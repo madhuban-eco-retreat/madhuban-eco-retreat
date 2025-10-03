@@ -1,0 +1,29 @@
+{
+    "redirects": [
+      {
+        "source": "/(.*)",
+        "has": [{ "type": "host", "value": "ratapaniwilderness.com" }],
+        "destination": "https://madhubanecoretreat.com/$1",
+        "statusCode": 301
+      },
+      {
+        "source": "/(.*)",
+        "has": [{ "type": "host", "value": "www.ratapaniwilderness.com" }],
+        "destination": "https://madhubanecoretreat.com/$1",
+        "statusCode": 301
+      },
+      {
+        "source": "/(.*)",
+        "has": [{ "type": "host", "value": "madhubanresort.com" }],
+        "destination": "https://madhubanecoretreat.com/$1",
+        "statusCode": 301
+      },
+      {
+        "source": "/(.*)",
+        "has": [{ "type": "host", "value": "www.madhubanresort.com" }],
+        "destination": "https://madhubanecoretreat.com/$1",
+        "statusCode": 301
+      }
+    ]
+  }
+  
