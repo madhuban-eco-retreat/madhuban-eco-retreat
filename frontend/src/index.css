@@ -41,22 +41,28 @@ body {
 }
 
 /* Override default datepicker styling */
-.react-datepicker-wrapper {
-  width: 100%;
+.react-datepicker-wrapper input[type='text'] {
+  background-color: #D1C8C1 !important;
+  color: white !important;
+  border: 1px solid black !important;
 }
 
-.react-datepicker__header {
-  background-color: #f8f8f8 !important;
-  border-bottom: 1px solid #e2e8f0 !important;
+.react-datepicker-wrapper input[type='text']:focus {
+  background-color: #D1C8C1 !important;
+  color: white !important;
+  border: 2px solid black !important;
+  outline: none !important;
 }
 
-.react-datepicker__day--selected {
-  background-color: var(--color-green-primary) !important;
+.react-datepicker-wrapper input[type='text']:hover {
+  background-color: #D1C8C1 !important;
+  color: white !important;
+  border: 1px solid black !important;
 }
 
-.react-datepicker__day--in-selecting-range,
-.react-datepicker__day--in-range {
-  background-color: rgba(45, 95, 45, 0.2) !important;
+.react-datepicker-wrapper input[type='text']::placeholder {
+  color: rgb(110, 97, 70) !important;
+  opacity: 1 !important;
 }
 
 /* Custom scrollbar */

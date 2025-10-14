@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-// import { FaMapMarkedAlt, 
-//   FaPhone, 
-//   FaEnvelope 
-// } from "react-icons/fa";
 import "./Contact.css";
+
+// ⚠️ CHANGE THIS TO YOUR WHATSAPP NUMBER
+// Format: Country code + number (no + sign, no spaces)
+// Example: 919876543210
+const ADMIN_WHATSAPP = "919770558419";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -13,8 +14,6 @@ const Contact = () => {
     message: "",
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -23,41 +22,51 @@ const Contact = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (isSubmitting) return;
 
-    setIsSubmitting(true);
+    // Validate required fields
+    if (!formData.name.trim() || !formData.email.trim() || !formData.subject.trim() || !formData.message.trim()) {
+      alert("Please fill in all required fields.");
+      return;
+    }
 
+    // Create WhatsApp message
+    const message = `New Contact Form Message
+
+Name: ${formData.name.trim()}
+Email: ${formData.email.trim()}
+Subject: ${formData.subject.trim()}
+
+Message:
+${formData.message.trim()}`;
+
+    // Build WhatsApp URL
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${ADMIN_WHATSAPP}&text=${encodeURIComponent(message)}`;
+
+    // Open WhatsApp
     try {
-      const response = await fetch('http://localhost:8000/api/contact/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const whatsappWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 
-      const data = await response.json();
+      // Check if popup was blocked
+      setTimeout(() => {
+        if (!whatsappWindow || whatsappWindow.closed || typeof whatsappWindow.closed === 'undefined') {
+          alert("Popup blocked! Please allow popups, or copy this link and open manually: " + whatsappUrl);
+        } else {
+          // Success - reset form
+          setFormData({
+            name: "",
+            email: "",
+            subject: "",
+            message: "",
+          });
+          alert('WhatsApp opened successfully! Please send the pre-filled message.');
+        }
+      }, 1000);
 
-      if (response.ok) {
-        setFormData({
-          name: "",
-          email: "",
-          subject: "",
-          message: "",
-        });
-        alert(data.message || "Thank you for your message! We'll get back to you soon.");
-      } else {
-        throw new Error(data.message || 'Failed to send message');
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      alert(
-        error.message || "Sorry, there was an error sending your message. Please try again."
-      );
-    } finally {
-      setIsSubmitting(false);
+    } catch (err) {
+      console.error('Error opening WhatsApp:', err);
+      alert("Failed to open WhatsApp. Please try again or check your browser settings.");
     }
   };
 
@@ -110,7 +119,6 @@ const Contact = () => {
                   onChange={handleChange}
                   placeholder="Your Name"
                   required
-                  disabled={isSubmitting}
                 />
               </div>
               <div className="form-group font-inter">
@@ -121,7 +129,6 @@ const Contact = () => {
                   onChange={handleChange}
                   placeholder="Your Email"
                   required
-                  disabled={isSubmitting}
                 />
               </div>
               <div className="form-group  font-inter">
@@ -132,7 +139,6 @@ const Contact = () => {
                   onChange={handleChange}
                   placeholder="Subject"
                   required
-                  disabled={isSubmitting}
                 />
               </div>
               <div className="form-group font-inter">
@@ -142,15 +148,13 @@ const Contact = () => {
                   onChange={handleChange}
                   placeholder="Your Message"
                   required
-                  disabled={isSubmitting}
                 ></textarea>
               </div>
               <button
                 type="submit"
                 className="submit-btn font-arial-narrow text-[rgb(110,97,70)]"
-                disabled={isSubmitting}
               >
-                {isSubmitting ? "Sending..." : "Send Message"}
+                Send Message
               </button>
             </form>
           </div>

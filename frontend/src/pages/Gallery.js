@@ -22,7 +22,7 @@ const mediaContent = {
     { type: "video", src: "/images/Gallery/gallery-video5.mp4" },
     { type: "image", src: "/images/Gallery/gallery15.jpg" },
     { type: "video", src: "/images/Gallery/gallery-video4.mp4" },
-    { type: "image", src: "/images/nature/nature8.jpg" },
+    { type: "video", src: "/images/Gallery/gallery-video-7.mp4" },
     { type: "image", src: "/images/Gallery/gallery-18.jpg" },
     { type: "image", src: "/images/Gallery/gallery-19.jpg" },
     { type: "image", src: "/images/Gallery/gallery-20.jpg" },
@@ -201,6 +201,8 @@ const Gallery = () => {
                     <video
                       src={item.src}
                       className="w-full h-full object-cover rounded-2xl"
+                      poster={item.poster}
+                      preload="metadata"
                       muted
                       loop
                       playsInline
