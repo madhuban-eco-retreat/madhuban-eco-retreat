@@ -344,16 +344,16 @@ const Home = () => {
               <hr className="w-16 border-t border-gray-400 ml-4" />
             </div>
             <p className="mt-1 max-w-2xl mx-auto text-lg text-gray-400 px-4 tracking-wide font-arial-narrow">
-              From earthy Mud Houses to elegant Safari Tents, cozy Camping Tents
-              to tranquil Poolside Rooms, every stay at Madhuban ECO Retreat is
-              crafted to blend comfort, sustainability, and the soothing charm
-              of nature.
+              From earthy Mud Houses to elegant Safari Tents, rustic Glamping
+              Tents, cozy Camping Tents and tranquil Poolside Rooms, every stay
+              at Madhuban ECO Retreat is crafted to blend comfort,
+              sustainability, and the soothing charm of nature.
             </p>
           </motion.div>
 
           {/* --- Cards Section --- */}
           <motion.div
-            className="flex flex-wrap xl:flex-nowrap xl:space-x-8 xl:overflow-x-auto justify-center xl:justify-start gap-y-8 pb-4 -mt-10 lg:space-x-8"
+            className="flex flex-wrap xl:flex-nowrap xl:gap-8 justify-center xl:justify-start gap-y-8 pb-4 -mt-10 lg:gap-8"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
@@ -361,7 +361,7 @@ const Home = () => {
           >
             {/* Card 1 */}
             <motion.div
-              className="w-full lg:w-[46%] xl:w-[calc(25%-16px)] 2xl:w-[300px] bg-[#D1C8C1] rounded-lg overflow-hidden shadow-lg transition transform hover:-translate-y-1 hover:shadow-xl h-[450px] flex flex-col justify-between"
+              className="w-full lg:w-[46%] xl:w-[calc(20%-12.8px)] 2xl:w-[calc(20%-12.8px)] bg-[#D1C8C1] rounded-lg overflow-hidden shadow-lg transition transform hover:-translate-y-1 hover:shadow-xl h-[450px] flex flex-col justify-between"
               variants={itemVariants}
               whileHover={{ scale: 1.05 }}
             >
@@ -387,7 +387,7 @@ const Home = () => {
 
             {/* Card 2 */}
             <motion.div
-              className="w-full lg:w-[46%] xl:w-[calc(25%-16px)] 2xl:w-[300px] bg-[#D1C8C1] rounded-lg overflow-hidden shadow-lg transition transform hover:-translate-y-1 hover:shadow-xl h-[450px] flex flex-col justify-between"
+              className="w-full lg:w-[46%] xl:w-[calc(20%-12.8px)] 2xl:w-[calc(20%-12.8px)] bg-[#D1C8C1] rounded-lg overflow-hidden shadow-lg transition transform hover:-translate-y-1 hover:shadow-xl h-[450px] flex flex-col justify-between"
               variants={itemVariants}
               whileHover={{ scale: 1.05 }}
             >
@@ -413,7 +413,7 @@ const Home = () => {
 
             {/* Card 3 */}
             <motion.div
-              className="w-full lg:w-[46%] xl:w-[calc(25%-16px)] 2xl:w-[300px] bg-[#D1C8C1] rounded-lg overflow-hidden shadow-lg transition transform hover:-translate-y-1 hover:shadow-xl h-[450px] flex flex-col justify-between"
+              className="w-full lg:w-[46%] xl:w-[calc(20%-12.8px)] 2xl:w-[calc(20%-12.8px)] bg-[#D1C8C1] rounded-lg overflow-hidden shadow-lg transition transform hover:-translate-y-1 hover:shadow-xl h-[450px] flex flex-col justify-between"
               variants={itemVariants}
               whileHover={{ scale: 1.05 }}
             >
@@ -431,7 +431,7 @@ const Home = () => {
                 <p className="text-[rgb(110,97,70)] font-arial-narrow text-base tracking-wide mb-4 text-justify">
                   Relax in our Pool Side Villa, where comfort meets scenic views.
                   These refreshing retreats are perfect for leisure, wellness,
-                  and eco-conscious travelers looking to unwind in nature’s
+                  and eco-conscious travelers looking to unwind in nature's
                   embrace.
                 </p>
               </div>
@@ -439,7 +439,32 @@ const Home = () => {
 
             {/* Card 4 */}
             <motion.div
-              className="w-full lg:w-[46%] xl:w-[calc(25%-16px)] 2xl:w-[300px] bg-[#D1C8C1] rounded-lg overflow-hidden shadow-lg transition transform hover:-translate-y-1 hover:shadow-xl h-[450px] flex flex-col justify-between"
+              className="w-full lg:w-[46%] xl:w-[calc(20%-12.8px)] 2xl:w-[calc(20%-12.8px)] bg-[#D1C8C1] rounded-lg overflow-hidden shadow-lg transition transform hover:-translate-y-1 hover:shadow-xl h-[450px] flex flex-col justify-between"
+              variants={itemVariants}
+              whileHover={{ scale: 1.05 }}
+            >
+              <div className="h-64 xl:h-[200px] overflow-hidden">
+                <img
+                  src="/images/accommodations/glamping-tent1.jpg"
+                  alt="Glamping Tent"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="font-sitka-banner tracking-widest text-[rgb(110,97,70)] mb-2 font-semibold text-2xl">
+                  Glamping Tents
+                </h3>
+                <p className="text-[rgb(110,97,70)] font-arial-narrow text-base tracking-wide mb-4 text-justify">
+                  Our rustic glamping tents pair king-size comfort with chic
+                  interiors, ensuite baths, and a private sit-out so you can
+                  enjoy the wild outdoors without giving up boutique luxuries.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Card 5 */}
+            <motion.div
+              className="w-full lg:w-[46%] xl:w-[calc(20%-12.8px)] 2xl:w-[calc(20%-12.8px)] bg-[#D1C8C1] rounded-lg overflow-hidden shadow-lg transition transform hover:-translate-y-1 hover:shadow-xl h-[450px] flex flex-col justify-between"
               variants={itemVariants}
               whileHover={{ scale: 1.05 }}
             >

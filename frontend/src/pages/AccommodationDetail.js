@@ -125,6 +125,43 @@ const accommodationsData = [
   },
   {
     id: 4,
+    name: "Glamping Tents",
+    slug: "glamping-tents",
+    image: "/images/accommodations/glamping-tent1.jpg",
+    altText: "Luxury glamping tent with deck overlooking greenery",
+    shortDescription:
+      "Experience comfort in the wild with rustic mini-safari glamping tents, cozy interiors, a personal lawn, and the perfect blend of nature and boutique luxury.",
+    longDescription:
+      "Our Glamping Tents are crafted for travelers who crave the raw beauty of Ratapani’s forest while enjoying refined comforts. Each tent hosts a plush king-size bed, curated décor inspired by safari chic, ensuite shower, and a private sit-out that opens into your own lawn. Wake up to golden mornings, sip freshly brewed tea on the verandah, and enjoy personalized hospitality that keeps every modern convenience within reach.",
+    galleryImages: [
+      "/images/accommodations/glamping-tent2.jpg",
+      "/images/accommodations/glamping-tent3.jpg",
+      "/images/accommodations/glamping-tent4.jpg",
+    ],
+    amenities: [
+      "King Size Bed",
+      "Double Occupancy",
+      "Infinity Pool",
+      "Shower",
+      "WiFi",
+      "Breakfast Included",
+      "Free Slippers",
+      "Pet Friendly",
+      "Room Service",
+      "Fan",
+      "AC",
+      "Table",
+      "Gyser",
+      "Tea/Coffee Maker",
+      "Work-Space",
+    ],
+    capacity: "Sleeps 2",
+    pricePerNightGlamping: "Rs. 7,500",
+    extraBedding: "Rs. 1,500 per person",
+    rating: 4.6,
+  },
+  {
+    id: 5,
     name: "Camping Tent",
     slug: "camping-tent",
     image: "/images/accommodations/camping-tent.jpeg",
@@ -407,6 +444,20 @@ const AccommodationDetail = () => {
                         <div className="border-b-4 border-black mt-3 w-full"></div>
                       </div> */}
                     </>
+                  )}
+
+                  {accommodation.slug === "glamping-tents" && (
+                    <div className="flex flex-col items-center space-y-2 mb-6">
+                      <h3 className="text-2xl font-bold text-[rgb(110,97,70)] tracking-wide">
+                        BOOK YOUR STAY
+                      </h3>
+                      <div className="bg-[rgb(110,97,70)] text-white rounded-full px-8 py-3 flex flex-col items-center">
+                        <span className="text-xl font-bold">
+                          {accommodation.pricePerNightGlamping}
+                        </span>
+                        <span className="text-sm">Per night</span>
+                      </div>
+                    </div>
                   )}
 
                   {/* <div className="flex justify-between items-center">

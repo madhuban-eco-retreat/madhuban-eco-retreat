@@ -2,7 +2,7 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: #F4F9F4; /* soft greenish cream */
+  background-color: #D1C8C1; /* warm beige/taupe (changed from green) */
   margin: 0;
   padding: 0;
 }
@@ -51,12 +51,12 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: #E6F2D6; /* light greenish white */
+  color: #6E6146; /* warm brown tone for overlay text */
   text-align: center;
   padding: 2rem;
   z-index: 1;
   pointer-events: none;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
 }
 
 .banner-overlay h1 {
@@ -76,10 +76,14 @@ body {
 
 /* Gallery Section */
 .gallery-section {
-  /* background: #D1C8C1;very soft pale green */
+  background: #D1C8C1; /* page section background: warm beige/taupe */
   padding: 3rem 4rem;
   /* box-shadow: inset 0 10px 20px #C7E0A9; */
   /* border: 2px solid red; */
+}
+
+.gallery-section h2 {
+  color: rgb(110,97,70); /* ensure gallery headings are brown */
 }
 
 
@@ -106,8 +110,7 @@ body {
 
 .media-item:hover {
   transform: scale(1.07);
-  box-shadow: 0 14px 30px rgba(34, 83, 34, 0.3);
-  border-color: #4CAF50;
+  box-shadow: 0 14px 30px rgba(78, 56, 35, 0.28); /* warmer brown shadow */
 }
 
 .media-item img,
@@ -131,14 +134,14 @@ body {
   right: 0;
   padding: 1.2rem 1rem;
   /* background: linear-gradient(180deg, transparent 0%, rgba(46, 77, 37, 0.85) 90%); */
-  color: #DFF0D8;
+  color: #EFE7DF; /* light warm text over dark gradient */
   text-align: center;
   font-weight: 600;
   font-size: 1.25rem;
   font-family: 'Playfair Display', serif;
   letter-spacing: 0.03em;
   user-select: none;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.45);
 }
 
 /* Modal Section */

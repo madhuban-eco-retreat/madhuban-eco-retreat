@@ -127,6 +127,31 @@ const accommodationsData = [
   },
   {
     id: 4,
+    name: "Glamping Tents",
+    slug: "glamping-tents",
+    image: "/images/accommodations/glamping-tent1.jpg",
+    altText: "Boutique glamping tent with deck and lush lawn",
+    shortDescription:
+      "Experience comfort in the wild with our rustic mini-safari glamping tents. Enjoy chic interiors, a private lawn sit-out, ensuite bathroom, and curated amenities that balance the charm of camping with boutique luxury.",
+    keyFeatures: [
+      {
+        icon: <BedDouble size={18} className="text-white" />,
+        text: "King Size Bed",
+      },
+      {
+        icon: <Users size={18} className="text-white" />,
+        text: "Double Occupancy",
+      },
+      {
+        icon: <Leaf size={18} className="text-white" />,
+        text: "Private Lawn Area",
+      },
+      { icon: <Wifi size={18} className="text-white" />, text: "Wi-Fi & Workspace" },
+    ],
+    capacity: "Sleeps 2",
+  },
+  {
+    id: 5,
     name: "Camping Tent",
     slug: "camping-tent",
     image: "/images/accommodations/comping-tent11.jpeg",
@@ -280,13 +305,13 @@ const Stay = () => {
           viewport={{ once: true, margin: "-100px" }}
         >
           Experience soulful living through our thoughtfully designed
-          eco-accommodation options at Madhuban Eco Retreat, from rustic Mud
-          Villas and elegant Safari Tents to cozy Camping Tents and scenic
-          Poolside Rooms. Each space is crafted to blend sustainability,
-          comfort, and charm, providing a serene escape into nature without
-          compromising on modern essentials. Perfect for eco-travelers,
-          families, couples, and wellness seekers looking for a unique stay
-          amidst the wild beauty of Madhya Pradesh.
+          eco-accommodation options at Madhuban Eco Retreat—from rustic Mud
+          Villas and elegant Safari Tents to boutique Glamping Tents, cozy
+          Camping Tents, and scenic Poolside Rooms. Each space is crafted to
+          blend sustainability, comfort, and charm, providing a serene escape
+          into nature without compromising on modern essentials. Perfect for
+          eco-travelers, families, couples, and wellness seekers looking for a
+          unique stay amidst the wild beauty of Madhya Pradesh.
         </motion.p>
 
         {accommodationsData.length > 0 ? (
@@ -295,28 +320,17 @@ const Stay = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="flex flex-col items-center"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-center"
           >
-            {(() => {
-              const rows = [];
-              for (let i = 0; i < accommodationsData.length; i += 2) {
-                const pair = accommodationsData.slice(i, i + 2);
-                rows.push(
-                  <motion.div
-                    key={`row-${i}`}
-                    // className="flex flex-col md:flex-row gap-8 mb-8 last:mb-0"
-                    className="flex flex-col md:flex-row justify-center items-center gap-8 mb-8 last:mb-0"
-                    variants={containerVariants}
-                  >
-                    {pair.map((accommodation, index) => (
-                      <motion.div
-                        key={accommodation.id}
-                        className="accommodation-card w-full md:w-[350px] h-[100vh] flex flex-col max500:min-h-[820px] max-367:min-h-[967px] "
-                        variants={itemVariants}
-                        whileHover="hover"
-                        initial="rest"
-                        animate="rest"
-                      >
+            {accommodationsData.map((accommodation) => (
+              <motion.div
+                key={accommodation.id}
+                className="accommodation-card w-full md:w-[350px] h-[100vh] flex flex-col max500:min-h-[820px] max-367:min-h-[967px]"
+                variants={itemVariants}
+                whileHover="hover"
+                initial="rest"
+                animate="rest"
+              >
                         <motion.div
                           className="image-wrapper"
                           variants={imageHoverVariants}
@@ -397,14 +411,6 @@ const Stay = () => {
                         </div>
                       </motion.div>
                     ))}
-                    {pair.length === 1 && (
-                      <div className="hidden md:block md:w-1/2"></div>
-                    )}
-                  </motion.div>
-                );
-              }
-              return rows;
-            })()}
           </motion.div>
         ) : (
           <motion.p

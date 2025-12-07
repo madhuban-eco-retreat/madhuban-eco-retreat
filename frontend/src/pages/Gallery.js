@@ -123,7 +123,7 @@ const Gallery = () => {
       <section className="relative h-[85vh] m-0 p-0">
         <div className="absolute inset-0 overflow-hidden h-[70vh] rounded-bl-[60px] rounded-br-[60px]">
           <video
-            src="/images/bird/gallery-video.mp4"
+            src="videos\gallery-bg-video.mp4"
             autoPlay
             muted
             loop

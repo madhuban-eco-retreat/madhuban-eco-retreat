@@ -54,10 +54,11 @@ const BookingModal = () => {
     if (typeParam && typeParam !== 'all') {
       // Map accommodation type from BookingWidget to BookingModal
       const typeMapping = {
-        'cottage': 'Safari Tent',
-        'tent': 'Mud Houses', 
-        'treehouse': 'Pool Side Villa',
-        'camping': 'Camping Tent'
+        cottage: "Safari Tent",
+        tent: "Mud Houses",
+        treehouse: "Pool Side Villa",
+        camping: "Camping Tent",
+        glamping: "Glamping Tents",
       };
       setFormData(prev => ({
         ...prev,
@@ -175,6 +176,7 @@ ${formData.room_interested}`;
     { value: "Mud Houses", label: "Mud Houses" },
     { value: "Pool Side Villa", label: "Pool Side Villa" },
     { value: "Camping Tent", label: "Camping Tent" },
+    { value: "Glamping Tents", label: "Glamping Tents" },
   ];
 
   return (
