@@ -126,6 +126,7 @@ const accommodationsData = [
     capacity: "Sleeps 4",
   },
   {
+    // glamping tents
     id: 4,
     name: "Glamping Tents",
     slug: "glamping-tents",
@@ -211,8 +212,7 @@ const Stay = () => {
       {/* -----------------Meta Tag start -------------------------------------------------------- */}
       <Helmet>
         <title>
-          eco-friendly, cottages, nature stays, near Bhopal, sustainable, Madhya
-          Pradesh
+          eco-friendly, cottages, nature stays, near Bhopal, sustainable, Madhya Pradesh
         </title>
         <meta
           name="description"
