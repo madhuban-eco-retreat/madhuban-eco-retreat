@@ -130,7 +130,7 @@ const accommodationsData = [
     id: 4,
     name: "Glamping Tents",
     slug: "glamping-tents",
-    image: "/images/accommodations/glamping-tent1.jpg",
+    image: "/images/accommodations/glamping-tent1.JPG",
     altText: "Boutique glamping tent with deck and lush lawn",
     shortDescription:
       "Experience comfort in the wild with our rustic mini-safari glamping tents. Enjoy chic interiors, a private lawn sit-out, ensuite bathroom, and curated amenities that balance the charm of camping with boutique luxury.",

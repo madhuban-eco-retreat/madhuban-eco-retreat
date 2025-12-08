@@ -127,16 +127,16 @@ const accommodationsData = [
     id: 4,
     name: "Glamping Tents",
     slug: "glamping-tents",
-    image: "/images/accommodations/glamping-tent1.jpg",
+    image: "/images/accommodations/glamping-tent1.JPG",
     altText: "Luxury glamping tent with deck overlooking greenery",
     shortDescription:
       "Experience comfort in the wild with rustic mini-safari glamping tents, cozy interiors, a personal lawn, and the perfect blend of nature and boutique luxury.",
     longDescription:
       "Our Glamping Tents are crafted for travelers who crave the raw beauty of Ratapani’s forest while enjoying refined comforts. Each tent hosts a plush king-size bed, curated décor inspired by safari chic, ensuite shower, and a private sit-out that opens into your own lawn. Wake up to golden mornings, sip freshly brewed tea on the verandah, and enjoy personalized hospitality that keeps every modern convenience within reach.",
     galleryImages: [
-      "/images/accommodations/glamping-tent2.jpg",
-      "/images/accommodations/glamping-tent3.jpg",
-      "/images/accommodations/glamping-tent4.jpg",
+      "/images/accommodations/glamping-tent2.JPG",
+      "/images/accommodations/glamping-tent3.JPG",
+      "/images/accommodations/glamping-tent4.JPG",
     ],
     amenities: [
       "King Size Bed",

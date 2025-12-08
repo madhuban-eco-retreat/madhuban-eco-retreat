@@ -445,7 +445,7 @@ const Home = () => {
             >
               <div className="h-64 xl:h-[200px] overflow-hidden">
                 <img
-                  src="/images/accommodations/glamping-tent1.jpg"
+                  src="/images/accommodations/glamping-tent1.JPG"
                   alt="Glamping Tent"
                   className="w-full h-full object-cover"
                 />
