@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;500;700&display=swap');
+
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Custom color variables */
+  --color-green-primary: #2D5F2D;
+  --color-green-secondary: #3A6B35;
+  --color-brown-primary: #8B5A2B;
+  --color-brown-secondary: #A67C52;
+  --color-gray-primary: #707070;
+  --color-gray-secondary: #A9A9A9;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  color: #333;
+}
+
+.font-serif {
+  font-family: 'Playfair Display', serif;
+}
+
+@theme {
+  --font-primary: "Sitka Banner", serif; 
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Override default datepicker styling */
+.react-datepicker-wrapper input[type='text'] {
+  background-color: #D1C8C1 !important;
+  color: white !important;
+}
+
+.react-datepicker-wrapper input[type='text']:focus {
+  background-color: #D1C8C1 !important;
+  color: white !important;
+  border: 2px solid var(--primary-gray2) !important;
+  outline: none !important;
+}
+
+.react-datepicker-wrapper input[type='text']:hover {
+  background-color: #D1C8C1 !important;
+  color: white !important;
+  border: 1px solid black !important;
+}
+
+.react-datepicker-wrapper input[type='text']::placeholder {
+  color: rgb(110, 97, 70) !important;
+  opacity: 1 !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+.custom-container {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .custom-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .custom-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .custom-container {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+
+.no-tailwind,
+.no-tailwind * {
+  all: revert;
+  box-sizing: border-box;
+}
+.discriptionContent{
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border: 1px solid var(--primary-gray2);
+    border-radius: 20px;
+    margin-top: 10px;
+    background: var(--primary-gray);
+}
+
+/* footer */
+
+.footer-section .footer-text{
+  font-size: var(--text-sm)
+}
+
+.footer-section .footer-heading{
+   font-size: var(--text-base)
+}
+
+.footer-section .footer-input-con{
+  display:flex ;
+  
+}
+
+.footer-section .footer-input-con input{
+   border-top-left-radius: var(--radius-md) ;
+    border-bottom-left-radius: var(--radius-md);
+     padding-block: calc(var(--spacing) * 1) ;
+}
+.footer-section .footer-input-con button{
+  padding-block: calc(var(--spacing) * 1) ;
+  border-radius: var(--radius-md);
+}
+
+@media (min-width: 768px) {
+.footer-section .footer-heading{
+   font-size: var(--text-xl)
+}
+.footer-section .footer-text{
+  font-size: var(--text-lg)
+}
+
+}
+
+@media (max-width: 400px) {
+.footer-section .footer-input-con{
+  display:flex ;
+  flex-direction: column;
+  gap: 8;
+}
+
+.footer-section .footer-input-con button{
+  padding-block: calc(var(--spacing) * 2) ;
+  border-radius: var(--radius-md);
+}
+.footer-section .footer-input-con input{
+   border-radius: var(--radius-md) ;
+   padding-block: calc(var(--spacing) * 2) ;
+}
+}
+
+

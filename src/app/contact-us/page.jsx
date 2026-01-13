@@ -1,0 +1,64 @@
+import ContactPage2 from "@/components/contact/Contact2";
+import SEO from "@/components/seo/Seo";
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  name: "Contact Madhuban Eco Retreat",
+  url: "https://www.madhubanecoretreat.com/contact",
+  description:
+    "Get in touch with Madhuban Eco Retreat, an eco-friendly jungle resort near Ratapani Wildlife Sanctuary, Madhya Pradesh.",
+  mainEntity: {
+    "@type": "LodgingBusiness",
+    name: "Madhuban Eco Retreat",
+    url: "https://www.madhubanecoretreat.com/",
+    logo: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288792/logo-4_p2iwwi.png",
+    telephone: "+91-9770558419",
+    email: "madhubanresort@somaiya.com",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Sarkanpur, Road, Dongri",
+      addressLocality: "Dongri",
+      addressRegion: "Madhya Pradesh",
+      postalCode: "466446",
+      addressCountry: "IN",
+    },
+    areaServed: {
+      "@type": "AdministrativeArea",
+      name: "Ratapani Wildlife Sanctuary, Bhopal, Madhya Pradesh",
+    },
+    sameAs: ["https://maps.app.goo.gl/YBcoQ4owh71Ly4so6"],
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: "+91-9770558419",
+      contactType: "Customer Support",
+      availableLanguage: ["English", "Hindi"],
+      areaServed: "IN",
+    },
+  },
+};
+
+export default function ContactPage() {
+  return (
+    <>
+      <SEO schemas={[schema]} />
+      <ContactPage2 />
+    </>
+  );
+}
+
+export const metadata = {
+  title: "Contact Madhuban Eco Retreat | Jungle Retreat in Ratapani",
+
+  description:
+    "Contact with Madhuban Eco Retreat, a top eco tourism and detox jungle retreat in Ratapani. Get a response within 24 hrs for any bookings & inquiries. ",
+  keywords: [
+    "Contact Madhuban Eco Retreat",
+    "Eco tourism",
+    "Nature resort near Ratapani",
+    "Detox retreat",
+    "Resorts near Bhopal for day outing",
+    " Contact jungle resort near Bhopal",
+    "Eco resort Bhopal",
+    "Eco resort India",
+  ],
+};
