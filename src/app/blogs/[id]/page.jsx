@@ -96,7 +96,6 @@ export async function generateStaticParams() {
   const res = await getAllBlogs();
 
   const posts = res?.data?.blogs ?? [];
-  console.log("res?.data?.blogs", posts);
 
   return posts.map((post) => ({
     id: post?.uid,
