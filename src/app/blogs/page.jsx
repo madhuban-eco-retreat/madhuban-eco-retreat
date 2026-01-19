@@ -62,7 +62,7 @@ export const metadata = {
   ],
 
   alternates: {
-    canonical: "https://www.madhubanecoretreat.com/blog",
+    canonical: "https://www.madhubanecoretreat.com/blogs",
   },
 
   robots: {

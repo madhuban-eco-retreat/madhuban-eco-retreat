@@ -39,7 +39,7 @@ const NaturesStory = () => {
       <div className="max-w-7xl mx-auto ">
         <DecorativeHeading
           text={"  Stories From Nature, Wellness & Wilderness"}
-          as="h1"
+          as="h2"
           color="#fff"
         />
 

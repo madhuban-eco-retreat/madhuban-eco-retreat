@@ -72,5 +72,13 @@ export async function generateMetadata() {
       "nature resort bhopal",
       "madhuban eco retreat",
     ],
+    alternates: {
+      canonical: "https://www.madhubanecoretreat.com/about-us",
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+    },
   };
 }

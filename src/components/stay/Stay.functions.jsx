@@ -226,7 +226,7 @@ const mudHouseMetadata = {
   ],
 
   alternates: {
-    canonical: "https://www.madhubanecoretreat.com/stay/mud-house",
+    canonical: "https://www.madhubanecoretreat.com/stay/mud-villa",
   },
 
   robots: {
@@ -253,7 +253,7 @@ const poolSideMetadata = {
   ],
 
   alternates: {
-    canonical: "https://www.madhubanecoretreat.com/stay/poolside-villa",
+    canonical: "https://www.madhubanecoretreat.com/stay/pool-side-room",
   },
 
   robots: {
@@ -279,7 +279,7 @@ const glampingTentMetadata = {
   ],
 
   alternates: {
-    canonical: "https://www.madhubanecoretreat.com/stay/glamping-tent",
+    canonical: "https://www.madhubanecoretreat.com/stay/glamping-tents",
   },
 
   robots: {
@@ -304,7 +304,7 @@ const nightCampingMetadata = {
   ],
 
   alternates: {
-    canonical: "https://www.madhubanecoretreat.com/stay/camping",
+    canonical: "https://www.madhubanecoretreat.com/stay/camping-tent",
   },
 
   robots: {

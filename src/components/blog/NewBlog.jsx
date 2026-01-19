@@ -19,7 +19,7 @@ const NewBlogPage = async () => {
       <BlogBanner />
       <NaturesStory />
       <div className="custom-container py-4 md:py-8">
-        <DecorativeHeading text={"Blogs"} as="h1" textClasses={"w-50"} />
+        <DecorativeHeading text={"Blogs"} as="h2" textClasses={"w-50"} />
 
         <div className="mt-4 md:mt-10 flex items-center justify-center gap-5">
           {!blogs.length ? (
