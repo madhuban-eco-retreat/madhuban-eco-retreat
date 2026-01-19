@@ -7,14 +7,14 @@ import Image from "next/image";
 const heroSlides = [
   {
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288954/hero-1_bqiyu3.jpg",
+      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768800159/homeBanner2_mh8cex.jpg",
     title: "Madhuban Eco Retreat: Eco-Luxury Forest Resort",
     subtitle:
       "Experience eco-luxury living amid the serene wilderness of Ratapani Tiger Reserve at Madhuban Eco Retreat — a peaceful forest stay offering sustainable comfort and mindful escapes.",
   },
   {
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288955/hero-2_cgdwri.jpg",
+      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768800159/homeBanner1_cfbysj.jpg",
     title: "Sustainable Travel in India: An Eco-Luxury Retreat",
     subtitle:
       "Reconnect with nature through immersive experiences like birdwatching in Madhya Pradesh, all without compromising on comfort.",
