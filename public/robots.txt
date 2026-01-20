@@ -1,25 +1,19 @@
-User-agent: * 
-Allow: / 
- 
-# Block common non-SEO system paths (safe for MERN / Node apps) 
-Disallow: /api/ 
-Disallow: /admin/ 
-Disallow: /login/ 
-Disallow: /register/ 
-Disallow: /dashboard/ 
-Disallow: /private/ 
-Disallow: /_next/ 
-Disallow: /node_modules/ 
- 
-# Block internal search & tracking URLs (if any) 
-Disallow: /? 
-Disallow: /& 
- 
-# Allow essential assets 
-Allow: /assets/ 
-Allow: /static/ 
-Allow: /images/ 
-Allow: /uploads/ 
- 
-# Sitemap 
+User-agent: *
+Allow: /
+# Block non-public areas
+Disallow: /api/
+Disallow: /admin/
+Disallow: /login/
+Disallow: /register/
+Disallow: /dashboard/
+Disallow: /private/
+# Allow Next.js rendering assets
+Allow: /_next/
+Allow: /_next/static/
+# Allow assets
+Allow: /assets/
+Allow: /static/
+Allow: /images/
+Allow: /uploads/
+# Sitemap
 Sitemap: https://www.madhubanecoretreat.com/sitemap.xml
