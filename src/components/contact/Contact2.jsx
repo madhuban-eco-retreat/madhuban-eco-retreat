@@ -40,7 +40,7 @@ Message: ${data.message}
     `;
 
     const whatsappURL = `https://api.whatsapp.com/send?phone=${ADMIN_WHATSAPP}&text=${encodeURIComponent(
-      message
+      message,
     )}`;
 
     window.open(whatsappURL, "_blank");
@@ -49,7 +49,7 @@ Message: ${data.message}
       const whatsappWindow = window.open(
         whatsappURL,
         "_blank",
-        "noopener,noreferrer"
+        "noopener,noreferrer",
       );
 
       // Check if popup was blocked
@@ -61,19 +61,19 @@ Message: ${data.message}
         ) {
           alert(
             "Popup blocked! Please allow popups, or copy this link and open manually: " +
-              whatsappURL
+              whatsappURL,
           );
         } else {
           reset();
           alert(
-            "WhatsApp opened successfully! Please send the pre-filled message."
+            "WhatsApp opened successfully! Please send the pre-filled message.",
           );
         }
       }, 1000);
     } catch (err) {
       console.error("Error opening WhatsApp:", err);
       alert(
-        "Failed to open WhatsApp. Please try again or check your browser settings."
+        "Failed to open WhatsApp. Please try again or check your browser settings.",
       );
     }
   };
@@ -110,7 +110,7 @@ Message: ${data.message}
                 <IoLocation /> Location
               </h3>
               <p className="text-gray-700">
-                Sarkanpur, Road, Dongri, Near Ratapani Wildlife Sanctuary,
+                Salkanpur, Road, Dongri, Near Ratapani Wildlife Sanctuary,
                 <br />
                 Bhopal, Madhya Pradesh, India – 466446
               </p>
