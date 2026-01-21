@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import BookingWidget from "../BookingWidget";
 import { motion } from "framer-motion";
-import Image from "next/image";
 
 const heroSlides = [
   {
