@@ -112,7 +112,7 @@ export async function generateMetadata({ params }) {
     description: blogDetails?.meta?.description,
     featuredImage: blogDetails?.featuredImage,
     keywords: blogDetails?.meta?.keywords,
-    canonicalEndpoint: `/blog/${id}`,
+    canonicalEndpoint: `/blogs/${id}`,
     robots: {
       index: true,
       follow: true,
