@@ -1,7 +1,7 @@
 "use client";
 // src/components/BookingModal.js
-import React, { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import React, { useState, useEffect, useRef } from "react";
+import { useSearchParams, usePathname } from "next/navigation";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Calendar } from "lucide-react";
@@ -10,6 +10,8 @@ import BookStay from "./BookStay";
 import WhyChoose from "./WhyChoose";
 import CommonFaqs from "@/common-components/faqs/CommonFaqs";
 import { motion } from "framer-motion";
+import Link from "next/link";
+const THANKYOU_URL = "/thank-you";
 
 const ADMIN_WHATSAPP = phone;
 
@@ -38,6 +40,7 @@ const bookingFaqs = [
 
 const BookingClient = () => {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
 
   // Get URL parameters
   const checkInParam = searchParams.get("checkIn");
@@ -59,6 +62,25 @@ const BookingClient = () => {
   const [checkOut, setCheckOut] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const [showThankYou, setShowThankYou] = useState(false);
+  // Ref to store original URL
+  const originalUrlRef = useRef("");
+  useEffect(() => {
+    if (showThankYou) {
+      originalUrlRef.current =
+        window.location.pathname + window.location.search;
+      window.history.pushState({ thankyou: true }, "", THANKYOU_URL);
+    }
+  }, [showThankYou]);
+  useEffect(() => {
+    const handlePopState = (event) => {
+      if (showThankYou) {
+        setShowThankYou(false);
+      }
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [showThankYou]);
 
   // Auto-fill form data from URL parameters
   useEffect(() => {
@@ -101,6 +123,15 @@ const BookingClient = () => {
     const encodedMessage = encodeURIComponent(message);
     // Try alternative URL format
     return `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+  };
+
+  //Function to restore original URL
+  const restoreOriginalUrl = () => {
+    if (originalUrlRef.current) {
+      window.history.replaceState({}, "", originalUrlRef.current);
+    } else {
+      window.history.replaceState({}, "", pathname);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -154,53 +185,62 @@ ${formData.room_interested}`;
     // Build WhatsApp URL
     const whatsappUrl = buildWhatsAppUrl(ADMIN_WHATSAPP, message);
 
-    // Open WhatsApp
-    try {
-      const whatsappWindow = window.open(
-        whatsappUrl,
-        "_blank",
-        "noopener,noreferrer"
-      );
+    //Show thank you popup (URL will update via useEffect)
+    setShowThankYou(true);
 
-      // Check if popup was blocked
-      setTimeout(() => {
-        if (
-          !whatsappWindow ||
-          whatsappWindow.closed ||
-          typeof whatsappWindow.closed === "undefined"
-        ) {
-          setError(
-            "Popup blocked! Please allow popups, or click the button below to try again."
-          );
-          // Create fallback button
-          const fallbackBtn = document.createElement("a");
-          fallbackBtn.href = whatsappUrl;
-          fallbackBtn.target = "_blank";
-          fallbackBtn.rel = "noopener noreferrer";
-          fallbackBtn.textContent = "📱 Click Here to Open WhatsApp";
-          fallbackBtn.className =
-            "block mt-4 w-full bg-[#25D366] text-white py-3 rounded-md hover:bg-[#128C7E] transition text-center font-semibold";
+    //Wait 2 seconds, then close popup and open WhatsApp
+    setTimeout(() => {
+      restoreOriginalUrl();
+      setShowThankYou(false);
 
-          const existingBtn = document.getElementById("whatsapp-fallback");
-          if (existingBtn) existingBtn.remove();
-          fallbackBtn.id = "whatsapp-fallback";
+      // Open WhatsApp
+      try {
+        const whatsappWindow = window.open(
+          whatsappUrl,
+          "_blank",
+          "noopener,noreferrer",
+        );
 
-          const form = document.querySelector("form");
-          if (form && form.parentElement) {
-            form.parentElement.appendChild(fallbackBtn);
+        // Check if popup was blocked
+        setTimeout(() => {
+          if (
+            !whatsappWindow ||
+            whatsappWindow.closed ||
+            typeof whatsappWindow.closed === "undefined"
+          ) {
+            setError(
+              "Popup blocked! Please allow popups, or click the button below to try again.",
+            );
+            // Create fallback button
+            const fallbackBtn = document.createElement("a");
+            fallbackBtn.href = whatsappUrl;
+            fallbackBtn.target = "_blank";
+            fallbackBtn.rel = "noopener noreferrer";
+            fallbackBtn.textContent = "📱 Click Here to Open WhatsApp";
+            fallbackBtn.className =
+              "block mt-4 w-full bg-[#25D366] text-white py-3 rounded-md hover:bg-[#128C7E] transition text-center font-semibold";
+
+            const existingBtn = document.getElementById("whatsapp-fallback");
+            if (existingBtn) existingBtn.remove();
+            fallbackBtn.id = "whatsapp-fallback";
+
+            const form = document.querySelector("form");
+            if (form && form.parentElement) {
+              form.parentElement.appendChild(fallbackBtn);
+            }
+          } else {
+            // Success - show thank you message
+            setSubmitted(true);
+            console.log("WhatsApp opened successfully");
           }
-        } else {
-          // Success - show thank you message
-          setSubmitted(true);
-          console.log("WhatsApp opened successfully");
-        }
-      }, 1000);
-    } catch (err) {
-      console.error("Error opening WhatsApp:", err);
-      setError(
-        "Failed to open WhatsApp. Please try again or check your browser settings."
-      );
-    }
+        }, 2000);
+      } catch (err) {
+        console.error("Error opening WhatsApp:", err);
+        setError(
+          "Failed to open WhatsApp. Please try again or check your browser settings.",
+        );
+      }
+    }, 3000);
   };
 
   const roomOptions = [
@@ -225,6 +265,24 @@ ${formData.room_interested}`;
 
   return (
     <div className="min-h-screen pt-20 md:pt-40 pb-20 bg-[#b4a6811a] flex flex-col items-center justify-center ">
+      {/* Thank You Page Popup - loads your actual thank-you page in iframe */}
+      {showThankYou && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            className="bg-white rounded-2xl shadow-2xl w-[90%] max-w-2xl h-[80vh] max-h-[600px] overflow-hidden relative"
+          >
+            <iframe
+              src={THANKYOU_URL}
+              className="w-full h-full border-0"
+              title="Thank You"
+            />
+          </motion.div>
+        </div>
+      )}
+
       <BookStay />
 
       <motion.div
@@ -437,6 +495,17 @@ ${formData.room_interested}`;
             </form>
           )}
         </div>
+        <Link
+          href="/stay"
+          className="flex justify-center w-full  mt-4 max-w-2xl p-6"
+        >
+          <button
+            type="button"
+            className="w-full sm:w-[100%] max-w-[670px] bg-[rgb(110,97,70)] text-white py-2  text-base md:text-lg rounded-md hover:bg-[rgb(117,105,83)] transition mt-5 "
+          >
+            Stay
+          </button>
+        </Link>
       </motion.div>
       <WhyChoose />
       <CommonFaqs faqs={bookingFaqs} bgColor="none" />
