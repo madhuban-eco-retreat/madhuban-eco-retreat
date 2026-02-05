@@ -1,3 +1,5 @@
+export const dynamic = "force-static";
+
 import ContactPage2 from "@/components/contact/Contact2";
 import SEO from "@/components/seo/Seo";
 import { generateMataDataForSEO } from "@/utills/helperFunctions";

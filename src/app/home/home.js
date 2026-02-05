@@ -1,3 +1,4 @@
+export const dynamic = "force-static";
 import HomeBanner from "@/components/home/HomeBanner";
 import WelComeSection from "@/components/home/WelComeSection";
 import Accommodations from "@/components/home/Accommodations";

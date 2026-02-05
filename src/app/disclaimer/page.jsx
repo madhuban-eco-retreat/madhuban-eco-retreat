@@ -1,3 +1,4 @@
+export const dynamic = "force-static";
 import Disclaimer from "@/components/disclaimer/Disclaimer";
 import SEO from "@/components/seo/Seo";
 import { generateMataDataForSEO } from "@/utills/helperFunctions";

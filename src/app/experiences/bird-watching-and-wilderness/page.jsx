@@ -1,3 +1,4 @@
+export const dynamic = "force-static";
 import BirdWatchingAndWilderness from "@/components/experiences/Bird-Watching-And-Wilderness/BirdWatchingAndWilderness";
 import SEO from "@/components/seo/Seo";
 

@@ -1,3 +1,4 @@
+export const dynamic = "force-static";
 import SEO from "@/components/seo/Seo";
 import Home from "./home/home";
 

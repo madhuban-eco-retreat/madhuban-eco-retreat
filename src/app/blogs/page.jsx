@@ -21,7 +21,7 @@ const BlogPage = () => {
   const getBlogs = async () => {
     try {
       const res = await getAllBlogs();
-      return res.data;
+      return res;
     } catch (err) {
       console.log("Error in fetching blogs", err);
     }

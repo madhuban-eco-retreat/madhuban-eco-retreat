@@ -1,3 +1,5 @@
+export const dynamic = "force-static";
+
 import AboutUs from "@/components/about/about";
 import SEO from "@/components/seo/Seo";
 

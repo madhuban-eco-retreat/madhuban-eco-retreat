@@ -1,3 +1,4 @@
+export const dynamic = "force-static";
 import BookingClient from "@/components/booking/BookingClient";
 import SEO from "@/components/seo/Seo";
 import { generateMataDataForSEO } from "@/utills/helperFunctions";

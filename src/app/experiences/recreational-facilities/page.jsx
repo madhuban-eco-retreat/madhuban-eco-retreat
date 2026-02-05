@@ -1,3 +1,4 @@
+export const dynamic = "force-static";
 import RecreationalFacilities from "@/components/experiences/recreational-facilities/RecreationalFacilities";
 import SEO from "@/components/seo/Seo";
 
@@ -86,7 +87,7 @@ const faqSchema = {
 const RecreationalFacilitiesPage = () => {
   return (
     <>
-    <SEO schemas={[pageSchema, faqSchema]} />
+      <SEO schemas={[pageSchema, faqSchema]} />
       <RecreationalFacilities />
     </>
   );
@@ -118,6 +119,6 @@ export async function generateMetadata() {
     robots: {
       index: true,
       follow: true,
-    }
+    },
   };
 }

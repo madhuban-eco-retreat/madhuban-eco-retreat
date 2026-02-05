@@ -1,3 +1,4 @@
+export const dynamic = "force-static";
 import SEO from "@/components/seo/Seo";
 import Stay from "@/components/stay/Stay";
 

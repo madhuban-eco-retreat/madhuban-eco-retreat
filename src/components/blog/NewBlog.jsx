@@ -11,7 +11,7 @@ const LIMIT = 8;
 const NewBlogPage = async () => {
   const page = 1;
   const res = await getAllBlogs(page, LIMIT);
-  const posts = res?.data;
+  const posts = res;
   const blogs = Array.isArray(posts?.blogs) ? posts.blogs : [];
 
   return (

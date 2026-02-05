@@ -1,3 +1,4 @@
+export const dynamic = "force-static";
 import NearbyAttractions from "@/components/nearbyAttractions/NearbyAttractions";
 import SEO from "@/components/seo/Seo";
 

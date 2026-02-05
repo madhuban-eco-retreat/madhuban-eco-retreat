@@ -1,3 +1,4 @@
+export const dynamic = "force-static";
 import SEO from "@/components/seo/Seo";
 import TermsAndCondition from "@/components/termsAndCondition/termsAndCondition";
 import { generateMataDataForSEO } from "@/utills/helperFunctions";

@@ -1,3 +1,4 @@
+export const dynamic = "force-static";
 import Cookie from "@/components/cookie/Cookie";
 import SEO from "@/components/seo/Seo";
 import { generateMataDataForSEO } from "@/utills/helperFunctions";

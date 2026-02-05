@@ -1,3 +1,4 @@
+export const dynamic = "force-static";
 import ExperienceComponent from "@/components/experiences/ExperienceComponent";
 import OurExperiences from "@/components/experiences/OurExperiences";
 import WhyChooseUs from "@/components/experiences/WhyChooseUs";

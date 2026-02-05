@@ -1,3 +1,4 @@
+export const dynamic = "force-static";
 import ForestWalkAndNatureTrails from "@/components/experiences/Forest-Walk-And-Nature-Trails/ForestWalkAndNatureTrails";
 import SEO from "@/components/seo/Seo";
 

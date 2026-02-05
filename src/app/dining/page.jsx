@@ -1,3 +1,4 @@
+export const dynamic = "force-static";
 import Dining from "@/components/dining/Dining";
 import SEO from "@/components/seo/Seo";
 

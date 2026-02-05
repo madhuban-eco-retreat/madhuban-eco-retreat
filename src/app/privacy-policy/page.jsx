@@ -1,3 +1,4 @@
+export const dynamic = "force-static";
 import PrivacyPolicy from "@/components/privacyAndPolicy/page";
 import SEO from "@/components/seo/Seo";
 import { generateMataDataForSEO } from "@/utills/helperFunctions";

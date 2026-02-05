@@ -192,7 +192,10 @@ Message: ${data.message}
           </div>
 
           {/* RIGHT SIDE – CONTACT FORM */}
-          <div className=" rounded-2xl shadow-lg p-4 md:p-8  bg-[#6e6146]">
+          <div
+            className=" rounded-2xl shadow-lg p-4 md:p-8  bg-[#6e6146]"
+            style={{ height: "fit-content" }}
+          >
             <h2 className="heading1 text-center  font-semibold text-white mb-2 font-primary">
               Send Us a Message
             </h2>

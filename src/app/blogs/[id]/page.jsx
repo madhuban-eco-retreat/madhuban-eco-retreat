@@ -33,7 +33,7 @@ const BlogDesc = async ({ params }) => {
   try {
     const data = await getBlogById(id);
     faqSchema = buildFaqSchema(data?.data?.blog?.faq);
-    blogDetails = data?.data?.blog;
+    blogDetails = data?.blog;
   } catch (err) {
     console.log("Error in fetching blog by id", err);
   }
