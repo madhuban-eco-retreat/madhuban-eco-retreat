@@ -5,8 +5,11 @@ const DecorativeHeading = ({
   text,
   color = "#6e6146",
   textClasses,
+  subheading = "",
+  subheadingAs = "p",
 }) => {
   const Tag = as;
+  const SubheadingTag = subheadingAs;
   return (
     <div className="group flex flex-col justify-center items-center">
       <div className="relative flex flex-col items-center justify-center  w-fit text-center">
@@ -69,6 +72,14 @@ const DecorativeHeading = ({
           />
         </div>
       </div>
+      {subheading && (
+        <SubheadingTag
+          className="heading2 text-gray-400 mt-2 text-center"
+          style={{ color }}
+        >
+          {subheading}
+        </SubheadingTag>
+      )}
     </div>
   );
 };

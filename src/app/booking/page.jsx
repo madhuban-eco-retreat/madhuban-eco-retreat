@@ -1,5 +1,6 @@
 export const dynamic = "force-static";
-import BookingClient from "@/components/booking/BookingClient";
+
+import NewBooking from "@/components/booking/NewBooking";
 import SEO from "@/components/seo/Seo";
 import { generateMataDataForSEO } from "@/utills/helperFunctions";
 import { Suspense } from "react";
@@ -96,7 +97,7 @@ const BookingModal = () => {
     <>
       <SEO schemas={[schema]} />
       <Suspense fallback={<div>Loading Booking Module...</div>}>
-        <BookingClient />
+        <NewBooking />
       </Suspense>
     </>
   );

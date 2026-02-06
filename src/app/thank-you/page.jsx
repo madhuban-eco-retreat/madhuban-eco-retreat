@@ -1,5 +1,4 @@
-export const dynamic = "force-static";
-("use client");
+"use client";
 import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 export default function ThankYouPage() {
