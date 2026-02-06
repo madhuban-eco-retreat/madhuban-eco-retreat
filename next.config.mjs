@@ -17,6 +17,180 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/about/:path*",
+        destination: "/about-us",
+        permanent: true,
+      },
+      { source: "/about/story", destination: "/about-us", permanent: true },
+      {
+        source: "/about/eco-philosophy",
+        destination: "/about-us",
+        permanent: true,
+      },
+      {
+        source: "/about/Vision-&-Mission",
+        destination: "/about-us",
+        permanent: true,
+      },
+
+      { source: "/rooms", destination: "/stay", permanent: true },
+      { source: "/tag/charter", destination: "/experiences", permanent: true },
+      { source: "/pricing-tables", destination: "/booking", permanent: true },
+      { source: "/home-5", destination: "/", permanent: true },
+      { source: "/tag/golf", destination: "/experiences", permanent: true },
+
+      {
+        source: "/activities/gym-fitness",
+        destination: "/experiences",
+        permanent: true,
+      },
+      {
+        source: "/activities/massage-spa",
+        destination: "/experiences",
+        permanent: true,
+      },
+
+      {
+        source: "/portfolio/luxury-suite",
+        destination: "/stay",
+        permanent: true,
+      },
+      {
+        source: "/category/yacht-charter",
+        destination: "/stay",
+        permanent: true,
+      },
+      {
+        source: "/rooms/swiss-cottages",
+        destination: "/stay",
+        permanent: true,
+      },
+
+      { source: "/tag/madhuban-main-menu", destination: "/", permanent: true },
+      {
+        source: "/madhuban-bamboo-cafe-8",
+        destination: "/stay",
+        permanent: true,
+      },
+
+      {
+        source: "/whatsapp-image-2021-03-15-at-1-46-05-am-21",
+        destination: "/booking",
+        permanent: true,
+      },
+
+      { source: "/hotels", destination: "/about-us", permanent: true },
+      { source: "/dsc_8879", destination: "/", permanent: true },
+      { source: "/tag/island", destination: "/", permanent: true },
+      { source: "/icon-boxes", destination: "/", permanent: true },
+
+      { source: "/hotel-account", destination: "/booking", permanent: true },
+      { source: "/help/contact", destination: "/contact", permanent: true },
+      { source: "/hotel-search", destination: "/contact", permanent: true },
+
+      { source: "/tabs-spa", destination: "/stay", permanent: true },
+      { source: "/siver-logo", destination: "/gallery", permanent: true },
+
+      {
+        source: "/tag/australia",
+        destination: "/near-by-attraction",
+        permanent: true,
+      },
+
+      {
+        source: "/rooms/camping-tents",
+        destination: "/stay/camping-tent",
+        permanent: true,
+      },
+      {
+        source: "/madhuban-camp-site",
+        destination: "/stay/camping-tent",
+        permanent: true,
+      },
+
+      {
+        source: "/rooms/mud-house",
+        destination: "/stay/mud-villa",
+        permanent: true,
+      },
+
+      {
+        source: "/skydiving-in-dubai",
+        destination: "/near-by-attraction",
+        permanent: true,
+      },
+      {
+        source: "/portfolio/miami-beach",
+        destination: "/near-by-attraction",
+        permanent: true,
+      },
+
+      {
+        source: "/about-section5-2",
+        destination: "/about-us",
+        permanent: true,
+      },
+
+      {
+        source: "/gallery-restaurant-1",
+        destination: "/gallery",
+        permanent: true,
+      },
+      { source: "/forest/home-5", destination: "/gallery", permanent: true },
+
+      {
+        source: "/thailand-exclusive-holidays",
+        destination: "/near-by-attraction",
+        permanent: true,
+      },
+      {
+        source: "/safari/home-5",
+        destination: "/experiences",
+        permanent: true,
+      },
+
+      {
+        source: "/gallery-restaurant-5",
+        destination: "/gallery",
+        permanent: true,
+      },
+
+      {
+        source: "/hotel-term-condition",
+        destination: "/terms",
+        permanent: true,
+      },
+
+      { source: "/quisque-velit-nisi", destination: "/", permanent: true },
+
+      {
+        source: "/maldives-resort-and-spa",
+        destination: "/stay",
+        permanent: true,
+      },
+
+      { source: "/hotel-includes/wi-fi", destination: "/", permanent: true },
+
+      {
+        source: "/our-services/ipsum-dolor-sit",
+        destination: "/about-us",
+        permanent: true,
+      },
+      {
+        source: "/our-services/lorem-ipsum-dolor-sit-amet",
+        destination: "/about-us",
+        permanent: true,
+      },
+      {
+        source: "/our-services/etiam-sit-amet-lectus-quis-est-congue-mollis",
+        destination: "/about-us",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
