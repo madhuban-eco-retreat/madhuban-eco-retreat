@@ -152,18 +152,18 @@ const NewBooking = () => {
 
     // Validate dates
     if (!checkIn) {
-      setError("Please select both check-in and check-out dates.");
+      setError("Please select check-in date");
       return;
     }
 
     // Validate required fields
     if (!formData.name.trim()) {
-      setError("Please enter your name.");
+      setError("Please enter your name");
       return;
     }
 
     if (!formData.phone.trim()) {
-      setError("Please enter your phone number.");
+      setError("Please enter your phone number");
       return;
     }
 
@@ -364,12 +364,12 @@ ${guests}`;
                           className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:border-(--primaryGray2) focus:bg-white/10 transition-all text-white"
                           onChange={(e) => {
                             const valueStr = e.target.value.replace(/\s/g, "");
-                            if (valueStr.length <= 13) {
+                            if (
+                              valueStr.length <= 13 &&
+                              /^\+?\d*$/.test(valueStr)
+                            ) {
                               handleChange(e);
                             }
-                            // if (/^\+?\d*$/.test(valueStr)) {
-                            //   handleChange(e);
-                            // }
                           }}
                         />
                       </div>
@@ -518,6 +518,11 @@ ${guests}`;
                       <WhatsAppIcon className="w-5 h-5 " />
                       SEND BY WHATSAPP
                     </button>
+                    {error && (
+                      <p className="md:col-span-2 text-red-500 text-sm font-semibold text-center">
+                        {error}
+                      </p>
+                    )}
                     <p className="md:col-span-2 text-[10px] font-bold tracking-widest text-white uppercase">
                       Clicking submit opens WhatsApp with your details ready to
                       send.
