@@ -237,26 +237,6 @@ ${guests}`;
     }, 3000);
   };
 
-  const roomOptions = [
-    { value: "Safari Tent", label: "Safari Tent" },
-    { value: "Mud Houses", label: "Mud Houses" },
-    { value: "Pool Side Villa", label: "Pool Side Villa" },
-    { value: "Camping Tent", label: "Camping Tent" },
-    { value: "Glamping Tents", label: "Glamping Tents" },
-  ];
-
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
-      },
-    },
-  };
-
   const darkTheme = createTheme({
     palette: {
       mode: "dark",
@@ -435,20 +415,33 @@ ${guests}`;
                               PaperProps: {
                                 className: "mui-paper-glass",
                                 sx: {
-                                  maxHeight: "200px",
-                                  overflowY: "auto",
                                   marginTop: "8px",
                                   "& .MuiMenuItem-root": {
                                     fontSize: "0.875rem",
                                     paddingY: "12px",
-                                    "&:hover": {
-                                      backgroundColor: "rgba(34, 197, 94, 0.1)",
-                                    },
                                     "&.Mui-selected": {
                                       backgroundColor: "var(--primary-gray2)",
                                       color: "#fff",
                                       fontWeight: "700",
                                     },
+                                  },
+                                },
+                              },
+                              MenuListProps: {
+                                sx: {
+                                  maxHeight: "200px",
+                                  overflowY: "auto",
+                                  scrollbarColor:
+                                    "rgba(255, 255, 255, 0.3) transparent",
+                                  "&::-webkit-scrollbar": {
+                                    width: "6px",
+                                  },
+                                  "&::-webkit-scrollbar-track": {
+                                    background: "transparent",
+                                  },
+                                  "&::-webkit-scrollbar-thumb": {
+                                    backgroundColor: "rgba(255, 255, 255, 0.3)",
+                                    borderRadius: "3px",
                                   },
                                 },
                               },

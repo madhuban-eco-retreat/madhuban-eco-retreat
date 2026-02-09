@@ -239,7 +239,7 @@ body {
     .MuiPickersDay-root.Mui-selected {
       background-color: var(--primary-gray2) !important;
       color: #fff !important;
-      font-weight: 700 !important;
+      font-weight: 700 !important;    
     }
     .MuiTypography-root {
       color: white !important;
@@ -257,6 +257,10 @@ body {
     .MuiDayCalendar-weekDayLabel {
       color: rgba(255,255,255,0.4) !important;
       font-weight: 700 !important;
+    }
+    .MuiYearCalendar-button.Mui-selected {
+      background-color: var(--primary-gray2) !important;
+      color: #fff !important;
     }
 
 
