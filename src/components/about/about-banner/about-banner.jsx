@@ -2,11 +2,6 @@ import Slidingbanner from "@/common-components/banner/Slidingbanner";
 
 const storyImages = [
   {
-    id: 1,
-    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770626840/story-image-5_10mb_ievd5b.jpg",
-    alt: "Our founders planning the retreat",
-  },
-  {
     id: 2,
     src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770627040/Stay3.jpg_deyrex.jpg",
     alt: "Early construction phase",
@@ -23,7 +18,7 @@ const storyImages = [
   },
   {
     id: 5,
-    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624855/story-image-7_jafac5.jpg",
+    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770642697/mud-house-99_cpo7gj.jpg",
     alt: "Community involvement event",
   },
 ];

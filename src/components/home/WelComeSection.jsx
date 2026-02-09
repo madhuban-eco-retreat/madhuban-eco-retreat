@@ -91,7 +91,7 @@ const WelComeSection = () => {
             <video
               id="about-video"
               ref={videoRef}
-              src="https://res.cloudinary.com/dx3aj7a40/video/upload/v1770624888/retreat-intro_epakzt.mp4"
+              src="https://res.cloudinary.com/dx3aj7a40/video/upload/v1770642400/madhuban-intro_iyhhjy.mp4"
               className="rounded-lg shadow-xl w-full h-full object-cover"
               loop
               muted

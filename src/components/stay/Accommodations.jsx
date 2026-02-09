@@ -41,8 +41,7 @@ const accommodationsData = [
     id: 1,
     name: "Safari Tent",
     slug: "safari-tent",
-    image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624787/safari-tent_j4zl6x.jpg",
+    image: "/safari-tent-2.jpg",
     altText: "Exterior view of a charming safari tent nestled in greenery",
     shortDescription:
       "Perched on raised platforms beside a gentle stream and facing forested mountains, our classic safari-style tents offer a true wilderness experience. Each tent is tastefully furnished with elegant cane furniture and features a vanity and dressing area, separate toilet and shower, and even an open-to-sky shower with a private relaxation space.",
@@ -88,7 +87,7 @@ const accommodationsData = [
     name: "Pool Side Villa",
     slug: "pool-side-room",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770631495/pool3_10mb_hly0fh.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639028/pool-9_nymumc.png",
     altText: "Poolside room with beautiful garden views",
     shortDescription:
       "Wake up to sunlight dancing on the eco-pool and unwind to the soothing rhythm of nature. Our elegant Pool Side Villas offer the perfect balance of sophistication and serenity. Ideal for couples, families, or anyone looking for a private poolside villa near Bhopal.",

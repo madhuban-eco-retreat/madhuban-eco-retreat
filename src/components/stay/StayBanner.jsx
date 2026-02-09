@@ -13,7 +13,7 @@ const storyImages = [
   },
   {
     id: 3,
-    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624783/mud-villa1_qvn4zz.jpg",
+    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770644242/stay-10_ofkf3x.jpg",
     alt: "First guests enjoying the eco-camp",
   },
   {

@@ -309,3 +309,7 @@ body {
       50% { border-color: #22c55e }
     }
 
+
+  .backdrop {
+  background: linear-gradient(to bottom, #000000aa, #000000dd);
+}

@@ -57,7 +57,7 @@ const accommodations = [
   {
     title: "Pool Side Villa",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624786/pool-side-tent_lnlbja.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639028/pool-9_nymumc.png",
     alt: "Pool Side Room",
     description:
       "For travelers seeking leisure and calm, our poolside villas combine scenic views, wellness-friendly spaces, and forest-side luxury.",

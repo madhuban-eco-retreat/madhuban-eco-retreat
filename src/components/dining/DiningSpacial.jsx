@@ -117,7 +117,7 @@ const DiningSpacial = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.9 }}
               style={{
-                backgroundImage: `url(https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624837/dining10_hlh3xn.jpg)`,
+                backgroundImage: `url(https://res.cloudinary.com/dx3aj7a40/image/upload/v1770640057/restra-108_jjhpco.jpg)`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}

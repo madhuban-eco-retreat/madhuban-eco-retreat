@@ -47,39 +47,96 @@ const Dining = () => {
   const photos = [
     {
       id: 1,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624809/dining1_pgz8mw.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770640072/restra-100_yeykxw.jpg",
     },
     {
       id: 2,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624824/dining2_iufmsq.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770640058/restra-101_x4orxt.jpg",
     },
     {
       id: 3,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624821/dining3_hmshsm.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770640054/restra-102_wmn76d.jpg",
     },
     {
       id: 4,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624818/dining4_lsdy9c.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770640061/restra-103_jtmbz0.jpg",
     },
     {
       id: 5,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624822/dining5_kfz2u8.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770640061/restra-104_l6t4ka.jpg",
     },
     {
       id: 6,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624823/dining6_shicpd.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770640061/restra-105_sjk3ac.jpg",
     },
     {
       id: 7,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624822/dining7_bhm3u4.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770640054/restra-106_kpurce.jpg",
     },
     {
       id: 8,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624811/dining8_h0vufw.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770640058/restra-107_aqxvyu.jpg",
     },
     {
       id: 9,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624820/dining9_uzs5zj.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770640057/restra-108_jjhpco.jpg",
+    },
+
+    {
+      id: 10,
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639731/dining-100_wprqef.jpg",
+    },
+    {
+      id: 11,
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639733/dining-101_rhbb6c.jpg",
+    },
+    {
+      id: 12,
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639734/dining-102_j0aaea.jpg",
+    },
+    {
+      id: 13,
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639734/dining-103_rwngye.jpg",
+    },
+    {
+      id: 14,
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639730/dining-104_xjb7vm.jpg",
+    },
+    {
+      id: 15,
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639854/dining-105_w9h76a.jpg",
+    },
+    {
+      id: 16,
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639729/dining-106_lmna5i.jpg",
+    },
+    {
+      id: 17,
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639732/dining-107_kbseiz.jpg",
+    },
+    {
+      id: 18,
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639731/dining-108_vadwhb.jpg",
+    },
+    {
+      id: 19,
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639731/dining-109_gmi6dw.jpg",
+    },
+    {
+      id: 20,
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639729/dining-110_ag8li6.jpg",
+    },
+    {
+      id: 21,
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639731/dining-111_mn9wjs.jpg",
+    },
+    {
+      id: 22,
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639855/dining-112_elvnlp.jpg",
+    },
+    {
+      id: 23,
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639728/dining-113_gdcfm3.jpg",
     },
   ];
 

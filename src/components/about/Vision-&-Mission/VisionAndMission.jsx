@@ -107,7 +107,7 @@ const VisionMission = () => {
                       transition={{ type: "spring", stiffness: 200 }}
                     >
                       <img
-                        src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624829/ms12_ipeljv.jpg"
+                        src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1770644072/camping-tent-9_zgxteu.jpg"
                         alt="Our Mission"
                         className="w-full  object-cover h-100"
                       />
@@ -134,7 +134,7 @@ const VisionMission = () => {
                       transition={{ type: "spring", stiffness: 200 }}
                     >
                       <img
-                        src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624829/ms13_nqrfbg.jpg"
+                        src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1770643961/camping-tent_gl9jrr.jpg"
                         alt="Our Vision"
                         className="w-full h-130  object-cover"
                       />

@@ -42,9 +42,11 @@ const ReadyForEcoRetreat = () => {
       className="py-8 px-4 bg-cover bg-center bg-no-repeat bg-[#FAFAFA]"
       style={{
         backgroundImage:
-          "url('https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624826/art4_ekwkhx.jpg')",
+          "url('https://res.cloudinary.com/dx3aj7a40/image/upload/v1770642891/mud-house-11_mg037l.jpg')",
       }}
     >
+      {" "}
+      <div className="backdrop w-full h-full"></div>
       <div className="container mx-auto">
         <motion.div
           className="max-w-4xl mx-auto text-center"
