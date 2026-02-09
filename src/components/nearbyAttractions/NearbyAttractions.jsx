@@ -8,19 +8,19 @@ import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
 const heroSlides = [
   {
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288877/bhim11_hyb58e.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624816/bhim11_spjjln.jpg",
   },
   {
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288834/smCaves6_qqbde7.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624851/smCaves6_o3o5yg.jpg",
   },
   {
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288832/smCaves11_hbqa8g.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624867/smCaves11_umqv3l.jpg",
   },
   {
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288817/nature8_ymyp0q.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624841/nature8_gdp5ym.jpg",
   },
 ];
 
@@ -28,7 +28,7 @@ const cardData = [
   {
     title: "Ratapani Widlife Sanctuary",
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288820/Ratapani_Widlife_Sanctuary_etyrdl.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624843/Ratapani_Widlife_Sanctuary_xzhvoj.jpg",
     description:
       "A stunning 688 sq. km forest known for teak woodlands, wildlife diversity, and peaceful jungle landscapes. Apart from the tiger, you may spot leopards, jackals, hyenas, wild dogs, and unique species of birds.",
     bestFor: "Wildlife lovers, nature photographers, jungle drives.",
@@ -36,7 +36,7 @@ const cardData = [
   {
     title: "Ginnorgarh Tribal Fort",
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288819/Ginnorgarh_Tribal_Fort_glqmvi.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624842/Ginnorgarh_Tribal_Fort_b85bsk.jpg",
     description:
       "A historic 1200 BC hilltop fort rising over 700 meters, located inside Ratapani Tiger Reserve. The fort features ancient water bodies, palace remains, and stone gateways — offering a raw glimpse into tribal and medieval heritage.",
     bestFor: "Trekkers, history lovers, architecture enthusiasts.",
@@ -44,7 +44,7 @@ const cardData = [
   {
     title: "Bhimbetka Rock Shelters (UNESCO Site)",
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288818/Bhimbetika_Rock_Shelter_Site_wbp6b9.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624842/Bhimbetika_Rock_Shelter_Site_lsjsob.jpg",
     description:
       "A world-renowned archaeological site with prehistoric rock art from the Paleolithic, Mesolithic, and early historic periods. These caves represent the earliest evidence of human life in India.",
     bestFor: "Historians, students, cultural explorers.",
@@ -52,7 +52,7 @@ const cardData = [
   {
     title: "Satpura Tiger Reserve / Satpura National Park",
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288822/Satpura_Tiger_Reserve_ih44ro.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624845/Satpura_Tiger_Reserve_a1yejb.jpg",
     description:
       "One of Central India’s finest forest belts, Satpura Tiger Reserve is known for its rugged landscapes, wildlife safaris, river boating, and deep forest trails.",
     bestFor: "Wildlife safaris, nature enthusiasts, adventure seekers.",
@@ -60,7 +60,7 @@ const cardData = [
   {
     title: "Saru Maru Caves",
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288821/Saru_Maru_Caves_pngbiw.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624844/Saru_Maru_Caves_m1cwld.jpg",
     description:
       "An ancient Buddhist monastic complex featuring meditation caves, inscriptions, and remnants of Ashokan-era history.",
     bestFor: "Archaeology lovers, cultural travelers, spiritual seekers.",
@@ -68,7 +68,7 @@ const cardData = [
   {
     title: "Narmada River Darshan (Sethani Ghat)",
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288820/Narmada_River_Darshan_knarfm.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624842/Narmada_River_Darshan_ytuedo.jpg",
     description:
       "A magnificent 19th-century riverside ghat located at Narmadapuram. It is one of India’s largest ghats and a serene place to experience the spiritual aura of the holy Narmada River.",
     bestFor: "Pilgrims, sunset views, riverside relaxation.",
@@ -76,7 +76,7 @@ const cardData = [
   {
     title: "Salkanpur Devi Temple",
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288820/Salkanpur_Devi_Temple_bsnul2.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624844/Salkanpur_Devi_Temple_gnvbhe.jpg",
     description:
       "A revered Shaktipeeth dedicated to Goddess Vindhyavasni Beejasan Devi. Located atop an 800-foot-high hill, the temple offers panoramic forest views and spiritual tranquility.",
     bestFor: "Devotees, trekking enthusiasts, sunrise/sunset views.",
@@ -181,7 +181,7 @@ const NearbyAttractions = () => {
                       <div className="absolute inset-0 bg-black/30"></div>
                     </div>
                   </motion.div>
-                )
+                ),
             )}
           </AnimatePresence>
 

@@ -51,9 +51,9 @@ const fadeIn = {
 };
 
 const instagramPosts = [
-  "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288789/insta-1_gvkymb.png",
-  "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288789/insta-2_lj10rz.png",
-  "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288789/insta-3_yarrxo.jpg",
+  "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624836/insta-1_q13dlp.png",
+  "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624848/insta-2_dec94k.png",
+  "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624809/insta-3_khebng.jpg",
 ];
 
 const OurJourney = () => {
@@ -89,7 +89,7 @@ const OurJourney = () => {
               <Image
                 width={32}
                 height={32}
-                src="https://res.cloudinary.com/djxgpbncu/image/upload/v1768288836/instagram_muunja.png"
+                src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624853/instagram_u3e6x0.png"
                 alt="Instagram"
                 className="w-8 h-8"
               />
@@ -143,7 +143,7 @@ const OurJourney = () => {
             transition={{ duration: 0.6 }}
           >
             <img
-              src="https://res.cloudinary.com/djxgpbncu/image/upload/v1768288791/vidya_rqcef7.jpg"
+              src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624809/vidya_g5qc5u.jpg"
               alt="Manual"
               className="xl:w-[50vw] xl:h-[50vh] object-cover rounded-md sm:w-[100vw] max640:w-[100vw]"
               // className="w-[50vw] h-[50vh]  object-cover rounded-md sm:w-screen max640:w-screen "
@@ -191,7 +191,7 @@ const OurJourney = () => {
               <Image
                 width={500}
                 height={500}
-                src="https://res.cloudinary.com/djxgpbncu/image/upload/v1768288790/insta-4-thumbanil_zckeag.png"
+                src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624823/insta-4-thumbanil_f3lvzp.png"
                 alt="Video Thumbnail"
                 className="xl:w-[25vw] xl:h-[50vh] object-cover rounded-md sm:w-[100vw] max640:w-[100vw]"
               />
@@ -226,7 +226,7 @@ const OurJourney = () => {
                   className="w-full h-[100vh] rounded-md"
                 >
                   <source
-                    src="https://res.cloudinary.com/djxgpbncu/video/upload/v1768288792/insta-4_p5ucse.mp4"
+                    src="https://res.cloudinary.com/dx3aj7a40/video/upload/v1770624880/insta-4_dncg3z.mp4"
                     type="video/mp4"
                   />
                   Your browser does not support the video tag.

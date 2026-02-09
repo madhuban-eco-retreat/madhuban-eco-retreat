@@ -41,7 +41,7 @@ const Footer = () => {
             <div className="flex items-center space-x-2 mb-4">
               <Link href="/" className="flex items-center space-x-4 z-20">
                 <img
-                  src="https://res.cloudinary.com/djxgpbncu/image/upload/v1768288795/logo7_nyli06.png"
+                  src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624827/logo7_ycfhd6.png"
                   alt="Madhuban Eco Retreat Logo"
                   className="h-20 w-20 filter brightness-75"
                 />
@@ -291,7 +291,7 @@ const Footer = () => {
           {/* Newsletter Signup */}
           <div className="">
             <img
-              src="https://res.cloudinary.com/djxgpbncu/image/upload/v1768288791/group-logo_hogyzt.png"
+              src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624797/group-logo_uqbqpj.png"
               alt="Newsletter"
               className="w-[70px] h-[70px] mt-3 mb-4 mx-auto filter brightness-75"
               style={{ filter: "brightness(0.75)" }}

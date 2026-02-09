@@ -17,48 +17,36 @@ const BirdWatchingAndWilderness = () => {
 
   const forestImages = [
     {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288891/bird14_szbqvv.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624812/bird14_vkg10k.jpg",
       alt: "Forest View 1",
     },
     {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288886/bird1_qfq8pa.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624794/bird1_soaozv.jpg",
       alt: "Forest View 1",
     },
     {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288890/bird2_iulmns.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624793/bird2_m5u4oj.jpg",
       alt: "Forest View 2",
     },
     {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288891/bird4_oiupro.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624791/bird4_ldyehe.jpg",
       alt: "Forest View 3",
     },
     {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288891/bird3_gbzwca.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624791/bird3_cx8rtl.jpg",
       alt: "Forest View 4",
     },
     {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288893/bird6_domeru.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624791/bird6_aarwud.jpg",
       alt: "Forest View 5",
     },
     {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288896/bird7_enkzkv.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624872/bird7_twnhyw.jpg",
       alt: "Forest View 6",
     },
     {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288894/bird9_e9brhw.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624792/bird9_zdn32f.jpg",
       alt: "Forest View 7",
-    },
-    {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288886/bird11_rzi05w.jpg",
-      alt: "Forest View 8",
-    },
-    {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288889/bird14_ezsixy.jpg",
-      alt: "Forest View 10",
-    },
-    {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288888/bird13_uuh3va.jpg",
-      alt: "Forest View 11",
     },
   ];
 
@@ -140,7 +128,7 @@ const BirdWatchingAndWilderness = () => {
                   className="flex items-center justify-between w-full py-3 px-4 text-left text-primary-gray2 font-medium transition duration-200"
                   onClick={() =>
                     setActiveNestedAccordion(
-                      activeNestedAccordion === idx ? null : idx
+                      activeNestedAccordion === idx ? null : idx,
                     )
                   }
                 >
@@ -223,7 +211,7 @@ const BirdWatchingAndWilderness = () => {
         >
           <source
             src={
-              "https://res.cloudinary.com/djxgpbncu/video/upload/v1768294832/wilderness_gjys4f.mp4"
+              "https://res.cloudinary.com/dx3aj7a40/video/upload/v1770624862/wilderness_pczq5n.mp4"
             }
             type="video/mp4"
           />

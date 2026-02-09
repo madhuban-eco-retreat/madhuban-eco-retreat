@@ -118,7 +118,7 @@ const WhyChooseUs = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.9 }}
             style={{
-              backgroundImage: `url(https://res.cloudinary.com/djxgpbncu/image/upload/v1768288954/hero-1_bqiyu3.jpg)`,
+              backgroundImage: `url(https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624825/hero-1_corwri.jpg)`,
               backgroundSize: "cover",
             }}
           ></motion.div>

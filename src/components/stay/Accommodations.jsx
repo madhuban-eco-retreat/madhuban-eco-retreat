@@ -42,7 +42,7 @@ const accommodationsData = [
     name: "Safari Tent",
     slug: "safari-tent",
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288868/safari-tent_omj9dm.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624787/safari-tent_j4zl6x.jpg",
     altText: "Exterior view of a charming safari tent nestled in greenery",
     shortDescription:
       "Perched on raised platforms beside a gentle stream and facing forested mountains, our classic safari-style tents offer a true wilderness experience. Each tent is tastefully furnished with elegant cane furniture and features a vanity and dressing area, separate toilet and shower, and even an open-to-sky shower with a private relaxation space.",
@@ -65,7 +65,7 @@ const accommodationsData = [
     name: "Mud Houses",
     slug: "mud-villa",
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768292703/stay3_rakqxv.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770631368/mud-house2_ezc4qx.jpg",
     altText: "Exterior view of a charming mud villa nestled in greenery",
     shortDescription:
       "Our mud-based cottages, inspired by the vernacular architecture of the Gond tribes, are nestled in a 5-acre organic orchard. Each Mud House features a spacious air-conditioned room, an annexed lobby, verandas, and a traditionally styled luxury bathroom. The rooftop offers breathtaking 360° views — perfect for stargazing or peaceful evenings.",
@@ -88,7 +88,7 @@ const accommodationsData = [
     name: "Pool Side Villa",
     slug: "pool-side-room",
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768293376/pool1_tequbc.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770631495/pool3_10mb_hly0fh.jpg",
     altText: "Poolside room with beautiful garden views",
     shortDescription:
       "Wake up to sunlight dancing on the eco-pool and unwind to the soothing rhythm of nature. Our elegant Pool Side Villas offer the perfect balance of sophistication and serenity. Ideal for couples, families, or anyone looking for a private poolside villa near Bhopal.",
@@ -118,7 +118,7 @@ const accommodationsData = [
     name: "Glamping Tents",
     slug: "glamping-tents",
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288858/glamping-tent1_hdls5v.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624859/glamping-tent1_rtvorw.jpg",
     altText: "Boutique glamping tent with deck and lush lawn",
     shortDescription:
       "Enjoy comfort in the wild with our rustic mini-safari glamping tents. Featuring chic interiors, a private lawn sit-out, and ensuite bathrooms, these tents offer boutique-style luxury with the charm of camping—ideal for couples, families, or weekend travelers looking for a unique glamping stay near Ratapani.",
@@ -147,7 +147,7 @@ const accommodationsData = [
     name: "Camping Tent",
     slug: "camping-tent",
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288852/comping-tent11_blzutq.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624781/comping-tent11_ddwzgn.jpg",
     altText: "Scenic camping tent surrounded by nature",
     shortDescription:
       "Our eco-friendly camping tents offer a simple yet comfortable outdoor stay in Ratapani’s lush wilderness. Perfect for travelers seeking digital detox, jungle adventure, or peaceful night camping near Bhopal.",

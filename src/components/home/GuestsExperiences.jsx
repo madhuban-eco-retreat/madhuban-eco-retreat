@@ -32,7 +32,7 @@ const GuestsExperiences = () => {
       className="py-8 px-4 bg-cover bg-center bg-no-repeat"
       style={{
         backgroundImage:
-          "url('https://res.cloudinary.com/djxgpbncu/image/upload/v1768288916/ex-bg_ihhc2w.jpg')",
+          "url('https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624796/ex-bg_qefnmz.jpg')",
       }}
     >
       <div className="container mx-auto">

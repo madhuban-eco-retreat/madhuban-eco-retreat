@@ -6,21 +6,21 @@ import { motion } from "framer-motion";
 const heroSlides = [
   {
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768800159/homeBanner2_mh8cex.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770637014/hero-4_jbtjxw.jpg",
     title: "Madhuban Eco Retreat: Eco-Luxury Forest Resort",
     subtitle:
       "Experience eco-luxury living amid the serene wilderness of Ratapani Tiger Reserve at Madhuban Eco Retreat — a peaceful forest stay offering sustainable comfort and mindful escapes.",
   },
   {
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768800159/homeBanner1_cfbysj.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624814/nature-trail_s7xyd3.jpg",
     title: "Sustainable Travel in India: An Eco-Luxury Retreat",
     subtitle:
       "Reconnect with nature through immersive experiences like birdwatching in Madhya Pradesh, all without compromising on comfort.",
   },
   {
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288955/hero-3_lwly9l.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624801/hero-3_hibx9q.jpg",
     title: "Connect With Wildlife & Nature",
     subtitle:
       "Located next to the Ratapani Wildlife Sanctuary, Madhuban is ideal for serene forest walks and birdwatching adventures.",

@@ -16,27 +16,27 @@ const ForestWalkAndNatureTrails = () => {
 
   const forestImages = [
     {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288818/nature9_kozay6.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624841/nature9_i3zb2r.jpg",
       alt: "Forest View 1",
     },
     {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288814/nature3_ucohza.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624852/nature3_vdzdtc.jpg",
       alt: "Forest View 2",
     },
     {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288816/nature6_j5mqzr.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624853/nature6_pmw8sl.jpg",
       alt: "Forest View 3",
     },
     {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288816/nature5_yajyuo.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624841/nature5_iylaqz.jpg",
       alt: "Forest View 4",
     },
     {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288818/nature7_ixb8so.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624861/nature7_mepmzx.jpg",
       alt: "Forest View 5",
     },
     {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288807/nature1_hgewji.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624834/nature1_w33ary.jpg",
       alt: "Forest View 6",
     },
   ];
@@ -118,7 +118,7 @@ const ForestWalkAndNatureTrails = () => {
                   className="p-text flex items-center justify-between w-full py-3 px-4 text-left text-primary-gray2  transition duration-200"
                   onClick={() =>
                     setActiveNestedAccordion(
-                      activeNestedAccordion === idx ? null : idx
+                      activeNestedAccordion === idx ? null : idx,
                     )
                   }
                 >
@@ -200,7 +200,7 @@ const ForestWalkAndNatureTrails = () => {
         >
           <source
             src={
-              "https://res.cloudinary.com/djxgpbncu/video/upload/v1768294884/nature-trails1_xl0b5v.mp4"
+              "https://res.cloudinary.com/dx3aj7a40/video/upload/v1770624896/nature-trails1_cwitb2.mp4"
             }
             type="video/mp4"
           />

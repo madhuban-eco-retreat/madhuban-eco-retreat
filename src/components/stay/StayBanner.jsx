@@ -3,33 +3,23 @@ import Slidingbanner from "@/common-components/banner/Slidingbanner";
 const storyImages = [
   {
     id: 1,
-    src: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288839/stay_i40y0f.jpg",
+    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770627152/stay-4_mmlf4y.jpg",
     alt: "Our founders planning the retreat",
   },
   {
     id: 2,
-    src: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768292702/stay2_wbqh0z.jpg",
+    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770637997/stay-9_pepjbw.jpg",
     alt: "Early construction phase",
   },
   {
     id: 3,
-    src: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768292703/stay3_rakqxv.jpg",
+    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624783/mud-villa1_qvn4zz.jpg",
     alt: "First guests enjoying the eco-camp",
   },
   {
     id: 4,
-    src: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288842/stay-4_x1k7le.jpg",
+    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770637799/stay-6_xcoqjd.jpg",
     alt: "The retreat as it looks today",
-  },
-  {
-    id: 5,
-    src: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288843/story-image-7_oh2vtu.jpg",
-    alt: "Community involvement event",
-  },
-  {
-    id: 6,
-    src: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288839/stay-5_uizl1n.jpg",
-    alt: "Community involvement event",
   },
 ];
 const StayBanner = () => {

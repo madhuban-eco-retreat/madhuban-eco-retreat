@@ -17,31 +17,31 @@ const RecreationalFacilities = () => {
 
   const forestImages = [
     {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768300490/RF1_gkvkf5.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770636760/RF1_zvi3oh.jpg",
       alt: "Forest View 1",
     },
     {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768300492/RF2_xf7nzg.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770636772/RF2_mm3rkr.jpg",
       alt: "Forest View 2",
     },
     {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768300495/RF3_ek9i3o.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770636766/RF3_ray6dc.jpg",
       alt: "Forest View 3",
     },
     {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768300497/RF4_foe1wd.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770636744/RF4_vwgl8s.jpg",
       alt: "Forest View 4",
     },
     {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768300501/RF5_dirg0v.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770636753/RF5_e1lmql.jpg",
       alt: "Forest View 5",
     },
     {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768300504/RF6_jvdv2o.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770636747/RF6_jjo7bt.jpg",
       alt: "Forest View 6",
     },
     {
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288827/RF7_wlw1mk.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770636747/RF6_jjo7bt.jpg",
       alt: "Forest View 7",
     },
   ];
@@ -130,7 +130,7 @@ const RecreationalFacilities = () => {
                   className="flex items-center justify-between w-full py-3 px-4 text-left text-primary-gray2 font-medium transition duration-200"
                   onClick={() =>
                     setActiveNestedAccordion(
-                      activeNestedAccordion === idx ? null : idx
+                      activeNestedAccordion === idx ? null : idx,
                     )
                   }
                 >
@@ -213,7 +213,7 @@ const RecreationalFacilities = () => {
           playsInline
         >
           <source
-            src="https://res.cloudinary.com/djxgpbncu/video/upload/v1768294829/PF_gvdooc.mp4"
+            src="https://res.cloudinary.com/dx3aj7a40/video/upload/v1770624860/PF_fqm5l6.mp4"
             type="video/mp4"
           />
           Your browser does not support the video tag.

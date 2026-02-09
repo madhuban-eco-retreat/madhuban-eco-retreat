@@ -47,62 +47,50 @@ const Dining = () => {
   const photos = [
     {
       id: 1,
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288903/dining1_yxgp8l.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624809/dining1_pgz8mw.jpg",
     },
     {
       id: 2,
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288902/dining2_yaw7lt.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624824/dining2_iufmsq.jpg",
     },
     {
       id: 3,
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288904/dining3_ncgktx.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624821/dining3_hmshsm.jpg",
     },
     {
       id: 4,
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288906/dining4_hrtwvl.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624818/dining4_lsdy9c.jpg",
     },
     {
       id: 5,
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288907/dining5_fgz1zk.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624822/dining5_kfz2u8.jpg",
     },
     {
       id: 6,
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288909/dining6_vhntfo.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624823/dining6_shicpd.jpg",
     },
     {
       id: 7,
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288910/dining7_t2zi3x.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624822/dining7_bhm3u4.jpg",
     },
     {
       id: 8,
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288911/dining8_qsox6h.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624811/dining8_h0vufw.jpg",
     },
     {
       id: 9,
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288913/dining9_imyfw0.jpg",
-    },
-    {
-      id: 10,
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288901/dining11_etzefp.jpg",
-    },
-    {
-      id: 11,
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288902/dining22_xbpeyq.jpg",
-    },
-    {
-      id: 11,
-      url: "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288903/dining33_gh0tty.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624820/dining9_uzs5zj.jpg",
     },
   ];
 
   const videos = [
     {
       id: 1,
-      url: "https://res.cloudinary.com/djxgpbncu/video/upload/v1768288897/dining_q3u9sq.mp4",
+      url: "https://res.cloudinary.com/dx3aj7a40/video/upload/v1770624859/dining_pdn94l.mp4",
     },
     {
       id: 1,
-      url: "https://res.cloudinary.com/djxgpbncu/video/upload/v1768288901/dining1_xrvzhj.mp4",
+      url: "https://res.cloudinary.com/dx3aj7a40/video/upload/v1770624864/dining1_ztn6ol.mp4",
     },
     // Add more if needed
   ];
@@ -130,7 +118,7 @@ const Dining = () => {
           <img
             loading="lazy"
             src={
-              "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288906/dining4_hrtwvl.jpg"
+              "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770632286/pool-20_pw5yzz.jpg"
             }
             alt="Farm Banner"
             className="w-full h-full object-cover"

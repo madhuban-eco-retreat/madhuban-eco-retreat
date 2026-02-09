@@ -42,16 +42,14 @@ const fadeInUp = {
 const accommodations = [
   {
     title: "Safari Tent",
-    image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288867/safari-tend1_gencq5.jpg",
+    image: "/safari-tent-2.jpg",
     alt: "Nature Tent",
     description:
       "Experience one of the most unique jungle stays near Bhopal with our eco-luxury safari tents featuring open-to-sky showers, forest views, and crafted cane interiors.",
   },
   {
     title: "Mud Houses",
-    image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288860/mud-villa_skhjwn.jpg",
+    image: "/Mud-house-2.JPG",
     alt: "Mud Houses",
     description:
       "Inspired by the Gond tribes, these mud cottages offer rustic charm and sustainable comfort — making them one of the most loved eco stays in Madhya Pradesh.",
@@ -59,7 +57,7 @@ const accommodations = [
   {
     title: "Pool Side Villa",
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288866/pool-side-tent_hugtjo.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624786/pool-side-tent_lnlbja.jpg",
     alt: "Pool Side Room",
     description:
       "For travelers seeking leisure and calm, our poolside villas combine scenic views, wellness-friendly spaces, and forest-side luxury.",
@@ -67,7 +65,7 @@ const accommodations = [
   {
     title: "Glamping Tents",
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288858/glamping-tent1_hdls5v.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624859/glamping-tent1_rtvorw.jpg",
     alt: "Glamping Tent",
     description:
       "Enjoy boutique-style glamping with chic décor, ensuite bathrooms, and private sit-outs — perfect for a stylish forest experience.",
@@ -75,7 +73,7 @@ const accommodations = [
   {
     title: "Camping Tents",
     image:
-      "https://res.cloudinary.com/djxgpbncu/image/upload/v1768288852/comping-tent11_blzutq.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624781/comping-tent11_ddwzgn.jpg",
     alt: "Camping Tent",
     description:
       "Ideal for adventure seekers looking for a pure nature experience, our camping tents offer a peaceful, off-grid stay under starry skies.",
