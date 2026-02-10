@@ -51,6 +51,11 @@ const navigation = [
     hideOnDesktop: true,
   },
   {
+    name: "Day Outing",
+    path: "/day-outing",
+    dropdown: null,
+  },
+  {
     name: "Contact",
     path: "/contact-us",
     dropdown: null,
