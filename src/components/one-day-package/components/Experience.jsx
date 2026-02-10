@@ -59,7 +59,7 @@ export const Experience = () => {
           <video
             id="about-video"
             src="https://res.cloudinary.com/dx3aj7a40/video/upload/v1770728104/one-day-package_itjebv.mp4"
-            className="rounded-lg shadow-xl w-full md:h-[70vh] object-cover"
+            className="rounded-lg shadow-xl w-full md:h-[70vh] object-cover aspect-[9/16]"
             loop
             muted
             playsInline
