@@ -31,7 +31,7 @@ export const Hero = () => {
             onClick={() => {
               window.open(`https://wa.me/${phone}`, "_blank");
             }}
-            className="w-full sm:w-auto bg-primary-gray2 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-(--primary-gray2) cursor-pointer transition-all transform hover:scale-105 active:scale-95 "
+            className=" sm:w-auto bg-primary-gray2 text-white px-8 py-4 rounded-full font-bold text-sm md:text-lg hover:bg-(--primary-gray2) cursor-pointer transition-all transform hover:scale-105 active:scale-95 "
           >
             Book Your Day Outing
           </button>
