@@ -266,7 +266,7 @@ const Footer = () => {
               <li className="flex items-center">
                 <Phone className="w-5 h-5 mr-3 flex-shrink-0 text-white footer-text" />
                 <a
-                  href="tel:+917895432160"
+                  href={`tel:+${phone}`}
                   className="text-primary-gray  tracking-wider "
                 >
                   +{phone}
