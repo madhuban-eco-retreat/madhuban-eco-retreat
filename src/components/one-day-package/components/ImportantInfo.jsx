@@ -56,7 +56,7 @@ export const ImportantInfo = () => {
                     Price
                   </p>
                   <p className="text-sm md:text-xl font-bold text-white">
-                    ₹1500 per person
+                    ₹1300 per person
                   </p>
                 </div>
               </div>
