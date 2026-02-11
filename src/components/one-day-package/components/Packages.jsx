@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Coffee,
   Utensils,
@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
 import { phone } from "@/utills/constants";
+import { motion } from "framer-motion";
+import SlideIndecator from "@/common-components/slideIndicator/SlideIndicator";
 
 const inclusions = [
   { icon: <Utensils size={20} />, label: "Breakfast & Lunch" },
@@ -23,7 +25,35 @@ const inclusions = [
   { icon: <Gamepad2 size={20} />, label: "Outdoor Games" },
 ];
 
+const heroSlides = [
+  {
+    image:
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639028/pool-9_nymumc.png",
+  },
+  {
+    image:
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770636760/RF1_zvi3oh.jpg",
+  },
+  {
+    image:
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639731/dining-111_mn9wjs.jpg",
+  },
+  {
+    image:
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770794357/bird-11_kmbyfc.jpg",
+  },
+];
+
 export const Packages = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [heroSlides.length]);
+
   return (
     <section id="packages" className=" py-16 md:py-24 px-6 bg-primary-gray2">
       <div className="max-w-7xl mx-auto">
@@ -36,18 +66,31 @@ export const Packages = () => {
         </div>
 
         <div className=" rounded md:rounded-[40px] overflow-hidden grid lg:grid-cols-2 bg-primary-gray  shadow-2xl">
-          <div
-            className="relative aspect-square lg:aspect-auto"
-            style={{
-              backgroundImage:
-                "url(https://res.cloudinary.com/dx3aj7a40/image/upload/v1770732608/day-outing-stay_lwvcr9.jpg)",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
-            <div className="absolute left-4 top-4 md:top-8 md:left-8 bg-(--primary-gray2) text-white px-4 py-2 rounded-xl font-bold flex items-center gap-1.5 shadow-xl">
-              <span className="text-sm md:text-xl">₹1500</span>
+          <div className=" relative aspect-square lg:aspect-auto h-full w-full">
+            {heroSlides.map((slide, index) => (
+              <motion.div
+                key={index}
+                className={` absolute aspect-square lg:aspect-auto h-full w-full inset-0 transition-opacity duration-3000 ease-in-out ${
+                  index === currentSlide ? "opacity-100" : "opacity-0"
+                }`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: index === currentSlide ? 1 : 0 }}
+                style={{
+                  backgroundImage: `url(${slide.image})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              ></motion.div>
+            ))}
+            <div className="absolute z-2 left-4 top-4 md:top-8 md:left-8 bg-(--primary-gray2) text-white px-4 py-2 rounded-xl font-bold flex items-center gap-1.5 shadow-xl">
+              <span className="text-sm md:text-xl">₹1300</span>
               <span className="text-xs uppercase opacity-80">/ PERSON</span>
+            </div>
+            <div className="absolute z-2 bottom-0 w-full  ">
+              <SlideIndecator
+                SLIDE_DURATION={6000}
+                slidesCount={heroSlides.length}
+              />
             </div>
           </div>
 

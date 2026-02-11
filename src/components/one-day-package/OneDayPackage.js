@@ -10,6 +10,7 @@ import OneDayDescription from "./components/Description";
 import { TargetAudience } from "./components/TargetAudience";
 import { ImportantInfo } from "./components/ImportantInfo";
 import { BookingCTA } from "./components/BookingCTA";
+import SlideIndecator from "@/common-components/slideIndicator/SlideIndicator";
 const faqs = [
   {
     question: "Is Madhuban suitable for a one-day picnic near Bhopal?",
@@ -51,6 +52,7 @@ export default function OneDayPackage() {
       <Location />
       <BookingCTA />
       <CommonFaqs faqs={faqs} />
+      <SlideIndecator />
     </>
   );
 }

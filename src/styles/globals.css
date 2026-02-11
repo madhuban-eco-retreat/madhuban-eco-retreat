@@ -313,3 +313,8 @@ body {
   .backdrop {
   background: linear-gradient(to bottom, #000000aa, #000000dd);
 }
+
+@keyframes dot-fill {
+  from { width: 0%; }
+  to { width: 100%; }
+}
