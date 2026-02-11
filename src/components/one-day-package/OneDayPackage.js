@@ -52,7 +52,6 @@ export default function OneDayPackage() {
       <Location />
       <BookingCTA />
       <CommonFaqs faqs={faqs} />
-      <SlideIndecator />
     </>
   );
 }
