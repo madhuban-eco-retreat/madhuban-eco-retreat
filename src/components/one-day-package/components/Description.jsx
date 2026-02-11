@@ -18,7 +18,7 @@ const OneDayDescription = () => {
             eco-luxury destination near Ratapani Wildlife Sanctuary, designed
             for meaningful one-day experiences close to nature.
           </p>
-          <p>
+          <p className={`p-text`}>
             Our thoughtfully curated Day Outing Package is perfect for families,
             corporate groups, friends, and travelers from Bhopal and Indore who
             want to escape the city, unwind in a natural setting, and return
