@@ -1,4 +1,4 @@
-const serverUrl = "https://admin-backend-prod-xvpb.onrender.com";
+const serverUrl = "https://madhuban-backend-s1l7.onrender.com/";
 
 export const getAllBlogs = async (pageCount, limit) => {
   try {
