@@ -16,9 +16,9 @@ stages:
       - job: DeployDev
         displayName: "Deploy to Vercel - Dev"
         variables:
-          VERCEL_PROJECT_ID: "prj_cDcPKcXRB816a1bqpFWYRsUQ6nd5"
-          VERCEL_ORG_ID: "gPLVlvJxaFI0eeU4D9A2btu2"
-          VERCEL_TOKEN: "v6DszU9BbT4tG0zVVdjyEVvF"
+          VERCEL_PROJECT_ID: "prj_yOx7scYgthWesZcIl4MFacxbVFuk"
+          VERCEL_ORG_ID: "6KISCDOq3iy327pqF30GOiBS"
+          VERCEL_TOKEN: "vcp_0IlLMFFLRTEGaJ0lH0Cwbc25FoY6kS0lPUeyPCsixDRzymLILB1GC957"
 
         steps:
           # Install Vercel CLI
