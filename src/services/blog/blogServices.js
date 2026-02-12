@@ -1,9 +1,9 @@
-const serverUrl = "https://madhuban-backend-s1l7.onrender.com/";
+const serverUrl = "https://madhuban-backend-s1l7.onrender.com";
 
 export const getAllBlogs = async (pageCount, limit) => {
   try {
     const res = await fetch(
-      `${serverUrl}/api/blogs/all/madhubhan?type=blog&status=Published&page=${pageCount}&limit=${limit}`,
+      `${serverUrl}/api/blogs/all/madhuban?type=blog&status=Published&page=${pageCount}&limit=${limit}`,
       { next: { revalidate: 3600 }, cache: "force-cache" },
     ).then((response) => response.json());
     return res;
@@ -15,7 +15,7 @@ export const getAllBlogs = async (pageCount, limit) => {
 
 export const getBlogById = async (id) => {
   try {
-    const res = await fetch(`${serverUrl}/api/blogs/${id}/madhubhan`, {
+    const res = await fetch(`${serverUrl}/api/blogs/${id}/madhuban`, {
       next: { revalidate: 3600 },
       cache: "force-cache",
     }).then((response) => response.json());
