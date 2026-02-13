@@ -7,12 +7,16 @@ const heroSlides = [
   {
     image:
       "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770637014/hero-4_jbtjxw.jpg",
+    mobile:
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770960537/forest-view-mobile_dfe2vk.png",
     title: "Madhuban Eco Retreat: Eco-Luxury Forest Resort",
     subtitle:
       "Experience eco-luxury living amid the serene wilderness of Ratapani Tiger Reserve at Madhuban Eco Retreat — a peaceful forest stay offering sustainable comfort and mindful escapes.",
   },
   {
     image:
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624814/nature-trail_s7xyd3.jpg",
+    mobile:
       "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624814/nature-trail_s7xyd3.jpg",
     title: "Sustainable Travel in India: An Eco-Luxury Retreat",
     subtitle:
@@ -21,6 +25,8 @@ const heroSlides = [
   {
     image:
       "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624801/hero-3_hibx9q.jpg",
+    mobile:
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770959338/tiger-mobileview2_yzo0t0.jpg",
     title: "Connect With Wildlife & Nature",
     subtitle:
       "Located next to the Ratapani Wildlife Sanctuary, Madhuban is ideal for serene forest walks and birdwatching adventures.",
@@ -38,64 +44,72 @@ const HomeBanner = () => {
   }, [heroSlides.length]);
 
   return (
-    <section className="relative min-h-screen m-0 p-0 lg:min-h-[50vh] md:-mt-[166px] sm:-mt-[116px] max640:-mt-[116px]">
-      <div className="absolute inset-0 overflow-hidden">
-        {heroSlides.map((slide, index) => (
-          <motion.div
-            key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              index === currentSlide ? "opacity-100" : "opacity-0"
-            }`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: index === currentSlide ? 1 : 0 }}
-            transition={{ duration: 1 }}
-          >
-            <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url(${slide.image})` }}
+    <>
+      <section className="relative min-h-screen m-0 p-0 lg:min-h-[50vh] md:-mt-[166px] sm:-mt-[116px] max640:-mt-[116px]">
+        <div className="absolute inset-0 overflow-hidden">
+          {heroSlides.map((slide, index) => (
+            <motion.div
+              key={index}
+              className={` absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                index === currentSlide ? "opacity-100" : "opacity-0"
+              }`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: index === currentSlide ? 1 : 0 }}
+              transition={{ duration: 1 }}
             >
-              <div className="absolute inset-0 bg-black/30"></div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
+              <div
+                className="absolute inset-0 bg-cover bg-center hidden md:block"
+                style={{ backgroundImage: `url(${slide.image})` }}
+              />
 
-      {/* Hero Content */}
-      <div className="relative min-h-screen   flex flex-col items-center justify-center text-white px-4 z-10 ">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          key={currentSlide}
-          className="text-center max-w-3xl"
-        >
-          <motion.h1
-            className="font-primary   bannerHeading mb-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
+              {/* Mobile image */}
+              <div
+                className="absolute inset-0 bg-cover bg-center block md:hidden"
+                style={{ backgroundImage: `url(${slide.mobile})` }}
+              />
+              <div className="absolute inset-0 bg-black/30"></div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Hero Content */}
+        <div className="relative min-h-screen   flex flex-col items-center justify-center text-white px-4 z-10 ">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            key={currentSlide}
+            className="text-center max-w-3xl"
           >
-            {heroSlides[currentSlide].title}
-          </motion.h1>
-          <motion.p
-            className="font-arial-narrow  bannerSubHeading mb-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-          >
-            {heroSlides[currentSlide].subtitle}
-          </motion.p>
-        </motion.div>
-      </div>
+            <motion.h1
+              className="font-primary   bannerHeading mb-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+            >
+              {heroSlides[currentSlide].title}
+            </motion.h1>
+            <motion.p
+              className="font-arial-narrow  bannerSubHeading mb-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+            >
+              {heroSlides[currentSlide].subtitle}
+            </motion.p>
+          </motion.div>
+        </div>
+      </section>
 
       <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.8 }}
+        className=" md:absolute w-full"
       >
         <BookingWidget />
       </motion.div>
-    </section>
+    </>
   );
 };
 
