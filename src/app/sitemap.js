@@ -46,7 +46,7 @@ export default async function sitemap() {
   let blogs = [];
   try {
     const blogResponse = await getAllBlogs();
-    const data = blogResponse.data.blogs;
+    const data = blogResponse?.blogs;
 
     if (Array.isArray(data)) {
       data.forEach((item) => {

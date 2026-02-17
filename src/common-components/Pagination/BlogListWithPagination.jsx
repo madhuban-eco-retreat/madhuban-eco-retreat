@@ -66,7 +66,7 @@ function BlogListWithPagination({ initialBlogs, totalBlogs, limit }) {
               viewport={{ once: true, margin: "-100px" }}
               variants={containerVariants}
             >
-              {blogs.map((val, i) => (
+              {blogs?.map((val, i) => (
                 <motion.div variants={itemVariants} key={i}>
                   <Card
                     imageUrl={val?.featuredImage?.url || "/placeholder.jpg"}
