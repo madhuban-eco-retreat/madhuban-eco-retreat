@@ -19,10 +19,12 @@ const fadeInUp = {
 };
 
 function formatDate(dateString) {
-  const date = new Date(dateString);
-  const day = date.getDate();
-  const month = date.toLocaleString("default", { month: "long" });
-  const year = date.getFullYear();
+  const [day, month, year] = dateString.split("-");
+  const date = new Date(year, month - 1, day);
+  const d = date.getDate();
+  const monthName = date.toLocaleString("default", { month: "long" });
+  const y = date.getFullYear();
+
   const getSuffix = (d) => {
     if (d >= 11 && d <= 13) return "th";
     switch (d % 10) {
@@ -36,9 +38,9 @@ function formatDate(dateString) {
         return "th";
     }
   };
-  return `${month} ${day}${getSuffix(day)}, ${year}`;
-}
 
+  return `${monthName} ${d}${getSuffix(d)}, ${y}`;
+}
 export default function HeroSection({
   breadcom = [],
   title = ``,
