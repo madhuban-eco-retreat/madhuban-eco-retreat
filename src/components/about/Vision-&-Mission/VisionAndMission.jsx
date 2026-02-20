@@ -134,7 +134,7 @@ const VisionMission = () => {
                       transition={{ type: "spring", stiffness: 200 }}
                     >
                       <img
-                        src="/image/w_700,c_fill,f_auto,q_auto,dpr_auto/camping-tent_gl9jrr.avif"
+                        src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589752/camping-tent-new-madhuban-eco-retreat-bhopal_pohjtj.avif"
                         alt="Our Vision"
                         className="w-full h-130  object-cover"
                       />

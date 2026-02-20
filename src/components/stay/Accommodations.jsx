@@ -118,7 +118,7 @@ const accommodationsData = [
     name: "Glamping Tents",
     slug: "glamping-tents",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624859/glamping-tent1_rtvorw.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771583489/Glamping_Tents_Image_-_madhuban_Eco_retreat_bhopal_s5vx1y.avif",
     altText: "Boutique glamping tent with deck and lush lawn",
     shortDescription:
       "Enjoy comfort in the wild with our rustic mini-safari glamping tents. Featuring chic interiors, a private lawn sit-out, and ensuite bathrooms, these tents offer boutique-style luxury with the charm of camping—ideal for couples, families, or weekend travelers looking for a unique glamping stay near Ratapani.",
@@ -147,7 +147,7 @@ const accommodationsData = [
     name: "Camping Tent",
     slug: "camping-tent",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624781/comping-tent11_ddwzgn.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589752/camping-tent-new-madhuban-eco-retreat-bhopal_pohjtj.avif",
     altText: "Scenic camping tent surrounded by nature",
     shortDescription:
       "Our eco-friendly camping tents offer a simple yet comfortable outdoor stay in Ratapani’s lush wilderness. Perfect for travelers seeking digital detox, jungle adventure, or peaceful night camping near Bhopal.",
