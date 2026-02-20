@@ -39,17 +39,17 @@ const fadeInUp = {
 
 const celebrities = [
   {
-    img: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624811/vidya1_ngrdya.jpg",
+    img: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574233/Vidhyan_Balan_At_Madhuban_Eco_Retreat_jevf7j.avif",
     name: "Vidya Balan",
     details: " Indian Actress",
   },
   {
-    img: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624821/vijay_pexbz9.jpg",
+    img: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771580207/Vijay_Raaz_Indian_Actor_-_Madhuban_Eco_Retreat_Image_dputky.webp",
     name: " Vijay Raaz",
     details: "Indian Actor",
   },
   {
-    img: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624814/samir1_fbfq4e.png",
+    img: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574230/Samir_ji_At_Madhuban_Eco_Retreat_Bhopal_dmzgog.avif",
     name: "Samir Somaiya",
     details: "President, Somaiya Group",
   },

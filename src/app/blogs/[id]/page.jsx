@@ -139,7 +139,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { id } = await params;
   const data = await getBlogById(id);
-  const blogDetails = data?.data?.blog;
+  const blogDetails = data?.blog;
 
   return generateMataDataForSEO({
     title: blogDetails?.meta?.title,

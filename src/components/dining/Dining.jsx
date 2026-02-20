@@ -44,110 +44,115 @@ const foodAndDiningFaqs = [
 const Dining = () => {
   const [selectedMedia, setSelectedMedia] = useState(null);
 
+  function removeCloudinaryParams(url) {
+    // match /image/<params>/<filename>
+    return url.replace(/\/image\/[^/]+\/([^/]+)$/, "/image/$1");
+  }
+
   const photos = [
     {
       id: 1,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770640072/restra-100_yeykxw.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/Dinning_Area_Image_5_-_Madhuban_Eco_Retreat_w58nw4",
     },
     {
       id: 2,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770640058/restra-101_x4orxt.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/restra-101_x4orxt.jpg",
     },
     {
       id: 3,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770640054/restra-102_wmn76d.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/restra-102_wmn76d.jpg",
     },
     {
       id: 4,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770640061/restra-103_jtmbz0.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/Dinning_Area_Image_4_-_Madhuban_Eco_Retreat_doyodl.avif",
     },
     {
       id: 5,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770640061/restra-104_l6t4ka.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/restra-104_l6t4ka.jpg",
     },
     {
       id: 6,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770640061/restra-105_sjk3ac.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/restra-105_sjk3ac.jpg",
     },
     {
       id: 7,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770640054/restra-106_kpurce.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/restra-106_kpurce.jpg",
     },
     {
       id: 8,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770640058/restra-107_aqxvyu.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/restra-107_aqxvyu.jpg",
     },
     {
       id: 9,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770640057/restra-108_jjhpco.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/restra-108_jjhpco.jpg",
     },
 
     {
       id: 10,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639731/dining-100_wprqef.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/Food_Image_2_-_Madhuban_Eco_Retreat_Bhopal_dosmvx.avif",
     },
     {
       id: 11,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639733/dining-101_rhbb6c.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/dining-101_rhbb6c.jpg",
     },
     {
       id: 12,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639734/dining-102_j0aaea.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/dining-102_j0aaea.jpg",
     },
     {
       id: 13,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639734/dining-103_rwngye.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/dining-103_rwngye.jpg",
     },
     {
       id: 14,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639730/dining-104_xjb7vm.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/dining-104_xjb7vm.jpg",
     },
     {
       id: 15,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639854/dining-105_w9h76a.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/dining-105_w9h76a.jpg",
     },
     {
       id: 16,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639729/dining-106_lmna5i.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/Food_Image_-_Madhuban_Eco_Retreat_Ratapani_Bhopal_enfdvl.avif",
     },
     {
       id: 17,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639732/dining-107_kbseiz.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/dining-107_kbseiz.jpg",
     },
     {
       id: 18,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639731/dining-108_vadwhb.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/Food_Image_-_Madhuban_Eco_Retreat_bajyib.avif",
     },
     {
       id: 19,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639731/dining-109_gmi6dw.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/dining-109_gmi6dw.jpg",
     },
     {
       id: 20,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639729/dining-110_ag8li6.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/dining-110_ag8li6.jpg",
     },
     {
       id: 21,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639731/dining-111_mn9wjs.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/dining-111_mn9wjs.jpg",
     },
     {
       id: 22,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639855/dining-112_elvnlp.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/dining-112_elvnlp.jpg",
     },
     {
       id: 23,
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639728/dining-113_gdcfm3.jpg",
+      url: "/image/w_400,c_fill,f_auto,q_auto,dpr_auto/Food_Image_3_-_Madhuban_Eco_Retreat_Bhopal_lhmrf8.avif",
     },
   ];
 
   const videos = [
     {
       id: 1,
-      url: "https://res.cloudinary.com/dx3aj7a40/video/upload/v1770624859/dining_pdn94l.mp4",
+      url: "/video/w_400,c_fill,f_auto,q_50,dpr_auto/dining_pdn94l.mp4",
     },
     {
-      id: 1,
-      url: "https://res.cloudinary.com/dx3aj7a40/video/upload/v1770624864/dining1_ztn6ol.mp4",
+      id: 2,
+      url: "/video/w_400,c_fill,f_auto,q_50,dpr_auto/dining1_ztn6ol.mp4",
     },
     // Add more if needed
   ];
@@ -174,9 +179,7 @@ const Dining = () => {
         <div className="relative w-full h-[85vh]  ">
           <img
             loading="lazy"
-            src={
-              "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770632286/pool-20_pw5yzz.jpg"
-            }
+            src={"/image/Dinning_Area_Image_-_Madhuban_Eco_Retreat_yze8zg.avif"}
             alt="Farm Banner"
             className="w-full h-full object-cover"
           />
@@ -299,7 +302,7 @@ const Dining = () => {
                 </video>
               ) : (
                 <img
-                  src={selectedMedia.url}
+                  src={removeCloudinaryParams(selectedMedia.url)}
                   alt={selectedMedia.title || "Media"}
                 />
               )}

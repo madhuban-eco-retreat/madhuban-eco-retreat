@@ -190,6 +190,18 @@ const nextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: "/image/:path*",
+        destination: "https://res.cloudinary.com/dx3aj7a40/image/upload/:path*",
+      },
+      {
+        source: "/video/:path*",
+        destination: "https://res.cloudinary.com/dx3aj7a40/video/upload/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;
