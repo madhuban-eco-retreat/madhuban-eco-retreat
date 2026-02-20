@@ -28,15 +28,15 @@ const inclusions = [
 const heroSlides = [
   {
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639028/pool-9_nymumc.png",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590007/Pool_Side_Image_-_Madhuban_Eco_Retreat_Bhopal_ydpnaj.avif",
   },
   {
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770636760/RF1_zvi3oh.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589732/adventure_activities_in_madhuban_eco_retreat_bhopal_yzed2f.avif",
   },
   {
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639731/dining-111_mn9wjs.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770632286/pool-20_pw5yzz.jpg",
   },
   {
     image:

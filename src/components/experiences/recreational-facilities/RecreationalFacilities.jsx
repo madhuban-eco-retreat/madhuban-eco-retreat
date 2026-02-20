@@ -17,32 +17,24 @@ const RecreationalFacilities = () => {
 
   const forestImages = [
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770636760/RF1_zvi3oh.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589732/adventure_activities_in_madhuban_eco_retreat_bhopal_yzed2f.avif",
       alt: "Forest View 1",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770636772/RF2_mm3rkr.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589730/adventure_activity_at_madhuban_eco_retreat_bhopal_nadv4s.webp",
       alt: "Forest View 2",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770636766/RF3_ray6dc.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589727/adventure_activities_in_madhuban_eco_retreat_bhopal_3_etk5dp.avif",
       alt: "Forest View 3",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770636744/RF4_vwgl8s.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589725/adventure_activities_in_madhuban_eco_retreat_bhopal_2_xziekh.avif",
       alt: "Forest View 4",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770636753/RF5_e1lmql.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589723/adventure-activities-3-at-madhuban-eco-retreat_b4vvf1.avif",
       alt: "Forest View 5",
-    },
-    {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770636747/RF6_jjo7bt.jpg",
-      alt: "Forest View 6",
-    },
-    {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770636747/RF6_jjo7bt.jpg",
-      alt: "Forest View 7",
     },
   ];
 

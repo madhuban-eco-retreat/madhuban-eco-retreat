@@ -103,7 +103,7 @@ const Story = () => {
             >
               <div className=" rounded-xl">
                 <img
-                  src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624797/group-logo_uqbqpj.png"
+                  src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624797/somaiya-group-logo.png"
                   alt="Madhuban Eco Retreat Logo"
                   className="w-64 h-auto object-contain"
                 />

@@ -232,51 +232,51 @@ const mediaContent = {
   "Bhim Bettika": [
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624815/bhim1_rpsz0l.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771594918/bhimbetika-rock-shelter-images-by-madhuban-eco-retreat.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624817/bhim2_nw9nyq.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771594825/bhimbetika-image-madhuban-eco-retreat-1.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624817/bhim3_etg5lb.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771594704/bhimbetika-images-madhuban-eco-retreat-bhopal.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624844/bhim4_v6o2cw.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771594596/bhimbetika-image-madhuban-eco-retreat-bhopal.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624817/bhim5_p6azrq.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771594451/bhimbetika-image-madhuban-eco-retreat.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624818/bhim6_nz6fck.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771594333/bhimbetika-rock-shelter-madhuban-eco-retreat-1.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624847/bhim15_tndgvc.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771594243/bhimbetika-rock-shelter-image-2.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624847/bhim14_gyrcmk.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771594188/bhimbetika-rock-shelter-image-1.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624834/bhim13_koksbc.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771594133/bhimbetika-rock-shelter-image.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624816/bhim10_hm99re.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771593922/bhimbetika-rock-shelter-image-madhuban-eco-retreat.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624816/bhim11_spjjln.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771593813/bhimbetika-image-2-madhuban-eco-retreat.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624816/bhim12_akvyi2.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771593667/bhimbetika-image-1-madhuban-eco-retreat.avif",
     },
   ],
   "Saru Maru Caves": [

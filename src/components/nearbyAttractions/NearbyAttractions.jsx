@@ -8,15 +8,15 @@ import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
 const heroSlides = [
   {
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624816/bhim11_spjjln.jpg",
-  },
-  {
-    image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624851/smCaves6_o3o5yg.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771594596/bhimbetika-image-madhuban-eco-retreat-bhopal.avif",
   },
   {
     image:
       "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624867/smCaves11_umqv3l.jpg",
+  },
+  {
+    image:
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624851/smCaves6_o3o5yg.jpg",
   },
   {
     image:
@@ -44,7 +44,7 @@ const cardData = [
   {
     title: "Bhimbetka Rock Shelters (UNESCO Site)",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624842/Bhimbetika_Rock_Shelter_Site_lsjsob.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771594596/bhimbetika-image-madhuban-eco-retreat-bhopal.avif",
     description:
       "A world-renowned archaeological site with prehistoric rock art from the Paleolithic, Mesolithic, and early historic periods. These caves represent the earliest evidence of human life in India.",
     bestFor: "Historians, students, cultural explorers.",

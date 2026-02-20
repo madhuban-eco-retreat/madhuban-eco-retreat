@@ -51,9 +51,9 @@ const fadeIn = {
 };
 
 const instagramPosts = [
-  "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574124/Madhuban_Eco_Retreat_Customer_Beyondyourexpectation_Review_kykenp.avif",
-  "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574122/Charlies12ways_-_customer_review_at_madhuban_eco_retreat_bhopal_cczhoo.webp",
-  "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624809/insta-3_khebng.jpg",
+  "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574124/beyondyourexpectation-customer-review-for-madhuban-eco-retreat.avif",
+  "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574122/charlies12ways-customer-review-for-madhuban-eco-retreat.webp",
+  "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624809/pre-wedding-shoot-at-madhuban-eco-retreat-bhopal.jpg",
 ];
 
 const OurJourney = () => {
@@ -143,7 +143,7 @@ const OurJourney = () => {
             transition={{ duration: 0.6 }}
           >
             <img
-              src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574136/Vidhya_Balan_Stay_At_Madhuban_Eco_Retreat_Bhopal_lzb71e.webp"
+              src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574136/vidhya-balan-stay-review-at-madhuban-eco-retreat-bhopal.webp"
               alt="Manual"
               className="xl:w-[50vw] xl:h-[50vh] object-cover rounded-md sm:w-[100vw] max640:w-[100vw]"
               // className="w-[50vw] h-[50vh]  object-cover rounded-md sm:w-screen max640:w-screen "
@@ -191,7 +191,7 @@ const OurJourney = () => {
               <Image
                 width={500}
                 height={500}
-                src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574132/Radhika_Goyal_Insta_Customer_Review_For_Madhuban_Eco_Retreat_Bhopal_uuybz0.avif"
+                src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574132/radhika-goyal-customer-review-for-madhuban-eco-retreat.avif"
                 alt="Video Thumbnail"
                 className="xl:w-[25vw] xl:h-[50vh] object-cover rounded-md sm:w-[100vw] max640:w-[100vw]"
               />

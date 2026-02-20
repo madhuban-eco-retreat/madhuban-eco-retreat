@@ -17,11 +17,11 @@ const BirdWatchingAndWilderness = () => {
 
   const forestImages = [
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624812/bird14_vkg10k.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771594536/peacock_bird_watching_ratapani_zj1jtd.avif",
       alt: "Forest View 1",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624794/bird1_soaozv.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589741/bird-watching-ratapani-madhuban-eco-retreat_k2lmis.avif",
       alt: "Forest View 1",
     },
     {

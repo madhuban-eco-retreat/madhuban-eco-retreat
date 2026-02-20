@@ -16,28 +16,20 @@ const ForestWalkAndNatureTrails = () => {
 
   const forestImages = [
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624841/nature9_i3zb2r.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589990/nature-visit-ratapani-madhuban-eco-retreat-bhopal-2_ghxdvr.avif",
       alt: "Forest View 1",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624852/nature3_vdzdtc.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589981/nature-visit-ratapani-madhuban-eco-retreat-bhopal_d74xco.avif",
       alt: "Forest View 2",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624853/nature6_pmw8sl.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589977/nature_forest_from_madhuban_eco_retreat_-_1_fwzpuv.avif",
       alt: "Forest View 3",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624841/nature5_iylaqz.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574292/ratapani_nature_with_madhuban_eco_retreat_bhopal_axpr25.avif",
       alt: "Forest View 4",
-    },
-    {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624861/nature7_mepmzx.jpg",
-      alt: "Forest View 5",
-    },
-    {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624834/nature1_w33ary.jpg",
-      alt: "Forest View 6",
     },
   ];
 

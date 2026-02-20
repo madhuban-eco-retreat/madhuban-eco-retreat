@@ -17,7 +17,7 @@ const schema = {
     "@type": "LodgingBusiness",
     name: "Madhuban Eco Retreat",
     url: "https://www.madhubanecoretreat.com/",
-    logo: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624823/logo-4_hovgiw.png",
+    logo: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624823/madhuban-eco-retreat-bhopal-logo.png",
     telephone: "+91-9770558419",
     email: "madhubanresort@somaiya.com",
     address: {

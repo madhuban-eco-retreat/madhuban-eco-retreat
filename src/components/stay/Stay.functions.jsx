@@ -939,9 +939,9 @@ export const accommodationsData = [
       "Each tent is thoughtfully crafted with elegant cane furniture, a vanity and dressing space, a separate shower area, and an open-to-sky bath surrounded by nature. Whether you're a couple seeking a peaceful getaway, a family looking for a unique stay near Bhopal, or a nature lover wanting to unwind amidst wilderness, this safari tent provides the ideal blend of rustic charm and eco-luxury.",
     ],
     galleryImages: [
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624787/safari-tent2_l8rifq.jpg",
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624788/safari-tent3_pbappi.jpg",
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624788/safari-tent4_ixqjtj.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590129/Safari_Tent_Customer_Stay_Madhuban_Eco_Retreat_urrvl4.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590126/Safari_Tent_-_Madhuban_Eco_Retreat_Bhopal_pbpcgr.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624788/safari-tent-image-madhuban-eco-retreat-bhopal.jpg",
     ],
     amenities: [
       "King Size Bed",
@@ -999,9 +999,9 @@ export const accommodationsData = [
       "Designed for travelers seeking a mud house stay near Bhopal, a cultural escape, or an eco-friendly retreat, this is one of the finest and most authentic mud cottage experiences in the Ratapani region.",
     ],
     galleryImages: [
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624783/mud-villa1_qvn4zz.jpg",
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624783/mud-villa2_e131ic.jpg",
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624782/mud-villa_vpo5cs.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589967/mud-house-image-madhuban-eco-retreat-bhopal_z3psu5.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590096/rooms_interior_image_madhubuan_eco_retreat_bhopal_lkzxgw.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589955/Mud_House_Image_2_-_Madhuban_Eco_Retreat_Bhopal_ob8fgg.avif",
     ],
     amenities: [
       "King Size Bed",
@@ -1066,11 +1066,9 @@ export const accommodationsData = [
       "Perfect for families, couples, and wellness seekers, this pool villa stay near Bhopal blends eco-conscious design with boutique luxury. Whether you prefer a morning dip, peaceful poolside chai, or quiet evenings under the stars, this villa invites you to reconnect with yourself and nature.",
     ],
     galleryImages: [
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624784/pool-side-room1_x55z04.jpg",
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624785/pool-side-room2_cxiye3.jpg",
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624785/pool-side-room3_ph6vk4.jpg",
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770631495/pool3_10mb_hly0fh.jpg",
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770627269/pool2_rd5pjw.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590044/pool-view-image-madhuban-eco-retreat-bhopal_p6ccda.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590030/pool_side_image_-_madhuban_eco_retreat_gqprnd.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589943/madhuban_eco_retreat_pool_side_villa_image_pcwltb.avif",
     ],
     amenities: [
       "King Size Bed",
@@ -1127,9 +1125,9 @@ export const accommodationsData = [
       "Step outside to your private lawn-side sit-out, perfect for slow mornings, evening tea, or peaceful moments surrounded by greenery. With attentive hospitality and all modern conveniences, this stay is ideal for couples, nature lovers, and weekend travelers searching for a stylish escape near Bhopal.",
     ],
     galleryImages: [
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624863/glamping-tent2_wftnlr.jpg",
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624863/glamping-tent3_br4nc7.jpg",
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624864/glamping-tent4_oiqhoj.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771592270/glamping-tent-madhuban-eco-retreat.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771592181/glamping-tent-interior-image-2-madhuban-eco-retreat.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590907/glamping-tent-interior-image-madhuban-eco-retreat-bhopal.avif",
     ],
     amenities: [
       "King Size Bed",
@@ -1178,7 +1176,7 @@ export const accommodationsData = [
     name: "Camping Tent – Nature-First Camping in the Heart of Ratapani",
     slug: "camping-tent",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624780/camping-tent_hqq0co.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589752/camping-tent-new-madhuban-eco-retreat-bhopal_pohjtj.avif",
     altText: "A beautiful treehouse offering panoramic views of the forest",
     descriptions: [
       "Experience the thrill of outdoor living with our Camping Tents, designed for travelers who want true closeness to nature. Set against the serene backdrop of Ratapani’s forest, this stay offers peaceful nights, fresh morning air, and uninterrupted views of the night sky.",
@@ -1186,9 +1184,9 @@ export const accommodationsData = [
       "Perfect for adventure seekers, trekkers, backpackers, and nature lovers, this is one of the best camping experiences near Bhopal, offering a safe, scenic, and refreshing escape from city life. Whether you’re planning a group outing, a solo nature break, or a weekend adventure, this tent stay gives you everything you need to disconnect and recharge.",
     ],
     galleryImages: [
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624780/comping-tent1_gjajwl.jpg",
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624781/comping-tent2_s5nqxt.jpg",
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624781/comping-tent5_av8lwe.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624781/camping-tent-image-madhuban-eco-retreat-bhopal-1.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624781/camping-tent-image-1-madhuban-eco-retreat-bhopal.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624780/camping-tent-image-2-madhuban-eco-retreat-bhopal.jpg",
     ],
     pricePerNight111: "One Night Comping: 2500/person",
     pricePerNight22: "Day Package: 1100/person",

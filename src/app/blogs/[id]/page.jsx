@@ -46,7 +46,7 @@ export function buildBlogSchema(blogDetail) {
       name: "Madhuban Eco Retreat",
       logo: {
         "@type": "ImageObject",
-        url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624823/logo-4_hovgiw.png",
+        url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624823/madhuban-eco-retreat-bhopal-logo.png",
       },
     },
     datePublished: getDateOnly(blogDetail?.createdAt),

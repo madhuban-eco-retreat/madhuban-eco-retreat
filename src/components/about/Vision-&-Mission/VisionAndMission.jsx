@@ -107,7 +107,7 @@ const VisionMission = () => {
                       transition={{ type: "spring", stiffness: 200 }}
                     >
                       <img
-                        src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1770644072/camping-tent-9_zgxteu.jpg"
+                        src="/image/w_700,c_fill,f_auto,q_auto,dpr_auto/Glamping_Tents_Image_-_madhuban_Eco_retreat_bhopal_s5vx1y.avif"
                         alt="Our Mission"
                         className="w-full  object-cover h-100"
                       />
@@ -134,7 +134,7 @@ const VisionMission = () => {
                       transition={{ type: "spring", stiffness: 200 }}
                     >
                       <img
-                        src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1770643961/camping-tent_gl9jrr.jpg"
+                        src="/image/w_700,c_fill,f_auto,q_auto,dpr_auto/camping-tent_gl9jrr.avif"
                         alt="Our Vision"
                         className="w-full h-130  object-cover"
                       />
