@@ -9,6 +9,10 @@ import { getAllBlogs, getBlogById } from "@/services/blog/blogServices";
 import { generateMataDataForSEO } from "@/utills/helperFunctions";
 import React from "react";
 
+const getDateOnly = (date) => {
+  return date.split("T")[0];
+};
+
 export function buildFaqSchema(faqs = []) {
   if (!faqs.length) return null;
 
@@ -26,13 +30,43 @@ export function buildFaqSchema(faqs = []) {
   };
 }
 
+export function buildBlogSchema(blogDetail) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: blogDetail?.meta?.title,
+    description: blogDetail?.meta?.description,
+    image: blogDetail.featuredImage.url,
+    author: {
+      "@type": "Person",
+      name: blogDetail?.authorName,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Madhuban Eco Retreat",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624823/logo-4_hovgiw.png",
+      },
+    },
+    datePublished: getDateOnly(blogDetail?.createdAt),
+    dateModified: getDateOnly(blogDetail?.lastUpdatedAt),
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://www.madhubanecoretreat.com/blogs/${blogDetail?.uid}`,
+    },
+  };
+}
+
 const BlogDesc = async ({ params }) => {
   const { id } = await params;
   let blogDetails = null;
   let faqSchema = null;
+  let blogSchema = null;
   try {
     const data = await getBlogById(id);
-    faqSchema = buildFaqSchema(data?.data?.blog?.faq);
+    faqSchema = buildFaqSchema(data?.blog?.faq);
+    blogSchema = buildBlogSchema(data?.blog);
     blogDetails = data?.blog;
   } catch (err) {
     console.log("Error in fetching blog by id", err);
@@ -42,7 +76,7 @@ const BlogDesc = async ({ params }) => {
     <>
       {blogDetails ? (
         <div>
-          {faqSchema && <SEO schemas={[faqSchema]} />}
+          {faqSchema && <SEO schemas={[blogSchema, faqSchema]} />}
 
           <HeroSection
             image={blogDetails.featuredImage?.url}

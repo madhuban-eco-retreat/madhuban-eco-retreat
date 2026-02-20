@@ -1,26 +1,51 @@
 import React from "react";
 import NewBlogPage from "@/components/blog/NewBlog";
 import SEO from "@/components/seo/Seo";
+import { getAllBlogs } from "@/services/blog/blogServices";
 
-const blogSchema = {
-  "@context": "https://schema.org",
-  "@type": "Blog",
-  name: "Madhuban Eco Retreat Blog",
-  url: "https://www.madhubanecoretreat.com/blog",
-  description:
-    "Nature stories, eco-travel guides, wildlife insights and sustainable living tips from Madhuban Eco Retreat, Ratapani.",
-  publisher: {
-    "@type": "Organization",
-    name: "Madhuban Eco Retreat",
-    url: "https://www.madhubanecoretreat.com",
-  },
+const buildBlogsSchema = (blogs) => {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "@id": "https://www.madhubanecoretreat.com/blogs",
+    name: "Madhuban Eco Retreat Blogs",
+    description:
+      "Nature stories, eco-travel guides, wildlife insights and sustainable living tips from Madhuban Eco Retreat, Ratapani.",
+    url: "https://www.madhubanecoretreat.com/blogs",
+    publisher: {
+      "@type": "Organization",
+      name: "Madhuban Eco Retreat",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624823/logo-4_hovgiw.png",
+      },
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: blogs.map((blog, idx) => {
+        return {
+          "@type": "ListItem",
+          position: idx + 1,
+          url: `https://www.madhubanecoretreat.com/blogs/${blog.uid}`,
+        };
+      }),
+    },
+  };
 };
 
-const BlogPage = () => {
+const LIMIT = 8;
+
+const BlogPage = async () => {
+  const page = 1;
+  const res = await getAllBlogs(page, LIMIT);
+  const posts = res;
+  const blogs = Array.isArray(posts?.blogs) ? posts.blogs : [];
+  const blogSchema = buildBlogsSchema(blogs);
+
   return (
     <>
       <SEO schemas={[blogSchema]} />
-      <NewBlogPage />
+      <NewBlogPage blogs={blogs} posts={posts} />
     </>
   );
 };

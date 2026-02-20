@@ -3,17 +3,11 @@ import React from "react";
 import BlogListWithPagination from "@/common-components/Pagination/BlogListWithPagination";
 import BlogBanner from "./BlogBanner";
 import NaturesStory from "./NaturesStory";
-import { getAllBlogs } from "@/services/blog/blogServices";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
 
 const LIMIT = 8;
 
-const NewBlogPage = async () => {
-  const page = 1;
-  const res = await getAllBlogs(page, LIMIT);
-  const posts = res;
-  const blogs = Array.isArray(posts?.blogs) ? posts.blogs : [];
-
+const NewBlogPage = ({ blogs, posts }) => {
   return (
     <div>
       <BlogBanner />

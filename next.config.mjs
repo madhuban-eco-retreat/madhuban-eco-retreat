@@ -95,12 +95,6 @@ const nextConfig = {
       { source: "/siver-logo", destination: "/gallery", permanent: true },
 
       {
-        source: "/tag/australia",
-        destination: "/near-by-attraction",
-        permanent: true,
-      },
-
-      {
         source: "/rooms/camping-tents",
         destination: "/stay/camping-tent",
         permanent: true,
@@ -119,12 +113,12 @@ const nextConfig = {
 
       {
         source: "/skydiving-in-dubai",
-        destination: "/near-by-attraction",
+        destination: "/nearby-attractions",
         permanent: true,
       },
       {
         source: "/portfolio/miami-beach",
-        destination: "/near-by-attraction",
+        destination: "/nearby-attractions",
         permanent: true,
       },
 
@@ -143,7 +137,12 @@ const nextConfig = {
 
       {
         source: "/thailand-exclusive-holidays",
-        destination: "/near-by-attraction",
+        destination: "/nearby-attractions",
+        permanent: true,
+      },
+      {
+        source: "/tag/australia",
+        destination: "/nearby-attractions",
         permanent: true,
       },
       {
