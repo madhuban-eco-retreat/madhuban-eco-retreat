@@ -232,7 +232,7 @@ ${guests}`;
           "Failed to open WhatsApp. Please try again or check your browser settings.",
         );
       }
-    }, 3000);
+    }, 100);
   };
 
   const darkTheme = createTheme({
