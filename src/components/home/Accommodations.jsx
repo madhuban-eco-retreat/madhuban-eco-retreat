@@ -49,7 +49,8 @@ const accommodations = [
   },
   {
     title: "Mud Houses",
-    image: "/Mud-house-2.JPG",
+    image:
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771576228/Mud_House_Image_2_-_Madhuban_Eco_Retreat_Bhopal_lbzlrg.avif",
     alt: "Mud Houses",
     description:
       "Inspired by the Gond tribes, these mud cottages offer rustic charm and sustainable comfort — making them one of the most loved eco stays in Madhya Pradesh.",
@@ -57,7 +58,7 @@ const accommodations = [
   {
     title: "Pool Side Villa",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639028/pool-9_nymumc.png",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574252/Pool_Image_2_-_Madhuban_Eco_Retreat_Bhopal_yl1tbg.avif",
     alt: "Pool Side Room",
     description:
       "For travelers seeking leisure and calm, our poolside villas combine scenic views, wellness-friendly spaces, and forest-side luxury.",
