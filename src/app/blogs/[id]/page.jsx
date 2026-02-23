@@ -1,4 +1,3 @@
-export const dynamic = "force-static";
 export const revalidate = 3600;
 import CustomLinkBtn from "@/common-components/CustomLinkBtn/CustomLinBtn";
 import CommonFaqs from "@/common-components/faqs/CommonFaqs";
@@ -129,7 +128,7 @@ export default BlogDesc;
 export async function generateStaticParams() {
   const res = await getAllBlogs();
 
-  const posts = res?.data?.blogs ?? [];
+  const posts = res?.blogs ?? [];
 
   return posts.map((post) => ({
     id: post?.uid,
