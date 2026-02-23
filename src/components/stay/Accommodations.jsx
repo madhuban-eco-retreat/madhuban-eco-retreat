@@ -42,7 +42,7 @@ const accommodationsData = [
     name: "Safari Tent",
     slug: "safari-tent",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590126/safari_tent_-_madhuban_eco_retreat_bhopal_pbpcgr.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590129/guest-near-safari-tent-madhuban-eco-retreat-bhopal.avif",
     altText: "Exterior view of a charming safari tent nestled in greenery",
     shortDescription:
       "Perched on raised platforms beside a gentle stream and facing forested mountains, our classic safari-style tents offer a true wilderness experience. Each tent is tastefully furnished with elegant cane furniture and features a vanity and dressing area, separate toilet and shower, and even an open-to-sky shower with a private relaxation space.",
@@ -65,7 +65,7 @@ const accommodationsData = [
     name: "Mud Houses",
     slug: "mud-villa",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770631368/mud-house2_ezc4qx.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771839089/mud-house-image-madhuban-eco-retreat-bhopal.avif",
     altText: "Exterior view of a charming mud villa nestled in greenery",
     shortDescription:
       "Our mud-based cottages, inspired by the vernacular architecture of the Gond tribes, are nestled in a 5-acre organic orchard. Each Mud House features a spacious air-conditioned room, an annexed lobby, verandas, and a traditionally styled luxury bathroom. The rooftop offers breathtaking 360° views — perfect for stargazing or peaceful evenings.",
@@ -88,7 +88,7 @@ const accommodationsData = [
     name: "Pool Side Villa",
     slug: "pool-side-room",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770639028/pool-9_nymumc.png",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589943/resort-poolside-view-madhuban-eco-retreat-bhopal.avif",
     altText: "Poolside room with beautiful garden views",
     shortDescription:
       "Wake up to sunlight dancing on the eco-pool and unwind to the soothing rhythm of nature. Our elegant Pool Side Villas offer the perfect balance of sophistication and serenity. Ideal for couples, families, or anyone looking for a private poolside villa near Bhopal.",
@@ -118,7 +118,7 @@ const accommodationsData = [
     name: "Glamping Tents",
     slug: "glamping-tents",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771583489/Glamping_Tents_Image_-_madhuban_Eco_retreat_bhopal_s5vx1y.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589796/madhuban-eco-retreat-glamping-tent-gallery-image-1.avif",
     altText: "Boutique glamping tent with deck and lush lawn",
     shortDescription:
       "Enjoy comfort in the wild with our rustic mini-safari glamping tents. Featuring chic interiors, a private lawn sit-out, and ensuite bathrooms, these tents offer boutique-style luxury with the charm of camping—ideal for couples, families, or weekend travelers looking for a unique glamping stay near Ratapani.",

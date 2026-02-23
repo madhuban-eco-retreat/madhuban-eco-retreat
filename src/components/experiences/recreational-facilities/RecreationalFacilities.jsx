@@ -17,24 +17,32 @@ const RecreationalFacilities = () => {
 
   const forestImages = [
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589732/adventure_activities_in_madhuban_eco_retreat_bhopal_yzed2f.avif",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771841757/nature-visit-ratapani-madhuban-eco-retreat-bhopal-2_gessgr.avif",
       alt: "Forest View 1",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589730/adventure_activity_at_madhuban_eco_retreat_bhopal_nadv4s.webp",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771841752/obstacle-course-madhuban-eco-retreat-bhopal.avif",
       alt: "Forest View 2",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589727/adventure_activities_in_madhuban_eco_retreat_bhopal_3_etk5dp.avif",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771841751/adventure-hurdles-madhuban-eco-retreat-bhopal.avif",
       alt: "Forest View 3",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589725/adventure_activities_in_madhuban_eco_retreat_bhopal_2_xziekh.avif",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771841750/rope-adventure-madhuban-eco-retreat-bhopal.avif",
       alt: "Forest View 4",
     },
-    {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589723/adventure-activities-3-at-madhuban-eco-retreat_b4vvf1.avif",
+     {
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771841749/outdoor-adventure-obstacles-madhuban-eco-retreat-bhopal.avif",
       alt: "Forest View 5",
+    },
+     {
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771841748/Adventure_Activities_3_At_madhuban-eco-retreat_rc9c0k.avif",
+      alt: "Forest View 6",
+    },
+     {
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771841749/balance-adventure-madhuban-eco-retreat-bhopal.avif",
+      alt: "Forest View 7",
     },
   ];
 

@@ -28,19 +28,19 @@ const inclusions = [
 const heroSlides = [
   {
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590007/Pool_Side_Image_-_Madhuban_Eco_Retreat_Bhopal_ydpnaj.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771838253/madhuban-eco-retreat-evening-view.avif",
   },
   {
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589732/adventure_activities_in_madhuban_eco_retreat_bhopal_yzed2f.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771838077/madhuban-eco-retreat-forest-view-hero-section-1.avif",
   },
   {
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770632286/pool-20_pw5yzz.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771837947/mobile-hero-tiger-madhuban-eco-retreat-ratapani-bhopal.avif",
   },
   {
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770794357/bird-11_kmbyfc.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771838186/madhuban-eco-retreat-ratapani-bhopal-top-view.avif",
   },
 ];
 

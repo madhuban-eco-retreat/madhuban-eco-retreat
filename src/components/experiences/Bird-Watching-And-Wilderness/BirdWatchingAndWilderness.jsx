@@ -17,7 +17,7 @@ const BirdWatchingAndWilderness = () => {
 
   const forestImages = [
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771594536/peacock_bird_watching_ratapani_zj1jtd.avif",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771830467/long-tailed-shrike-image-from-ratapani-by-madhuban-eco-retreat.avif",
       alt: "Forest View 1",
     },
     {
@@ -25,29 +25,46 @@ const BirdWatchingAndWilderness = () => {
       alt: "Forest View 1",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624793/bird2_m5u4oj.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771830642/hummingbird-hawk-moth-image-from-ratapani-by-madhuban-eco-retreat.avif",
       alt: "Forest View 2",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624791/bird4_ldyehe.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771830630/indian-roller-image-from-ratapani-by-madhuban-eco-retreat.avif",
       alt: "Forest View 3",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624791/bird3_cx8rtl.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771830480/black-winged-kite-image-from-ratapani-by-madhuban-eco-retreat.avif",
       alt: "Forest View 4",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624791/bird6_aarwud.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771830190/male-plum-headed-parakeet-image-from-ratapani-by-madhuban-eco-retreat.avif",
       alt: "Forest View 5",
     },
+    
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624872/bird7_twnhyw.jpg",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771829849/experiences-madhuban-eco-retreat.avif",
       alt: "Forest View 6",
     },
-    {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624792/bird9_zdn32f.jpg",
+     {
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771594536/peacock-watching-experience-ratapani-madhuban-eco-retreat.avif",
       alt: "Forest View 7",
     },
+     {
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771830131/indian-pitta-image-from-ratapani-by-madhuban-eco-retreat-bhopal.avif",
+      alt: "Forest View 8",
+    },
+     {
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771829898/unique-owl-image-ratapani-madhuban-eco-retreat.avif",
+      alt: "Forest View 9",
+    },
+    //  {
+    //   url: "",
+    //   alt: "Forest View 7",
+    // },
+    //  {
+    //   url: "",
+    //   alt: "Forest View 7",
+    // },
   ];
 
   const accordionItems = [
