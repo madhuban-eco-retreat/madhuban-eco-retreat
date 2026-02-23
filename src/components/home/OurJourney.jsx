@@ -89,7 +89,7 @@ const OurJourney = () => {
               <Image
                 width={32}
                 height={32}
-                src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624853/instagram_u3e6x0.png"
+                src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
                 alt="Instagram"
                 className="w-8 h-8"
               />
