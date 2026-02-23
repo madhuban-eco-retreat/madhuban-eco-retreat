@@ -6,27 +6,27 @@ import { motion } from "framer-motion";
 const heroSlides = [
   {
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590162/madhuban-eco-retreat-best-resort-near-bhopal-sign-board.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771834121/tourists-jungle-safari-jeep-madhuban-eco-retreat-ratapani.avif",
     mobile:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590162/madhuban-eco-retreat-best-resort-near-bhopal-sign-board.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771834121/tourists-jungle-safari-jeep-madhuban-eco-retreat-ratapani.avif",
     title: "Madhuban Eco Retreat: Eco-Luxury Forest Resort",
     subtitle:
       "Experience eco-luxury living amid the serene wilderness of Ratapani Tiger Reserve at Madhuban Eco Retreat — a peaceful forest stay offering sustainable comfort and mindful escapes.",
   },
   {
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590162/madhuban-eco-retreat-best-resort-near-bhopal-sign-board.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771838077/madhuban-eco-retreat-forest-view-hero-section-1.avif",
     mobile:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590162/madhuban-eco-retreat-best-resort-near-bhopal-sign-board.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771837850/madhuban-eco-retreat-forest-view-hero-section.avif",
     title: "Sustainable Travel in India: An Eco-Luxury Retreat",
     subtitle:
       "Reconnect with nature through immersive experiences like birdwatching in Madhya Pradesh, all without compromising on comfort.",
   },
   {
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590162/madhuban-eco-retreat-best-resort-near-bhopal-sign-board.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624801/hero-tiger-madhuban-eco-retreat.jpg",
     mobile:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590162/madhuban-eco-retreat-best-resort-near-bhopal-sign-board.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771837947/mobile-hero-tiger-madhuban-eco-retreat-ratapani-bhopal.avif",
     title: "Connect With Wildlife & Nature",
     subtitle:
       "Located next to the Ratapani Wildlife Sanctuary, Madhuban is ideal for serene forest walks and birdwatching adventures.",
