@@ -33,7 +33,7 @@ const ContactModal = () => {
         `;
 
     const whatsappURL = `https://api.whatsapp.com/send?phone=${ADMIN_WHATSAPP}&text=${encodeURIComponent(
-      message
+      message,
     )}`;
 
     window.open(whatsappURL, "_blank");
@@ -42,7 +42,7 @@ const ContactModal = () => {
       const whatsappWindow = window.open(
         whatsappURL,
         "_blank",
-        "noopener,noreferrer"
+        "noopener,noreferrer",
       );
 
       // Check if popup was blocked
@@ -54,19 +54,19 @@ const ContactModal = () => {
         ) {
           alert(
             "Popup blocked! Please allow popups, or copy this link and open manually: " +
-              whatsappURL
+              whatsappURL,
           );
         } else {
           reset();
           alert(
-            "WhatsApp opened successfully! Please send the pre-filled message."
+            "WhatsApp opened successfully! Please send the pre-filled message.",
           );
         }
       }, 1000);
     } catch (err) {
       console.error("Error opening WhatsApp:", err);
       alert(
-        "Failed to open WhatsApp. Please try again or check your browser settings."
+        "Failed to open WhatsApp. Please try again or check your browser settings.",
       );
     }
   };
@@ -79,7 +79,7 @@ const ContactModal = () => {
         if (pathName !== "/contact-us") {
           setOpen(true);
         }
-      }, 7000);
+      }, 10000);
     }
   }, []);
 
@@ -113,7 +113,7 @@ const ContactModal = () => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: { xs: "90%", md: "30%" },
+            width: { xs: "85%", md: "30%" },
             boxShadow: 24,
             border: "none",
             outline: "none",
@@ -135,11 +135,11 @@ const ContactModal = () => {
           >
             <IoMdCloseCircle />
           </Box>
-          <div className="rounded-2xl shadow-lg p-2 py-8 md:p-8 bg-[#6e6146] ">
-            <h2 className="heading1 font-semibold text-white text-center mb-2 font-primary">
+          <div className="rounded-2xl shadow-lg p-2 py-4 md:p-8 bg-[#6e6146] ">
+            <h2 className="heading1 font-semibold text-white text-center mb-1 font-primary">
               Send Us a Message
             </h2>
-            <p className="p-text text-gray-200 mb-2 md:mb-6 text-center">
+            <p className="p-text text-gray-200 mb-1 md:mb-4 text-center">
               Your message goes directly to WhatsApp.
             </p>
 

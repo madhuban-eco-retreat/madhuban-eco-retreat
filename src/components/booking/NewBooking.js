@@ -1,24 +1,13 @@
 "use client";
-// src/components/BookingModal.js
 import React, { useState, useEffect, useRef } from "react";
 import { useSearchParams, usePathname } from "next/navigation";
 import "react-datepicker/dist/react-datepicker.css";
-import { Calendar } from "lucide-react";
 import { phone } from "@/utills/constants";
-import BookStay from "./BookStay";
-import WhyChoose from "./WhyChoose";
 import CommonFaqs from "@/common-components/faqs/CommonFaqs";
 import { motion } from "framer-motion";
-import Link from "next/link";
 const THANKYOU_URL = "/thank-you";
-import {
-  Select,
-  MenuItem,
-  FormControl,
-  createTheme,
-  ThemeProvider,
-} from "@mui/material";
-import { Users, Phone, User, MessageCircle } from "lucide-react";
+import { Select, MenuItem, FormControl } from "@mui/material";
+import { Users, Phone, User } from "lucide-react";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
@@ -236,30 +225,6 @@ ${guests}`;
     }, 100);
   };
 
-  const darkTheme = createTheme({
-    palette: {
-      mode: "dark",
-      primary: {
-        main: "#22c55e",
-      },
-      background: {
-        paper: "rgba(17, 20, 17, 0.95)",
-      },
-    },
-    typography: {
-      fontFamily: '"Plus Jakarta Sans", sans-serif',
-    },
-    components: {
-      MuiPaper: {
-        styleOverrides: {
-          root: {
-            backgroundImage: "none",
-          },
-        },
-      },
-    },
-  });
-
   return (
     <>
       {showThankYou && (
@@ -326,242 +291,216 @@ ${guests}`;
                 </p>
               </div>
 
-              <ThemeProvider theme={darkTheme}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <form
-                    className="grid grid-cols-1 md:grid-cols-2 gap-6 bookingForm"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      handleSubmit(e);
-                    }}
-                  >
-                    <div className="space-y-2 text-left">
-                      <label className="text-[10px] font-bold tracking-widest text-white uppercase ml-1">
-                        Full Name
-                      </label>
-                      <div className="relative">
-                        <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white z-10" />
-                        <input
-                          name="name"
-                          type="text"
-                          placeholder="Your name"
-                          className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:border-(--primaryGray2) focus:bg-white/10 transition-all text-white"
-                          onChange={handleChange}
-                        />
-                      </div>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <form
+                  className="grid grid-cols-1 md:grid-cols-2 gap-6 bookingForm"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSubmit(e);
+                  }}
+                >
+                  <div className="space-y-2 text-left">
+                    <label className="text-[10px] font-bold tracking-widest text-white uppercase ml-1">
+                      Full Name
+                    </label>
+                    <div className="relative">
+                      <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white z-10" />
+                      <input
+                        name="name"
+                        type="text"
+                        placeholder="Your name"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:border-(--primaryGray2) focus:bg-white/10 transition-all text-white"
+                        onChange={handleChange}
+                      />
                     </div>
+                  </div>
 
-                    <div className="space-y-2 text-left">
-                      <label className="text-[10px] font-bold tracking-widest text-white uppercase ml-1">
-                        WhatsApp Number
-                      </label>
-                      <div className="relative">
-                        <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white z-10" />
-                        <input
-                          type="tel"
-                          name="phone"
-                          value={formData.phone}
-                          placeholder="+91 XXXXX XXXXX"
-                          className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:border-(--primaryGray2) focus:bg-white/10 transition-all text-white"
-                          onChange={(e) => {
-                            const valueStr = e.target.value.replace(/\s/g, "");
-                            if (
-                              valueStr.length <= 13 &&
-                              /^\+?\d*$/.test(valueStr)
-                            ) {
-                              handleChange(e);
-                            }
+                  <div className="space-y-2 text-left">
+                    <label className="text-[10px] font-bold tracking-widest text-white uppercase ml-1">
+                      WhatsApp Number
+                    </label>
+                    <div className="relative">
+                      <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white z-10" />
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        placeholder="+91 XXXXX XXXXX"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:border-(--primaryGray2) focus:bg-white/10 transition-all text-white"
+                        onChange={(e) => {
+                          const valueStr = e.target.value.replace(/\s/g, "");
+                          if (
+                            valueStr.length <= 13 &&
+                            /^\+?\d*$/.test(valueStr)
+                          ) {
+                            handleChange(e);
+                          }
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 text-left">
+                    <label className="text-[10px] font-bold tracking-widest text-white uppercase ml-1">
+                      Guests
+                    </label>
+                    <div className="relative">
+                      <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white z-10 pointer-events-none" />
+                      <FormControl fullWidth>
+                        <Select
+                          name="guests"
+                          value={guests}
+                          onChange={(e) => setGuests(e.target.value)}
+                          displayEmpty
+                          sx={{
+                            backgroundColor: "rgba(255, 255, 255, 0.05)",
+                            border: "1px solid #fff",
+                            borderRadius: "0.75rem",
+                            height: "56px",
+                            paddingLeft: "32px",
+                            fontSize: "0.875rem",
+                            "& .MuiOutlinedInput-notchedOutline": {
+                              border: "none",
+                            },
+                            "&:hover .MuiOutlinedInput-notchedOutline": {
+                              border: "none",
+                            },
+                            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                              border: "none",
+                            },
+                            "&.Mui-focused": { border: "1px solid #fff" },
+                            transition: "all 0.2s",
+                            color: "white",
+                            "& .MuiSelect-icon": {
+                              color: "rgba(255,255,255,0.3)",
+                            },
                           }}
-                        />
-                      </div>
+                          MenuProps={{
+                            PaperProps: {
+                              className: "mui-paper-glass",
+                              sx: {
+                                marginTop: "8px",
+                                "& .MuiMenuItem-root": {
+                                  fontSize: "0.875rem",
+                                  paddingY: "12px",
+                                  "&.Mui-selected": {
+                                    backgroundColor: "var(--primary-gray2)",
+                                    color: "#fff",
+                                    fontWeight: "700",
+                                  },
+                                },
+                              },
+                            },
+                            MenuListProps: {
+                              sx: {
+                                maxHeight: "200px",
+                                overflowY: "auto",
+                                scrollbarColor:
+                                  "rgba(255, 255, 255, 0.3) transparent",
+                                "&::-webkit-scrollbar": {
+                                  width: "6px",
+                                },
+                                "&::-webkit-scrollbar-track": {
+                                  background: "transparent",
+                                },
+                                "&::-webkit-scrollbar-thumb": {
+                                  backgroundColor: "rgba(255, 255, 255, 0.3)",
+                                  borderRadius: "3px",
+                                },
+                              },
+                            },
+                          }}
+                        >
+                          {Array.from({ length: 10 }, (_, i) => (
+                            <MenuItem key={i} value={`${i + 1} Guest`}>
+                              {i + 1} Guest
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
                     </div>
+                  </div>
 
-                    <div className="space-y-2 text-left">
-                      <label className="text-[10px] font-bold tracking-widest text-white uppercase ml-1">
-                        Guests
-                      </label>
-                      <div className="relative">
-                        <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white z-10 pointer-events-none" />
-                        <FormControl fullWidth>
-                          <Select
-                            name="guests"
-                            value={guests}
-                            onChange={(e) => setGuests(e.target.value)}
-                            displayEmpty
-                            sx={{
-                              backgroundColor: "rgba(255, 255, 255, 0.05)",
-                              border: "1px solid #fff",
-                              borderRadius: "0.75rem",
-                              height: "56px",
-                              paddingLeft: "32px",
-                              fontSize: "0.875rem",
+                  <div className="space-y-2 text-left">
+                    <label className="text-[10px] font-bold tracking-widest text-white uppercase ml-1">
+                      Check-In
+                    </label>
+                    <div className="relative">
+                      <DatePicker
+                        value={checkIn}
+                        onChange={(newValue) => setCheckIn(newValue)}
+                        format="DD / MM / YYYY"
+                        slotProps={{
+                          textField: {
+                            fullWidth: true,
+                            placeholder: "Select Date",
+                            sx: {
+                              "& .MuiPickersInputBase-root": {
+                                color: "#fff",
+                                borderRadius: "14px",
+                                border: "1px solid #fff",
+                                "&:hover": {
+                                  border: "1px solid #fff",
+                                },
+                                "&.Mui-focused": {
+                                  border: "1px solid #fff",
+                                },
+                              },
+                              "& .MuiInputBase-root": {
+                                backgroundColor: "rgba(255, 255, 255, 0.05)",
+                                border: "1px solid #fff",
+                                borderRadius: "0.75rem",
+                                height: "56px",
+                                fontSize: "0.875rem",
+                                color: "#fff",
+                                paddingLeft: "8px",
+                                transition: "all 0.2s",
+                              },
                               "& .MuiOutlinedInput-notchedOutline": {
                                 border: "none",
+                                border: "1px solid #fff",
                               },
-                              "&:hover .MuiOutlinedInput-notchedOutline": {
-                                border: "none",
+                              "& .MuiInputAdornment-root .MuiSvgIcon-root": {
+                                color: "#fff",
+                                fontSize: "1.25rem",
                               },
-                              "&.Mui-focused .MuiOutlinedInput-notchedOutline":
-                                {
-                                  border: "none",
-                                },
-                              "&.Mui-focused": { border: "1px solid #fff" },
-                              transition: "all 0.2s",
-                              color: "white",
-                              "& .MuiSelect-icon": {
-                                color: "rgba(255,255,255,0.3)",
-                              },
-                            }}
-                            MenuProps={{
-                              PaperProps: {
+                            },
+                          },
+                          popper: {
+                            sx: {
+                              "& .MuiPaper-root": {
                                 className: "mui-paper-glass",
-                                sx: {
-                                  marginTop: "8px",
-                                  "& .MuiMenuItem-root": {
-                                    fontSize: "0.875rem",
-                                    paddingY: "12px",
-                                    "&.Mui-selected": {
-                                      backgroundColor: "var(--primary-gray2)",
-                                      color: "#fff",
-                                      fontWeight: "700",
-                                    },
-                                  },
-                                },
                               },
-                              MenuListProps: {
-                                sx: {
-                                  maxHeight: "200px",
-                                  overflowY: "auto",
-                                  scrollbarColor:
-                                    "rgba(255, 255, 255, 0.3) transparent",
-                                  "&::-webkit-scrollbar": {
-                                    width: "6px",
-                                  },
-                                  "&::-webkit-scrollbar-track": {
-                                    background: "transparent",
-                                  },
-                                  "&::-webkit-scrollbar-thumb": {
-                                    backgroundColor: "rgba(255, 255, 255, 0.3)",
-                                    borderRadius: "3px",
-                                  },
-                                },
-                              },
-                            }}
-                          >
-                            {Array.from({ length: 10 }, (_, i) => (
-                              <MenuItem key={i} value={`${i + 1} Guest`}>
-                                {i + 1} Guest
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </div>
+                            },
+                          },
+                          desktopPaper: {
+                            className: "mui-paper-glass",
+                          },
+                          mobilePaper: {
+                            className: "mui-paper-glass",
+                          },
+                        }}
+                      />
                     </div>
+                  </div>
 
-                    <div className="space-y-2 text-left">
-                      <label className="text-[10px] font-bold tracking-widest text-white uppercase ml-1">
-                        Check-In
-                      </label>
-                      <div className="relative">
-                        <DatePicker
-                          value={checkIn}
-                          onChange={(newValue) => setCheckIn(newValue)}
-                          format="DD / MM / YYYY"
-                          slotProps={{
-                            textField: {
-                              fullWidth: true,
-                              placeholder: "Select Date",
-                              sx: {
-                                "& .MuiInputBase-root": {
-                                  backgroundColor: "rgba(255, 255, 255, 0.05)",
-                                  border: "1px solid #fff",
-                                  borderRadius: "0.75rem",
-                                  height: "56px",
-                                  fontSize: "0.875rem",
-                                  color: "white",
-                                  paddingLeft: "8px",
-                                  transition: "all 0.2s",
-                                  "&:hover": {
-                                    border: "1px solid #fff",
-                                  },
-                                  "&.Mui-focused": {
-                                    border: "1px solid #fff",
-                                  },
-                                },
-                                "& .MuiOutlinedInput-notchedOutline": {
-                                  border: "none",
-                                },
-                                "& .MuiInputAdornment-root .MuiSvgIcon-root": {
-                                  color: "#fff",
-                                  fontSize: "1.25rem",
-                                },
-                              },
-                            },
-                            popper: {
-                              sx: {
-                                "& .MuiPaper-root": {
-                                  className: "mui-paper-glass",
-                                },
-                              },
-                            },
-                            desktopPaper: {
-                              className: "mui-paper-glass",
-                            },
-                            mobilePaper: {
-                              className: "mui-paper-glass",
-                            },
-                          }}
-                        />
-                      </div>
-                    </div>
-
-                    <button className="md:col-span-2 group flex items-center cursor-pointer justify-center gap-3 w-full bg-[#25D366]  text-white font-black text-sm tracking-widest py-5 rounded-xl transition-all hover:scale-101">
-                      <WhatsAppIcon className="w-5 h-5 " />
-                      SEND BY WHATSAPP
-                    </button>
-                    {error && (
-                      <p className="md:col-span-2 text-red-500 text-sm font-semibold text-center">
-                        {error}
-                      </p>
-                    )}
-                    <p className="md:col-span-2 text-[10px] font-bold tracking-widest text-white uppercase">
-                      Clicking submit opens WhatsApp with your details ready to
-                      send.
+                  <button className="md:col-span-2 group flex items-center cursor-pointer justify-center gap-3 w-full bg-[#25D366]  text-white font-black text-sm tracking-widest py-5 rounded-xl transition-all hover:scale-101">
+                    <WhatsAppIcon className="w-5 h-5 " />
+                    SEND BY WHATSAPP
+                  </button>
+                  {error && (
+                    <p className="md:col-span-2 text-red-500 text-sm font-semibold text-center">
+                      {error}
                     </p>
-                  </form>
-                </LocalizationProvider>
-              </ThemeProvider>
+                  )}
+                  <p className="md:col-span-2 text-[10px] font-bold tracking-widest text-white uppercase">
+                    Clicking submit opens WhatsApp with your details ready to
+                    send.
+                  </p>
+                </form>
+              </LocalizationProvider>
             </div>
-            {/* <div className="mt-12 flex items-center gap-6 justify-center">
-              <div className="flex -space-x-3">
-                <img
-                  alt="Guest avatar"
-                  className="h-10 w-10 rounded-full border-2 border-background-dark"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzdv8nzrsNK9OYUsWnTiKHP7dAYySdZ2VZCwCBiNJThzNmeZqvouaDgCh0IOssUJ_QNuNcHPdVB9FPLTlYoAKiRvvT9tVwplVl67h6XOkPi8cqjHQhsdiinptoHGKraHJtkdiqLpaWwW2gNmlegzSkoFxn2mjkVWuw8BlU2BgaKpbngmZWiU0O4PYZo3slY_HJBjd-JpKGsIAKZiFobN287QvaYIwfLQbrGf8vKbIHfHW6idTxyBuuA12xOF-2FGGO6jBJyi-8PPB8"
-                />
-                <img
-                  alt="Guest avatar"
-                  className="h-10 w-10 rounded-full border-2 border-background-dark"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-LD78i6ML4hQ2VMnp3K9eky2Ry4qL8Ea0gGn4NFSl4gJHoawvx7aUqmk9z9bqO6a_Zal7q1NVRNKq-T3K3mipEewYMpcHbPrajPKOLQ6T_LkfPa7g18HI3YWzRrubNXuAMuSoi4wyK9tgidSaVXg3KlGtk4E_dqPz8YUGYvBGAiXxfJ2LJ2au-JGrQM08k6dkFI2erDhuVU2uvGfyzKs4hElkeyxn8rMpCus6QmNp-svLKHP1VekjVEQTpGEqetpuJvhqb0Fyqyct"
-                />
-                <img
-                  alt="Guest avatar"
-                  className="h-10 w-10 rounded-full border-2 border-background-dark"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcOo8xFN9oWm73Aa6n_GMhuxPdp4dSzVfy23Tb1Gv28YYmjXJzWAcRmDJ7WZyEC697z1eHAfH8bXrpYQshNMAyQvLUdFdT6RuXsUPwSzJbrjXtPyTfbSlzLGC-xNxMBfhTUHoyT-AJJ1HaKDfg3TZcZn1yZRUcgzr1Ae_bHyEwNZWqE84-PwfYwg8PEbdkAu5HcM62De9Ped2IJVc7T7P-XqSYwRQ2fMlGGT78_I53dK6hMhFaSm198CHa2BJKo3nucLdTTQXRKA0l"
-                />
-              </div>
-              <div className="text-white/80 text-sm font-medium">
-                <span className="text-primary font-bold">500+</span> nature
-                lovers visited last month
-              </div>
-            </div> */}
           </div>
-          {/* <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-50">
-            <span className="text-[10px] text-white uppercase tracking-[0.3em]">
-              Explore
-            </span>
-            <div className="w-px h-8 bg-gradient-to-b from-primary to-transparent"></div>
-          </div> */}
         </main>
         <Features />
         <LuxeryStay />

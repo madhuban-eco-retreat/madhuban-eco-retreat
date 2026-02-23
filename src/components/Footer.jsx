@@ -40,8 +40,10 @@ const Footer = () => {
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <Link href="/" className="flex items-center space-x-4 z-20">
-                <img
-                  src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624827/madhuban-eco-retreat-logo-footer.png"
+                <Image
+                  width={120}
+                  height={120}
+                  src="/image/w_120,c_fill,f_auto,q_auto,dpr_auto/madhuban-eco-retreat-logo-footer.png"
                   alt="Madhuban Eco Retreat Logo"
                   className="h-20 w-20 filter brightness-75"
                 />

@@ -2,7 +2,6 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { FaRoute } from "react-icons/fa6";
 import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import CompostIcon from "@mui/icons-material/Compost";
