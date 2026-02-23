@@ -1,24 +1,13 @@
 "use client";
-// src/components/BookingModal.js
 import React, { useState, useEffect, useRef } from "react";
 import { useSearchParams, usePathname } from "next/navigation";
 import "react-datepicker/dist/react-datepicker.css";
-import { Calendar } from "lucide-react";
 import { phone } from "@/utills/constants";
-import BookStay from "./BookStay";
-import WhyChoose from "./WhyChoose";
 import CommonFaqs from "@/common-components/faqs/CommonFaqs";
 import { motion } from "framer-motion";
-import Link from "next/link";
 const THANKYOU_URL = "/thank-you";
-import {
-  Select,
-  MenuItem,
-  FormControl,
-  createTheme,
-  ThemeProvider,
-} from "@mui/material";
-import { Users, Phone, User, MessageCircle } from "lucide-react";
+import { Select, MenuItem, FormControl } from "@mui/material";
+import { Users, Phone, User } from "lucide-react";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
@@ -511,36 +500,7 @@ ${guests}`;
                 </form>
               </LocalizationProvider>
             </div>
-            {/* <div className="mt-12 flex items-center gap-6 justify-center">
-              <div className="flex -space-x-3">
-                <img
-                  alt="Guest avatar"
-                  className="h-10 w-10 rounded-full border-2 border-background-dark"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzdv8nzrsNK9OYUsWnTiKHP7dAYySdZ2VZCwCBiNJThzNmeZqvouaDgCh0IOssUJ_QNuNcHPdVB9FPLTlYoAKiRvvT9tVwplVl67h6XOkPi8cqjHQhsdiinptoHGKraHJtkdiqLpaWwW2gNmlegzSkoFxn2mjkVWuw8BlU2BgaKpbngmZWiU0O4PYZo3slY_HJBjd-JpKGsIAKZiFobN287QvaYIwfLQbrGf8vKbIHfHW6idTxyBuuA12xOF-2FGGO6jBJyi-8PPB8"
-                />
-                <img
-                  alt="Guest avatar"
-                  className="h-10 w-10 rounded-full border-2 border-background-dark"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-LD78i6ML4hQ2VMnp3K9eky2Ry4qL8Ea0gGn4NFSl4gJHoawvx7aUqmk9z9bqO6a_Zal7q1NVRNKq-T3K3mipEewYMpcHbPrajPKOLQ6T_LkfPa7g18HI3YWzRrubNXuAMuSoi4wyK9tgidSaVXg3KlGtk4E_dqPz8YUGYvBGAiXxfJ2LJ2au-JGrQM08k6dkFI2erDhuVU2uvGfyzKs4hElkeyxn8rMpCus6QmNp-svLKHP1VekjVEQTpGEqetpuJvhqb0Fyqyct"
-                />
-                <img
-                  alt="Guest avatar"
-                  className="h-10 w-10 rounded-full border-2 border-background-dark"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcOo8xFN9oWm73Aa6n_GMhuxPdp4dSzVfy23Tb1Gv28YYmjXJzWAcRmDJ7WZyEC697z1eHAfH8bXrpYQshNMAyQvLUdFdT6RuXsUPwSzJbrjXtPyTfbSlzLGC-xNxMBfhTUHoyT-AJJ1HaKDfg3TZcZn1yZRUcgzr1Ae_bHyEwNZWqE84-PwfYwg8PEbdkAu5HcM62De9Ped2IJVc7T7P-XqSYwRQ2fMlGGT78_I53dK6hMhFaSm198CHa2BJKo3nucLdTTQXRKA0l"
-                />
-              </div>
-              <div className="text-white/80 text-sm font-medium">
-                <span className="text-primary font-bold">500+</span> nature
-                lovers visited last month
-              </div>
-            </div> */}
           </div>
-          {/* <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-50">
-            <span className="text-[10px] text-white uppercase tracking-[0.3em]">
-              Explore
-            </span>
-            <div className="w-px h-8 bg-gradient-to-b from-primary to-transparent"></div>
-          </div> */}
         </main>
         <Features />
         <LuxeryStay />
