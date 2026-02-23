@@ -20,17 +20,14 @@ const ForestWalkAndNatureTrails = () => {
       alt: "Forest View 1",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589981/nature-visit-ratapani-madhuban-eco-retreat-bhopal_d74xco.avif",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574328/ratapani-forest-walk-with-madhuban-eco-retreat-team.avif",
       alt: "Forest View 2",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589977/nature_forest_from_madhuban_eco_retreat_-_1_fwzpuv.avif",
+      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771834121/tourists-jungle-safari-jeep-madhuban-eco-retreat-ratapani.avif",
       alt: "Forest View 3",
     },
-    {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574292/ratapani_nature_with_madhuban_eco_retreat_bhopal_axpr25.avif",
-      alt: "Forest View 4",
-    },
+    
   ];
 
   const accordionItems = [

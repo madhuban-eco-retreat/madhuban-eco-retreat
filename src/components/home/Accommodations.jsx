@@ -42,7 +42,7 @@ const fadeInUp = {
 const accommodations = [
   {
     title: "Safari Tent",
-    image: "/safari-tent-2.jpg",
+    image: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590126/Safari_Tent_-_Madhuban_Eco_Retreat_Bhopal_pbpcgr.avif",
     alt: "Nature Tent",
     description:
       "Experience one of the most unique jungle stays near Bhopal with our eco-luxury safari tents featuring open-to-sky showers, forest views, and crafted cane interiors.",
@@ -66,7 +66,7 @@ const accommodations = [
   {
     title: "Glamping Tents",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624859/glamping-tent1_rtvorw.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589796/madhuban-eco-retreat-glamping-tent-gallery-image-1.avif",
     alt: "Glamping Tent",
     description:
       "Enjoy boutique-style glamping with chic décor, ensuite bathrooms, and private sit-outs — perfect for a stylish forest experience.",
@@ -74,7 +74,7 @@ const accommodations = [
   {
     title: "Camping Tents",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624781/comping-tent11_ddwzgn.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624781/camping-tent-image-1-madhuban-eco-retreat-bhopal.jpg",
     alt: "Camping Tent",
     description:
       "Ideal for adventure seekers looking for a pure nature experience, our camping tents offer a peaceful, off-grid stay under starry skies.",

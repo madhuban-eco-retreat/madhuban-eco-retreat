@@ -34,7 +34,7 @@ const mediaContent = {
   "Madhuban Eco Retreat": [
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624799/gallery17_kh3tko.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771835637/madhuban-eco-retreat-best-resort-near-bhopal-1.avif",
     },
     {
       type: "video",
@@ -42,7 +42,7 @@ const mediaContent = {
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624820/gallery5_fk1vgr.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771834915/glamping-tent-madhuban-eco-retreat-1.avif",
     },
     {
       type: "video",
@@ -50,7 +50,7 @@ const mediaContent = {
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624810/gallery15_e23krk.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771835137/collage-image-madhuban-eco-retreat-best-resort-near-bhopal.avif",
     },
     {
       type: "video",
@@ -62,27 +62,27 @@ const mediaContent = {
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624802/gallery-18_d0pmsc.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771835534/glamping-tent-gallery-madhuban-eco-retreat.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624812/gallery-19_girrc2.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771835434/mud-house-sunset-madhuban-eco-retreat-bhopal.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624812/gallery-20_a7ovva.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771834843/pool-view-image-madhuban-eco-retreat-bhopal.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624797/gallery-21_kndrsa.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771835763/madhuban-eco-retreat-image.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624802/gallery-22_znmyae.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771835368/madhuban-eco-retreat-image-best-resort-near-bhopal.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624797/gallery-23_kiijvi.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771835708/mud-house-gallery-image-2-madhuban-eco-retreat.avif",
     },
     {
       type: "video",
@@ -92,49 +92,61 @@ const mediaContent = {
       type: "image",
       src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624803/gallery-25_gl6yav.jpg",
     },
+     {
+      type: "image",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771833362/dinning-area-image-7-madhuban-eco-retreat-bhopal.avif",
+    },
+    {
+      type: "image",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771583374/fine-dine-restaurant-in-ratapani-bhopal-madhuban-eco-retreat-2.avif",
+    },
+     {
+      type: "image",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771583365/madhuban-eco-retreat-best-restaurant-near-bhopal.avif",
+    },
+    {
+      type: "image",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590079/fine-dine-restaurant-in-ratapani-bhopal-madhuban-eco-retreat.avif",
+    },
+     {
+      type: "image",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771833360/dinning-area-image-8-madhuban-eco-retreat-bhopal.avif",
+    },
   ],
   "Tribal Culture At Madhuban": [
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624805/gallery3_cfrfp1.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771844179/ratapani-tribal-dance-madhuban-eco-retreat.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624806/gallery4_qytdib.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771844128/traditional-tribal-dance-madhuban-eco-retreat-bhopal.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624856/culture-3_ndnmsk.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771844127/tribal-folk-dance-madhuban-eco-retreat-ratapani.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624856/culture-4_rvexfh.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771844127/cultural-tribal-dance-madhuban-eco-retreat.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624856/culture-2_ju6n04.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771844126/tribal-dance-performance-ratapani-madhuban-eco-retreat.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624858/culture-7_md0xir.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771844126/local-tribal-dance-madhuban-eco-retreat-bhopal.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624855/culture-1_mriq5z.jpg",
-    },
-    {
-      type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624857/culture-5_hojn2l.jpg",
-    },
-    {
-      type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624857/culture-6_jp7rgp.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771844179/tribal-cultural-dance-madhuban-eco-retreat-ratapani.avif",
     },
   ],
   "Forest & Nature": [
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624861/nature7_mepmzx.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589990/nature-visit-ratapani-madhuban-eco-retreat-bhopal-2_ghxdvr.avif",
     },
     {
       type: "video",
@@ -142,7 +154,7 @@ const mediaContent = {
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624853/nature6_pmw8sl.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589981/nature-visit-ratapani-madhuban-eco-retreat-bhopal_d74xco.avif",
     },
     {
       type: "video",
@@ -150,83 +162,107 @@ const mediaContent = {
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624791/bird3_cx8rtl.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771830642/hummingbird-hawk-moth-image-from-ratapani-by-madhuban-eco-retreat.avif",
     },
     {
       type: "video",
       src: "https://res.cloudinary.com/dx3aj7a40/video/upload/v1770624860/nature-video1_hrklzp.mp4",
     },
     {
-      type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624852/nature3_vdzdtc.jpg",
-    },
-    {
       type: "video",
       src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624841/nature5_iylaqz.jpg",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624790/bird11_lts1c3.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771830630/indian-roller-image-from-ratapani-by-madhuban-eco-retreat.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624841/nature5_iylaqz.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771830480/black-winged-kite-image-from-ratapani-by-madhuban-eco-retreat.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624793/bird2_m5u4oj.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771830467/long-tailed-shrike-image-from-ratapani-by-madhuban-eco-retreat.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624791/bird6_aarwud.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771830190/male-plum-headed-parakeet-image-from-ratapani-by-madhuban-eco-retreat.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624835/nature10_sdmtoh.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589977/nature_forest_from_madhuban_eco_retreat_-_1_fwzpuv.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624835/nature11_jhjjox.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771830131/indian-pitta-image-from-ratapani-by-madhuban-eco-retreat-bhopal.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624836/nature12_ysvp1o.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574292/ratapani_nature_with_madhuban_eco_retreat_bhopal_axpr25.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624836/nature13_blcmzq.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771829898/unique-owl-image-ratapani-madhuban-eco-retreat.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624837/nature14_hpdniw.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771829849/experiences-madhuban-eco-retreat.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624838/nature15_op4oeb.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771834121/tourists-jungle-safari-jeep-madhuban-eco-retreat-ratapani.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624838/nature16_kjmsf0.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771594536/peacock-watching-experience-ratapani-madhuban-eco-retreat.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624838/nature17_iulp1m.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589741/bird-watching-ratapani-madhuban-eco-retreat_k2lmis.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624839/nature18_zmcbrp.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771840151/nature-forest-view-ratapani-tiger-reserve-madhuban-eco-retreat-bhopal-2.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624839/nature19_d0fuyn.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771840153/nature-forest-view-ratapani-tiger-reserve-madhuban-eco-retreat-bhopal-1.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624840/nature20_o65qii.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771840156/nature-forest-view-ratapani-tiger-reserve-madhuban-eco-retreat-bhopal.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624872/bird7_twnhyw.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771840149/nature-forest-view-ratapani-tiger-reserve-madhuban-eco-retreat-bhopal-3.avif",
+    },
+     {
+      type: "image",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771840123/nature-forest-view-ratapani-tiger-reserve-madhuban-eco-retreat-bhopal-4.avif",
+    },
+     {
+      type: "image",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771840121/nature-forest-view-ratapani-tiger-reserve-madhuban-eco-retreat-bhopal-5.avif",
+    },
+     {
+      type: "image",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771840119/nature-forest-view-ratapani-tiger-reserve-madhuban-eco-retreat-bhopal-6.avif",
+    },
+     {
+      type: "image",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771840073/nature-forest-view-ratapani-tiger-reserve-madhuban-eco-retreat-bhopal-7.avif",
+    },
+     {
+      type: "image",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771840071/nature-forest-view-ratapani-tiger-reserve-madhuban-eco-retreat-bhopal-8.avif",
+    },
+     {
+      type: "image",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771840069/nature-forest-view-ratapani-tiger-reserve-madhuban-eco-retreat-bhopal-9.avif",
+    },
+     {
+      type: "image",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771840067/nature-forest-view-ratapani-tiger-reserve-madhuban-eco-retreat-bhopal-10.avif",
     },
   ],
   "Bhim Bettika": [
@@ -282,7 +318,7 @@ const mediaContent = {
   "Saru Maru Caves": [
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624848/smCaves1_bhuzvj.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771843272/saru-maru-caves-madhuban-eco-retreat-bhopal-10.avif",
     },
     {
       type: "video",
@@ -290,23 +326,23 @@ const mediaContent = {
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624849/smCaves2_hxnq0o.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771843269/saru-maru-caves-madhuban-eco-retreat-bhopal-9.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624852/smCaves3_eprm7p.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771843193/saru-maru-caves-madhuban-eco-retreat-bhopal-8.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624850/smCaves4_c5smsa.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771843128/saru-maru-caves-madhuban-eco-retreat-bhopal-7.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624851/smCaves5_x8t1is.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771843069/saru-maru-caves-madhuban-eco-retreat-bhopal-6.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624868/smCaves7_yfhzz3.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771842890/smCaves12_dugzkm_qbidai.avif",
     },
     {
       type: "video",
@@ -314,19 +350,19 @@ const mediaContent = {
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624869/smCaves8_nz56zw.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771842847/saru-maru-caves-madhuban-eco-retreat-bhopal-5.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624867/smCaves9_obhtqq.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771842618/saru-maru-caves-madhuban-eco-retreat-bhopal-2.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624861/smCaves12_dugzkm.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771842617/saru-maru-caves-madhuban-eco-retreat-bhopal-3.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624867/smCaves11_umqv3l.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771842371/saru-maru-caves-madhuban-eco-retreat-bhopal.avif",
     },
   ],
   "Ginnorgarh Fort": [
