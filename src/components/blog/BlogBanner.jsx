@@ -19,7 +19,7 @@ const BlogBanner = () => {
       className="h-[90vh] bg-cover bg-center flex items-center justify-center"
       style={{
         backgroundImage:
-          "url('https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624824/hero-2_nlidxn.jpg')",
+          "url('/image/w_auto,c_fill,f_auto,q_auto,dpr_auto/madhuban-house.webp')",
       }}
     >
       <motion.div

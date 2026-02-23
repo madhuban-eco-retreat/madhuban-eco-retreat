@@ -6,7 +6,7 @@
   position: relative;
   background-size: cover;
   background-position: center;
-  padding: 2rem;
+  padding: 1rem;
   /* box-shadow: 0 6px 14px rgba(46, 77, 37, 0.15); */
   color: white;
   transition: transform 0.5s ease, box-shadow 0.3s ease;
@@ -29,7 +29,7 @@
 
 
 .contactModal .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .contactModal input[type="text"],
@@ -62,7 +62,7 @@
 }
 
 .contactModal textarea {
-  height: 150px;
+  height: 100px;
 }
 
 .submit-btn {

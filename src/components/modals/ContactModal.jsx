@@ -113,7 +113,7 @@ const ContactModal = () => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: { xs: "90%", md: "30%" },
+            width: { xs: "85%", md: "30%" },
             boxShadow: 24,
             border: "none",
             outline: "none",
@@ -135,11 +135,11 @@ const ContactModal = () => {
           >
             <IoMdCloseCircle />
           </Box>
-          <div className="rounded-2xl shadow-lg p-2 py-8 md:p-8 bg-[#6e6146] ">
-            <h2 className="heading1 font-semibold text-white text-center mb-2 font-primary">
+          <div className="rounded-2xl shadow-lg p-2 py-4 md:p-8 bg-[#6e6146] ">
+            <h2 className="heading1 font-semibold text-white text-center mb-1 font-primary">
               Send Us a Message
             </h2>
-            <p className="p-text text-gray-200 mb-2 md:mb-6 text-center">
+            <p className="p-text text-gray-200 mb-1 md:mb-4 text-center">
               Your message goes directly to WhatsApp.
             </p>
 
