@@ -44,7 +44,7 @@ const experiences = [
     title: "Forest Walks & Nature Trails",
     path: "forest-walks-and-nature-trails",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574328/Ratapani_Forest_Walk_With_Madhuban_Eco_Retreat_Team_ut5ycg.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771833985/students-walking-ratapani-tiger-reserve-madhuban-eco-retreat-team.avif",
     description:
       "Reconnect with the wilderness through guided forest walks and nature trails inside the Ratapani region. Learn about native plants, medicinal herbs, butterflies, and eco-systems while enjoying peaceful, device-free moments in the forest.",
     idealFor: "Nature lovers, wellness travelers, families, photographers",
@@ -54,7 +54,7 @@ const experiences = [
     title: "Bird Watching & Wilderness",
     path: "bird-watching-and-wilderness",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624794/bird1_soaozv.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589741/bird-watching-ratapani-madhuban-eco-retreat_k2lmis.avif",
     description:
       "Witness over 70+ species of birds across pristine landscapes — from paradise flycatchers to orioles and kingfishers. Our guided birding sessions offer a serene wilderness experience ideal for enthusiasts and researchers.",
     learnMoreBtn: "Explore Bird Watching",
@@ -65,7 +65,7 @@ const experiences = [
     title: "Recreational Facilities",
     path: "recreational-facilities",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574646/Adventure_Activity_at_Madhuban_Eco_Retreat_Bhopal_mm7iu3.webp",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771833671/adventure-activity-at-madhuban-eco-retreat-bhopal.avif",
     description:
       "Relax and unwind with eco-friendly recreation — from indoor games and cycling tracks to hammocks, swings, open-air seating, children zones, and quiet reading corners.",
     learnMoreBtn: "Explore Recreational Activities",

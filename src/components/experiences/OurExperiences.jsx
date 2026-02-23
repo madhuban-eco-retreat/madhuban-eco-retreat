@@ -22,7 +22,7 @@ const experiences = [
     title: "Forest Walks & Nature Trails",
     path: "forest-walks-and-nature-trails",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574328/ratapani_forest_walk_with_madhuban_eco_retreat_team_ut5ycg.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771833985/students-walking-ratapani-tiger-reserve-madhuban-eco-retreat-team.avif",
     description:
       "Reconnect with the wilderness through guided forest walks and nature trails inside the Ratapani region. Learn about native plants, medicinal herbs, butterflies, and eco-systems while enjoying peaceful, device-free moments in the forest.",
     idealFor: "Nature lovers, wellness travelers, families, photographers",

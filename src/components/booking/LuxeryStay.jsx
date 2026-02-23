@@ -39,50 +39,50 @@ const LuxeryStay = () => {
         <StayCard
           title="Mud House"
           subtitle="Traditional Jungle Resort Mud House"
-          imageUrl="/image/w_600,c_fill,f_auto,q_auto,dpr_auto/Mud_House_Image_2_-_Madhuban_Eco_Retreat_Bhopal_lbzlrg"
+          imageUrl="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771839088/mud-house-madhuban-eco-retreat-bhopal-3.avif"
           className="md:h-[400px]"
         />
         <StayCard
           title="Glamping Tent"
           subtitle="Luxury Jungle Camp Glamping"
-          imageUrl="/image/w_600,c_fill,f_auto,q_auto,dpr_auto/Glamping_Tent_-_Madhuban_Eco_Retreat_Bhopal_qur7og.avif"
+          imageUrl="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771843593/glamping-tent-madhuban-eco-retreat-bhopal.avif"
           className="md:h-[400px]"
         />
         <StayCard
           title="Pool Side Villa"
           subtitle=" Resort with Swimming Pool Villa"
-          imageUrl="/image/w_600,c_fill,f_auto,q_auto,dpr_auto/Pool_Side_Image_-_Madhuban_Eco_Retreat_gqprnd.avif"
+          imageUrl="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590030/pool-side-madhuban-eco-retreat-best-pool-resort-near-bhopal.avif"
           className=" md:h-[400px]"
         />
 
         <StayCard
           title="Safari Tent"
           subtitle="Ratapani Resort Safari Stay"
-          imageUrl="/image/w_600,c_fill,f_auto,q_auto,dpr_auto/Safari_Tent_Customer_Stay_Madhuban_Eco_Retreat_urrvl4.avif"
+          imageUrl="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590126/Safari_Tent_-_Madhuban_Eco_Retreat_Bhopal_pbpcgr.avif"
           className="md:h-[400px]"
         />
         <StayCard
           title="Camping Tent"
           subtitle="Nature Forest Resort Camping"
-          imageUrl="/image/w_700,c_fill,f_auto,q_auto,dpr_auto/camping-tent-image-1-madhuban-eco-retreat-bhopal.jpg"
+          imageUrl="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771843592/new-camping-tent-madhuban-eco-retreat-bhopal.avif"
           className="md:h-[400px]"
         />
         <StayCard
           title="Jungle Lodge"
           subtitle="Jungle Lodge near Ratapani Sanctuary"
-          imageUrl="/image/w_700,c_fill,f_auto,q_auto,dpr_auto/Guest_Stay_Madhuban_Eco_Retreat_Bhopal_cbn6fw.avif"
+          imageUrl="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771843589/Guest-stay-madhuban-eco-retreat-bhopal.avif"
           className="md:h-[400px]"
         />
         <StayCard
           title="Eco Luxury Room"
           subtitle="Eco Luxury Resort Stay Bhopal"
-          imageUrl="/image/w_700,c_fill,f_auto,q_auto,dpr_auto/glamping-tent-interior-madhuban-eco-retreat_l70tnc.avif"
+           imageUrl="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771843588/safari-tent-stay-madhuban-eco-retreat-bhopal.avif"
           className="md:h-[400px]"
         />
         <StayCard
           title="Group Stays"
           subtitle="Best Resort Near Bhopal for family Getaways"
-          imageUrl="/image/w_700,c_fill,f_auto,q_auto,dpr_auto/group_stay_room_revvtq.jpg"
+          imageUrl="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771843590/madhuban-eco-retreat-bhopal-restaurant.avif"
           className="md:h-[400px]"
         />
       </div>
