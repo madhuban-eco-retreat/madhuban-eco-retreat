@@ -42,7 +42,7 @@ const ReadyForEcoRetreat = () => {
       className="py-8 px-4 bg-cover bg-center bg-no-repeat bg-[#FAFAFA]"
       style={{
         backgroundImage:
-          "url('https://res.cloudinary.com/dx3aj7a40/image/upload/v1770642891/mud-house-11_mg037l.jpg')",
+          "url('https://res.cloudinary.com/dx3aj7a40/image/upload/v1771839088/mud-house-madhuban-eco-retreat-bhopal.avif')",
       }}
     >
       {" "}

@@ -28,7 +28,7 @@ const inclusions = [
 const heroSlides = [
   {
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771838253/madhuban-eco-retreat-evening-view.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771841749/balance-adventure-madhuban-eco-retreat-bhopal.avif",
   },
   {
     image:
@@ -41,6 +41,14 @@ const heroSlides = [
   {
     image:
       "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771838186/madhuban-eco-retreat-ratapani-bhopal-top-view.avif",
+  },
+  {
+    image:
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574252/rooms-near-pool-madhuban-eco-retreat-bhopal.avif",
+  },
+   {
+    image:
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771829898/unique-owl-image-ratapani-madhuban-eco-retreat.avif",
   },
 ];
 

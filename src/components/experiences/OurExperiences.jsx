@@ -43,7 +43,7 @@ const experiences = [
     title: "Recreational Facilities",
     path: "recreational-facilities",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589730/adventure_activity_at_madhuban_eco_retreat_bhopal_nadv4s.webp",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771841749/outdoor-adventure-obstacles-madhuban-eco-retreat-bhopal.avif",
     description:
       "Relax and unwind with eco-friendly recreation — from indoor games and cycling tracks to hammocks, swings, open-air seating, children zones, and quiet reading corners.",
     learnMoreBtn: "Explore Recreational Activities",
