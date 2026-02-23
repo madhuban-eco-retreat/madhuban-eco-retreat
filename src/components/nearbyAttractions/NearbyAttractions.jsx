@@ -12,15 +12,15 @@ const heroSlides = [
   },
   {
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624867/smCaves11_umqv3l.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771843069/saru-maru-caves-madhuban-eco-retreat-bhopal-6.avif",
   },
   {
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624851/smCaves6_o3o5yg.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771842371/saru-maru-caves-madhuban-eco-retreat-bhopal.avif",
   },
   {
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624841/nature8_gdp5ym.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771843128/saru-maru-caves-madhuban-eco-retreat-bhopal-7.avif",
   },
 ];
 

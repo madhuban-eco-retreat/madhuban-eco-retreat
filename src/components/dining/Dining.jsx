@@ -143,7 +143,7 @@ const Dining = () => {
       id: 23,
       url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771833358/dinning-area-image-6-madhuban-eco-retreat-bhopal.avif",
     },
-     {
+    {
       id: 24,
       url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590069/fine-dine-restaurant-in-ratapani-bhopal-madhuban-eco-retreat-1.avif",
     },
@@ -151,7 +151,7 @@ const Dining = () => {
       id: 25,
       url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590065/madhuban-eco-retreat-best-resort-near-bhopal.avif",
     },
-     {
+    {
       id: 26,
       url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771583374/fine-dine-restaurant-in-ratapani-bhopal-madhuban-eco-retreat-2.avif",
     },
@@ -159,11 +159,10 @@ const Dining = () => {
       id: 27,
       url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771583369/madhuban-eco-retreat-restaurant-image.avif",
     },
-     {
+    {
       id: 28,
       url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771583365/madhuban-eco-retreat-best-restaurant-near-bhopal.avif",
     },
-    
   ];
 
   const videos = [
@@ -200,7 +199,9 @@ const Dining = () => {
         <div className="relative w-full h-[85vh]  ">
           <img
             loading="lazy"
-            src={"/image/Dinning_Area_Image_-_Madhuban_Eco_Retreat_yze8zg.avif"}
+            src={
+              "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771583365/madhuban-eco-retreat-best-restaurant-near-bhopal.avif"
+            }
             alt="Farm Banner"
             className="w-full h-full object-cover"
           />

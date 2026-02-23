@@ -19,7 +19,7 @@ const ExperiencesBanner = () => {
       className="h-[90vh] bg-cover bg-center flex items-center justify-center"
       style={{
         backgroundImage:
-          "url('https://res.cloudinary.com/dx3aj7a40/image/upload/v1770644958/mud-house-50_oukece.jpg ')",
+          "url('https://res.cloudinary.com/dx3aj7a40/image/upload/v1771839089/mud-house-image-madhuban-eco-retreat-bhopal.avif')",
       }}
     >
       <motion.div

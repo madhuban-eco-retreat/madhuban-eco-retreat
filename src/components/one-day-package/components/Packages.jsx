@@ -32,10 +32,6 @@ const heroSlides = [
   },
   {
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771838077/madhuban-eco-retreat-forest-view-hero-section-1.avif",
-  },
-  {
-    image:
       "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771837947/mobile-hero-tiger-madhuban-eco-retreat-ratapani-bhopal.avif",
   },
   {
@@ -46,7 +42,7 @@ const heroSlides = [
     image:
       "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574252/rooms-near-pool-madhuban-eco-retreat-bhopal.avif",
   },
-   {
+  {
     image:
       "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771829898/unique-owl-image-ratapani-madhuban-eco-retreat.avif",
   },
