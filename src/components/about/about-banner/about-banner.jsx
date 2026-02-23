@@ -1,24 +1,29 @@
 import Slidingbanner from "@/common-components/banner/Slidingbanner";
 
 const storyImages = [
+   {
+    id: 1,
+    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771835763/madhuban-eco-retreat-image.avif",
+    alt: "Early construction phase",
+  },
   {
     id: 2,
-    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589796/Guest_Stay_Madhuban_Eco_Retreat_Bhopal_syxrnm.avif",
+    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771841749/balance-adventure-madhuban-eco-retreat-bhopal.avif",
     alt: "Early construction phase",
   },
   {
     id: 3,
-    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771583365/Dinning_Area_Image_-_Madhuban_Eco_Retreat_yze8zg.avif",
+    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771583365/madhuban-eco-retreat-best-restaurant-near-bhopal.avif",
     alt: "First guests enjoying the eco-camp",
   },
   {
     id: 4,
-    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590030/Pool_Side_Image_-_Madhuban_Eco_Retreat_gqprnd.avif",
+    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590126/Safari_Tent_-_Madhuban_Eco_Retreat_Bhopal_pbpcgr.avif",
     alt: "The retreat as it looks today",
   },
   {
     id: 5,
-    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589962/Mud_House_Image_3_-_Madhuban_Eco_Retreat_Bhopal_ajdzet.avif",
+    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590030/pool-side-madhuban-eco-retreat-best-pool-resort-near-bhopal.avif",
     alt: "Community involvement event",
   },
 ];
