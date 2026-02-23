@@ -54,7 +54,7 @@ const experiences = [
     title: "Bird Watching & Wilderness",
     path: "bird-watching-and-wilderness",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624794/bird1_soaozv.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589741/bird-watching-ratapani-madhuban-eco-retreat_k2lmis.avif",
     description:
       "Witness over 70+ species of birds across pristine landscapes — from paradise flycatchers to orioles and kingfishers. Our guided birding sessions offer a serene wilderness experience ideal for enthusiasts and researchers.",
     learnMoreBtn: "Explore Bird Watching",

@@ -50,7 +50,7 @@ const CookiesPopup = () => {
       // If no cookie preferences exist, show banner
       setTimeout(() => {
         setShowBanner(true);
-      }, 7000);
+      }, 10000);
     }
   }, []);
 

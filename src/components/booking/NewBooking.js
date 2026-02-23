@@ -236,30 +236,6 @@ ${guests}`;
     }, 100);
   };
 
-  const darkTheme = createTheme({
-    palette: {
-      mode: "dark",
-      primary: {
-        main: "#22c55e",
-      },
-      background: {
-        paper: "rgba(17, 20, 17, 0.95)",
-      },
-    },
-    typography: {
-      fontFamily: '"Plus Jakarta Sans", sans-serif',
-    },
-    components: {
-      MuiPaper: {
-        styleOverrides: {
-          root: {
-            backgroundImage: "none",
-          },
-        },
-      },
-    },
-  });
-
   return (
     <>
       {showThankYou && (
@@ -326,211 +302,214 @@ ${guests}`;
                 </p>
               </div>
 
-              <ThemeProvider theme={darkTheme}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <form
-                    className="grid grid-cols-1 md:grid-cols-2 gap-6 bookingForm"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      handleSubmit(e);
-                    }}
-                  >
-                    <div className="space-y-2 text-left">
-                      <label className="text-[10px] font-bold tracking-widest text-white uppercase ml-1">
-                        Full Name
-                      </label>
-                      <div className="relative">
-                        <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white z-10" />
-                        <input
-                          name="name"
-                          type="text"
-                          placeholder="Your name"
-                          className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:border-(--primaryGray2) focus:bg-white/10 transition-all text-white"
-                          onChange={handleChange}
-                        />
-                      </div>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <form
+                  className="grid grid-cols-1 md:grid-cols-2 gap-6 bookingForm"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSubmit(e);
+                  }}
+                >
+                  <div className="space-y-2 text-left">
+                    <label className="text-[10px] font-bold tracking-widest text-white uppercase ml-1">
+                      Full Name
+                    </label>
+                    <div className="relative">
+                      <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white z-10" />
+                      <input
+                        name="name"
+                        type="text"
+                        placeholder="Your name"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:border-(--primaryGray2) focus:bg-white/10 transition-all text-white"
+                        onChange={handleChange}
+                      />
                     </div>
+                  </div>
 
-                    <div className="space-y-2 text-left">
-                      <label className="text-[10px] font-bold tracking-widest text-white uppercase ml-1">
-                        WhatsApp Number
-                      </label>
-                      <div className="relative">
-                        <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white z-10" />
-                        <input
-                          type="tel"
-                          name="phone"
-                          value={formData.phone}
-                          placeholder="+91 XXXXX XXXXX"
-                          className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:border-(--primaryGray2) focus:bg-white/10 transition-all text-white"
-                          onChange={(e) => {
-                            const valueStr = e.target.value.replace(/\s/g, "");
-                            if (
-                              valueStr.length <= 13 &&
-                              /^\+?\d*$/.test(valueStr)
-                            ) {
-                              handleChange(e);
-                            }
+                  <div className="space-y-2 text-left">
+                    <label className="text-[10px] font-bold tracking-widest text-white uppercase ml-1">
+                      WhatsApp Number
+                    </label>
+                    <div className="relative">
+                      <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white z-10" />
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        placeholder="+91 XXXXX XXXXX"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:border-(--primaryGray2) focus:bg-white/10 transition-all text-white"
+                        onChange={(e) => {
+                          const valueStr = e.target.value.replace(/\s/g, "");
+                          if (
+                            valueStr.length <= 13 &&
+                            /^\+?\d*$/.test(valueStr)
+                          ) {
+                            handleChange(e);
+                          }
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 text-left">
+                    <label className="text-[10px] font-bold tracking-widest text-white uppercase ml-1">
+                      Guests
+                    </label>
+                    <div className="relative">
+                      <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white z-10 pointer-events-none" />
+                      <FormControl fullWidth>
+                        <Select
+                          name="guests"
+                          value={guests}
+                          onChange={(e) => setGuests(e.target.value)}
+                          displayEmpty
+                          sx={{
+                            backgroundColor: "rgba(255, 255, 255, 0.05)",
+                            border: "1px solid #fff",
+                            borderRadius: "0.75rem",
+                            height: "56px",
+                            paddingLeft: "32px",
+                            fontSize: "0.875rem",
+                            "& .MuiOutlinedInput-notchedOutline": {
+                              border: "none",
+                            },
+                            "&:hover .MuiOutlinedInput-notchedOutline": {
+                              border: "none",
+                            },
+                            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                              border: "none",
+                            },
+                            "&.Mui-focused": { border: "1px solid #fff" },
+                            transition: "all 0.2s",
+                            color: "white",
+                            "& .MuiSelect-icon": {
+                              color: "rgba(255,255,255,0.3)",
+                            },
                           }}
-                        />
-                      </div>
+                          MenuProps={{
+                            PaperProps: {
+                              className: "mui-paper-glass",
+                              sx: {
+                                marginTop: "8px",
+                                "& .MuiMenuItem-root": {
+                                  fontSize: "0.875rem",
+                                  paddingY: "12px",
+                                  "&.Mui-selected": {
+                                    backgroundColor: "var(--primary-gray2)",
+                                    color: "#fff",
+                                    fontWeight: "700",
+                                  },
+                                },
+                              },
+                            },
+                            MenuListProps: {
+                              sx: {
+                                maxHeight: "200px",
+                                overflowY: "auto",
+                                scrollbarColor:
+                                  "rgba(255, 255, 255, 0.3) transparent",
+                                "&::-webkit-scrollbar": {
+                                  width: "6px",
+                                },
+                                "&::-webkit-scrollbar-track": {
+                                  background: "transparent",
+                                },
+                                "&::-webkit-scrollbar-thumb": {
+                                  backgroundColor: "rgba(255, 255, 255, 0.3)",
+                                  borderRadius: "3px",
+                                },
+                              },
+                            },
+                          }}
+                        >
+                          {Array.from({ length: 10 }, (_, i) => (
+                            <MenuItem key={i} value={`${i + 1} Guest`}>
+                              {i + 1} Guest
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
                     </div>
+                  </div>
 
-                    <div className="space-y-2 text-left">
-                      <label className="text-[10px] font-bold tracking-widest text-white uppercase ml-1">
-                        Guests
-                      </label>
-                      <div className="relative">
-                        <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white z-10 pointer-events-none" />
-                        <FormControl fullWidth>
-                          <Select
-                            name="guests"
-                            value={guests}
-                            onChange={(e) => setGuests(e.target.value)}
-                            displayEmpty
-                            sx={{
-                              backgroundColor: "rgba(255, 255, 255, 0.05)",
-                              border: "1px solid #fff",
-                              borderRadius: "0.75rem",
-                              height: "56px",
-                              paddingLeft: "32px",
-                              fontSize: "0.875rem",
+                  <div className="space-y-2 text-left">
+                    <label className="text-[10px] font-bold tracking-widest text-white uppercase ml-1">
+                      Check-In
+                    </label>
+                    <div className="relative">
+                      <DatePicker
+                        value={checkIn}
+                        onChange={(newValue) => setCheckIn(newValue)}
+                        format="DD / MM / YYYY"
+                        slotProps={{
+                          textField: {
+                            fullWidth: true,
+                            placeholder: "Select Date",
+                            sx: {
+                              "& .MuiPickersInputBase-root": {
+                                color: "#fff",
+                                borderRadius: "14px",
+                                border: "1px solid #fff",
+                                "&:hover": {
+                                  border: "1px solid #fff",
+                                },
+                                "&.Mui-focused": {
+                                  border: "1px solid #fff",
+                                },
+                              },
+                              "& .MuiInputBase-root": {
+                                backgroundColor: "rgba(255, 255, 255, 0.05)",
+                                border: "1px solid #fff",
+                                borderRadius: "0.75rem",
+                                height: "56px",
+                                fontSize: "0.875rem",
+                                color: "#fff",
+                                paddingLeft: "8px",
+                                transition: "all 0.2s",
+                              },
                               "& .MuiOutlinedInput-notchedOutline": {
                                 border: "none",
+                                border: "1px solid #fff",
                               },
-                              "&:hover .MuiOutlinedInput-notchedOutline": {
-                                border: "none",
+                              "& .MuiInputAdornment-root .MuiSvgIcon-root": {
+                                color: "#fff",
+                                fontSize: "1.25rem",
                               },
-                              "&.Mui-focused .MuiOutlinedInput-notchedOutline":
-                                {
-                                  border: "none",
-                                },
-                              "&.Mui-focused": { border: "1px solid #fff" },
-                              transition: "all 0.2s",
-                              color: "white",
-                              "& .MuiSelect-icon": {
-                                color: "rgba(255,255,255,0.3)",
-                              },
-                            }}
-                            MenuProps={{
-                              PaperProps: {
+                            },
+                          },
+                          popper: {
+                            sx: {
+                              "& .MuiPaper-root": {
                                 className: "mui-paper-glass",
-                                sx: {
-                                  marginTop: "8px",
-                                  "& .MuiMenuItem-root": {
-                                    fontSize: "0.875rem",
-                                    paddingY: "12px",
-                                    "&.Mui-selected": {
-                                      backgroundColor: "var(--primary-gray2)",
-                                      color: "#fff",
-                                      fontWeight: "700",
-                                    },
-                                  },
-                                },
                               },
-                              MenuListProps: {
-                                sx: {
-                                  maxHeight: "200px",
-                                  overflowY: "auto",
-                                  scrollbarColor:
-                                    "rgba(255, 255, 255, 0.3) transparent",
-                                  "&::-webkit-scrollbar": {
-                                    width: "6px",
-                                  },
-                                  "&::-webkit-scrollbar-track": {
-                                    background: "transparent",
-                                  },
-                                  "&::-webkit-scrollbar-thumb": {
-                                    backgroundColor: "rgba(255, 255, 255, 0.3)",
-                                    borderRadius: "3px",
-                                  },
-                                },
-                              },
-                            }}
-                          >
-                            {Array.from({ length: 10 }, (_, i) => (
-                              <MenuItem key={i} value={`${i + 1} Guest`}>
-                                {i + 1} Guest
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </div>
+                            },
+                          },
+                          desktopPaper: {
+                            className: "mui-paper-glass",
+                          },
+                          mobilePaper: {
+                            className: "mui-paper-glass",
+                          },
+                        }}
+                      />
                     </div>
+                  </div>
 
-                    <div className="space-y-2 text-left">
-                      <label className="text-[10px] font-bold tracking-widest text-white uppercase ml-1">
-                        Check-In
-                      </label>
-                      <div className="relative">
-                        <DatePicker
-                          value={checkIn}
-                          onChange={(newValue) => setCheckIn(newValue)}
-                          format="DD / MM / YYYY"
-                          slotProps={{
-                            textField: {
-                              fullWidth: true,
-                              placeholder: "Select Date",
-                              sx: {
-                                "& .MuiInputBase-root": {
-                                  backgroundColor: "rgba(255, 255, 255, 0.05)",
-                                  border: "1px solid #fff",
-                                  borderRadius: "0.75rem",
-                                  height: "56px",
-                                  fontSize: "0.875rem",
-                                  color: "white",
-                                  paddingLeft: "8px",
-                                  transition: "all 0.2s",
-                                  "&:hover": {
-                                    border: "1px solid #fff",
-                                  },
-                                  "&.Mui-focused": {
-                                    border: "1px solid #fff",
-                                  },
-                                },
-                                "& .MuiOutlinedInput-notchedOutline": {
-                                  border: "none",
-                                },
-                                "& .MuiInputAdornment-root .MuiSvgIcon-root": {
-                                  color: "#fff",
-                                  fontSize: "1.25rem",
-                                },
-                              },
-                            },
-                            popper: {
-                              sx: {
-                                "& .MuiPaper-root": {
-                                  className: "mui-paper-glass",
-                                },
-                              },
-                            },
-                            desktopPaper: {
-                              className: "mui-paper-glass",
-                            },
-                            mobilePaper: {
-                              className: "mui-paper-glass",
-                            },
-                          }}
-                        />
-                      </div>
-                    </div>
-
-                    <button className="md:col-span-2 group flex items-center cursor-pointer justify-center gap-3 w-full bg-[#25D366]  text-white font-black text-sm tracking-widest py-5 rounded-xl transition-all hover:scale-101">
-                      <WhatsAppIcon className="w-5 h-5 " />
-                      SEND BY WHATSAPP
-                    </button>
-                    {error && (
-                      <p className="md:col-span-2 text-red-500 text-sm font-semibold text-center">
-                        {error}
-                      </p>
-                    )}
-                    <p className="md:col-span-2 text-[10px] font-bold tracking-widest text-white uppercase">
-                      Clicking submit opens WhatsApp with your details ready to
-                      send.
+                  <button className="md:col-span-2 group flex items-center cursor-pointer justify-center gap-3 w-full bg-[#25D366]  text-white font-black text-sm tracking-widest py-5 rounded-xl transition-all hover:scale-101">
+                    <WhatsAppIcon className="w-5 h-5 " />
+                    SEND BY WHATSAPP
+                  </button>
+                  {error && (
+                    <p className="md:col-span-2 text-red-500 text-sm font-semibold text-center">
+                      {error}
                     </p>
-                  </form>
-                </LocalizationProvider>
-              </ThemeProvider>
+                  )}
+                  <p className="md:col-span-2 text-[10px] font-bold tracking-widest text-white uppercase">
+                    Clicking submit opens WhatsApp with your details ready to
+                    send.
+                  </p>
+                </form>
+              </LocalizationProvider>
             </div>
             {/* <div className="mt-12 flex items-center gap-6 justify-center">
               <div className="flex -space-x-3">
