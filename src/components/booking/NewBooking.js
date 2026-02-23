@@ -27,6 +27,7 @@ import LuxeryStay from "./LuxeryStay";
 import Map from "./Map";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import "./Booking.css";
+import Image from "next/image";
 
 const ADMIN_WHATSAPP = phone;
 
@@ -281,7 +282,9 @@ ${guests}`;
         <main className="relative min-h-screen flex flex-col items-center justify-center pt-50 pb-24 overflow-hidden  ">
           <div className="absolute inset-0 z-0">
             <div className="absolute inset-0 hero-overlay z-10"></div>
-            <img
+            <Image
+              width={1200}
+              height={400}
               alt="Lush tropical jungle retreat with luxury wooden cabins"
               className="w-full h-full object-cover"
               src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771596757/madhuban-eco-retreat-bhopal-image_l87khe.avif"

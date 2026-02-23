@@ -138,6 +138,7 @@ const MainNavigation = () => {
                   src={item.img}
                   alt={item.name}
                   className={item.className}
+                  loading="lazy"
                 />
               </a>
             ))}
