@@ -31,3 +31,15 @@ export const generateMataDataForSEO = ({
     robots: robots,
   };
 };
+
+export function getAltFromUrl(url) {
+  if (!url) return "";
+
+  const fileName = url.split("/").pop();
+  let name = fileName.replace(/\.[^/.]+$/, "");
+
+  // remove last random cloudinary hash (like _lbzlrg)
+  name = name.replace(/_[a-z0-9]+$/i, "");
+
+  return name.replace(/[-_]+/g, " ").replace(/\s+/g, " ").trim();
+}

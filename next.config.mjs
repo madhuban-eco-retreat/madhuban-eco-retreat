@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   /* config options here */
+
   images: {
     remotePatterns: [
       {
@@ -30,6 +31,12 @@ const nextConfig = {
         destination: "/about-us",
         permanent: true,
       },
+      {
+        source: "/hotels/madhuban-resort",
+        destination: "/",
+        permanent: true,
+      },
+
       {
         source: "/about/Vision-&-Mission",
         destination: "/about-us",
@@ -88,12 +95,16 @@ const nextConfig = {
       { source: "/icon-boxes", destination: "/", permanent: true },
 
       { source: "/hotel-account", destination: "/booking", permanent: true },
-      { source: "/help/contact", destination: "/contact", permanent: true },
-      { source: "/hotel-search", destination: "/contact", permanent: true },
+      { source: "/help/contact", destination: "/contact-us", permanent: true },
+      { source: "/hotel-search", destination: "/contact-us", permanent: true },
 
       { source: "/tabs-spa", destination: "/stay", permanent: true },
       { source: "/siver-logo", destination: "/gallery", permanent: true },
-
+      {
+        source: "/hotel/:path*",
+        destination: "/",
+        permanent: true,
+      },
       {
         source: "/rooms/camping-tents",
         destination: "/stay/camping-tent",
@@ -159,7 +170,7 @@ const nextConfig = {
 
       {
         source: "/hotel-term-condition",
-        destination: "/terms",
+        destination: "/terms-and-condition",
         permanent: true,
       },
 
@@ -186,6 +197,47 @@ const nextConfig = {
       {
         source: "/our-services/etiam-sit-amet-lectus-quis-est-congue-mollis",
         destination: "/about-us",
+        permanent: true,
+      },
+      {
+        source: "/madhuban-bamboo-cafe-8",
+        destination: "/stay",
+        permanent: true,
+      },
+      {
+        source: "/pexels-pok-rie-144681",
+        destination: "/stay",
+        permanent: true,
+      },
+      {
+        source: "/madhuban-camp-site-4",
+        destination: "/stay",
+        permanent: true,
+      },
+      {
+        source: "/cropped-madhuban-logo-e1726477323214-png",
+        destination: "/gallery",
+        permanent: true,
+      },
+      {
+        source: "/cropped-madhuban-logo-e1726477323214-1-png",
+        destination: "/gallery",
+        permanent: true,
+      },
+      {
+        source: "/cropped-cropped-madhuban-logo-e1726477323214-1-png",
+        destination: "/gallery",
+        permanent: true,
+      },
+
+      {
+        source: "/faqs",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/our-services/phasellus-congue-lacus-eget",
+        destination: "/",
         permanent: true,
       },
     ];

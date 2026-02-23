@@ -2,8 +2,8 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
-import { primary_gray2 } from "@/styles/variables";
 import Image from "next/image";
+import { getAltFromUrl } from "@/utills/helperFunctions";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -131,7 +131,7 @@ const Accommodations = () => {
                   width={300}
                   height={200}
                   src={item.image}
-                  alt={item.alt}
+                  alt={getAltFromUrl(item.image)}
                   className="w-full h-full object-cover"
                 />
               </div>
