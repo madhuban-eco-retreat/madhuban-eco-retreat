@@ -91,14 +91,14 @@ export default function App() {
           name={"prevSlide"}
           className="swiper-prev absolute left-0 top-1/2 z-10 cursor-pointer"
         >
-          <IoIosArrowDropleftCircle size={40} className="text-primary-gray" />
+          <IoIosArrowDropleftCircle size={40} className="text-primary-gray"  aria-label="arrow" />
         </button>
 
         <button
           name={"nextSlide"}
           className="swiper-next absolute right-0 top-1/2 z-10 cursor-pointer"
         >
-          <IoIosArrowDroprightCircle size={40} className="text-primary-gray" />
+          <IoIosArrowDroprightCircle size={40} className="text-primary-gray" aria-label="arrow" />
         </button>
 
         {testimonials.map((testimonial) => (
