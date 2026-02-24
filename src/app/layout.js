@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <Script
-          strategy="beforeInteractive"
+          strategy="lazyOnload"
           src="https://t.contentsquare.net/uxa/d252099aa0f2e.js"
         ></Script>
         <Script
