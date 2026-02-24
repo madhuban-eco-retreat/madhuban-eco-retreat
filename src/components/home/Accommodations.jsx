@@ -133,6 +133,7 @@ const Accommodations = () => {
                   src={item.image}
                   alt={getAltFromUrl(item.image)}
                   className="w-full h-full object-cover"
+                  aria-label={getAltFromUrl(item.image)}
                 />
               </div>
 

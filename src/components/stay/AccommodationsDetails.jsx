@@ -26,7 +26,7 @@ const AccommodationDetail = () => {
   const accommodation = getAccommodation(slug);
   const randomImgUrl =
     accommodation?.galleryImages[
-      Math.floor(Math.random() * accommodation.galleryImages.length)
+    Math.floor(Math.random() * accommodation.galleryImages.length)
     ];
 
   if (!accommodation) {
@@ -43,7 +43,7 @@ const AccommodationDetail = () => {
           href="/stay"
           className="mt-[30px] font-primary inline-flex items-center bg-green-700 text-gray-500 font-medium py-3 px-6 rounded-md hover:bg-green-600 transition-colors duration-300"
         >
-          <ChevronLeft size={20} className="mr-2" />
+          <ChevronLeft size={20} className="mr-2" aria-label="Left" />
           Back to All Accommodations
         </Link>
       </div>
@@ -60,6 +60,7 @@ const AccommodationDetail = () => {
               className="inline-flex items-center font-semibold text-[rgb(110,97,70)] mt-8 transition-colors duration-300 group"
             >
               <ChevronLeft
+                aria-label="left"
                 size={20}
                 className="font-primary  font-medium mr-1 group-hover:-translate-x-1 transition-transform duration-300"
               />
@@ -115,8 +116,8 @@ const AccommodationDetail = () => {
                           i < Math.floor(accommodation.rating)
                             ? "text-yellow-500 fill-current"
                             : i < accommodation.rating
-                            ? "text-yellow-500"
-                            : "text-gray-300"
+                              ? "text-yellow-500"
+                              : "text-gray-300"
                         }
                       />
                     ))}
@@ -149,6 +150,7 @@ const AccommodationDetail = () => {
                               className="flex items-start font-primary  text-primary-gray2 p-text "
                             >
                               <Check
+                                aria-label="check"
                                 size={16}
                                 className="text-primary-gray2 mr-2 mt-1"
                               />
@@ -233,7 +235,7 @@ const AccommodationDetail = () => {
                     href="/booking"
                     className="font-inter w-full flex items-center justify-center bg-[rgb(110,97,70)] text-white font-medium py-3 px-6 rounded-md hover:bg-[rgb(123,108,80)] p-text"
                   >
-                    <CalendarDays size={20} className="mr-2" />
+                    <CalendarDays size={20} className="mr-2" aria-label="calender" />
                     Book Your Stay
                   </Link>
                 </div>
