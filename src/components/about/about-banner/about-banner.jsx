@@ -3,12 +3,12 @@ import Slidingbanner from "@/common-components/banner/Slidingbanner";
 const storyImages = [
    {
     id: 1,
-    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771835763/madhuban-eco-retreat-image.avif",
+    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771841749/outdoor-adventure-obstacles-madhuban-eco-retreat-bhopal.avif",
     alt: "Early construction phase",
   },
   {
     id: 2,
-    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771841749/balance-adventure-madhuban-eco-retreat-bhopal.avif",
+    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771839088/mud-house-madhuban-eco-retreat-bhopal.avif",
     alt: "Early construction phase",
   },
   {

@@ -939,7 +939,7 @@ export const accommodationsData = [
       "Each tent is thoughtfully crafted with elegant cane furniture, a vanity and dressing space, a separate shower area, and an open-to-sky bath surrounded by nature. Whether you're a couple seeking a peaceful getaway, a family looking for a unique stay near Bhopal, or a nature lover wanting to unwind amidst wilderness, this safari tent provides the ideal blend of rustic charm and eco-luxury.",
     ],
     galleryImages: [
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590129/Safari_Tent_Customer_Stay_Madhuban_Eco_Retreat_urrvl4.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590129/guest-near-safari-tent-madhuban-eco-retreat-bhopal.avif",
       "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590126/Safari_Tent_-_Madhuban_Eco_Retreat_Bhopal_pbpcgr.avif",
       "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624788/safari-tent-image-madhuban-eco-retreat-bhopal.jpg",
     ],
@@ -999,9 +999,9 @@ export const accommodationsData = [
       "Designed for travelers seeking a mud house stay near Bhopal, a cultural escape, or an eco-friendly retreat, this is one of the finest and most authentic mud cottage experiences in the Ratapani region.",
     ],
     galleryImages: [
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589967/mud-house-image-madhuban-eco-retreat-bhopal_z3psu5.avif",
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590096/rooms_interior_image_madhubuan_eco_retreat_bhopal_lkzxgw.avif",
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589955/Mud_House_Image_2_-_Madhuban_Eco_Retreat_Bhopal_ob8fgg.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771839090/mud-house-madhuban-eco-retreat-bhopal-4.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771839088/mud-house-madhuban-eco-retreat-bhopal-3.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771839088/mud-house-madhuban-eco-retreat-bhopal.avif",
     ],
     amenities: [
       "King Size Bed",
@@ -1067,8 +1067,8 @@ export const accommodationsData = [
     ],
     galleryImages: [
       "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590044/pool-view-image-madhuban-eco-retreat-bhopal_p6ccda.avif",
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590030/pool_side_image_-_madhuban_eco_retreat_gqprnd.avif",
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589943/madhuban_eco_retreat_pool_side_villa_image_pcwltb.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590030/pool-side-madhuban-eco-retreat-best-pool-resort-near-bhopal.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589943/resort-poolside-view-madhuban-eco-retreat-bhopal.avif",
     ],
     amenities: [
       "King Size Bed",
@@ -1117,7 +1117,7 @@ export const accommodationsData = [
     name: "Glamping Tents – Boutique Comfort in the Heart of Ratapani",
     slug: "glamping-tents",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624859/glamping-tent1_rtvorw.jpg",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771583489/madhuban-eco-retreat-glamping-tent-gallery-image-2.avif",
     altText: "Luxury glamping tent with deck overlooking greenery",
     descriptions: [
       "Enjoy the charm of the outdoors with the comfort of a thoughtfully designed stay in our Glamping Tents. Set amid Ratapani’s peaceful landscape, each tent combines natural textures with warm, elegant décor. Inside, you’ll find a plush king-size bed, ensuite shower, soft lighting, and calming interiors that make your stay effortless and relaxing.",

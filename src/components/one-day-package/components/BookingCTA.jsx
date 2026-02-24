@@ -42,7 +42,7 @@ export const BookingCTA = () => {
               className="cursor-pointer w-full sm:w-auto bg-[#22c55e] text-white px-10 py-5 rounded-2xl font-bold text-sm md:text-lg hover:bg-[#16a34a] transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-3 "
             >
               <div>
-                <FaWhatsapp size={22} />
+                <FaWhatsapp size={22} aria-label="whatsapp" />
               </div>
               Contact us to book your Day Outing Package
             </button>
@@ -50,7 +50,7 @@ export const BookingCTA = () => {
               href={`tel:+${phone}`}
               className=" cursor-pointer w-full sm:w-auto bg-white/5 border border-white/10 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white/10 transition-all flex items-center justify-center gap-3"
             >
-              <Phone size={22} />
+              <Phone size={22} aria-label="phone" />
               Call Now
             </Link>
           </div>
@@ -58,15 +58,15 @@ export const BookingCTA = () => {
           {/* Footer Features */}
           <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 opacity-60">
             <div className="flex items-center gap-2 p-text   font-bold  text-white">
-              <Sprout size={16} className="text-white" />
+              <Sprout size={16} className="text-white" aria-label="sprout" />
               Mindful Nature
             </div>
             <div className="flex items-center gap-2 p-text   font-bold  text-white">
-              <UtensilsCrossed size={16} className="text-white" />
+              <UtensilsCrossed size={16} className="text-white" aria-label="UtensilsCrossed"/>
               Organic Dining
             </div>
             <div className="flex items-center gap-2 p-text   font-bold  text-white">
-              <TreePine size={16} className="text-white" />
+              <TreePine size={16} className="text-white" aria-label="tree" />
               Eco-Friendly
             </div>
           </div>

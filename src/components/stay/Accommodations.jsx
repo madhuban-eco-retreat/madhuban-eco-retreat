@@ -88,7 +88,7 @@ const accommodationsData = [
     name: "Pool Side Villa",
     slug: "pool-side-room",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589943/resort-poolside-view-madhuban-eco-retreat-bhopal.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590007/swimming-pool-view-madhuban-eco-retreat-bhopal.avif",
     altText: "Poolside room with beautiful garden views",
     shortDescription:
       "Wake up to sunlight dancing on the eco-pool and unwind to the soothing rhythm of nature. Our elegant Pool Side Villas offer the perfect balance of sophistication and serenity. Ideal for couples, families, or anyone looking for a private poolside villa near Bhopal.",

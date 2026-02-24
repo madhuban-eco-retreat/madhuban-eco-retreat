@@ -27,8 +27,8 @@ export const BookingBanner = () => {
         </div>
       </div>
       <Link href={`tel:+${phone}`}>
-        <button className="w-full cursor-pointer hover:scale-102 md:w-auto bg-primary-gray2 text-white   px-5 py-3 md:py-5 rounded-xl font-black  text-sm md:text-md hover:bg-[#12b87f] transition-transform active:scale-95">
-          <LocalPhoneIcon sx={{ fill: "#ffffff" }} /> CALL NOW
+        <button  title="call" className="w-full cursor-pointer hover:scale-102 md:w-auto bg-primary-gray2 text-white   px-5 py-3 md:py-5 rounded-xl font-black  text-sm md:text-md hover:bg-[#12b87f] transition-transform active:scale-95">
+          <LocalPhoneIcon sx={{ fill: "#ffffff" }} arial-label="call"  /> CALL NOW
         </button>
       </Link>
     </div>
