@@ -8,7 +8,7 @@ import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
 const heroSlides = [
   {
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771594596/bhimbetika-image-madhuban-eco-retreat-bhopal.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771843269/saru-maru-caves-madhuban-eco-retreat-bhopal-9.avif",
   },
   {
     image:
@@ -178,7 +178,7 @@ const NearbyAttractions = () => {
                       className="absolute inset-0 bg-cover bg-center"
                       style={{ backgroundImage: `url(${slide.image})` }}
                     >
-                      <div className="absolute inset-0 bg-black/30"></div>
+                      {/* <div className="absolute inset-0 bg-black/30"></div> */}
                     </div>
                   </motion.div>
                 ),

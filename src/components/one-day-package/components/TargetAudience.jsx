@@ -4,25 +4,25 @@ import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
 
 const segments = [
   {
-    icon: <Sun size={24} />,
+    icon: <Sun size={24} aria-label="day" />,
     title: "One Day Picnickers",
     description:
       "Perfect for those seeking a quick escape near Bhopal without the commitment of an overnight stay. Rejuvenate your spirit in a single day.",
   },
   {
-    icon: <Users size={24} />,
+    icon: <Users size={24}  aria-label="teams"/>,
     title: "Corporate Teams",
     description:
       "Boost morale with tailored corporate day outings designed for team bonding in the lap of nature. Professional yet profoundly refreshing.",
   },
   {
-    icon: <UserRound size={24} />,
+    icon: <UserRound size={24} aria-label="families"/>,
     title: "Families",
     description:
       "A safe, hygienic, and serene environment where children and elders alike can relax. Create memories that bridge generations.",
   },
   {
-    icon: <Trees size={24} />,
+    icon: <Trees size={24} aria-label="lovers"/>,
     title: "Nature Lovers",
     description:
       "Immerse yourself in a short forest escape with lush greenery and tranquil vibes. Discover rare flora and fauna just outside the city.",
@@ -85,7 +85,7 @@ export const TargetAudience = () => {
 
           <div className="md:col-span-3 glass-card p-10 rounded-[32px] border-white/5 bg-white/[0.02] flex flex-col md:flex-row items-center md:items-center gap-8 hover:bg-white/[0.04] transition-all group">
             <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center text-white shrink-0 group-hover:bg-(--primary-gray2) group-hover:text-white transition-all">
-              <Waves size={32} />
+              <Waves size={32} aria-label="waves" />
             </div>
             <div className="space-y-4">
               <h4 className="text-xl primary-font-family   text-white text-center md:text-left">

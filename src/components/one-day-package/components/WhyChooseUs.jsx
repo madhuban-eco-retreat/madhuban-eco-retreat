@@ -4,19 +4,19 @@ import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
 
 const reasons = [
   {
-    icon: <MessageSquare className="w-6 h-6" />,
+    icon: <MessageSquare className="w-6 h-6" aria-label="experience" />,
     title: "Nature-Centered Experience",
     description:
       "Immerse yourself in authentic wilderness where the rustling leaves are the only soundtrack to your day.",
   },
   {
-    icon: <Leaf className="w-6 h-6" />,
+    icon: <Leaf className="w-6 h-6" aria-label="eco-friendly" />,
     title: "Eco-Friendly & Peaceful",
     description:
       "Sustainable practices and minimal disruption to the local ecosystem ensure a guilt-free luxury experience.",
   },
   {
-    icon: <Users className="w-6 h-6" />,
+    icon: <Users className="w-6 h-6" aria-label="groups" />,
     title: "Ideal for All Groups",
     description:
       "Tailored experiences for kids, families, corporate teams looking for offsites, and friends seeking adventure.",

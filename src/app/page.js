@@ -6,6 +6,7 @@ const HomeSchema = {
   "@context": "https://schema.org",
   "@type": "Resort",
   name: "Madhuban Eco Retreat",
+  alternateName : "Madhuban Eco Retreat Bhopal",
   url: "https://www.madhubanecoretreat.com/",
   description:
     "Madhuban Eco Retreat is an eco-luxury resort near Ratapani Wildlife Sanctuary in Bhopal, offering sustainable stays, nature walks, bird watching, and farm-to-table dining.",

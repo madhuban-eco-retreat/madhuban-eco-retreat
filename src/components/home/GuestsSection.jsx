@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
 import { motion } from "framer-motion";
 
@@ -39,17 +40,17 @@ const fadeInUp = {
 
 const celebrities = [
   {
-    img: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574233/vidhya-balan-at-madhuban-eco-retreat-bhopal.avif",
+    img: "https://res.cloudinary.com/dx3aj7a40/image/upload/f_auto,q_auto,w_600/v1771574233/vidhya-balan-at-madhuban-eco-retreat-bhopal.avif",
     name: "Vidya Balan",
     details: " Indian Actress",
   },
   {
-    img: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771580207/vijay-raaz-indian-actor-at-madhuban-eco-retreat.webp",
+    img: "https://res.cloudinary.com/dx3aj7a40/image/upload/f_auto,q_auto,w_600/v1771580207/vijay-raaz-indian-actor-at-madhuban-eco-retreat.webp",
     name: " Vijay Raaz",
     details: "Indian Actor",
   },
   {
-    img: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574230/samir-somaiya-madhuban-eco-retreat-bhopal.avif",
+    img: "https://res.cloudinary.com/dx3aj7a40/image/upload/f_auto,q_auto,w_600/v1771574230/samir-somaiya-madhuban-eco-retreat-bhopal.avif",
     name: "Samir Somaiya",
     details: "President, Somaiya Group",
   },
@@ -81,32 +82,32 @@ const GuestsSection = () => {
           viewport={{ once: true, margin: "-100px" }}
           variants={containerVariants}
         >
-          {celebrities.map((celeb, i) => {
-            return (
-              <motion.div
-                key={i}
-                className="relative h-80 rounded-lg overflow-hidden shadow-lg group"
-                variants={itemVariants}
-                whileHover={{ scale: 1.03 }}
-              >
-                <img
-                  src={celeb.img}
-                  alt="Guest Experience"
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute  inset-0 bg-black/50 flex flex-col justify-end p-4">
-                  <div className="ml-5">
-                    <h3 className="font-primary  text-[rgb(190,175,145)] tracking-widest text-lg md:text-xl">
-                      {celeb.name}
-                    </h3>
-                    <p className="text-[rgb(204,180,120)] text-sm tracking-wider font-arial-narrow">
-                      {celeb.details}
-                    </p>
-                  </div>
+          {celebrities.map((celeb, i) => (
+            <motion.div
+              key={i}
+              className="relative h-80 rounded-lg overflow-hidden shadow-lg group"
+              variants={itemVariants}
+              whileHover={{ scale: 1.03 }}
+            >
+              <Image
+                src={celeb.img}
+                alt={`${celeb.name} at Madhuban Eco Retreat`}
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className=" object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+              <div className="absolute  inset-0 bg-black/50 flex flex-col justify-end p-4">
+                <div className="ml-5">
+                  <h3 className="font-primary  text-[rgb(190,175,145)] tracking-widest text-lg md:text-xl">
+                    {celeb.name}
+                  </h3>
+                  <p className="text-[rgb(204,180,120)] text-sm tracking-wider font-arial-narrow">
+                    {celeb.details}
+                  </p>
                 </div>
-              </motion.div>
-            );
-          })}
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
     </section>

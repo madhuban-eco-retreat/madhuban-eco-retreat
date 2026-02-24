@@ -43,7 +43,7 @@ export const Location = () => {
             <div className="p-8 rounded-[32px] bg-white/[0.02] border border-white/5 group hover:bg-white/[0.05] transition-all duration-300">
               <div className="flex gap-6 items-center">
                 <div className="w-14  h-14 bg-white/5 rounded-2xl flex items-center justify-center text-gray-200  transition-colors">
-                  <Car size={28} />
+                  <Car size={28} aria-label="car" />
                 </div>
                 <div className="space-y-2">
                   <h4 className="text-lg md:text-xl font-bold text-white">
@@ -53,7 +53,7 @@ export const Location = () => {
                     Ideal same-day return for urban explorers.
                   </p>
                   <div className="flex items-center gap-2 text-white font-bold text-sm pt-2">
-                    <Clock size={16} />
+                    <Clock size={16} aria-label="clock" />
                     <span>Approx. 45-minute drive</span>
                   </div>
                 </div>
@@ -63,7 +63,7 @@ export const Location = () => {
             <div className="p-8 rounded-[32px] bg-white/[0.02] border border-white/5 group hover:bg-white/[0.05] transition-all duration-300">
               <div className="flex gap-6 items-center">
                 <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-gray-200  transition-colors">
-                  <Users size={28} />
+                  <Users size={28} aria-label="users" />
                 </div>
                 <div className="space-y-2">
                   <h4 className="text-lg md:text-xl font-bold text-white">
@@ -73,7 +73,7 @@ export const Location = () => {
                     Popular choice for planned weekend group outings.
                   </p>
                   <div className="flex items-center gap-2 text-white font-bold text-sm pt-2">
-                    <Clock size={16} />
+                    <Clock size={16} aria-label="clock"/>
                     <span>Approx. 3-hour drive</span>
                   </div>
                 </div>
@@ -83,7 +83,7 @@ export const Location = () => {
             <div className="p-8 rounded-[32px] bg-white/[0.02] border border-white/5 group hover:bg-white/[0.05] transition-all duration-300">
               <div className="flex gap-6 items-center">
                 <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-gray-200  transition-colors">
-                  <TreePine size={28} />
+                  <TreePine size={28} aria-label="tree" />
                 </div>
                 <div className="space-y-2">
                   <h4 className="text-lg md:text-xl font-bold text-white">
@@ -94,7 +94,7 @@ export const Location = () => {
                     reserves.
                   </p>
                   <div className="flex items-center gap-2 text-white font-bold text-sm pt-2">
-                    <MapPin size={16} />
+                    <MapPin size={16} aria-label="map pin" />
                     <span>Nature at your doorstep</span>
                   </div>
                 </div>

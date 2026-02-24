@@ -27,7 +27,7 @@ export const Hero = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-          <button
+          <button title=" Book Your Day Outing"
             onClick={() => {
               window.open(`https://wa.me/${phone}`, "_blank");
             }}
