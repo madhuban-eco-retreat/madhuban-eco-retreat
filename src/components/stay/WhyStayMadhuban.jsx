@@ -52,14 +52,8 @@ const WhyStayMadhuban = () => {
               viewport={{ once: true }}
             >
               <p className=" text-justify md:text-center  text-white p-text">
-                Experience sustainable living in the heart of Ratapani. Every
-                accommodation—whether a safari tent, mud house, glamping tent,
-                camping setup, or poolside villa—is designed with local
-                materials, responsible practices, and nature-first principles.
-                Guests enjoy peaceful forest views, organic food experiences,
-                mindful activities, and the perfect mix of comfort and
-                wilderness—making it one of the top weekend getaways near
-                Bhopal.
+               Experience sustainable living in the heart of Ratapani. Every accommodation — whether a safari tent in Ratapani, mud villa, glamping tent, camping setup, or poolside villa — is designed with local materials, responsible practices, and nature-first principles. Guests enjoy peaceful forest views, organic food experiences, mindful activities, and the perfect mix of comfort and wilderness. For Ratapani eco resort pricing and booking, get in touch with our team or check availability directly on the reservations page — making it easy to plan the best weekend getaway near Bhopal, any time of the year.
+
               </p>
             </motion.div>
           </div>

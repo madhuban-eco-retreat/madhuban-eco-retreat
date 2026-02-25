@@ -182,20 +182,18 @@ const nightCampingFaqs = [
 //************************metadata**********************************
 
 const safariTentMetadata = {
-  title: "Safari Tent House Ratapani | Eco Luxury Safari Tent Near Bhopal",
+  title: "Safari Tent in Ratapani | Eco-Luxury Stay Near Bhopal",
 
   description:
-    "Experience eco-luxury in our safari tent house in Ratapani. Streamside views, open-sky shower, infinity pool, and premium amenities near Bhopal. Book your stay.",
+    "Stay in our eco-luxury safari tents at Madhuban Ratapani — streamside location, open-sky shower & forest views. Best jungle stay near Bhopal. Book your stay now!",
 
   keywords: [
-    "safari tent house ratapani",
-    "safari tent near bhopal",
-    "safari tent house price",
-    "safari tent house ratapani ticket price",
-    "madhuban eco retreat safari tent",
-    "family safari tent stay bhopal",
-    "ratapani jungle stay",
-    "eco safari tent mp",
+    "safari tent Ratapani",
+    "Ratapani jungle stay",
+    "eco-luxury tent Ratapani",
+    "family safari stay Ratapani",
+    "forest adventure stay near Bhopal"
+
   ],
 
   alternates: {
@@ -236,20 +234,18 @@ const mudHouseMetadata = {
 };
 
 const poolSideMetadata = {
-  title: "Pool Side Villa Ratapani | Luxury Pool Villa Stay Near Bhopal",
+  title: "Poolside Villa Ratapani | Luxury Eco Stay Near Bhopal",
 
   description:
-    "Experience eco-luxury in our Pool Side Villa near Bhopal. Nature views, private comfort, infinity pool access, and boutique amenities. Book your stay today.",
+    " Stay in our private poolside villa at Madhuban Ratapani — infinity pool, forest views & boutique luxury. Perfect for couples & families near Bhopal. Book now!",
 
   keywords: [
-    "pool side villa near bhopal",
-    "private pool villa bhopal",
-    "pool villa ratapani",
-    "pool villa stay mp",
-    "pool villa in madhya pradesh",
-    "eco pool villa bhopal",
-    "madhuban pool villa",
-    "best pool villa bhopal",
+    " private poolside villa Ratapani",
+    "luxury villa with pool near Bhopal",
+    "poolside villa near Bhopal",
+    "resorts with swimming pools near Bhopal",
+    "poolside villa Ratapani for couples"
+
   ],
 
   alternates: {
@@ -263,19 +259,18 @@ const poolSideMetadata = {
 };
 
 const glampingTentMetadata = {
-  title: "Glamping Tent Stay Ratapani | Boutique Nature Stay Near Bhopal",
+  title: "Glamping Tents in Ratapani | Luxury Stay Near Bhopal",
 
   description:
-    "Stay in stylish Glamping Tents near Bhopal. Private sit-out, nature views, AC rooms, infinity pool access & boutique comfort in Ratapani. Book now.",
+    "Experience boutique luxury glamping tents in Ratapani at Madhuban Eco Retreat. King-size beds, private lawn & forest views. Perfect romantic escape near Bhopal!",
 
   keywords: [
-    "glamping tent near bhopal",
-    "glamping ratapani",
-    "nature glamping mp",
-    "glamping stay madhya pradesh",
-    "luxury tent stay bhopal",
-    "madhuban glamping tent",
-    "forest glamping stay ratapani",
+    "glamping tent Ratapani",
+    "luxury glamping near Bhopal",
+    "romantic glamping Ratapani",
+    "boutique tent stay Ratapani",
+    "Ratapani jungle glamping experience"
+
   ],
 
   alternates: {
@@ -928,15 +923,15 @@ const nightCampingFaqsSchema = {
 export const accommodationsData = [
   {
     id: 1,
-    name: "Safari Tent",
+    name: "Safari Tent House in Ratapani – Eco-Luxury Jungle Stay Near Bhopal",
     slug: "safari-tent",
     image:
       "https://res.cloudinary.com/dx3aj7a40/video/upload/v1770624871/safari-tent_mhzc7n.mp4",
     altText: "Exterior view of a charming safari tent nestled in greenery",
     descriptions: [
-      "Experience the charm of a true safari tent house in Ratapani, designed for travelers who wish to immerse themselves in nature without compromising on comfort. Set on raised platforms beside a gentle stream and overlooking forested mountains, these classic safari-style tents offer one of the most serene and authentic jungle stay experiences near Bhopal.",
+      "Experience the charm of a true safari tent in Ratapani, designed for travelers who wish to immerse themselves in nature without compromising on comfort. Set on raised platforms beside a gentle stream and overlooking forested mountains, these classic safari-style tents offer one of the most serene and authentic Ratapani jungle stay experiences near Bhopal. As part of the Madhuban Eco Retreat, our safari tent house sits at the heart of a premier Ratapani wildlife lodge, surrounded by the rich biodiversity of the sanctuary.",
 
-      "Each tent is thoughtfully crafted with elegant cane furniture, a vanity and dressing space, a separate shower area, and an open-to-sky bath surrounded by nature. Whether you're a couple seeking a peaceful getaway, a family looking for a unique stay near Bhopal, or a nature lover wanting to unwind amidst wilderness, this safari tent provides the ideal blend of rustic charm and eco-luxury.",
+      "Each tent is thoughtfully crafted with elegant cane furniture, a vanity and dressing space, a separate shower area, and an open-to-sky bath surrounded by nature. Whether you're a couple seeking a peaceful getaway, a family planning a family safari stay in Ratapani, or a nature lover wanting to unwind amidst wilderness, this Ratapani eco-luxury tent provides the ideal blend of rustic charm and comfort. For anyone seeking a memorable forest adventure stay near Bhopal, the Madhuban Eco Retreat safari tent delivers an experience that is both grounding and unforgettable.",
     ],
     galleryImages: [
       "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590129/guest-near-safari-tent-madhuban-eco-retreat-bhopal.avif",
@@ -1056,14 +1051,14 @@ export const accommodationsData = [
   },
   {
     id: 3,
-    name: "Pool Side Villa – Luxury Eco Stay by the Water",
+    name: "PoolPool Side Villa – Luxury Eco Stay by the Water",
     slug: "pool-side-room",
     image:
       "https://res.cloudinary.com/dx3aj7a40/video/upload/v1770624876/pool-side_mei750.mp4",
     altText: "A beautiful treehouse offering panoramic views of the forest",
     descriptions: [
-      "Discover serenity and slow living in our Pool Side Villa, designed for travelers seeking comfort, privacy, and a refreshing nature-dipped experience. Wake up to gentle sunlight shimmering on the eco-pool, breathe in the fresh forest air, and enjoy calm moments surrounded by greenery.",
-      "Perfect for families, couples, and wellness seekers, this pool villa stay near Bhopal blends eco-conscious design with boutique luxury. Whether you prefer a morning dip, peaceful poolside chai, or quiet evenings under the stars, this villa invites you to reconnect with yourself and nature.",
+      "Discover serenity and slow living in our private poolside villa in Ratapani, designed for travelers seeking comfort, privacy, and a refreshing nature-dipped experience. Wake up to gentle sunlight shimmering on the eco-pool, breathe in the fresh forest air, and enjoy calm moments surrounded by greenery. As one of the most stunning villas in Bhopal with a private pool experience, Madhuban's Pool Side Villa redefines what a nature retreat can feel like.",
+      "Perfect for families, couples, and wellness seekers, this poolside villa near Bhopal blends eco-conscious design with boutique luxury. Among the finest resorts with swimming pools near Bhopal, Madhuban offers a stay that is as peaceful as it is beautiful. Whether you prefer a morning dip, a quiet poolside chai, or calm evenings under the stars, this luxury villa with pool near Bhopal invites you to reconnect with yourself and nature. Couples looking for a private, romantic escape will find this poolside villa in Ratapani for couples an especially memorable choice.",
     ],
     galleryImages: [
       "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590044/pool-view-image-madhuban-eco-retreat-bhopal_p6ccda.avif",
@@ -1114,15 +1109,15 @@ export const accommodationsData = [
   },
   {
     id: 4,
-    name: "Glamping Tents – Boutique Comfort in the Heart of Ratapani",
+    name: "Glamping Tents – Boutique Comfort in the Heart of Ratapani ",
     slug: "glamping-tents",
     image:
       "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771583489/madhuban-eco-retreat-glamping-tent-gallery-image-2.avif",
     altText: "Luxury glamping tent with deck overlooking greenery",
     descriptions: [
-      "Enjoy the charm of the outdoors with the comfort of a thoughtfully designed stay in our Glamping Tents. Set amid Ratapani’s peaceful landscape, each tent combines natural textures with warm, elegant décor. Inside, you’ll find a plush king-size bed, ensuite shower, soft lighting, and calming interiors that make your stay effortless and relaxing.",
+      "Enjoy the charm of the outdoors with the comfort of a thoughtfully designed glamping tent stay in Ratapani. Set amid Ratapani's peaceful landscape, each tent combines natural textures with warm, elegant décor — offering a true luxury glamping in Ratapani experience unlike any other. Inside, you'll find a plush king-size bed, ensuite shower, soft lighting, and calming interiors that make your stay effortless and relaxing.",
 
-      "Step outside to your private lawn-side sit-out, perfect for slow mornings, evening tea, or peaceful moments surrounded by greenery. With attentive hospitality and all modern conveniences, this stay is ideal for couples, nature lovers, and weekend travelers searching for a stylish escape near Bhopal.",
+      "Step outside to your private lawn-side sit-out, perfect for slow mornings, evening tea, or peaceful moments surrounded by greenery. As a premier eco-lodge glamping near Bhopal, Madhuban brings together attentive hospitality and all modern conveniences — making this boutique tent stay in Ratapani ideal for couples, nature lovers, and weekend travelers searching for a stylish escape. Whether you're planning a romantic glamping near Bhopal or simply seeking a mindful retreat, our glamping tents near Bhopal offer the perfect blend of wilderness and comfort.",
     ],
     galleryImages: [
       "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771592270/glamping-tent-madhuban-eco-retreat.avif",

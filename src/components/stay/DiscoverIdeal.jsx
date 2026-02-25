@@ -18,7 +18,7 @@ const fadeInUp = {
 };
 
 const p1 =
-  "At Madhuban Eco Retreat, every stay blends natural serenity with eco-friendly comfort. From safari tents and mud houses to glamping, camping, and poolside villas, each space invites you to slow down and reconnect with nature. Located near the lush Ratapani Wildlife Sanctuary, Madhuban is one of the best eco stays near Bhopal for families, couples, adventure seekers, and wellness travelers.";
+  "At Madhuban Eco Retreat, every stay blends natural serenity with eco-friendly comfort. From safari tents and mud houses to glamping, camping, and poolside villas, each space invites you to slow down and reconnect with nature. Located beside the lush Ratapani Wildlife Sanctuary, Madhuban is a premier Ratapani jungle lodge and one of the best eco-luxury stays in Ratapani for families, couples, adventure seekers, and wellness travelers seeking a true nature resort near Bhopal.";
 
 const DiscoverIdeal = () => {
   return (

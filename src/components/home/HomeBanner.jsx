@@ -1,23 +1,20 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import BookingWidget from "../BookingWidget";
-import { motion } from "framer-motion";
 
- 
 const heroSlides = [
   {
-  image:
+    image:
       "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771838077/madhuban-eco-retreat-forest-view-hero-section-1.avif",
     mobile:
       "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771837850/madhuban-eco-retreat-forest-view-hero-section.avif",
     title: "Madhuban Eco Retreat: Eco-Luxury Forest Resort",
     subtitle:
       "Experience eco-luxury living amid the serene wilderness of Ratapani Tiger Reserve at Madhuban Eco Retreat — a peaceful forest stay offering sustainable comfort and mindful escapes.",
- 
-  
-    },
+  },
   {
-   image:
+    image:
       "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771834121/tourists-jungle-safari-jeep-madhuban-eco-retreat-ratapani.avif",
     mobile:
       "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771834121/tourists-jungle-safari-jeep-madhuban-eco-retreat-ratapani.avif",
@@ -36,84 +33,65 @@ const heroSlides = [
   },
 ];
 
-const HomeBanner = () => {
+export default function HomeBanner() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
     }, 6000);
+
     return () => clearInterval(interval);
-  }, [heroSlides.length]);
+  }, []);
+
+  const slide = heroSlides[currentSlide]; 
 
   return (
     <>
-      <section className="relative min-h-screen m-0 p-0 lg:min-h-[50vh] md:-mt-[166px] sm:-mt-[116px] max640:-mt-[116px]">
-        <div className="absolute inset-0 overflow-hidden">
-          {heroSlides.map((slide, index) => (
-            <motion.div
-              key={index}
-              className={` absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                index === currentSlide ? "opacity-100" : "opacity-0"
-              }`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: index === currentSlide ? 1 : 0 }}
-              transition={{ duration: 1 }}
-            >
-              <div
-                className="absolute inset-0 bg-cover bg-center hidden md:block"
-                style={{ backgroundImage: `url(${slide.image})` }}
-              />
+    <section className="relative min-h-screen overflow-hidden m-0 p-0 lg:min-h-[50vh] md:-mt-[166px] sm:-mt-[116px] max640:-mt-[116px]">
+        {/* SINGLE ACTIVE SLIDE ONLY */}
+        <div className="absolute inset-0 transition-opacity duration-1000">
+          {/* Desktop */}
+          <div className="hidden md:block relative w-full min-h-screen">
+            <Image
+              src={slide.image}
+              alt={slide.title}
+              fill
+              priority={currentSlide === 0}
+              sizes="100vw"
+              className="object-cover"
+            />
+          </div>
+          {/* Mobile */}
+          <div className="block md:hidden relative w-full min-h-screen">
+            <Image
+              src={slide.mobile}
+              alt={slide.title}
+              fill
+              priority={currentSlide === 0}
+              sizes="100vw"
+              className="object-cover"
+            />
+          </div>
 
-              {/* Mobile image */}
-              <div
-                className="absolute inset-0 bg-cover bg-center block md:hidden"
-                style={{ backgroundImage: `url(${slide.mobile})` }}
-              />
-              <div className="absolute inset-0 bg-black/30"></div>
-            </motion.div>
-          ))}
+          <div className="absolute inset-0 bg-black/40" />
         </div>
 
-        {/* Hero Content */}
-        <div className="relative min-h-screen   flex flex-col items-center justify-center text-white px-4 z-10 ">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            key={currentSlide}
-            className="text-center max-w-3xl"
-          >
-            <motion.h1
-              className="font-primary   bannerHeading mb-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-            >
-              {heroSlides[currentSlide].title}
-            </motion.h1>
-            <motion.p
-              className="font-arial-narrow  bannerSubHeading mb-8"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-            >
-              {heroSlides[currentSlide].subtitle}
-            </motion.p>
-          </motion.div>
+        {/* Content */}
+        <div className="relative z-10 min-h-screen flex flex-col items-center justify-center text-white px-4 text-center">
+          <h1 className="font-primary bannerHeading mb-4 max-w-3xl">
+            {slide.title}
+          </h1>
+
+          <p className="font-arial-narrow bannerSubHeading mb-8 max-w-3xl">
+            {slide.subtitle}
+          </p>
         </div>
       </section>
 
-      <motion.div
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.8 }}
-        className=" md:absolute w-full"
-      >
+      <div className="w-full">
         <BookingWidget />
-      </motion.div>
+      </div>
     </>
   );
-};
-
-export default HomeBanner;
+}

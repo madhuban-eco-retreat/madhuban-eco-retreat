@@ -1,41 +1,31 @@
-"use client";
-import { motion } from "framer-motion";
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut",
-    },
-  },
-};
+import Image from "next/image";
 
 const ExperiencesBanner = () => {
   return (
-    <section
-      className="h-[90vh] bg-cover bg-center flex items-center justify-center"
-      style={{
-        backgroundImage:
-          "url('https://res.cloudinary.com/dx3aj7a40/image/upload/v1771844127/cultural-tribal-dance-madhuban-eco-retreat.avif')",
-      }}
-    >
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        className="text-white text-center px-4"
-      >
-        <p className=" bannerHeading mb-4 font-primary">
+    <section className="relative w-full min-h-screen overflow-hidden">
+      
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <Image
+          src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771844127/cultural-tribal-dance-madhuban-eco-retreat.avif"
+          alt="Cultural tribal dance at eco retreat"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+      </div>
+      {/* Content */}
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center text-white text-center px-4">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-primary mb-4">
           Experience Life at Nature’s Rhythm
-        </p>
-        <p className="max-w-2xl mx-auto bannerSubHeading">
+        </h1>
+
+        <p className="max-w-2xl text-base sm:text-lg md:text-xl">
           Explore mindful, eco-friendly experiences designed around forests,
           wildlife, and peaceful living near Bhopal
         </p>
-      </motion.div>
+      </div>
     </section>
   );
 };

@@ -180,19 +180,18 @@ export default StayPage;
 
 export const metadata = {
   title:
-    "Eco Stay Near Bhopal – Safari Tents, Mud Houses, Glamping & Villas | Madhuban",
+    " Eco Stays at Ratapani | Safari Tents, Villas & More",
 
   description:
-    "Experience eco-friendly stays near Bhopal at Madhuban Eco Retreat. Safari tents, mud houses, glamping tents, poolside villas & camping near Ratapani.",
+    "Explore eco-luxury stays at Madhuban Ratapani — safari tents, mud villas, glamping tents & poolside villas. Book your perfect nature retreat near Bhopal today!",
 
   keywords: [
-    "eco stay near bhopal",
-    "safari tent near bhopal",
-    "mud house bhopal",
-    "pool side villa near bhopal",
-    "glamping tent ratapani",
-    "camping in ratapani",
-    "madhuban eco retreat stay",
+    " safari tent Ratapani",
+    "glamping tent Ratapani",
+    "mud villa Ratapani",
+    "poolside villa near Bhopal",
+    " Ratapani jungle lodge"
+
   ],
 
   alternates: {

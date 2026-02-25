@@ -406,41 +406,40 @@ const Gallery = () => {
 
   return (
     <div className="min-h-screen bg-[#D1C8C1]">
-      <section className="relative h-[85vh] m-0 p-0">
-        <div className="absolute inset-0 overflow-hidden h-[70vh] ">
-          <video
-            src={
-              "https://res.cloudinary.com/dx3aj7a40/video/upload/v1770624901/gallery-bg-video_cdwjew.mp4"
-            }
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-full h-full object-cover"
-          />
+    <section className="relative w-full h-[85vh] overflow-hidden">
 
-          <div
-            className="absolute top-0 z-10 h-full w-full text-white flex flex-col items-center justify-center"
-            style={{
-              background: "linear-gradient(180deg,rgba(0, 0, 0, 0.4 ) 100%)",
-            }}
-          >
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={fadeInUp}
-              className="text-white text-center px-4"
-            >
-              <div className="text-center max-w-7xl">
-                <h1 className="bannerHeading font-primary">Eco Gallery</h1>
-                <h2 className="bannerSubHeading">
-                  Discover the beauty of nature through our lens
-                </h2>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+  {/* Video Layer */}
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    preload="auto"
+    className="absolute inset-0 w-full h-full object-cover"
+  >
+    <source
+      src="https://res.cloudinary.com/dx3aj7a40/video/upload/v1770624901/gallery-bg-video_cdwjew.mp4"
+      type="video/mp4"
+    />
+  </video>
+
+  {/* Dark Overlay */}
+  <div className="absolute inset-0 bg-black/40"></div>
+
+  {/* Content Layer */}
+  <div className="relative z-10 flex items-center justify-center h-full text-white text-center px-4">
+    <div className="max-w-7xl">
+      <h1 className="bannerHeading font-primary">
+        Eco Gallery
+      </h1>
+
+      <h2 className="bannerSubHeading">
+        Discover the beauty of nature through our lens
+      </h2>
+    </div>
+  </div>
+
+</section>
 
       <section className="py-8 px-4 -mt-24 rounded-bl-[60px] rounded-br-[60px] ">
         <div className="max-w-[86rem] mx-auto">

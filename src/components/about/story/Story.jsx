@@ -121,9 +121,8 @@ const Story = () => {
             viewport={{ once: true }}
           >
             <p className="p-text pt-12 text-white">
-              Families, solo travelers, artists, researchers, nature lovers, and
-              spiritual seekers come to Madhuban Eco Retreat to rediscover{" "}
-              <br /> what truly matters — simplicity, serenity, and balance.
+             Families, solo travelers, artists, researchers, nature lovers, and spiritual seekers come to Madhuban to rediscover what truly matters — simplicity, serenity, and balance. For many, it has become the best weekend getaway near Bhopal, not just for its setting, but for the way it makes you feel.
+
             </p>
           </motion.div>
         </div>
