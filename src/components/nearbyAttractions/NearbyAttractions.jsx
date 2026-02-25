@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CommonFaqs from "@/common-components/faqs/CommonFaqs";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
+import Image from "next/image";
+import HeroSlider from "./HeroSlider";
 
 const heroSlides = [
   {
@@ -157,74 +159,24 @@ const NearbyAttractions = () => {
     },
   ];
 
+
+
+  // Auto slide
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) =>
+        prev === heroSlides.length - 1 ? 0 : prev + 1
+      );
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [heroSlides.length]);
+
   return (
     <div className="min-h-screen bg-[#D1C8C1]  ">
       {/* Hero Section */}
-      <section className="relative h-[85vh] m-0 p-0 ">
-        <div className="absolute inset-0 overflow-hidden  ">
-          <AnimatePresence>
-            {heroSlides.map(
-              (slide, index) =>
-                index === currentSlide && (
-                  <motion.div
-                    key={index}
-                    className="absolute inset-0"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 1 }}
-                  >
-                    <div
-                      className="absolute inset-0 bg-cover bg-center"
-                      style={{ backgroundImage: `url(${slide.image})` }}
-                    >
-                      {/* <div className="absolute inset-0 bg-black/30"></div> */}
-                    </div>
-                  </motion.div>
-                ),
-            )}
-          </AnimatePresence>
 
-          <div
-            className="absolute top-0 z-10 h-full w-full text-white flex flex-col items-center justify-center"
-            style={{
-              background: "linear-gradient(180deg,rgba(0, 0, 0, 0.4 ) 100%)",
-            }}
-          >
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={fadeInUp}
-              className="text-white text-center px-4"
-            >
-              <div className="text-center max-w-7xl">
-                <h1 className="bannerHeading font-primary">
-                  Nearby Attractions
-                </h1>
-
-                <h2 className="bannerSubHeading">
-                  Experience the Soul of Madhya Pradesh!!
-                </h2>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* <div
-            className="absolute top-0 z-10 h-full w-full text-white flex flex-col items-center justify-center"
-            style={{
-              background: "linear-gradient(180deg,rgba(0, 0, 0, 0.4 ) 100%)",
-            }}
-          >
-            <div className="text-center max-w-7xl">
-              <h1 className="bannerHeading font-primary">Nearby Attractions</h1>
-
-              <h2 className="bannerSubHeading">
-                Experience the Soul of Madhya Pradesh!!
-              </h2>
-            </div>
-          </div> */}
-        </div>
-      </section>
+  <HeroSlider heroSlides={heroSlides} />
       <section className=" px-4 py-4 rounded-bl-[60px] rounded-br-[60px] flex flex-col justify-center items-center">
         <div className="text-center max-w-7xl mb-12 mt-10">
           <p className="text-justify md:text-center p-text  text-primary-gray2">

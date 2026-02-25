@@ -6,7 +6,7 @@ const HomeSchema = {
   "@context": "https://schema.org",
   "@type": "Resort",
   name: "Madhuban Eco Retreat",
-  alternateName : "Madhuban Eco Retreat Bhopal",
+  alternateName: "Madhuban Eco Retreat Bhopal",
   url: "https://www.madhubanecoretreat.com/",
   description:
     "Madhuban Eco Retreat is an eco-luxury resort near Ratapani Wildlife Sanctuary in Bhopal, offering sustainable stays, nature walks, bird watching, and farm-to-table dining.",
@@ -61,19 +61,18 @@ export default function main() {
 }
 
 export const metadata = {
-  title: "Madhuban Eco Retreat | Eco-Luxury Resort Near Ratapani, Bhopal",
+  title: " Madhuban Eco Retreat | Best Eco Resort Near Bhopal",
 
   description:
-    "Experience eco-luxury at Madhuban Eco Retreat in Ratapani near Bhopal. Forest stays, nature trails, birdwatching, farm-to-table dining & sustainable travel.",
+    "Discover Madhuban Eco Retreat, a premier eco resort near Bhopal & Ratapani. Enjoy safari tents, mud villas, forest walks & sustainable luxury. Book your stay!",
 
   keywords: [
-    "eco retreat bhopal",
-    "ratapani eco resort",
-    "nature resort near bhopal",
-    "forest stay madhya pradesh",
-    "eco luxury resort mp",
-    "sustainable tourism mp",
-    "ratapani tiger reserve stay",
+    " eco resort near Bhopal",
+    "forest resort Ratapani",
+    " nature resort Madhya Pradesh",
+    "Ratapani eco lodge",
+    "best weekend getaway near Bhopal"
+
   ],
 
   alternates: {
