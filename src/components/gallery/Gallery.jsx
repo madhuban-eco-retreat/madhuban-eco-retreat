@@ -90,7 +90,7 @@ const mediaContent = {
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624803/gallery-25_gl6yav.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590129/guest-near-safari-tent-madhuban-eco-retreat-bhopal.avif",
     },
      {
       type: "image",
@@ -190,7 +190,7 @@ const mediaContent = {
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589977/nature_forest_from_madhuban_eco_retreat_-_1_fwzpuv.avif",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771840066/nature-forest-view-ratapani-tiger-reserve-madhuban-eco-retreat-bhopal-11.avif",
     },
     {
       type: "image",
@@ -198,7 +198,7 @@ const mediaContent = {
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574292/ratapani_nature_with_madhuban_eco_retreat_bhopal_axpr25.avif",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589977/nature-walk-madhuban-eco-retreat-ratapani-bhopal.avif",
     },
     {
       type: "image",
@@ -368,28 +368,28 @@ const mediaContent = {
   "Ginnorgarh Fort": [
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624810/GF_vijdqs.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771837413/ginnorgarh-fort-ratapani-mad-1huban-eco-retreat-bhopal-1.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624813/GF1_pe2rra.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771837411/ginnorgarh-fort-ratapani-madhuban-eco-retreat-bhopal.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624811/GF2_epsyrb.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771837410/ginnorgarh-fort-ratapani-madhuban-eco-retreat-bhopal-2.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624807/GF3_rbqlmo.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771837407/ginnorgarh-fort-ratapani-madhuban-eco-retreat-bhopal-3.avif",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624813/GF4_fkn5mj.jpg",
+      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771837404/ginnorgarh-fort-ratapani-madhuban-eco-retreat-bhopal-4.avif",
     },
-    {
-      type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624795/GF5_zfbe8q.jpg",
-    },
+    // {
+    //   type: "image",
+    //   src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624795/GF5_zfbe8q.jpg",
+    // },
   ],
 };
 
@@ -406,7 +406,7 @@ const Gallery = () => {
 
   return (
     <div className="min-h-screen bg-[#D1C8C1]">
-    <section className="relative w-full h-[85vh] overflow-hidden">
+    <section className="relative w-full h-[85vh] overflow-hidden mb-20 ">
 
   {/* Video Layer */}
   <video
