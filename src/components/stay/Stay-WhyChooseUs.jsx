@@ -70,7 +70,7 @@ const StayWhyChooseUs = ({ points = [], title = "", imageUrl = "" }) => {
                   key={i}
                 >
                   <div className=" flex items-center p-text gap-4 rounded-xl border border-primary-gray bg-primary-gray  p-4 text-primary-gray2 transition">
-                    <FaAnglesRight className="shrink-0" /> {item}
+                    <FaAnglesRight className="shrink-0" aria-label="right angles" /> {item}
                   </div>
                 </motion.div>
               );

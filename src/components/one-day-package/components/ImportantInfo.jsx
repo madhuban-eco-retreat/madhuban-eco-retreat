@@ -8,7 +8,7 @@ export const ImportantInfo = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <DecorativeHeading text={"Important Information"} as="h2" />
+          <DecorativeHeading text={"Important Information"} as="h2" aria-label="important" />
         </div>
 
         {/* Info Card */}
@@ -18,7 +18,7 @@ export const ImportantInfo = () => {
             <div className="px-10 py-4  space-y-8 md:space-y-12">
               <div className="flex items-center md:items-start gap-4">
                 <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-white shrink-0">
-                  <Briefcase size={24} />
+                  <Briefcase size={24} aria-label="briefcase"/>
                 </div>
                 <div>
                   <p className="text-[10px] font-bold uppercase  text-gray-200 mb-1">
@@ -32,7 +32,7 @@ export const ImportantInfo = () => {
 
               <div className="flex items-center md:items-start gap-4">
                 <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-white shrink-0">
-                  <Ban size={24} />
+                  <Ban size={24} aria-label="ban"/>
                 </div>
                 <div>
                   <p className="text-[10px] font-bold uppercase  text-gray-200 mb-1">
@@ -63,7 +63,7 @@ export const ImportantInfo = () => {
 
               <div className="flex items-center md:items-start gap-4">
                 <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-white shrink-0">
-                  <Calendar size={24} />
+                  <Calendar size={24} aria-label="calendar"/>
                 </div>
                 <div>
                   <p className="text-[10px] font-bold uppercase  text-gray-200 mb-1">
@@ -80,7 +80,7 @@ export const ImportantInfo = () => {
             <div className="px-10 py-4">
               <div className="flex items-center md:items-start gap-4">
                 <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-white shrink-0">
-                  <Leaf size={24} />
+                  <Leaf size={24} aria-label="leaf" />
                 </div>
                 <div>
                   <p className="text-[10px] font-bold uppercase  text-gray-200 mb-1">

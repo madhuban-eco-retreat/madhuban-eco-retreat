@@ -45,6 +45,7 @@ const Slidingbanner = ({ images, heading, subHeading }) => {
         {images.map((image) => (
           <SwiperSlide key={image.id}>
             <img
+              aria-label={image.alt}
               src={image.src}
               alt={image.alt}
               className="w-full object-cover min-h-[70vh] lg:min-h-[85vh] md:min-h-[85vh] sm:min-h-[85vh] max640:min-h-[85vh] sm:mt-[41px] md:mt-[60px] sm:h-[300px] md:h-[400px] lg:h-[500px] xl:h-[600px] pt-[22px] max500:min-h-[65vh]"

@@ -19,6 +19,7 @@ const ExperienceCard = ({ experience }) => {
           src={image}
           alt={title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          aria-label="experience pic"
         />
         {/* Gradient overlay with hover effect */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300"></div>
@@ -43,7 +44,7 @@ const ExperienceCard = ({ experience }) => {
           className="inline-flex items-center  text-white font-arial-narrow font-semibold tracking-wider group-hover:opacity-100 absolute bottom-6"
         >
           {learnMoreBtn}{" "}
-          <ChevronRight className="ml-1 w-5 h-5 transition-transform group-hover:translate-x-1" />
+          <ChevronRight className="ml-1 w-5 h-5 transition-transform group-hover:translate-x-1" aria-label="arrow" />
         </Link>
       </div>
     </div>

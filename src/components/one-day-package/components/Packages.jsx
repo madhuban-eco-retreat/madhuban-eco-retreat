@@ -118,7 +118,7 @@ export const Packages = () => {
 
             <div className="flex flex-col sm:flex-row items-center justify-between gap-6  pt-4 md:pt-10 border-t border-primary-gray2">
               <div></div>
-              <button
+              <button title="Contact Us"
                 className="w-full sm:w-auto cursor-pointer bg-primary-gray2 text-white px-8 py-4 rounded-full font-bold flex items-center justify-center gap-3 hover:bg-[#16a34a] transition-all transform hover:translate-x-1"
                 onClick={() => {
                   window.open(`https://wa.me/${phone}`, "_blank");

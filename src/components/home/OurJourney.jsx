@@ -92,6 +92,7 @@ const OurJourney = () => {
                 src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
                 alt="Instagram"
                 className="w-8 h-8"
+                aria-label="instagram"
               />
             </motion.a>
             <motion.a
@@ -107,6 +108,7 @@ const OurJourney = () => {
                 src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg"
                 alt="Facebook"
                 className="w-8 h-8"
+                aria-label="facebook"
               />
             </motion.a>
             <motion.a
@@ -122,6 +124,7 @@ const OurJourney = () => {
                 src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
                 alt="WhatsApp"
                 className="w-8 h-8"
+                aria-label="whatsapp"
               />
             </motion.a>
           </motion.div>
@@ -146,7 +149,7 @@ const OurJourney = () => {
               src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574136/vidhya-balan-stay-review-at-madhuban-eco-retreat-bhopal.webp"
               alt="Manual"
               className="xl:w-[50vw] xl:h-[50vh] object-cover rounded-md sm:w-[100vw] max640:w-[100vw]"
-              // className="w-[50vw] h-[50vh]  object-cover rounded-md sm:w-screen max640:w-screen "
+            // className="w-[50vw] h-[50vh]  object-cover rounded-md sm:w-screen max640:w-screen "
             />
           </motion.div>
 
@@ -172,6 +175,7 @@ const OurJourney = () => {
                   src={url}
                   alt={`Instagram post ${index + 1}`}
                   className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                  aria-label="instagram"
                 />
               </motion.div>
             ))}
@@ -194,6 +198,7 @@ const OurJourney = () => {
                 src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574132/radhika-goyal-customer-review-for-madhuban-eco-retreat.avif"
                 alt="Video Thumbnail"
                 className="xl:w-[25vw] xl:h-[50vh] object-cover rounded-md sm:w-[100vw] max640:w-[100vw]"
+                aria-label="thumbnail"
               />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="bg-white/80 rounded-full p-4 hover:scale-105 transition">

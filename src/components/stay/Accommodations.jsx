@@ -48,15 +48,15 @@ const accommodationsData = [
       "Perched on raised platforms beside a gentle stream and facing forested mountains, our classic safari-style tents offer a true wilderness experience. Each tent is tastefully furnished with elegant cane furniture and features a vanity and dressing area, separate toilet and shower, and even an open-to-sky shower with a private relaxation space.",
     keyFeatures: [
       {
-        icon: <Leaf size={18} className="text-white" />,
+        icon: <Leaf size={18} className="text-white"  aria-label="leaf" />,
         text: "Eco-Friendly Design",
       },
       {
         icon: <BedDouble size={18} className="text-white" />,
         text: "Queen Bed",
       },
-      { icon: <Sun size={18} className="text-white" />, text: "Solar Powered" },
-      { icon: <Wifi size={18} className="text-white" />, text: "Wi-Fi Access" },
+      { icon: <Sun size={18} className="text-white"  aria-label="sun"/>, text: "Solar Powered" },
+      { icon: <Wifi size={18} className="text-white" aria-label="wifi" />, text: "Wi-Fi Access" },
     ],
     capacity: "Sleeps 2",
   },
@@ -71,15 +71,15 @@ const accommodationsData = [
       "Our mud-based cottages, inspired by the vernacular architecture of the Gond tribes, are nestled in a 5-acre organic orchard. Each Mud House features a spacious air-conditioned room, an annexed lobby, verandas, and a traditionally styled luxury bathroom. The rooftop offers breathtaking 360° views — perfect for stargazing or peaceful evenings.",
     keyFeatures: [
       {
-        icon: <Leaf size={18} className="text-white" />,
+        icon: <Leaf size={18} className="text-white" aria-label="leaf" />,
         text: "Eco-Friendly Design",
       },
       {
         icon: <BedDouble size={18} className="text-white" />,
         text: "Queen Bed",
       },
-      { icon: <Sun size={18} className="text-white" />, text: "Solar Powered" },
-      { icon: <Wifi size={18} className="text-white" />, text: "Wi-Fi Access" },
+      { icon: <Sun size={18} className="text-white" aria-label="sun" />, text: "Solar Powered" },
+      { icon: <Wifi size={18} className="text-white" aria-label="wifi" />, text: "Wi-Fi Access" },
     ],
     capacity: "Sleeps 2",
   },
@@ -88,25 +88,25 @@ const accommodationsData = [
     name: "Pool Side Villa",
     slug: "pool-side-room",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589943/resort-poolside-view-madhuban-eco-retreat-bhopal.avif",
+      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590007/swimming-pool-view-madhuban-eco-retreat-bhopal.avif",
     altText: "Poolside room with beautiful garden views",
     shortDescription:
       "Wake up to sunlight dancing on the eco-pool and unwind to the soothing rhythm of nature. Our elegant Pool Side Villas offer the perfect balance of sophistication and serenity. Ideal for couples, families, or anyone looking for a private poolside villa near Bhopal.",
     keyFeatures: [
       {
-        icon: <MountainSnow size={18} className="text-white" />,
+        icon: <MountainSnow size={18} className="text-white" aria-label="mountain" />,
         text: "Panoramic Forest Views",
       },
       {
-        icon: <BedDouble size={18} className="text-white" />,
+        icon: <BedDouble size={18} className="text-white" aria-label="bed" />,
         text: "Comfortable Double Bed",
       },
       {
-        icon: <Leaf size={18} className="text-white" />,
+        icon: <Leaf size={18} className="text-white" aria-label="leaf" />,
         text: "Sustainably Built",
       },
       {
-        icon: <Users size={18} className="text-white" />,
+        icon: <Users size={18} className="text-white" aria-label="user" />,
         text: "Cozy Reading Nook",
       },
     ],
@@ -124,19 +124,19 @@ const accommodationsData = [
       "Enjoy comfort in the wild with our rustic mini-safari glamping tents. Featuring chic interiors, a private lawn sit-out, and ensuite bathrooms, these tents offer boutique-style luxury with the charm of camping—ideal for couples, families, or weekend travelers looking for a unique glamping stay near Ratapani.",
     keyFeatures: [
       {
-        icon: <BedDouble size={18} className="text-white" />,
+        icon: <BedDouble size={18} className="text-white" aria-label="bed"/>,
         text: "King Size Bed",
       },
       {
-        icon: <Users size={18} className="text-white" />,
+        icon: <Users size={18} className="text-white" aria-label="user" />,
         text: "Double Occupancy",
       },
       {
-        icon: <Leaf size={18} className="text-white" />,
+        icon: <Leaf size={18} className="text-white" aria-label="leaf" />,
         text: "Private Lawn Area",
       },
       {
-        icon: <Wifi size={18} className="text-white" />,
+        icon: <Wifi size={18} className="text-white" aria-label="wifi" />,
         text: "Wi-Fi & Workspace",
       },
     ],
@@ -153,19 +153,19 @@ const accommodationsData = [
       "Our eco-friendly camping tents offer a simple yet comfortable outdoor stay in Ratapani’s lush wilderness. Perfect for travelers seeking digital detox, jungle adventure, or peaceful night camping near Bhopal.",
     keyFeatures: [
       {
-        icon: <MountainSnow size={18} className="text-white" />,
+        icon: <MountainSnow size={18} className="text-white" aria-label="mountain" />,
         text: "Panoramic Forest Views",
       },
       {
-        icon: <BedDouble size={18} className="text-white" />,
+        icon: <BedDouble size={18} className="text-white" aria-label="bed" />,
         text: "Comfortable Double Bed",
       },
       {
-        icon: <Leaf size={18} className="text-white" />,
+        icon: <Leaf size={18} className="text-white" aria-label="leaf" />,
         text: "Sustainably Built",
       },
       {
-        icon: <Users size={18} className="text-white" />,
+        icon: <Users size={18} className="text-white" aria-label="user" />,
         text: "Cozy Reading Nook",
       },
     ],
@@ -184,7 +184,7 @@ const Accommodations = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <DecorativeHeading text="Our Accommodations" />
+          <DecorativeHeading text="Our Accommodations" aria />
         </motion.div>
       </div>
       <motion.p
