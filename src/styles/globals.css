@@ -318,17 +318,34 @@ body {
   to { width: 100%; }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .discriptionContent img {
-        width: 100% !important;
-        height: 100% !important;
-        margin: auto;
-        margin: 20px 0 !important;
-    }
-    span:has(> img) {
-   width: 100% !important;
-   height: 100% !important;
-   display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: auto;
+    margin: 20px 0 !important;
+  }
+  span:has(> img) {
+    width: 50% !important;
+    height: 100% !important;
+    display: block !important;
+    margin: auto;
+  }
 }
+
+/* Large screens */
+@media (min-width: 1024px) {
+  .discriptionContent img {
+    width: 80% !important;
+    height: auto !important;
+    margin: 20px auto !important;
+    display: block;
+  }
+  span:has(> img) {
+    width: 60% !important;
+    height: auto !important;
+    display: block !important;
+    margin: auto;
+  }
 }
 

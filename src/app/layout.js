@@ -31,22 +31,22 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <Script
-          strategy="lazyOnload"
+         strategy="afterInteractive"
           src="https://t.contentsquare.net/uxa/d252099aa0f2e.js"
         ></Script>
         <Script
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-DBTW8G5KT3"
         />
-        <Script id="google-analytics" strategy="beforeInteractive">
+        <Script id="google-analytics" strategy="afterInteractive">
           {`window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', 'G-DBTW8G5KT3')`}
         </Script>
 
-        <Script id="googletagmanager" strategy="beforeInteractive">
+        <Script id="googletagmanager" strategy="afterInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
           j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=

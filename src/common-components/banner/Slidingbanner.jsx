@@ -1,18 +1,12 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "swiper/css/scrollbar";
-import {
-  Navigation,
-  Pagination,
-  Scrollbar,
-  A11y,
-  Autoplay,
-} from "swiper/modules";
+import { Pagination, A11y, Autoplay } from "swiper/modules";
 import { motion } from "framer-motion";
 
 const fadeInUp = {
@@ -27,69 +21,87 @@ const fadeInUp = {
   },
 };
 
-const Slidingbanner = ({ images, heading, subHeading }) => {
+const Slidingbanner = ({ images = [], heading, subHeading, buttonLink }) => {
+  if (!images || images.length === 0) return null;
+
   return (
-    <motion.div className="w-full  relative">
+    <div className="relative w-full h-[85vh] overflow-hidden">
+
       <Swiper
-        modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
+        modules={[Pagination, A11y, Autoplay]}
         spaceBetween={0}
         slidesPerView={1}
         pagination={{ clickable: true }}
-        loop={true}
         autoplay={{
           delay: 4000,
           disableOnInteraction: false,
         }}
-        className="w-full"
+        loop={false} //prevents blank cloned slide
+        className="w-full h-full"
       >
-        {images.map((image) => (
-          <SwiperSlide key={image.id}>
-            <img
-              aria-label={image.alt}
-              src={image.src}
-              alt={image.alt}
-              className="w-full object-cover min-h-[70vh] lg:min-h-[85vh] md:min-h-[85vh] sm:min-h-[85vh] max640:min-h-[85vh] sm:mt-[41px] md:mt-[60px] sm:h-[300px] md:h-[400px] lg:h-[500px] xl:h-[600px] pt-[22px] max500:min-h-[65vh]"
-            />
+        {images.map((image, index) => (
+          <SwiperSlide key={image.id || index}>
+            <div className="relative w-full h-full">
+              <Image
+                src={image.src}
+                alt={image.alt || "Banner image"}
+                fill
+                sizes="100vw"
+                priority={index === 0} 
+                fetchPriority={index === 0 ? "high" : "auto"}
+                className="object-cover"
+              />
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>
 
-      {heading || subHeading ? (
-        <div
-          className="absolute top-0 z-10 h-full w-full text-white flex flex-col items-center justify-center"
-          style={{
-            background: "linear-gradient(180deg,rgba(0, 0, 0, 0.4 ) 100%)",
-          }}
-        >
+      {/* Overlay Content */}
+      {(heading || subHeading) && (
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-white bg-black/40">
           <motion.div
             initial="hidden"
             animate="visible"
             variants={fadeInUp}
-            className="text-white text-center px-4"
+            className="text-center px-4"
           >
-            <div className="text-center max-w-7xl">
-              <h1 className="bannerHeading font-primary">{heading}</h1>
-              {subHeading && <h2 className="bannerSubHeading">{subHeading}</h2>}
+            <div className="max-w-7xl">
+              {heading && (
+                <h1 className="bannerHeading font-primary">
+                  {heading}
+                </h1>
+              )}
+
+              {subHeading && (
+                <h2 className="bannerSubHeading mt-4">
+                  {subHeading}
+                </h2>
+              )}
+
+              {buttonLink && (
+                <Link
+                  href={buttonLink}
+                  className="inline-block mt-6 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+                >
+                  Explore More
+                </Link>
+              )}
             </div>
           </motion.div>
         </div>
-      ) : null}
+      )}
 
+      {/* Swiper Pagination Styling */}
       <style jsx>{`
         .swiper-pagination-bullet {
           background: #d1fae5;
           opacity: 1;
         }
-
         .swiper-pagination-bullet-active {
           background: #22c55e;
         }
-
-        .swiper-scrollbar-drag {
-          background-color: #22c55e;
-        }
       `}</style>
-    </motion.div>
+    </div>
   );
 };
 
