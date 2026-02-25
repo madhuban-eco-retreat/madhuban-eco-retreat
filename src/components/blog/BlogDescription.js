@@ -132,7 +132,7 @@ const BlogDescription = ({ blog }) => {
         </div>
 
         {/*  Contact Form Below Content  */}
-        <div className="xl:hidden w-full my-10 pb-8">
+        <div className="xl:hidden w-full  py-10">
           <StickyContactForm />
         </div>
       </div>
