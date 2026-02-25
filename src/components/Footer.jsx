@@ -1,4 +1,3 @@
-// src/components/Footer.js
 "use client";
 import React, { useState } from "react";
 import { MapPin, Phone, Mail, ChevronRight, ChevronDown } from "lucide-react";
@@ -14,7 +13,7 @@ import {
 import Image from "next/image";
 
 const Footer = () => {
-  const [open, setOpen] = useState(false); // dropdown state
+  const [open, setOpen] = useState(false); // dropdown state 
   const currentYear = new Date().getFullYear();
 
   const buttonStyle = {
@@ -35,9 +34,9 @@ const Footer = () => {
     <footer className="bg-[rgb(110,97,70)] text-[#D1C8C1] pt-4 pb-8 footer-section">
       <div className="container mx-auto px-4">
         {/* Footer Top Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="flex flex-wrap justify-center gap-8 mb-12">
           {/* About Section */}
-          <div>
+          <div className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(25%-1.5rem)] min-w-[260px]">
             <div className="flex items-center space-x-2 mb-4">
               <Link href="/" className="flex items-center space-x-4 z-20">
                 <Image
@@ -159,7 +158,7 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <div>
+          <div className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(25%-1.5rem)] min-w-[260px]">
             <div className="footer-heading text-[#D1C8C1] tracking-widest font-primary font-medium mb-4 pb-2 border-b border-gray-700">
               Quick Links
             </div>
@@ -253,7 +252,7 @@ const Footer = () => {
           </div>
 
           {/* Contact Information */}
-          <div>
+          <div className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(25%-1.5rem)] min-w-[260px]">
             <div className="text-xl footer-heading text-primary-gray tracking-widest font-primary font-medium mb-4 pb-2 border-b border-gray-700">
               Contact Us
             </div>
@@ -291,7 +290,7 @@ const Footer = () => {
           </div>
 
           {/* Newsletter Signup */}
-          <div className="">
+          <div className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(25%-1.5rem)] min-w-[260px]">
             <img
               src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624797/somaiya-group-logo.png"
               alt="Newsletter"
@@ -302,20 +301,20 @@ const Footer = () => {
               A Somaiya Group Initiative <br /> Where Sustainability Meets
               Hospitality.
             </p>
-            <p className="text-primary-gray mb-6 font-primary tracking-wider text-sm ">
+            <p className="text-primary-gray mb-6 font-primary tracking-wider text-sm">
               By subscribing, you agree to our Privacy Policy. You can
               unsubscribe at any time.
             </p>
             <form className="mb-4">
-              <div className="footer-input-con">
+              <div className="footer-input-con flex">
                 <input
                   type="email"
                   placeholder="Your email"
-                  className="font-primary tracking-wider flex-grow px-4 py-2 md:py-4 bg-primary-gray border border-stone-700 focus:outline-none focus:ring-2 focus:ring-brown-700  text-[rgb(110,97,70)] placeholder-[rgb(110,97,70)]"
+                  className="font-primary tracking-wider flex-grow  min-w-0 px-4 py-2 md:py-4 bg-primary-gray border border-stone-700 focus:outline-none focus:ring-2 focus:ring-brown-700 text-[rgb(110,97,70)] placeholder-[rgb(110,97,70)] rounded-l-md"
                 />
                 <button
                   type="submit"
-                  className="bg-[rgb(106,95,80)] hover:bg-[rgb(87,75,58)] px-4 py-4 rounded-r-md font-primary font-medium cursor-pointer"
+                  className="bg-[rgb(106,95,80)] hover:bg-[rgb(87,75,58)] px-4 py-2 md:py-4 rounded-r-md font-primary font-medium cursor-pointer whitespace-nowrap"
                 >
                   Subscribe
                 </button>
@@ -325,35 +324,32 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-gray-800 -mt-5 pt-2 flex  flex-col-reverse md:flex-row gap-8  items-center justify-between">
+        <div className="border-t border-gray-800 -mt-5 pt-2 flex  flex-col-reverse md:flex-row gap-4 md:gap-8 items-center justify-between">
           <div className="font-primary text-sm  text-primary-gray tracking-wider text-center">
             &copy; {currentYear} Madhuban Eco Retreat. All rights reserved.
           </div>
-          <div className="font-primary text-sm md:text-sm  text-primary-gray w-full md:w-auto mt-4 md:mt-0 flex flex-col md:flex-row gap-4 tracking-wider text-center">
+          <div className="font-primary text-sm text-primary-gray w-full md:w-auto mt-4 md:mt-0 flex flex-col sm:flex-row flex-wrap justify-center gap-2 sm:gap-4 tracking-wider text-center">
             <Link
               href="/privacy-policy"
-              className=" text-primary-gray tracking-wider   flex items-center"
+              className="text-primary-gray tracking-wider flex items-center justify-center"
             >
               Privacy Policy
             </Link>
-
             <Link
               href="/terms-and-condition"
-              className=" text-primary-gray tracking-wider  flex items-center"
+              className=" text-primary-gray tracking-wider  flex items-center justify-center"
             >
               Terms & Conditions
             </Link>
-
             <Link
               href="/cookies-and-consent-policy"
-              className=" text-primary-gray tracking-wider  flex items-center"
+              className=" text-primary-gray tracking-wider  flex items-center justify-center"
             >
               Cookie Policy
             </Link>
-
             <Link
               href="/disclaimer"
-              className=" text-primary-gray tracking-wider  flex items-center"
+              className=" text-primary-gray tracking-wider  flex items-center justify-center"
             >
               Disclaimer
             </Link>

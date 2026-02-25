@@ -70,9 +70,7 @@ const GuestsSection = () => {
           <DecorativeHeading text={"Loved by Guests Across India"} />
 
           <div className="p-text-black p-text text-sm  md:text-xl ">
-            Recognized as one of the most peaceful retreats near Bhopal,
-            Madhuban Eco Retreat is cherished by families, nature lovers,
-            celebrities, and wellness travelers.
+           Recognized as one of the best resorts near Ratapani and a top-rated resort near Bhopal, Madhuban Eco Retreat is cherished by families, nature lovers, celebrities, and wellness travelers.
           </div>
         </motion.div>
         <motion.div

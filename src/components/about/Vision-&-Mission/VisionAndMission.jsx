@@ -82,12 +82,7 @@ const VisionMission = () => {
                         Our Vision
                       </h3>
                       <p className="mb-6 text-base md:text-lg  text-justify">
-                        To become India’s leading eco resort near Bhopal, where
-                        guests rediscover the joy of simple living, reconnect
-                        with nature, and leave with a renewed sense of
-                        well-being. We envision a world where travel supports
-                        the environment, not harms it — a space where every stay
-                        contributes to healing the planet.
+                       Our Vision To become India's leading eco-luxury stay destination in Ratapani and a defining nature retreat near Bhopal, where guests rediscover the joy of simple living, reconnect with nature, and leave with a renewed sense of well-being. We envision a world where travel supports the environment, not harms it — a space where every stay contributes to healing the planet.
                       </p>
                     </div>
                   </div>

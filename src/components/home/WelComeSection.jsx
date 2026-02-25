@@ -65,19 +65,12 @@ const WelComeSection = () => {
             </div>
 
             <p className="font-arial-narrow text-md md:text:lg mb-6 text-1 text-justify">
-              Located just an hour from Bhopal, Madhuban is a premium eco resort
-              near Ratapani designed for travelers who love nature, wellness,
-              and responsible travel. Nestled beside the scenic teak forests of
-              Ratapani Wildlife Sanctuary, our resort offers a rare blend of
-              sustainable hospitality and natural luxury.
+              Located just an hour from Bhopal, Madhuban is a premium eco resort near Bhopal designed for travelers who love nature, wellness, and responsible travel. As a leading Ratapani eco lodge, we are nestled beside the scenic teak forests of Ratapani Wildlife Sanctuary, offering a rare blend of sustainable hospitality and natural luxury.
+
             </p>
             <p className="text-md md:text:lg font-arial-narrow  text-1 text-justify">
-              As one of the best forest resorts in Madhya Pradesh, Madhuban
-              invites you to reconnect with the outdoors through forest walks,
-              birdwatching, organic dining, and peaceful eco-friendly stays.
-              Whether you're planning a weekend getaway near Bhopal, a family
-              vacation, or a quiet wellness escape, this is the perfect place to
-              breathe, slow down, and reconnect with nature.
+             As one of the best forest resorts near Bhopal and a top choice for eco-tourism near Bhopal and Ratapani, Madhuban invites you to reconnect with the outdoors through forest walks, birdwatching, organic dining, and peaceful eco-friendly stays. Whether you're planning the best weekend getaway near Bhopal, a family vacation, or a quiet wellness escape, this nature resort in Ratapani is the perfect place to breathe, slow down, and reconnect with nature.
+
             </p>
           </motion.div>
 

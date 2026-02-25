@@ -82,9 +82,7 @@ const CommitmentSection = () => {
           />
 
           <p className="mt-1 p-text max-w-2xl mx-auto   font-arial-narrow text-[#D1C8C1] px-4 tracking-wide">
-            As a leading sustainable resort in India, Madhuban Eco Retreat is
-            built on practices that preserve the environment and support local
-            communities.
+           As a leading eco-friendly resort near Bhopal, Madhuban Eco Retreat is built on practices that preserve the environment and support local communities.
           </p>
         </motion.div>
         <motion.div

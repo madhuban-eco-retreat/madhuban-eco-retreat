@@ -62,12 +62,10 @@ const ReadyForEcoRetreat = () => {
           />
 
           <p className="mt-4 max-w-2xl mx-auto text-lg text-white px-4 tracking-wide font-arial-narrow">
-            Escape to nature without leaving comfort behind.
+           Escape to nature without leaving comfort behind.
           </p>
           <p className="mt-4 max-w-2xl mx-auto p-text text-white px-4 tracking-wide font-arial-narrow">
-            Book your stay at Madhuban Eco Retreat — the perfect forest resort
-            near Bhopal for peaceful getaways, wellness travel, and nature
-            exploration.
+           Book your stay at Madhuban Eco Retreat — the perfect jungle resort in Ratapani for peaceful getaways, wellness travel, and nature exploration. Your best weekend getaway near Bhopal starts here.
           </p>
           <motion.div
             className="mt-8 flex flex-col sm:flex-row gap-4 justify-center"

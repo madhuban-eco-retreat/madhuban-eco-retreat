@@ -56,26 +56,10 @@ const AboutSection = () => {
               <div className="max-w-4xl mx-auto px-4 py-10 text-lg text-gray-800">
                 <div className="p-text-black p-text font-arial-narrow text-justify">
                   <p className="mb-4">
-                    Madhuban Eco Retreat is a regenerative forest and
-                    experiential travel destination nestled across 20 acres of
-                    land that was once barren and degraded. Madhuban welcomes
-                    solo travelers, families, and conscious explorers alike. Our
-                    eco-conscious design blends rustic charm with comfort,
-                    inviting you to slow down and reconnect with the rhythms of
-                    nature.
+                    Madhuban Eco Retreat is a regenerative forest and experiential travel destination nestled across 20 acres of land that was once barren and degraded. Today it stands as one of the most thoughtfully built eco-luxury resorts near Bhopal — welcoming solo travelers, families, and conscious explorers alike. Our eco-conscious design blends rustic charm with comfort, inviting you to slow down and reconnect with the rhythms of nature.
                   </p>
                   <p>
-                    Strategically located near Bhopal and in close proximity to
-                    both Ratapani and Satpura Tiger Reserves, Madhuban is an
-                    ideal base for those wishing to explore the stunning
-                    wildlife, rich cultural heritage, and natural beauty of
-                    central India. As a regenerative travel destination and eco
-                    lodge near Bhopal, it invites you to be part of a growing
-                    movement toward meaningful, sustainable tourism. Travelers
-                    can embark on thrilling wildlife safaris, discover the
-                    ancient rock shelters of Bhimbetka-a UNESCO World Heritage
-                    Site or visit the serene ruins of Buddhist monasteries
-                    tucked away in the forested hills.
+                  Strategically located near Bhopal and in close proximity to both Ratapani and Satpura Tiger Reserves, Madhuban is an ideal base for those wishing to explore the stunning wildlife, rich cultural heritage, and natural beauty of central India. As a regenerative travel destination and Ratapani eco lodge, it invites you to be part of a growing movement toward meaningful, responsible tourism near Bhopal. Travelers can embark on thrilling wildlife safaris, discover the ancient rock shelters of Bhimbetka — a UNESCO World Heritage Site — or visit the serene ruins of Buddhist monasteries tucked away in the forested hills.
                   </p>
                 </div>
               </div>
@@ -123,9 +107,7 @@ const AboutSection = () => {
             viewport={{ once: true }}
           >
             <p className="p-text pt-12 p-text-black">
-              Whether you're planning a forest escape, a cultural journey, or a
-              sustainable retreat, Madhuban offers an unforgettable experience
-              of Madhya Pradesh's wilderness and wonder.
+             Whether you're planning a forest escape, a cultural journey, or a nature retreat near Bhopal, Madhuban offers an unforgettable experience of Madhya Pradesh's wilderness and wonder.
             </p>
           </motion.div>
         </div>
