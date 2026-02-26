@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { FaAnglesRight } from "react-icons/fa6";
 import Image from "next/image";
+import { getAltFromUrl } from "@/utills/helperFunctions";
 
 const ExperienceCard = ({ experience }) => {
   const { title, image, description, learnMoreBtn, path, idealFor } =
@@ -17,7 +18,7 @@ const ExperienceCard = ({ experience }) => {
           width={500}
           height={400}
           src={image}
-          alt={title}
+          alt={getAltFromUrl(image)}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           aria-label="experience pic"
         />
@@ -44,7 +45,10 @@ const ExperienceCard = ({ experience }) => {
           className="inline-flex items-center  text-white font-arial-narrow font-semibold tracking-wider group-hover:opacity-100 absolute bottom-6"
         >
           {learnMoreBtn}{" "}
-          <ChevronRight className="ml-1 w-5 h-5 transition-transform group-hover:translate-x-1" aria-label="arrow" />
+          <ChevronRight
+            className="ml-1 w-5 h-5 transition-transform group-hover:translate-x-1"
+            aria-label="arrow"
+          />
         </Link>
       </div>
     </div>

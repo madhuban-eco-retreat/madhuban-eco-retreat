@@ -3,6 +3,7 @@
 import Image from "next/image";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
 import { motion } from "framer-motion";
+import { getAltFromUrl } from "@/utills/helperFunctions";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -70,7 +71,9 @@ const GuestsSection = () => {
           <DecorativeHeading text={"Loved by Guests Across India"} />
 
           <div className="p-text-black p-text text-sm  md:text-xl ">
-           Recognized as one of the best resorts near Ratapani and a top-rated resort near Bhopal, Madhuban Eco Retreat is cherished by families, nature lovers, celebrities, and wellness travelers.
+            Recognized as one of the best resorts near Ratapani and a top-rated
+            resort near Bhopal, Madhuban Eco Retreat is cherished by families,
+            nature lovers, celebrities, and wellness travelers.
           </div>
         </motion.div>
         <motion.div
@@ -89,7 +92,7 @@ const GuestsSection = () => {
             >
               <Image
                 src={celeb.img}
-                alt={`${celeb.name} at Madhuban Eco Retreat`}
+                alt={getAltFromUrl(celeb.img)}
                 fill
                 sizes="(max-width: 768px) 100vw, 33vw"
                 className=" object-cover transition-transform duration-300 group-hover:scale-105"

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import BookingWidget from "../BookingWidget";
+import { getAltFromUrl } from "@/utills/helperFunctions";
 
 const heroSlides = [
   {
@@ -44,18 +45,18 @@ export default function HomeBanner() {
     return () => clearInterval(interval);
   }, []);
 
-  const slide = heroSlides[currentSlide]; 
+  const slide = heroSlides[currentSlide];
 
   return (
     <>
-    <section className="relative min-h-screen overflow-hidden m-0 p-0 lg:min-h-[50vh] md:-mt-[166px] sm:-mt-[116px] max640:-mt-[116px]">
+      <section className="relative min-h-screen overflow-hidden m-0 p-0 lg:min-h-[50vh] md:-mt-[166px] sm:-mt-[116px] max640:-mt-[116px]">
         {/* SINGLE ACTIVE SLIDE ONLY */}
         <div className="absolute inset-0 transition-opacity duration-1000">
           {/* Desktop */}
           <div className="hidden md:block relative w-full min-h-screen">
             <Image
               src={slide.image}
-              alt={slide.title}
+              alt={getAltFromUrl(slide.image)}
               fill
               priority={currentSlide === 0}
               sizes="100vw"
@@ -66,7 +67,7 @@ export default function HomeBanner() {
           <div className="block md:hidden relative w-full min-h-screen">
             <Image
               src={slide.mobile}
-              alt={slide.title}
+              alt={getAltFromUrl(slide.image)}
               fill
               priority={currentSlide === 0}
               sizes="100vw"
