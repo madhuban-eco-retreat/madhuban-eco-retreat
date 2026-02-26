@@ -4,6 +4,7 @@ import React from "react";
 import { color, motion } from "framer-motion";
 import { FaAnglesRight } from "react-icons/fa6";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
+import { getAltFromUrl } from "@/utills/helperFunctions";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -104,7 +105,9 @@ const Story = () => {
               <div className=" rounded-xl">
                 <img
                   src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624797/somaiya-group-logo.png"
-                  alt="Madhuban Eco Retreat Logo"
+                  alt={getAltFromUrl(
+                    "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624797/somaiya-group-logo.png",
+                  )}
                   className="w-64 h-auto object-contain"
                 />
               </div>
@@ -121,8 +124,11 @@ const Story = () => {
             viewport={{ once: true }}
           >
             <p className="p-text pt-12 text-white">
-             Families, solo travelers, artists, researchers, nature lovers, and spiritual seekers come to Madhuban to rediscover what truly matters — simplicity, serenity, and balance. For many, it has become the best weekend getaway near Bhopal, not just for its setting, but for the way it makes you feel.
-
+              Families, solo travelers, artists, researchers, nature lovers, and
+              spiritual seekers come to Madhuban to rediscover what truly
+              matters — simplicity, serenity, and balance. For many, it has
+              become the best weekend getaway near Bhopal, not just for its
+              setting, but for the way it makes you feel.
             </p>
           </motion.div>
         </div>

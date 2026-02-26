@@ -6,6 +6,7 @@ import CommonFaqs from "@/common-components/faqs/CommonFaqs";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
 import Image from "next/image";
 import HeroSlider from "./HeroSlider";
+import { getAltFromUrl } from "@/utills/helperFunctions";
 
 const heroSlides = [
   {
@@ -159,13 +160,11 @@ const NearbyAttractions = () => {
     },
   ];
 
-
-
   // Auto slide
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) =>
-        prev === heroSlides.length - 1 ? 0 : prev + 1
+        prev === heroSlides.length - 1 ? 0 : prev + 1,
       );
     }, 5000);
 
@@ -176,7 +175,7 @@ const NearbyAttractions = () => {
     <div className="min-h-screen bg-[#D1C8C1]  ">
       {/* Hero Section */}
 
-  <HeroSlider heroSlides={heroSlides} />
+      <HeroSlider heroSlides={heroSlides} />
       <section className=" px-4 py-4 rounded-bl-[60px] rounded-br-[60px] flex flex-col justify-center items-center">
         <div className="text-center max-w-7xl mb-12 mt-10">
           <p className="text-justify md:text-center p-text  text-primary-gray2">
@@ -213,7 +212,7 @@ const NearbyAttractions = () => {
               <motion.img
                 className="w-full h-40 object-cover"
                 src={card.image}
-                alt={card.title}
+                alt={getAltFromUrl(card.image)}
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}

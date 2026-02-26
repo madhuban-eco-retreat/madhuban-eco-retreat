@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { BedDouble, Users, Leaf, Wifi, Sun, MountainSnow } from "lucide-react";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
+import { getAltFromUrl } from "@/utills/helperFunctions";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -48,15 +49,21 @@ const accommodationsData = [
       "Perched on raised platforms beside a gentle stream and facing forested mountains, our classic safari tent in Ratapani offers a true wilderness experience. Each tent is tastefully furnished with elegant cane furniture and features a vanity and dressing area, separate toilet and shower, and even an open-to-sky shower with a private relaxation space.",
     keyFeatures: [
       {
-        icon: <Leaf size={18} className="text-white"  aria-label="leaf" />,
+        icon: <Leaf size={18} className="text-white" aria-label="leaf" />,
         text: "Eco-Friendly Design",
       },
       {
         icon: <BedDouble size={18} className="text-white" />,
         text: "Queen Bed",
       },
-      { icon: <Sun size={18} className="text-white"  aria-label="sun"/>, text: "Solar Powered" },
-      { icon: <Wifi size={18} className="text-white" aria-label="wifi" />, text: "Wi-Fi Access" },
+      {
+        icon: <Sun size={18} className="text-white" aria-label="sun" />,
+        text: "Solar Powered",
+      },
+      {
+        icon: <Wifi size={18} className="text-white" aria-label="wifi" />,
+        text: "Wi-Fi Access",
+      },
     ],
     capacity: "Sleeps 2",
   },
@@ -78,8 +85,14 @@ const accommodationsData = [
         icon: <BedDouble size={18} className="text-white" />,
         text: "Queen Bed",
       },
-      { icon: <Sun size={18} className="text-white" aria-label="sun" />, text: "Solar Powered" },
-      { icon: <Wifi size={18} className="text-white" aria-label="wifi" />, text: "Wi-Fi Access" },
+      {
+        icon: <Sun size={18} className="text-white" aria-label="sun" />,
+        text: "Solar Powered",
+      },
+      {
+        icon: <Wifi size={18} className="text-white" aria-label="wifi" />,
+        text: "Wi-Fi Access",
+      },
     ],
     capacity: "Sleeps 2",
   },
@@ -94,7 +107,13 @@ const accommodationsData = [
       "Wake up to sunlight dancing on the eco-pool and unwind to the soothing rhythm of nature. Our elegant poolside villa in Ratapani offers the perfect balance of sophistication and serenity. Ideal for couples, families, or anyone looking for a private villa near Bhopal with forest-side calm.",
     keyFeatures: [
       {
-        icon: <MountainSnow size={18} className="text-white" aria-label="mountain" />,
+        icon: (
+          <MountainSnow
+            size={18}
+            className="text-white"
+            aria-label="mountain"
+          />
+        ),
         text: "Panoramic Forest Views",
       },
       {
@@ -124,7 +143,7 @@ const accommodationsData = [
       "Enjoy comfort in the wild with our rustic mini-safari glamping tents. Featuring chic interiors, a private lawn sit-out, and ensuite bathrooms, our glamping tent in Ratapani offers boutique-style luxury with the charm of camping — ideal for couples, families, or weekend travelers looking for a unique stay in the wilderness.",
     keyFeatures: [
       {
-        icon: <BedDouble size={18} className="text-white" aria-label="bed"/>,
+        icon: <BedDouble size={18} className="text-white" aria-label="bed" />,
         text: "King Size Bed",
       },
       {
@@ -153,7 +172,13 @@ const accommodationsData = [
       "Our eco-friendly camping tents offer a simple yet comfortable outdoor stay in Ratapani's lush wilderness. Perfect for travelers seeking digital detox, jungle adventure, or peaceful night camping — a truly authentic experience at this Ratapani eco resort.",
     keyFeatures: [
       {
-        icon: <MountainSnow size={18} className="text-white" aria-label="mountain" />,
+        icon: (
+          <MountainSnow
+            size={18}
+            className="text-white"
+            aria-label="mountain"
+          />
+        ),
         text: "Panoramic Forest Views",
       },
       {
@@ -223,7 +248,7 @@ const Accommodations = () => {
               >
                 <motion.img
                   src={accommodation.image}
-                  alt={accommodation.altText}
+                  alt={getAltFromUrl(accommodation.image)}
                   className="w-full h-full object-cover"
                   transition={{ duration: 0.5 }}
                 />

@@ -1,5 +1,6 @@
 "use client";
 
+import { getAltFromUrl } from "@/utills/helperFunctions";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -9,7 +10,7 @@ export default function HeroSlider({ heroSlides }) {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) =>
-        prev === heroSlides.length - 1 ? 0 : prev + 1
+        prev === heroSlides.length - 1 ? 0 : prev + 1,
       );
     }, 4000);
 
@@ -18,7 +19,6 @@ export default function HeroSlider({ heroSlides }) {
 
   return (
     <section className="relative h-[85vh] md:h-[85vh] min-h-[60vh] overflow-hidden">
-      
       {/* Slides */}
       {heroSlides.map((slide, index) => (
         <div
@@ -29,7 +29,7 @@ export default function HeroSlider({ heroSlides }) {
         >
           <Image
             src={slide.image}
-            alt="Nearby Attractions"
+            alt={getAltFromUrl(slide.image)}
             fill
             priority={index === 0}
             sizes="100vw"
@@ -41,16 +41,13 @@ export default function HeroSlider({ heroSlides }) {
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/40 z-10 flex flex-col items-center justify-center text-white text-center px-4">
         <div className="max-w-7xl animate-fadeInUp">
-          <h1 className="bannerHeading font-primary">
-            Nearby Attractions
-          </h1>
+          <h1 className="bannerHeading font-primary">Nearby Attractions</h1>
 
           <h2 className="bannerSubHeading">
             Experience the Soul of Madhya Pradesh!!
           </h2>
         </div>
       </div>
-
     </section>
   );
 }

@@ -8,6 +8,8 @@ import "../../components/photoGallery.css";
 import { FaPlayCircle } from "react-icons/fa";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
 import { motion } from "framer-motion";
+import Image from "next/image";
+import { getAltFromUrl } from "@/utills/helperFunctions";
 
 const tabs = [
   "Madhuban Eco Retreat",
@@ -92,7 +94,7 @@ const mediaContent = {
       type: "image",
       src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590129/guest-near-safari-tent-madhuban-eco-retreat-bhopal.avif",
     },
-     {
+    {
       type: "image",
       src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771833362/dinning-area-image-7-madhuban-eco-retreat-bhopal.avif",
     },
@@ -100,7 +102,7 @@ const mediaContent = {
       type: "image",
       src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771583374/fine-dine-restaurant-in-ratapani-bhopal-madhuban-eco-retreat-2.avif",
     },
-     {
+    {
       type: "image",
       src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771583365/madhuban-eco-retreat-best-restaurant-near-bhopal.avif",
     },
@@ -108,7 +110,7 @@ const mediaContent = {
       type: "image",
       src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590079/fine-dine-restaurant-in-ratapani-bhopal-madhuban-eco-retreat.avif",
     },
-     {
+    {
       type: "image",
       src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771833360/dinning-area-image-8-madhuban-eco-retreat-bhopal.avif",
     },
@@ -236,31 +238,31 @@ const mediaContent = {
       type: "image",
       src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771840149/nature-forest-view-ratapani-tiger-reserve-madhuban-eco-retreat-bhopal-3.avif",
     },
-     {
+    {
       type: "image",
       src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771840123/nature-forest-view-ratapani-tiger-reserve-madhuban-eco-retreat-bhopal-4.avif",
     },
-     {
+    {
       type: "image",
       src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771840121/nature-forest-view-ratapani-tiger-reserve-madhuban-eco-retreat-bhopal-5.avif",
     },
-     {
+    {
       type: "image",
       src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771840119/nature-forest-view-ratapani-tiger-reserve-madhuban-eco-retreat-bhopal-6.avif",
     },
-     {
+    {
       type: "image",
       src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771840073/nature-forest-view-ratapani-tiger-reserve-madhuban-eco-retreat-bhopal-7.avif",
     },
-     {
+    {
       type: "image",
       src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771840071/nature-forest-view-ratapani-tiger-reserve-madhuban-eco-retreat-bhopal-8.avif",
     },
-     {
+    {
       type: "image",
       src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771840069/nature-forest-view-ratapani-tiger-reserve-madhuban-eco-retreat-bhopal-9.avif",
     },
-     {
+    {
       type: "image",
       src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771840067/nature-forest-view-ratapani-tiger-reserve-madhuban-eco-retreat-bhopal-10.avif",
     },
@@ -406,40 +408,36 @@ const Gallery = () => {
 
   return (
     <div className="min-h-screen bg-[#D1C8C1]">
-    <section className="relative w-full h-[85vh] overflow-hidden mb-20 ">
+      <section className="relative w-full h-[85vh] overflow-hidden mb-20 ">
+        {/* Video Layer */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source
+            src="https://res.cloudinary.com/dx3aj7a40/video/upload/v1770624901/gallery-bg-video_cdwjew.mp4"
+            type="video/mp4"
+          />
+        </video>
 
-  {/* Video Layer */}
-  <video
-    autoPlay
-    muted
-    loop
-    playsInline
-    preload="auto"
-    className="absolute inset-0 w-full h-full object-cover"
-  >
-    <source
-      src="https://res.cloudinary.com/dx3aj7a40/video/upload/v1770624901/gallery-bg-video_cdwjew.mp4"
-      type="video/mp4"
-    />
-  </video>
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-black/40"></div>
 
-  {/* Dark Overlay */}
-  <div className="absolute inset-0 bg-black/40"></div>
+        {/* Content Layer */}
+        <div className="relative z-10 flex items-center justify-center h-full text-white text-center px-4">
+          <div className="max-w-7xl">
+            <h1 className="bannerHeading font-primary">Eco Gallery</h1>
 
-  {/* Content Layer */}
-  <div className="relative z-10 flex items-center justify-center h-full text-white text-center px-4">
-    <div className="max-w-7xl">
-      <h1 className="bannerHeading font-primary">
-        Eco Gallery
-      </h1>
-
-      <h2 className="bannerSubHeading">
-        Discover the beauty of nature through our lens
-      </h2>
-    </div>
-  </div>
-
-</section>
+            <h2 className="bannerSubHeading">
+              Discover the beauty of nature through our lens
+            </h2>
+          </div>
+        </div>
+      </section>
 
       <section className="py-8 px-4 -mt-24 rounded-bl-[60px] rounded-br-[60px] ">
         <div className="max-w-[86rem] mx-auto">
@@ -499,9 +497,11 @@ const Gallery = () => {
               >
                 {item.type === "image" ? (
                   <>
-                    <img
+                    <Image
+                      width={300}
+                      height={300}
                       src={item.src}
-                      alt="gallery"
+                      alt={getAltFromUrl(item.src)}
                       className="h-80 w-full object-cover rounded-t-2xl"
                       loading="lazy"
                     />

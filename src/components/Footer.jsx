@@ -12,6 +12,7 @@ import {
   youtube,
 } from "@/utills/constants";
 import Image from "next/image";
+import { getAltFromUrl } from "@/utills/helperFunctions";
 
 const Footer = () => {
   const [open, setOpen] = useState(false); // dropdown state
@@ -294,7 +295,9 @@ const Footer = () => {
           <div className="">
             <img
               src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624797/somaiya-group-logo.png"
-              alt="Newsletter"
+              alt={getAltFromUrl(
+                "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624797/somaiya-group-logo.png",
+              )}
               className="w-[70px] h-[70px] mt-3 mb-4 mx-auto filter brightness-75"
               style={{ filter: "brightness(0.75)" }}
             />

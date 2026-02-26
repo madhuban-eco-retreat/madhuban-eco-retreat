@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FaAnglesRight } from "react-icons/fa6";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
+import { getAltFromUrl } from "@/utills/helperFunctions";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -82,7 +83,13 @@ const VisionMission = () => {
                         Our Vision
                       </h3>
                       <p className="mb-6 text-base md:text-lg  text-justify">
-                       Our Vision To become India's leading eco-luxury stay destination in Ratapani and a defining nature retreat near Bhopal, where guests rediscover the joy of simple living, reconnect with nature, and leave with a renewed sense of well-being. We envision a world where travel supports the environment, not harms it — a space where every stay contributes to healing the planet.
+                        Our Vision To become India's leading eco-luxury stay
+                        destination in Ratapani and a defining nature retreat
+                        near Bhopal, where guests rediscover the joy of simple
+                        living, reconnect with nature, and leave with a renewed
+                        sense of well-being. We envision a world where travel
+                        supports the environment, not harms it — a space where
+                        every stay contributes to healing the planet.
                       </p>
                     </div>
                   </div>
@@ -103,7 +110,9 @@ const VisionMission = () => {
                     >
                       <img
                         src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771834121/tourists-jungle-safari-jeep-madhuban-eco-retreat-ratapani.avif"
-                        alt="Our Mission"
+                        alt={getAltFromUrl(
+                          "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771834121/tourists-jungle-safari-jeep-madhuban-eco-retreat-ratapani.avif",
+                        )}
                         className="w-full  object-cover h-100"
                       />
                     </motion.div>
@@ -130,7 +139,9 @@ const VisionMission = () => {
                     >
                       <img
                         src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589752/camping-tent-new-madhuban-eco-retreat-bhopal_pohjtj.avif"
-                        alt="Our Vision"
+                        alt={getAltFromUrl(
+                          "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589752/camping-tent-new-madhuban-eco-retreat-bhopal_pohjtj.avif",
+                        )}
                         className="w-full h-130  object-cover"
                       />
                     </motion.div>

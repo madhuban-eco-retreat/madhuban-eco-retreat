@@ -8,6 +8,7 @@ import CommonFaqs from "@/common-components/faqs/CommonFaqs";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { getAltFromUrl } from "@/utills/helperFunctions";
 
 const foodAndDiningFaqs = [
   {
@@ -199,8 +200,12 @@ const Dining = () => {
       <div className="farm-to-table bg-[#D1C8C1] flex flex-col items-center">
         <div className="relative w-full h-[85vh]  ">
           <Image
-            src={"https://res.cloudinary.com/dx3aj7a40/image/upload/v1771583365/madhuban-eco-retreat-best-restaurant-near-bhopal.avif"}
-            alt="Farm Banner"
+            src={
+              "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771583365/madhuban-eco-retreat-best-restaurant-near-bhopal.avif"
+            }
+            alt={getAltFromUrl(
+              "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771583365/madhuban-eco-retreat-best-restaurant-near-bhopal.avif",
+            )}
             className="w-full h-full object-cover"
             fill
             priority
@@ -277,7 +282,13 @@ const Dining = () => {
                     className="media-item"
                     onClick={() => setSelectedMedia(photo)}
                   >
-                    <img src={photo.url} alt={photo.title || "Photo"} />
+                    <Image
+                      width={400}
+                      height={400}
+                      src={photo.url}
+                      alt={getAltFromUrl(photo.url)}
+                      objectFit="cover"
+                    />
                     <div className="media-title">{photo.title}</div>
                   </div>
                 ))}
@@ -292,8 +303,9 @@ const Dining = () => {
 
             <div className="flex flex-col mt-4 ">
               <div
-                className={`media-grid ${videos.length === 1 ? "single-media" : ""
-                  } max-w-7xl`}
+                className={`media-grid ${
+                  videos.length === 1 ? "single-media" : ""
+                } max-w-7xl`}
               >
                 {videos.map((video) => (
                   <div
@@ -325,7 +337,7 @@ const Dining = () => {
               ) : (
                 <img
                   src={removeCloudinaryParams(selectedMedia.url)}
-                  alt={selectedMedia.title || "Media"}
+                  alt={getAltFromUrl(selectedMedia.url)}
                 />
               )}
               <h3>{selectedMedia.title}</h3>

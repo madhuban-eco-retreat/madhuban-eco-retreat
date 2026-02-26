@@ -8,6 +8,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, A11y, Autoplay } from "swiper/modules";
 import { motion } from "framer-motion";
+import { getAltFromUrl } from "@/utills/helperFunctions";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -26,7 +27,6 @@ const Slidingbanner = ({ images = [], heading, subHeading, buttonLink }) => {
 
   return (
     <div className="relative w-full h-[85vh] overflow-hidden">
-
       <Swiper
         modules={[Pagination, A11y, Autoplay]}
         spaceBetween={0}
@@ -44,10 +44,10 @@ const Slidingbanner = ({ images = [], heading, subHeading, buttonLink }) => {
             <div className="relative w-full h-full">
               <Image
                 src={image.src}
-                alt={image.alt || "Banner image"}
+                alt={getAltFromUrl(image.src)}
                 fill
                 sizes="100vw"
-                priority={index === 0} 
+                priority={index === 0}
                 fetchPriority={index === 0 ? "high" : "auto"}
                 className="object-cover"
               />
@@ -67,15 +67,11 @@ const Slidingbanner = ({ images = [], heading, subHeading, buttonLink }) => {
           >
             <div className="max-w-7xl">
               {heading && (
-                <h1 className="bannerHeading font-primary">
-                  {heading}
-                </h1>
+                <h1 className="bannerHeading font-primary">{heading}</h1>
               )}
 
               {subHeading && (
-                <h2 className="bannerSubHeading mt-4">
-                  {subHeading}
-                </h2>
+                <h2 className="bannerSubHeading mt-4">{subHeading}</h2>
               )}
 
               {buttonLink && (

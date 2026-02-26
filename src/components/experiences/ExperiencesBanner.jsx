@@ -1,14 +1,16 @@
+import { getAltFromUrl } from "@/utills/helperFunctions";
 import Image from "next/image";
 
 const ExperiencesBanner = () => {
   return (
     <section className="relative w-full min-h-screen overflow-hidden">
-      
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
           src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771844127/cultural-tribal-dance-madhuban-eco-retreat.avif"
-          alt="Cultural tribal dance at eco retreat"
+          alt={getAltFromUrl(
+            "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771844127/cultural-tribal-dance-madhuban-eco-retreat.avif",
+          )}
           fill
           priority
           sizes="100vw"

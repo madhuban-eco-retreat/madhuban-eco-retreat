@@ -1,6 +1,7 @@
 "use client";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
 import { facebook, instagram } from "@/utills/constants";
+import { getAltFromUrl } from "@/utills/helperFunctions";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
@@ -145,11 +146,15 @@ const OurJourney = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <img
+            <Image
+              width={1600}
+              height={200}
               src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574136/vidhya-balan-stay-review-at-madhuban-eco-retreat-bhopal.webp"
-              alt="Manual"
+              alt={getAltFromUrl(
+                "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574136/vidhya-balan-stay-review-at-madhuban-eco-retreat-bhopal.webp",
+              )}
               className="xl:w-[50vw] xl:h-[50vh] object-cover rounded-md sm:w-[100vw] max640:w-[100vw]"
-            // className="w-[50vw] h-[50vh]  object-cover rounded-md sm:w-screen max640:w-screen "
+              // className="w-[50vw] h-[50vh]  object-cover rounded-md sm:w-screen max640:w-screen "
             />
           </motion.div>
 
@@ -173,7 +178,7 @@ const OurJourney = () => {
                   width={500}
                   height={500}
                   src={url}
-                  alt={`Instagram post ${index + 1}`}
+                  alt={getAltFromUrl(url)}
                   className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                   aria-label="instagram"
                 />
@@ -196,7 +201,9 @@ const OurJourney = () => {
                 width={500}
                 height={500}
                 src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574132/radhika-goyal-customer-review-for-madhuban-eco-retreat.avif"
-                alt="Video Thumbnail"
+                alt={getAltFromUrl(
+                  "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574132/radhika-goyal-customer-review-for-madhuban-eco-retreat.avif",
+                )}
                 className="xl:w-[25vw] xl:h-[50vh] object-cover rounded-md sm:w-[100vw] max640:w-[100vw]"
                 aria-label="thumbnail"
               />
