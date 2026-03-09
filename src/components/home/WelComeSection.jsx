@@ -49,34 +49,46 @@ const WelComeSection = () => {
     return () => observer.disconnect();
   }, []);
   return (
-    <section className="  md:pt-20 pb-8 md:px-8 bg-[#D1C8C1] min-h-[60vh] max640:pt-0 max640:text-center">
+    <section className="   pb-8 md:px-8 bg-[#D1C8C1] min-h-[60vh] max640:pt-0 max640:text-center">
       <div className="max-w-7xl mx-auto px-2 py-7 md:px-6">
         <motion.div
-          className="grid md:grid-cols-2 xl:grid-cols-2 gap-12 items-center"
+          className="grid md:grid-cols-2 xl:grid-cols-2 gap-12 items-center justify-between"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={containerVariants}
         >
           {/* Text Section text-[rgb(110,97,70)] */}
-          <motion.div className="h-full" variants={itemVariants}>
+          <motion.div
+            className="h-full flex flex-col justify-center"
+            variants={itemVariants}
+          >
             <div className="flex flex-col justify-center items-center">
               <DecorativeHeading text={`Welcome to "Madhuban Eco Retreat"`} />
             </div>
 
             <p className="font-arial-narrow text-md md:text:lg mb-6 text-1 text-justify">
-              Located just an hour from Bhopal, Madhuban is a premium eco resort near Bhopal designed for travelers who love nature, wellness, and responsible travel. As a leading Ratapani eco lodge, we are nestled beside the scenic teak forests of Ratapani Wildlife Sanctuary, offering a rare blend of sustainable hospitality and natural luxury.
-
+              Located just an hour from Bhopal, Madhuban is a premium eco resort
+              near Bhopal designed for travelers who love nature, wellness, and
+              responsible travel. As a leading Ratapani eco lodge, we are
+              nestled beside the scenic teak forests of Ratapani Wildlife
+              Sanctuary, offering a rare blend of sustainable hospitality and
+              natural luxury.
             </p>
             <p className="text-md md:text:lg font-arial-narrow  text-1 text-justify">
-             As one of the best forest resorts near Bhopal and a top choice for eco-tourism near Bhopal and Ratapani, Madhuban invites you to reconnect with the outdoors through forest walks, birdwatching, organic dining, and peaceful eco-friendly stays. Whether you're planning the best weekend getaway near Bhopal, a family vacation, or a quiet wellness escape, this nature resort in Ratapani is the perfect place to breathe, slow down, and reconnect with nature.
-
+              As one of the best forest resorts near Bhopal and a top choice for
+              eco-tourism near Bhopal and Ratapani, Madhuban invites you to
+              reconnect with the outdoors through forest walks, birdwatching,
+              organic dining, and peaceful eco-friendly stays. Whether you're
+              planning the best weekend getaway near Bhopal, a family vacation,
+              or a quiet wellness escape, this nature resort in Ratapani is the
+              perfect place to breathe, slow down, and reconnect with nature.
             </p>
           </motion.div>
 
           {/* Video Section */}
           <motion.div
-            className="h-full"
+            className="h-full flex justify-center items-center"
             variants={itemVariants}
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -84,8 +96,10 @@ const WelComeSection = () => {
             <video
               id="about-video"
               ref={videoRef}
-              src="https://res.cloudinary.com/dx3aj7a40/video/upload/v1770642400/madhuban-intro_iyhhjy.mp4"
-              className="rounded-lg shadow-xl w-full h-full object-cover"
+              src="/images/home/welcome/madhuban-intro.mp4"
+              autoPlay
+              controls
+              className="rounded-lg shadow-xl w-full md:w-[350px] h-full object-cover aspect-9/16"
               loop
               muted
               playsInline

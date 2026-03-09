@@ -42,7 +42,8 @@ const fadeInUp = {
 const accommodations = [
   {
     title: "Safari Tent",
-    image: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590126/Safari_Tent_-_Madhuban_Eco_Retreat_Bhopal_pbpcgr.avif",
+    image:
+      "/images/home/accommodations/Safari_Tent_-_Madhuban_Eco_Retreat_Bhopal_pbpcgr.webp",
     alt: "Nature Tent",
     description:
       "Experience one of the most unique jungle stays near Bhopal with our eco-luxury safari tents featuring open-to-sky showers, forest views, and crafted cane interiors.",
@@ -50,7 +51,7 @@ const accommodations = [
   {
     title: "Mud Houses",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771576228/Mud_House_Image_2_-_Madhuban_Eco_Retreat_Bhopal_lbzlrg.avif",
+      "/images/home/accommodations/Mud_House_Image_2_-_Madhuban_Eco_Retreat_Bhopal_lbzlrg.webp",
     alt: "Mud Houses",
     description:
       "Inspired by the Gond tribes, these mud cottages offer rustic charm and sustainable comfort — making them one of the most loved eco stays in Madhya Pradesh.",
@@ -58,7 +59,7 @@ const accommodations = [
   {
     title: "Pool Side Villa",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574252/Pool_Image_2_-_Madhuban_Eco_Retreat_Bhopal_yl1tbg.avif",
+      "/images/home/accommodations/Pool_Image_2_-_Madhuban_Eco_Retreat_Bhopal_yl1tbg.webp",
     alt: "Pool Side Room",
     description:
       "For travelers seeking leisure and calm, our poolside villas combine scenic views, wellness-friendly spaces, and forest-side luxury.",
@@ -66,7 +67,7 @@ const accommodations = [
   {
     title: "Glamping Tents",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589796/madhuban-eco-retreat-glamping-tent-gallery-image-1.avif",
+      "/images/home/accommodations/madhuban-eco-retreat-glamping-tent-gallery-image-1.webp",
     alt: "Glamping Tent",
     description:
       "Enjoy boutique-style glamping with chic décor, ensuite bathrooms, and private sit-outs — perfect for a stylish forest experience.",
@@ -74,7 +75,7 @@ const accommodations = [
   {
     title: "Camping Tents",
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624781/camping-tent-image-1-madhuban-eco-retreat-bhopal.jpg",
+      "/images/home/accommodations/camping-tent-image-1-madhuban-eco-retreat-bhopal.webp",
     alt: "Camping Tent",
     description:
       "Ideal for adventure seekers looking for a pure nature experience, our camping tents offer a peaceful, off-grid stay under starry skies.",

@@ -52,9 +52,9 @@ const fadeIn = {
 };
 
 const instagramPosts = [
-  "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574124/beyondyourexpectation-customer-review-for-madhuban-eco-retreat.avif",
-  "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574122/charlies12ways-customer-review-for-madhuban-eco-retreat.webp",
-  "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624809/pre-wedding-shoot-at-madhuban-eco-retreat-bhopal.jpg",
+  "/images/home/journey/beyondyourexpectation-customer-review-for-madhuban-eco-retreat.webp",
+  "/images/home/journey/charlies12ways-customer-review-for-madhuban-eco-retreat.webp",
+  "/images/home/journey/pre-wedding-shoot-at-madhuban-eco-retreat-bhopal.webp",
 ];
 
 const OurJourney = () => {
@@ -149,9 +149,9 @@ const OurJourney = () => {
             <Image
               width={1600}
               height={200}
-              src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574136/vidhya-balan-stay-review-at-madhuban-eco-retreat-bhopal.webp"
+              src="/images/home/journey/vidhya-balan-stay-review-at-madhuban-eco-retreat-bhopal.webp"
               alt={getAltFromUrl(
-                "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574136/vidhya-balan-stay-review-at-madhuban-eco-retreat-bhopal.webp",
+                "/images/home/journey/vidhya-balan-stay-review-at-madhuban-eco-retreat-bhopal.webp",
               )}
               className="xl:w-[50vw] xl:h-[50vh] object-cover rounded-md sm:w-[100vw] max640:w-[100vw]"
               // className="w-[50vw] h-[50vh]  object-cover rounded-md sm:w-screen max640:w-screen "
@@ -200,9 +200,9 @@ const OurJourney = () => {
               <Image
                 width={500}
                 height={500}
-                src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574132/radhika-goyal-customer-review-for-madhuban-eco-retreat.avif"
+                src="/images/home/journey/radhika-goyal-customer-review-for-madhuban-eco-retreat.webp"
                 alt={getAltFromUrl(
-                  "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574132/radhika-goyal-customer-review-for-madhuban-eco-retreat.avif",
+                  "/images/home/journey/radhika-goyal-customer-review-for-madhuban-eco-retreat.webp",
                 )}
                 className="xl:w-[25vw] xl:h-[50vh] object-cover rounded-md sm:w-[100vw] max640:w-[100vw]"
                 aria-label="thumbnail"
@@ -238,7 +238,7 @@ const OurJourney = () => {
                   className="w-full h-[100vh] rounded-md"
                 >
                   <source
-                    src="https://res.cloudinary.com/dx3aj7a40/video/upload/v1770624880/insta-4_dncg3z.mp4"
+                    src="/images/home/journey/insta-video.mp4"
                     type="video/mp4"
                   />
                   Your browser does not support the video tag.

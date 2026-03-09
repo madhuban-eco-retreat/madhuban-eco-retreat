@@ -43,8 +43,8 @@ const GuestsExperiences = () => {
           viewport={{ once: true }}
           variants={fadeInUp}
         >
-          <DecorativeHeading text="Guest Experiences" color="#fff" />
-          <p className="mt-1 max-w-2xl mx-auto p-text text-white px-4 tracking-wide font-arial-narrow">
+          <DecorativeHeading text="Guest Experiences" />
+          <p className="mt-1 max-w-2xl mx-auto p-text  px-4 tracking-wide font-arial-narrow">
             What our guests say about their stay at Madhuban Eco Retreat
           </p>
         </motion.div>

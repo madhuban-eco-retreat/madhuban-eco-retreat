@@ -36,7 +36,7 @@ const mediaContent = {
   "Madhuban Eco Retreat": [
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771835637/madhuban-eco-retreat-best-resort-near-bhopal-1.avif",
+      src: "/images/gallery/madhuban-eco-retreat/madhuban-eco-retreat-best-resort-near-bhopal-1.webp",
     },
     {
       type: "video",
@@ -44,7 +44,7 @@ const mediaContent = {
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771834915/glamping-tent-madhuban-eco-retreat-1.avif",
+      src: "/images/gallery/madhuban-eco-retreat/glamping-tent-madhuban-eco-retreat-1.webp",
     },
     {
       type: "video",
@@ -52,7 +52,7 @@ const mediaContent = {
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771835137/collage-image-madhuban-eco-retreat-best-resort-near-bhopal.avif",
+      src: "/images/gallery/madhuban-eco-retreat/collage-image-madhuban-eco-retreat-best-resort-near-bhopal.webp",
     },
     {
       type: "video",
@@ -64,27 +64,27 @@ const mediaContent = {
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771835534/glamping-tent-gallery-madhuban-eco-retreat.avif",
+      src: "/images/gallery/madhuban-eco-retreat/glamping-tent-gallery-madhuban-eco-retreat.webp",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771835434/mud-house-sunset-madhuban-eco-retreat-bhopal.avif",
+      src: "/images/gallery/madhuban-eco-retreat/mud-house-sunset-madhuban-eco-retreat-bhopal.webp",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771834843/pool-view-image-madhuban-eco-retreat-bhopal.avif",
+      src: "/images/gallery/madhuban-eco-retreat/pool-view-image-madhuban-eco-retreat-bhopal.webp",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771835763/madhuban-eco-retreat-image.avif",
+      src: "/images/gallery/madhuban-eco-retreat/madhuban-eco-retreat-image.webp",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771835368/madhuban-eco-retreat-image-best-resort-near-bhopal.avif",
+      src: "/images/gallery/madhuban-eco-retreat/madhuban-eco-retreat-image-best-resort-near-bhopal.webp",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771835708/mud-house-gallery-image-2-madhuban-eco-retreat.avif",
+      src: "/images/gallery/madhuban-eco-retreat/mud-house-gallery-image-2-madhuban-eco-retreat.webp",
     },
     {
       type: "video",
@@ -92,27 +92,27 @@ const mediaContent = {
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590129/guest-near-safari-tent-madhuban-eco-retreat-bhopal.avif",
+      src: "/images/gallery/madhuban-eco-retreat/guest-near-safari-tent-madhuban-eco-retreat-bhopal.webp",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771833362/dinning-area-image-7-madhuban-eco-retreat-bhopal.avif",
+      src: "/images/gallery/madhuban-eco-retreat/dinning-area-image-7-madhuban-eco-retreat-bhopal.webp",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771583374/fine-dine-restaurant-in-ratapani-bhopal-madhuban-eco-retreat-2.avif",
+      src: "/images/gallery/madhuban-eco-retreat/fine-dine-restaurant-in-ratapani-bhopal-madhuban-eco-retreat-2.webp",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771583365/madhuban-eco-retreat-best-restaurant-near-bhopal.avif",
+      src: "/images/gallery/madhuban-eco-retreat/madhuban-eco-retreat-best-restaurant-near-bhopal.webp",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771590079/fine-dine-restaurant-in-ratapani-bhopal-madhuban-eco-retreat.avif",
+      src: "/images/gallery/madhuban-eco-retreat/fine-dine-restaurant-in-ratapani-bhopal-madhuban-eco-retreat.webp",
     },
     {
       type: "image",
-      src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771833360/dinning-area-image-8-madhuban-eco-retreat-bhopal.avif",
+      src: "/images/gallery/madhuban-eco-retreat/dinning-area-image-8-madhuban-eco-retreat-bhopal.webp",
     },
   ],
   "Tribal Culture At Madhuban": [

@@ -44,7 +44,7 @@ const Footer = () => {
                 <Image
                   width={120}
                   height={120}
-                  src="/image/w_120,c_fill,f_auto,q_auto,dpr_auto/madhuban-eco-retreat-logo-footer.png"
+                  src="/images/logo/black-madhuban-eco-retreat-bhopal-logo.png"
                   alt="Madhuban Eco Retreat Logo"
                   className="h-20 w-20 filter brightness-75"
                 />
@@ -103,7 +103,7 @@ const Footer = () => {
                 <Image
                   width={32}
                   height={32}
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/640px-YouTube_full-color_icon_%282017%29.svg.png"
+                  src="/images/logo/youtube-logo.png"
                   alt="Youtube"
                   className="w-9 h-8"
                 />
@@ -117,7 +117,7 @@ const Footer = () => {
                 <Image
                   width={32}
                   height={32}
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Linkedin.svg/640px-Linkedin.svg.png"
+                  src="/images/logo/linkedin-logo.png"
                   alt="Linkedin"
                   className="w-8 h-8"
                 />
@@ -294,10 +294,8 @@ const Footer = () => {
           {/* Newsletter Signup */}
           <div className="">
             <img
-              src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624797/somaiya-group-logo.png"
-              alt={getAltFromUrl(
-                "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624797/somaiya-group-logo.png",
-              )}
+              src="/images/logo/somaiya-group-logo.png"
+              alt={getAltFromUrl("/images/logo/somaiya-group-logo.png")}
               className="w-[70px] h-[70px] mt-3 mb-4 mx-auto filter brightness-75"
               style={{ filter: "brightness(0.75)" }}
             />

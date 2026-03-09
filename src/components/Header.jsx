@@ -78,13 +78,13 @@ const socialLinks = [
   {
     name: "YouTube",
     href: youtube,
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/640px-YouTube_full-color_icon_%282017%29.svg.png",
+    img: "/images/logo/youtube-logo.png",
     className: "w-6 h-5",
   },
   {
     name: "LinkedIn",
     href: linkedin,
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Linkedin.svg/640px-Linkedin.svg.png",
+    img: "/images/logo/linkedin-logo.png",
     className: "w-5 h-5",
   },
   {
@@ -151,7 +151,7 @@ const MainNavigation = () => {
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-4 z-20">
           <Image
-            src="/image/w_120,c_fill,f_auto,q_auto,dpr_auto/madhuban-eco-retreat-bhopal-logo.png"
+            src="/images/logo/madhuban-eco-retreat-bhopal-logo.webp"
             width={120}
             height={120}
             alt="Madhuban Eco Retreat Logo"
