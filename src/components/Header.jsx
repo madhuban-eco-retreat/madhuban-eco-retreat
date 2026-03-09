@@ -151,7 +151,7 @@ const MainNavigation = () => {
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-4 z-20">
           <Image
-            src="/images/logo/madhuban-eco-retreat-bhopal-logo.webp"
+            src="/images/logo/madhuban-eco-retreat-bhopal-logo.png"
             width={120}
             height={120}
             alt="Madhuban Eco Retreat Logo"
