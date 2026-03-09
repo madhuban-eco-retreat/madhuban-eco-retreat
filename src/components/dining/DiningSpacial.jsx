@@ -116,7 +116,7 @@ const DiningSpacial = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.9 }}
               style={{
-                backgroundImage: `url(https://res.cloudinary.com/dx3aj7a40/image/upload/v1771583374/fine-dine-restaurant-in-ratapani-bhopal-madhuban-eco-retreat-2.avif)`,
+                backgroundImage: `url(/images/dining/dinning-area-image-5-madhuban-eco-retreat.avif)`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
