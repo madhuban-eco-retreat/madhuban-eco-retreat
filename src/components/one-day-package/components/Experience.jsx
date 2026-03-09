@@ -58,7 +58,7 @@ export const Experience = () => {
         <div className="relative order-1 md:order-2 rounded-md overflow-hidden aspect-[9/16] max-w-[420px] mx-auto lg:ml-auto group border border-white/5 shadow-2xl">
           <video
             id="about-video"
-            src="https://res.cloudinary.com/dx3aj7a40/video/upload/v1770728104/one-day-package_itjebv.mp4"
+            src="/images/day-outing/day-outing-madhuban.mp4"
             className="rounded-lg shadow-xl w-full md:h-[70vh] object-cover aspect-[9/16]"
             loop
             muted

@@ -88,7 +88,7 @@ const WelComeSection = () => {
 
           {/* Video Section */}
           <motion.div
-            className="h-full flex justify-center items-center"
+            className="h-full"
             variants={itemVariants}
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -98,12 +98,11 @@ const WelComeSection = () => {
               ref={videoRef}
               src="/images/home/welcome/madhuban-intro.mp4"
               autoPlay
-              controls
-              className="rounded-lg shadow-xl w-full md:w-[350px] h-full object-cover aspect-9/16"
+              className="rounded-lg shadow-xl w-full h-full object-cover"
               loop
               muted
               playsInline
-              style={{ background: "#000", minHeight: "300px" }}
+              style={{ background: "#000", height: "400px" }}
             />
           </motion.div>
         </motion.div>

@@ -28,23 +28,17 @@ const inclusions = [
 const heroSlides = [
   {
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771841749/balance-adventure-madhuban-eco-retreat-bhopal.avif",
+      "/images/day-outing/package/adventure-activities-in-madhuban-eco-retreat-bhopal.avif",
+  },
+  {
+    image: "/images/day-outing/package/birds-in-madhuban-retreat.jpg",
+  },
+  {
+    image: "/images/day-outing/package/explore-caves.JPG",
   },
   {
     image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771837947/mobile-hero-tiger-madhuban-eco-retreat-ratapani-bhopal.avif",
-  },
-  {
-    image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771838186/madhuban-eco-retreat-ratapani-bhopal-top-view.avif",
-  },
-  {
-    image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574252/rooms-near-pool-madhuban-eco-retreat-bhopal.avif",
-  },
-  {
-    image:
-      "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771829898/unique-owl-image-ratapani-madhuban-eco-retreat.avif",
+      "/images/day-outing/package/pool-side-image-madhuban-eco-retreat-bhopal.avif",
   },
 ];
 
@@ -118,7 +112,8 @@ export const Packages = () => {
 
             <div className="flex flex-col sm:flex-row items-center justify-between gap-6  pt-4 md:pt-10 border-t border-primary-gray2">
               <div></div>
-              <button title="Contact Us"
+              <button
+                title="Contact Us"
                 className="w-full sm:w-auto cursor-pointer bg-primary-gray2 text-white px-8 py-4 rounded-full font-bold flex items-center justify-center gap-3 hover:bg-[#16a34a] transition-all transform hover:translate-x-1"
                 onClick={() => {
                   window.open(`https://wa.me/${phone}`, "_blank");

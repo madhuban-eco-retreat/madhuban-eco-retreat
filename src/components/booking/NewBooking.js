@@ -252,7 +252,7 @@ ${guests}`;
               height={400}
               alt="Lush tropical jungle retreat with luxury wooden cabins"
               className="w-full h-full object-cover"
-              src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1771596757/madhuban-eco-retreat-bhopal-image_l87khe.avif"
+              src="/images/booking/madhuban-eco-retreat-bhopal-image.avif"
             />
           </div>
           <div className="relative z-20 max-w-4xl mx-auto px-6 w-full flex flex-col items-center text-center">

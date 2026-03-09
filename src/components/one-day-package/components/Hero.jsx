@@ -11,7 +11,7 @@ export const Hero = () => {
         className="absolute inset-0 bg-cover bg-center transition-transform duration-[10s] hover:scale-110"
         style={{
           backgroundImage:
-            "url(https://res.cloudinary.com/dx3aj7a40/image/upload/v1771595141/day-outing-hero-image-madhuban-eco-retreat-best-resort-near-bhopal.avif)",
+            "url(/images/day-outing/madhuban-eco-retreat-forest-view-hero-section-1.avif)",
         }}
       />
       <div className="absolute inset-0 forest-gradient" />
