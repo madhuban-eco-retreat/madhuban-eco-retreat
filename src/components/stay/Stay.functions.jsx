@@ -192,8 +192,7 @@ const safariTentMetadata = {
     "Ratapani jungle stay",
     "eco-luxury tent Ratapani",
     "family safari stay Ratapani",
-    "forest adventure stay near Bhopal"
-
+    "forest adventure stay near Bhopal",
   ],
 
   alternates: {
@@ -244,8 +243,7 @@ const poolSideMetadata = {
     "luxury villa with pool near Bhopal",
     "poolside villa near Bhopal",
     "resorts with swimming pools near Bhopal",
-    "poolside villa Ratapani for couples"
-
+    "poolside villa Ratapani for couples",
   ],
 
   alternates: {
@@ -269,8 +267,7 @@ const glampingTentMetadata = {
     "luxury glamping near Bhopal",
     "romantic glamping Ratapani",
     "boutique tent stay Ratapani",
-    "Ratapani jungle glamping experience"
-
+    "Ratapani jungle glamping experience",
   ],
 
   alternates: {
@@ -1051,7 +1048,7 @@ export const accommodationsData = [
   },
   {
     id: 3,
-    name: "PoolPool Side Villa – Luxury Eco Stay by the Water",
+    name: "Pool Side Villa – Luxury Eco Stay by the Water",
     slug: "pool-side-room",
     image:
       "https://res.cloudinary.com/dx3aj7a40/video/upload/v1770624876/pool-side_mei750.mp4",

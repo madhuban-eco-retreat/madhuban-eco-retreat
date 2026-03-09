@@ -26,7 +26,7 @@ const AccommodationDetail = () => {
   const accommodation = getAccommodation(slug);
   const randomImgUrl =
     accommodation?.galleryImages[
-    Math.floor(Math.random() * accommodation.galleryImages.length)
+      Math.floor(Math.random() * accommodation.galleryImages.length)
     ];
 
   if (!accommodation) {
@@ -83,7 +83,7 @@ const AccommodationDetail = () => {
                       e.target.onerror = null;
                       console.error(
                         "Error loading video:",
-                        accommodation.image
+                        accommodation.image,
                       );
                     }}
                   >
@@ -94,10 +94,6 @@ const AccommodationDetail = () => {
                     src={accommodation.image}
                     alt={accommodation.altText}
                     className="w-full h-full object-cover md:min-h-[400px]"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = "/images/placeholder.jpg";
-                    }}
                   />
                 )}
               </div>
@@ -235,7 +231,11 @@ const AccommodationDetail = () => {
                     href="/booking"
                     className="font-inter w-full flex items-center justify-center bg-[rgb(110,97,70)] text-white font-medium py-3 px-6 rounded-md hover:bg-[rgb(123,108,80)] p-text"
                   >
-                    <CalendarDays size={20} className="mr-2" aria-label="calender" />
+                    <CalendarDays
+                      size={20}
+                      className="mr-2"
+                      aria-label="calender"
+                    />
                     Book Your Stay
                   </Link>
                 </div>
@@ -258,10 +258,6 @@ const AccommodationDetail = () => {
                         src={img}
                         alt={`${accommodation.name} gallery ${index + 1}`}
                         className="w-full h-48 object-cover rounded-lg shadow-sm"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = "/images/placeholder.jpg";
-                        }}
                       />
                     ))}
                   </div>
