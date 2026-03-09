@@ -104,10 +104,8 @@ const Story = () => {
             >
               <div className=" rounded-xl">
                 <img
-                  src="https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624797/somaiya-group-logo.png"
-                  alt={getAltFromUrl(
-                    "https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624797/somaiya-group-logo.png",
-                  )}
+                  src="/images/logo/somaiya-group-logo.png"
+                  alt={getAltFromUrl("/images/logo/somaiya-group-logo.png")}
                   className="w-64 h-auto object-contain"
                 />
               </div>

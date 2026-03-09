@@ -3,22 +3,22 @@ import Slidingbanner from "@/common-components/banner/Slidingbanner";
 const storyImages = [
   {
     id: 1,
-    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771843590/madhuban-eco-retreat-bhopal-restaurant.avif",
+    src: "/images/stay/banner/madhuban-eco-retreat-bhopal-restaurant.webp",
     alt: "Our founders planning the retreat",
   },
   {
     id: 2,
-    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771843589/Guest-stay-madhuban-eco-retreat-bhopal.avif",
+    src: "/images/stay/banner/Guest-stay-madhuban-eco-retreat-bhopal.webp",
     alt: "Early construction phase",
   },
   {
     id: 3,
-    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771843588/mud-house-stay-madhuban-eco-retreat-bhopal-1.avif",
+    src: "/images/stay/banner/mud-house-stay-madhuban-eco-retreat-bhopal-1.webp",
     alt: "First guests enjoying the eco-camp",
   },
   {
     id: 4,
-    src: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771843588/pool-side-stay-rooms-madhuban-eco-retreat-bhopal.webp",
+    src: "/images/stay/banner/pool-side-stay-rooms-madhuban-eco-retreat-bhopal.webp",
     alt: "The retreat as it looks today",
   },
 ];
