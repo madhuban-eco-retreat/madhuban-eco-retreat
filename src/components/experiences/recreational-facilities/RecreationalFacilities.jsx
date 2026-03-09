@@ -17,32 +17,24 @@ const RecreationalFacilities = () => {
 
   const forestImages = [
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771841757/nature-visit-ratapani-madhuban-eco-retreat-bhopal-2_gessgr.avif",
+      url: "/images/experiences/activities/Adventure_Activities_3_At_madhuban-eco-retreat.jpg",
       alt: "Forest View 1",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771841752/obstacle-course-madhuban-eco-retreat-bhopal.avif",
+      url: "/images/experiences/activities/adventure-hurdles-madhuban-eco-retreat-bhopal.jpg",
       alt: "Forest View 2",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771841751/adventure-hurdles-madhuban-eco-retreat-bhopal.avif",
+      url: "/images/experiences/activities/balance-adventure-madhuban-eco-retreat-bhopal.jpg",
       alt: "Forest View 3",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771841750/rope-adventure-madhuban-eco-retreat-bhopal.avif",
+      url: "/images/experiences/activities/obstacle-course-madhuban-eco-retreat-bhopal.jpg",
       alt: "Forest View 4",
     },
-     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771841749/outdoor-adventure-obstacles-madhuban-eco-retreat-bhopal.avif",
+    {
+      url: "/images/experiences/activities/rope-adventure-madhuban-eco-retreat-bhopal.jpg",
       alt: "Forest View 5",
-    },
-     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771841748/Adventure_Activities_3_At_madhuban-eco-retreat_rc9c0k.avif",
-      alt: "Forest View 6",
-    },
-     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771841749/balance-adventure-madhuban-eco-retreat-bhopal.avif",
-      alt: "Forest View 7",
     },
   ];
 
@@ -213,7 +205,7 @@ const RecreationalFacilities = () => {
           playsInline
         >
           <source
-            src="https://res.cloudinary.com/dx3aj7a40/video/upload/v1770624860/PF_fqm5l6.mp4"
+            src="/images/experiences/activities/PF.mp4"
             type="video/mp4"
           />
           Your browser does not support the video tag.

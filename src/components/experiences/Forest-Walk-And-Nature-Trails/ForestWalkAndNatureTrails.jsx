@@ -16,18 +16,17 @@ const ForestWalkAndNatureTrails = () => {
 
   const forestImages = [
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589990/nature-visit-ratapani-madhuban-eco-retreat-bhopal-2_ghxdvr.avif",
+      url: "/images/experiences/forest-walk/Nature & Forest From Madhuban Eco Retreat - 1.avif",
       alt: "Forest View 1",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771574328/ratapani-forest-walk-with-madhuban-eco-retreat-team.avif",
+      url: "/images/experiences/forest-walk/nature-visit-ratapani-madhuban-eco-retreat-bhopal-2.avif",
       alt: "Forest View 2",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771834121/tourists-jungle-safari-jeep-madhuban-eco-retreat-ratapani.avif",
+      url: "/images/experiences/forest-walk/Ratapani Forest Walk With Madhuban Eco Retreat Team.avif",
       alt: "Forest View 3",
     },
-    
   ];
 
   const accordionItems = [
@@ -188,9 +187,7 @@ const ForestWalkAndNatureTrails = () => {
           playsInline
         >
           <source
-            src={
-              "https://res.cloudinary.com/dx3aj7a40/video/upload/v1770624896/nature-trails1_cwitb2.mp4"
-            }
+            src={"/images/experiences/forest-walk/nature-trails1.mp4"}
             type="video/mp4"
           />
           Your browser does not support the video tag.

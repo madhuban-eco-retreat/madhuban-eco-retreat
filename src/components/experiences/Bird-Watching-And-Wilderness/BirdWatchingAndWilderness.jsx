@@ -17,54 +17,21 @@ const BirdWatchingAndWilderness = () => {
 
   const forestImages = [
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771830467/long-tailed-shrike-image-from-ratapani-by-madhuban-eco-retreat.avif",
+      url: "/images/experiences/birds-watch/best-wildlife-view.jpg",
       alt: "Forest View 1",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771589741/bird-watching-ratapani-madhuban-eco-retreat_k2lmis.avif",
+      url: "/images/experiences/birds-watch/bird-watching-with-guides.jpg",
       alt: "Forest View 1",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771830642/hummingbird-hawk-moth-image-from-ratapani-by-madhuban-eco-retreat.avif",
+      url: "/images/experiences/birds-watch/bird2.jpg",
       alt: "Forest View 2",
     },
     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771830630/indian-roller-image-from-ratapani-by-madhuban-eco-retreat.avif",
+      url: "/images/experiences/birds-watch/bird3.jpg",
       alt: "Forest View 3",
     },
-    {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771830480/black-winged-kite-image-from-ratapani-by-madhuban-eco-retreat.avif",
-      alt: "Forest View 4",
-    },
-    {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771830190/male-plum-headed-parakeet-image-from-ratapani-by-madhuban-eco-retreat.avif",
-      alt: "Forest View 5",
-    },
-    
-    {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771829849/experiences-madhuban-eco-retreat.avif",
-      alt: "Forest View 6",
-    },
-     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771594536/peacock-watching-experience-ratapani-madhuban-eco-retreat.avif",
-      alt: "Forest View 7",
-    },
-     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771830131/indian-pitta-image-from-ratapani-by-madhuban-eco-retreat-bhopal.avif",
-      alt: "Forest View 8",
-    },
-     {
-      url: "https://res.cloudinary.com/dx3aj7a40/image/upload/v1771829898/unique-owl-image-ratapani-madhuban-eco-retreat.avif",
-      alt: "Forest View 9",
-    },
-    //  {
-    //   url: "",
-    //   alt: "Forest View 7",
-    // },
-    //  {
-    //   url: "",
-    //   alt: "Forest View 7",
-    // },
   ];
 
   const accordionItems = [
@@ -227,9 +194,7 @@ const BirdWatchingAndWilderness = () => {
           className="w-full h-full object-cover"
         >
           <source
-            src={
-              "https://res.cloudinary.com/dx3aj7a40/video/upload/v1770624862/wilderness_pczq5n.mp4"
-            }
+            src={"/images/experiences/birds-watch/wilderness.mp4"}
             type="video/mp4"
           />
           Your browser does not support the video tag.
