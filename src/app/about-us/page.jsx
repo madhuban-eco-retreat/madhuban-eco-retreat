@@ -4,7 +4,7 @@ import AboutUs from "@/components/about/about";
 import SEO from "@/components/seo/Seo";
 
 const schema = {
-  "@context": "https://schema.org",
+  "@context": "https://schema.org", 
   "@type": "LodgingBusiness",
   name: "Madhuban Eco Retreat",
   url: "https://www.madhubanecoretreat.com/about-us",
