@@ -30,7 +30,7 @@ const BookingWidget = () => {
 
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 max-sm:py-4 bg-[#D1C8C1]">
-      <div className="bg-[rgb(110,97,70)] rounded-lg shadow-xl p-4 max-sm:my-6 sm:p-6 relative sm:bottom-25 mx-auto max-w-[1000px]">
+      <div className="bg-[rgb(110,97,70)] rounded-lg shadow-xl p-4 max-sm:my-6 z-10 sm:p-6 relative sm:bottom-25 mx-auto max-w-[1000px]">
         <form onSubmit={handleCheckAvailability}>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 justify-center">
             {/* Check-in Date */}
@@ -41,7 +41,10 @@ const BookingWidget = () => {
                 </label>
                 <div className="relative text-black">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Calendar className="h-5 w-5 text-primary-gray2 z-1" aria-label="calender" />
+                    <Calendar
+                      className="h-5 w-5 text-primary-gray2 z-1"
+                      aria-label="calender"
+                    />
                   </div>
                   <DatePicker
                     selected={checkIn}
@@ -65,7 +68,10 @@ const BookingWidget = () => {
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-1">
-                    <Calendar className="h-5 w-5 text-primary-gray2" aria-label="calender" />
+                    <Calendar
+                      className="h-5 w-5 text-primary-gray2"
+                      aria-label="calender"
+                    />
                   </div>
                   <DatePicker
                     selected={checkOut}
@@ -144,7 +150,8 @@ const BookingWidget = () => {
                   type="submit"
                   className="w-full font-arial-narrow cursor-pointer  font-semibold flex items-center justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-[rgb(110,97,70)] bg-[#D1C8C1]"
                 >
-                  Check Availability <ChevronRight className="ml-2 h-5 w-5" aria-label="arrow" />
+                  Check Availability{" "}
+                  <ChevronRight className="ml-2 h-5 w-5" aria-label="arrow" />
                 </button>
               </div>
             </div>

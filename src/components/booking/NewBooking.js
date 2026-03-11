@@ -87,7 +87,7 @@ const NewBooking = () => {
   // Auto-fill form data from URL parameters
   useEffect(() => {
     if (checkInParam) {
-      setCheckIn(new Date(checkInParam));
+      setCheckIn(dayjs(checkInParam));
     }
 
     if (adultsParam || childrenParam) {
