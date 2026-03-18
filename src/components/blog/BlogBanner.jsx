@@ -18,8 +18,7 @@ const BlogBanner = () => {
     <section
       className="h-[90vh] bg-cover bg-center flex items-center justify-center"
       style={{
-        backgroundImage:
-          "url('/image/w_auto,c_fill,f_auto,q_auto,dpr_auto/madhuban-house.webp')",
+        backgroundImage: "url('/images/blogs/hero-2.jpg')",
       }}
     >
       <motion.div
