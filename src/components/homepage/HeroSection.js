@@ -1,10 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { MdOutlineDateRange } from "react-icons/md";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -47,14 +48,23 @@ export default function HeroSection({
   createdAt = ``,
   image = "",
 }) {
+  const [imgSrc, setImgSrc] = useState(image);
   return (
     <>
-      <section
-        className="h-[90vh] bg-cover bg-center "
-        style={{ backgroundImage: `url(${image})` }}
-      >
+      <section className="h-[90vh] relative">
+        {/* Background Image */}
+        <Image
+          src={imgSrc}
+          alt={title || "Banner"}
+          fill
+          priority
+          className="object-cover object-center"
+          onError={() => setImgSrc("/images/no-image/no-image-banner.png")}
+        />
+
+        {/* Everything below is unchanged */}
         <div
-          className="w-full h-full flex flex-col items-center justify-center relative"
+          className="w-full h-full flex flex-col items-center justify-center relative z-10"
           style={{
             background:
               "linear-gradient(180deg,rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.4) 80%)",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import CustomButton from "../CustomButton/CustomButton";
@@ -12,6 +12,7 @@ const Card = ({
   cardkey = "",
   createdAt = "",
 }) => {
+  const [imgSrc, setImgSrc] = useState(imageUrl);
   return (
     <Link href={hrefLink} key={cardkey}>
       <div
@@ -21,11 +22,12 @@ const Card = ({
       >
         <div className="relative w-full h-[180px]   rounded-br-[20px]  overflow-hidden">
           <Image
-            src={imageUrl}
+            src={imgSrc || "/images/no-image/no-image.png"}
             fill
             quality={90}
             alt={altText}
             className="object-cover transition-transform duration-300 group-hover:scale-110 group-focus:scale-110 group-active:scale-110"
+            onError={() => setImgSrc("/images/no-image/no-image.png")}
           />
         </div>
         <div className="p-3">

@@ -69,7 +69,9 @@ function BlogListWithPagination({ initialBlogs, totalBlogs, limit }) {
               {blogs?.map((val, i) => (
                 <motion.div variants={itemVariants} key={i}>
                   <Card
-                    imageUrl={val?.featuredImage?.url || "/placeholder.jpg"}
+                    imageUrl={
+                      val?.featuredImage?.url || "/images/no-image/no-image.png"
+                    }
                     altText={val?.featuredImage?.alt || "Blog Image"}
                     hrefLink={`blogs/${val?.uid}`}
                     title={val?.title}
