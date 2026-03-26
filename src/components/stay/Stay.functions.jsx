@@ -930,6 +930,7 @@ export const accommodationsData = [
       "Each tent is thoughtfully crafted with elegant cane furniture, a vanity and dressing space, a separate shower area, and an open-to-sky bath surrounded by nature. Whether you're a couple seeking a peaceful getaway, a family planning a family safari stay in Ratapani, or a nature lover wanting to unwind amidst wilderness, this Ratapani eco-luxury tent provides the ideal blend of rustic charm and comfort. For anyone seeking a memorable forest adventure stay near Bhopal, the Madhuban Eco Retreat safari tent delivers an experience that is both grounding and unforgettable.",
     ],
     galleryImages: [
+      "/images/stay/glamping-tent/glamping-tent-interior-image-madhuban-eco-retreat-bhopal.avif",
       "/images/stay/glamping-tent/glamping-tent-madhuban-eco-retreat-bhopal-image.avif",
       "/images/stay/glamping-tent/glamping-tent-gallery-image-madhuban-eco-retreat.avif",
       "/images/stay/safari-tent/Safari_Tent_-_Madhuban_Eco_Retreat_Bhopal_pbpcgr.avif",
@@ -1116,7 +1117,6 @@ export const accommodationsData = [
       "Step outside to your private lawn-side sit-out, perfect for slow mornings, evening tea, or peaceful moments surrounded by greenery. As a premier eco-lodge glamping near Bhopal, Madhuban brings together attentive hospitality and all modern conveniences — making this boutique tent stay in Ratapani ideal for couples, nature lovers, and weekend travelers searching for a stylish escape. Whether you're planning a romantic glamping near Bhopal or simply seeking a mindful retreat, our glamping tents near Bhopal offer the perfect blend of wilderness and comfort.",
     ],
     galleryImages: [
-      "/images/stay/glamping-tent/glamping-tent-interior-image-madhuban-eco-retreat-bhopal.avif",
       "/images/stay/glamping-tent/glamping-tent-madhuban-eco-retreat-bhopal-image-2-1.avif",
 
       "/images/stay/glamping-tent/glamping-tent-madhuban-eco-retreat-bhopal.avif",
