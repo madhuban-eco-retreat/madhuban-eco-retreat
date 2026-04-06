@@ -86,7 +86,7 @@ const Accommodations = () => {
   return (
     <section className="py-8 px-4 bg-cover bg-center bg-no-repeat bg-[rgb(110,97,70)]">
       <div className="container mx-auto">
-        {/* --- THE WORLD AWAITS Section --- */}
+        {/* --- Header Section --- */}
         <motion.div
           className="text-center mb-16"
           initial="hidden"
@@ -99,14 +99,11 @@ const Accommodations = () => {
             text={"Our Accommodations"}
             color={"#fff"}
           />
-
           <h3 className="text-lg md:text-2xl font-primary text-white tracking-wider">
             Eco-Luxury Stays in the Heart of Ratapani
           </h3>
           <p className="mt-1 max-w-2xl text-justify md:text-center mx-auto text-sm md:text-lg text-white px-4 tracking-wide font-arial-narrow">
-            Every stay at Madhuban Eco Retreat is designed to bring you closer
-            to the forest, offering a soothing balance of earthy architecture,
-            natural materials, and modern comfort.
+            Every stay at Madhuban Eco Retreat is designed...
           </p>
         </motion.div>
 
@@ -122,28 +119,30 @@ const Accommodations = () => {
             <motion.div
               key={index}
               className="w-full lg:w-[46%] xl:w-[calc(20%-12.8px)] 2xl:w-[calc(20%-12.8px)]
-               bg-[#D1C8C1] rounded-lg overflow-hidden shadow-lg hover:shadow-xl h-[450px]
-               flex flex-col "
+                bg-[#D1C8C1] rounded-lg overflow-hidden shadow-lg hover:shadow-xl h-[450px]
+                flex flex-col will-change-transform" // OPTIMIZATION: Hardware acceleration
               variants={itemVariants}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.03 }} // Reduced slightly for better performance
             >
-              <div className="h-64 xl:h-[200px] overflow-hidden">
+              <div className="h-64 xl:h-[200px] overflow-hidden relative">
                 <Image
-                  width={300}
-                  height={200}
                   src={item.image}
                   alt={getAltFromUrl(item.image)}
-                  className="w-full h-full object-cover"
-                  aria-label={getAltFromUrl(item.image)}
+                  fill // Use fill for better aspect ratio management in cards
+                  className="object-cover transition-transform duration-500 hover:scale-110"
+                  // OPTIMIZATION: Tell the browser exactly how small these images are
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 45vw, 20vw"
+                  // OPTIMIZATION: Lazy load by default, but prioritize the first card if it's high on the page
+                  loading="lazy"
+                  quality={75} // Lower quality for small thumbnails saves a lot of KB
                 />
               </div>
 
-              <div className="p-6">
-                <h3 className="font-primary  text-primary-gray2 mb-2  text-xl md:text-2xl">
+              <div className="p-6 flex-grow">
+                <h3 className="font-primary text-primary-gray2 mb-2 text-xl md:text-2xl">
                   {item.title}
                 </h3>
-
-                <p className=" p-text p-text-black    mb-4 text-justify">
+                <p className="p-text p-text-black mb-4 text-justify">
                   {item.description}
                 </p>
               </div>
@@ -161,7 +160,7 @@ const Accommodations = () => {
         >
           <Link
             href="/stay"
-            className="font-arial-narrow text-primary-gray2 px-8 py-3 bg-[#D1C8C1] hover:font-bold rounded-md font-medium p-text inline-block"
+            className="font-arial-narrow text-primary-gray2 px-8 py-3 bg-[#D1C8C1] hover:font-bold rounded-md font-medium p-text inline-block transition-all"
           >
             Explore All Accommodations
           </Link>

@@ -13,7 +13,7 @@ import ReadyForEcoRetreat from "@/components/home/ReadyForEcoRetreat";
 const Home = () => {
   return (
     <>
-      <div className="min-h-screen bg-stone-50 md:pt-[210px]">
+      <div className="min-h-screen bg-stone-50 ">
         <HomeBanner />
         <WelComeSection />
         <Accommodations />

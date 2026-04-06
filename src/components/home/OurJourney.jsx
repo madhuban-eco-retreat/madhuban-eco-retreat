@@ -2,7 +2,7 @@
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
 import { facebook, instagram } from "@/utills/constants";
 import { getAltFromUrl } from "@/utills/helperFunctions";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -131,145 +131,116 @@ const OurJourney = () => {
           </motion.div>
         </motion.div>
 
-        {/* Instagram Grid */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeIn}
         >
-          {/* Manual image on top */}
-          <motion.div
-            className="mb-4 flex justify-center items-center"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <Image
-              width={1600}
-              height={200}
-              src="/images/home/journey/vidhya-balan-stay-review-at-madhuban-eco-retreat-bhopal.webp"
-              alt={getAltFromUrl(
-                "/images/home/journey/vidhya-balan-stay-review-at-madhuban-eco-retreat-bhopal.webp",
-              )}
-              className="xl:w-[50vw] xl:h-[50vh] object-cover rounded-md sm:w-[100vw] max640:w-[100vw]"
-              // className="w-[50vw] h-[50vh]  object-cover rounded-md sm:w-screen max640:w-screen "
-            />
+          {/* Main Large Image */}
+          <motion.div className="mb-4 flex justify-center items-center">
+            <div className="relative xl:w-[50vw] xl:h-[50vh] w-full h-[40vh] overflow-hidden rounded-md">
+              <Image
+                src="/images/home/journey/vidhya-balan-stay-review-at-madhuban-eco-retreat-bhopal.webp"
+                alt="Vidya Balan Review"
+                fill
+                className="object-cover"
+                // Large image, but below the fold, so lazy load with specific sizes
+                sizes="(max-width: 1280px) 100vw, 50vw"
+                quality={85}
+              />
+            </div>
           </motion.div>
 
-          {/* Grid of 4 Instagram images */}
-          <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={containerVariants}
-          >
+          {/* Grid Section */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {instagramPosts.map((url, index) => (
               <motion.div
                 key={index}
-                className="aspect-square min-h-[200px] rounded-xl overflow-hidden cursor-pointer"
+                className="relative aspect-square rounded-xl overflow-hidden cursor-pointer"
                 onClick={() => setSelectedImage(url)}
-                variants={itemVariants}
                 whileHover={{ scale: 1.05 }}
               >
                 <Image
-                  width={500}
-                  height={500}
                   src={url}
                   alt={getAltFromUrl(url)}
-                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-                  aria-label="instagram"
+                  fill
+                  className="object-cover transition-transform duration-300 hover:scale-110"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  quality={75}
                 />
               </motion.div>
             ))}
-          </motion.div>
+          </div>
 
-          <motion.div
-            className="flex justify-center items-center relative mt-4"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+          {/* Video Thumbnail Section */}
+          <div className="flex justify-center items-center relative mt-4">
             <div
-              className="relative cursor-pointer"
+              className="relative cursor-pointer xl:w-[25vw] xl:h-[50vh] w-full h-[40vh]"
               onClick={() => setIsModalOpen(true)}
             >
               <Image
-                width={500}
-                height={500}
                 src="/images/home/journey/radhika-goyal-customer-review-for-madhuban-eco-retreat.webp"
-                alt={getAltFromUrl(
-                  "/images/home/journey/radhika-goyal-customer-review-for-madhuban-eco-retreat.webp",
-                )}
-                className="xl:w-[25vw] xl:h-[50vh] object-cover rounded-md sm:w-[100vw] max640:w-[100vw]"
-                aria-label="thumbnail"
+                alt="Video Thumbnail"
+                fill
+                className="object-cover rounded-md"
+                sizes="(max-width: 1280px) 100vw, 25vw"
               />
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="bg-white/80 rounded-full p-4 hover:scale-105 transition">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-8 h-8 text-[#29561F]"
-                    fill="currentColor"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M6.271 11.653l4.5-3.5a.5.5 0 000-.806l-4.5-3.5A.5.5 0 006 4.5v7a.5.5 0 00.271.153z" />
-                  </svg>
+                <div className="bg-white/80 rounded-full p-4 hover:scale-105 transition shadow-lg">
+                  <PlayIcon />
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          {/* Modal Popup */}
-          {isModalOpen && (
-            <div className="fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center">
-              <div className="relative w-full max-w-4xl px-4">
-                <button
-                  className="absolute top-2 right-4 text-white text-3xl font-bold z-50"
-                  onClick={() => setIsModalOpen(false)}
-                >
-                  &times;
-                </button>
-                <video
-                  autoPlay
-                  playsInline
-                  className="w-full h-[100vh] rounded-md"
-                >
-                  <source
-                    src="/images/home/journey/insta-video.mp4"
-                    type="video/mp4"
-                  />
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-            </div>
-          )}
+          {/* Modal with AnimatePresence for smooth fade */}
+          <AnimatePresence>
+            {isModalOpen && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+              >
+                <div className="relative w-full max-w-4xl max-h-[90vh]">
+                  <button
+                    className="absolute -top-10 right-0 text-white text-4xl"
+                    onClick={() => setIsModalOpen(false)}
+                  >
+                    &times;
+                  </button>
+                  <video
+                    autoPlay
+                    controls
+                    playsInline
+                    className="w-full h-full max-h-[80vh] rounded-md shadow-2xl"
+                    preload="auto" // Load only when modal opens
+                  >
+                    <source
+                      src="/images/home/journey/insta-video.mp4"
+                      type="video/mp4"
+                    />
+                  </video>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
-
-        {/* Lightbox Modal */}
-        {selectedImage && (
-          <motion.div
-            className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
-            onClick={() => setSelectedImage(null)}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.img
-              src={selectedImage}
-              alt="Full Size"
-              className="max-w-full max-h-full rounded-lg shadow-lg"
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.9 }}
-            />
-          </motion.div>
-        )}
       </div>
     </section>
   );
 };
+
+const PlayIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-8 h-8 text-[#29561F]"
+    fill="currentColor"
+    viewBox="0 0 16 16"
+  >
+    <path d="M6.271 11.653l4.5-3.5a.5.5 0 000-.806l-4.5-3.5A.5.5 0 006 4.5v7a.5.5 0 00.271.153z" />
+  </svg>
+);
 
 export default OurJourney;

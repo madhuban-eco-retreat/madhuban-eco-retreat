@@ -70,12 +70,11 @@ const GuestsSection = () => {
         >
           <DecorativeHeading text={"Loved by Guests Across India"} />
 
-          <div className="p-text-black p-text text-sm  md:text-xl ">
-            Recognized as one of the best resorts near Ratapani and a top-rated
-            resort near Bhopal, Madhuban Eco Retreat is cherished by families,
-            nature lovers, celebrities, and wellness travelers.
+          <div className="p-text-black p-text text-sm md:text-xl">
+            Recognized as one of the best resorts near Ratapani...
           </div>
         </motion.div>
+
         <motion.div
           className="grid grid-cols-1 md:grid-cols-3 gap-6 -mt-10"
           initial="hidden"
@@ -86,7 +85,8 @@ const GuestsSection = () => {
           {celebrities.map((celeb, i) => (
             <motion.div
               key={i}
-              className="relative h-80 rounded-lg overflow-hidden shadow-lg group"
+              // OPTIMIZATION: added 'will-change-transform' for smoother GPU scaling
+              className="relative h-80 rounded-lg overflow-hidden shadow-lg group bg-gray-300 will-change-transform"
               variants={itemVariants}
               whileHover={{ scale: 1.03 }}
             >
@@ -94,13 +94,18 @@ const GuestsSection = () => {
                 src={celeb.img}
                 alt={getAltFromUrl(celeb.img)}
                 fill
+                // OPTIMIZATION: Tell Next.js these are smaller thumbnails
                 sizes="(max-width: 768px) 100vw, 33vw"
-                className=" object-cover transition-transform duration-300 group-hover:scale-105"
-                aria-label={`${celeb.name} at Madhuban Eco Retreat`}
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                // OPTIMIZATION: Lower quality for guest photos to prioritize speed
+                quality={75}
+                loading="lazy"
               />
-              <div className="absolute  inset-0 bg-black/50 flex flex-col justify-end p-4">
+
+              {/* Gradient Overlay - Fixed background for better performance */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex flex-col justify-end p-4 pointer-events-none">
                 <div className="ml-5">
-                  <h3 className="font-primary  text-[rgb(190,175,145)] tracking-widest text-lg md:text-xl">
+                  <h3 className="font-primary text-[rgb(190,175,145)] tracking-widest text-lg md:text-xl">
                     {celeb.name}
                   </h3>
                   <p className="text-[rgb(204,180,120)] text-sm tracking-wider font-arial-narrow">

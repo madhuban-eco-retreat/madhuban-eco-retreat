@@ -94,16 +94,21 @@ const ImmersiveExperiences = () => {
             of Madhya Pradesh.
           </p>
         </motion.div>
-        {/* Adjusted grid columns for exactly 3 items */}
+
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 -mt-9 "
+          // OPTIMIZATION: Ensure cards fill grid cells correctly
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 -mt-9 items-stretch"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={containerVariants}
         >
           {experiences.map((experience, index) => (
-            <motion.div key={index} variants={itemVariants}>
+            <motion.div
+              key={index}
+              variants={itemVariants}
+              className="flex w-full" // Ensures card occupies full grid width
+            >
               <ExperienceCard experience={experience} />
             </motion.div>
           ))}
@@ -118,7 +123,7 @@ const ImmersiveExperiences = () => {
         >
           <Link
             href="/experiences"
-            className="font-arial-narrow text-white px-8 py-3 bg-primary-gray2 hover:font-bold rounded-md font-medium p-text inline-block"
+            className="font-arial-narrow text-white px-8 py-3 bg-primary-gray2 hover:bg-opacity-90 transition-colors rounded-md font-medium p-text inline-block"
           >
             Explore All Experiences
           </Link>

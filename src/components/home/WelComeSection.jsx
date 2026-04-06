@@ -97,11 +97,14 @@ const WelComeSection = () => {
               id="about-video"
               ref={videoRef}
               src="/images/home/welcome/madhuban-intro.mp4"
+              poster="/images/home/welcome/video-preview.avif"
+              preload="metadata"
               autoPlay
               className="rounded-lg shadow-xl w-full h-full object-cover"
               loop
               muted
               playsInline
+              // Keep your exact styling
               style={{ background: "#000", height: "400px" }}
             />
           </motion.div>
