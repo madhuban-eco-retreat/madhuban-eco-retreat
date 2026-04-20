@@ -48,6 +48,8 @@ function BlogListWithPagination({ initialBlogs, totalBlogs, limit }) {
     }
   };
 
+  console.log("blogs state updated:", blogs);
+
   return (
     <>
       <div className="relative w-full" aria-busy={loading}>
