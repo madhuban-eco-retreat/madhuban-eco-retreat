@@ -52,9 +52,9 @@ const fadeIn = {
 };
 
 const instagramPosts = [
-  "/images/home/journey/beyondyourexpectation-customer-review-for-madhuban-eco-retreat.webp",
-  "/images/home/journey/charlies12ways-customer-review-for-madhuban-eco-retreat.webp",
-  "/images/home/journey/pre-wedding-shoot-at-madhuban-eco-retreat-bhopal.webp",
+  "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/journey/beyondyourexpectation-customer-review-for-madhuban-eco-retreat.webp",
+  "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/journey/charlies12ways-customer-review-for-madhuban-eco-retreat.webp",
+  "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/journey/pre-wedding-shoot-at-madhuban-eco-retreat-bhopal.webp",
 ];
 
 const OurJourney = () => {
@@ -90,7 +90,7 @@ const OurJourney = () => {
               <Image
                 width={32}
                 height={32}
-                src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+                src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/insta-logo.webp"
                 alt="Instagram"
                 className="w-8 h-8"
                 aria-label="instagram"
@@ -141,7 +141,7 @@ const OurJourney = () => {
           <motion.div className="mb-4 flex justify-center items-center">
             <div className="relative xl:w-[50vw] xl:h-[50vh] w-full h-[40vh] overflow-hidden rounded-md">
               <Image
-                src="/images/home/journey/vidhya-balan-stay-review-at-madhuban-eco-retreat-bhopal.webp"
+                src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/journey/vidhya-balan-stay-review-at-madhuban-eco-retreat-bhopal.webp"
                 alt="Vidya Balan Review"
                 fill
                 className="object-cover"
@@ -180,7 +180,7 @@ const OurJourney = () => {
               onClick={() => setIsModalOpen(true)}
             >
               <Image
-                src="/images/home/journey/radhika-goyal-customer-review-for-madhuban-eco-retreat.webp"
+                src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/journey/radhika-goyal-customer-review-for-madhuban-eco-retreat.webp"
                 alt="Video Thumbnail"
                 fill
                 className="object-cover rounded-md"
@@ -218,7 +218,7 @@ const OurJourney = () => {
                     preload="auto" // Load only when modal opens
                   >
                     <source
-                      src="/images/home/journey/insta-video.mp4"
+                      src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/journey/insta-video.mp4"
                       type="video/mp4"
                     />
                   </video>

@@ -116,7 +116,11 @@ const CookiesPopup = () => {
           <div className=" w-full px-2 m-2.5">
             <div className="flex flex-row gap-1.5 md:gap-2  items-center">
               <div className="w-[40px] h-[40px] md:w-[60px] md:h-[60px] lg:w-[70px] lg:h-[70px] relative shrink-0">
-                <Image src="/images/logo/cookies.svg" alt="logo" fill />
+                <Image
+                  src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/cookies.svg"
+                  alt="logo"
+                  fill
+                />
               </div>
               <div className="text-base">
                 <p className="text-sm md:text-lg">{`We use cookies to improve your experience. By continuing, you agree to our use of cookies`}</p>

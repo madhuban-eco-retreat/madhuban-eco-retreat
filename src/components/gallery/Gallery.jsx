@@ -36,337 +36,337 @@ const mediaContent = {
   "Madhuban Eco Retreat": [
     {
       type: "image",
-      src: "/images/gallery/madhuban-eco-retreat/madhuban-eco-retreat-best-resort-near-bhopal-1.webp",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/madhuban-eco-retreat/madhuban-eco-retreat-best-resort-near-bhopal-1.webp",
     },
     {
       type: "video",
-      src: "/images/gallery/madhuban-eco-retreat/gallery-video.mp4",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/madhuban-eco-retreat/gallery-video.mp4",
     },
     {
       type: "image",
-      src: "/images/gallery/madhuban-eco-retreat/glamping-tent-madhuban-eco-retreat-1.webp",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/madhuban-eco-retreat/glamping-tent-madhuban-eco-retreat-1.webp",
     },
     {
       type: "video",
-      src: "/images/gallery/madhuban-eco-retreat/gallery-video5.mp4",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/madhuban-eco-retreat/gallery-video5.mp4",
     },
     {
       type: "image",
-      src: "/images/gallery/madhuban-eco-retreat/collage-image-madhuban-eco-retreat-best-resort-near-bhopal.webp",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/madhuban-eco-retreat/collage-image-madhuban-eco-retreat-best-resort-near-bhopal.webp",
     },
     {
       type: "video",
-      src: "/images/gallery/madhuban-eco-retreat/gallery-video4.mp4",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/madhuban-eco-retreat/gallery-video4.mp4",
     },
     {
       type: "video",
-      src: "/images/gallery/madhuban-eco-retreat/gallery-video-7.mp4",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/madhuban-eco-retreat/gallery-video-7.mp4",
     },
     {
       type: "image",
-      src: "/images/gallery/madhuban-eco-retreat/glamping-tent-gallery-madhuban-eco-retreat.webp",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/madhuban-eco-retreat/glamping-tent-gallery-madhuban-eco-retreat.webp",
     },
     {
       type: "image",
-      src: "/images/gallery/madhuban-eco-retreat/mud-house-sunset-madhuban-eco-retreat-bhopal.webp",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/madhuban-eco-retreat/mud-house-sunset-madhuban-eco-retreat-bhopal.webp",
     },
     {
       type: "image",
-      src: "/images/gallery/madhuban-eco-retreat/pool-view-image-madhuban-eco-retreat-bhopal.webp",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/madhuban-eco-retreat/pool-view-image-madhuban-eco-retreat-bhopal.webp",
     },
     {
       type: "image",
-      src: "/images/gallery/madhuban-eco-retreat/madhuban-eco-retreat-image.webp",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/madhuban-eco-retreat/madhuban-eco-retreat-image.webp",
     },
     {
       type: "image",
-      src: "/images/gallery/madhuban-eco-retreat/madhuban-eco-retreat-image-best-resort-near-bhopal.webp",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/madhuban-eco-retreat/madhuban-eco-retreat-image-best-resort-near-bhopal.webp",
     },
     {
       type: "image",
-      src: "/images/gallery/madhuban-eco-retreat/mud-house-gallery-image-2-madhuban-eco-retreat.webp",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/madhuban-eco-retreat/mud-house-gallery-image-2-madhuban-eco-retreat.webp",
     },
     {
       type: "video",
-      src: "/images/gallery/madhuban-eco-retreat/gallery-video-6.mp4",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/madhuban-eco-retreat/gallery-video-6.mp4",
     },
     {
       type: "image",
-      src: "/images/gallery/madhuban-eco-retreat/guest-near-safari-tent-madhuban-eco-retreat-bhopal.webp",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/madhuban-eco-retreat/guest-near-safari-tent-madhuban-eco-retreat-bhopal.webp",
     },
     {
       type: "image",
-      src: "/images/gallery/madhuban-eco-retreat/dinning-area-image-7-madhuban-eco-retreat-bhopal.webp",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/madhuban-eco-retreat/dinning-area-image-7-madhuban-eco-retreat-bhopal.webp",
     },
     {
       type: "image",
-      src: "/images/gallery/madhuban-eco-retreat/fine-dine-restaurant-in-ratapani-bhopal-madhuban-eco-retreat-2.webp",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/madhuban-eco-retreat/fine-dine-restaurant-in-ratapani-bhopal-madhuban-eco-retreat-2.webp",
     },
     {
       type: "image",
-      src: "/images/gallery/madhuban-eco-retreat/madhuban-eco-retreat-best-restaurant-near-bhopal.webp",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/madhuban-eco-retreat/madhuban-eco-retreat-best-restaurant-near-bhopal.webp",
     },
     {
       type: "image",
-      src: "/images/gallery/madhuban-eco-retreat/fine-dine-restaurant-in-ratapani-bhopal-madhuban-eco-retreat.webp",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/madhuban-eco-retreat/fine-dine-restaurant-in-ratapani-bhopal-madhuban-eco-retreat.webp",
     },
     {
       type: "image",
-      src: "/images/gallery/madhuban-eco-retreat/dinning-area-image-8-madhuban-eco-retreat-bhopal.webp",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/madhuban-eco-retreat/dinning-area-image-8-madhuban-eco-retreat-bhopal.webp",
     },
   ],
   "Tribal Culture At Madhuban": [
     {
       type: "image",
-      src: "/images/gallery/Tribal/traditional-tribal-dance-madhuban-eco-retreat-bhopal.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/Tribal/traditional-tribal-dance-madhuban-eco-retreat-bhopal.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/Tribal/traditional-tribal-dance-madhuban-eco-retreat-bhopal2.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/Tribal/traditional-tribal-dance-madhuban-eco-retreat-bhopal2.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/Tribal/traditional-tribal-dance-madhuban-eco-retreat-bhopal3.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/Tribal/traditional-tribal-dance-madhuban-eco-retreat-bhopal3.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/Tribal/traditional-tribal-dance-madhuban-eco-retreat-bhopal4.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/Tribal/traditional-tribal-dance-madhuban-eco-retreat-bhopal4.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/Tribal/traditional-tribal-dance-madhuban-eco-retreat-bhopal5.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/Tribal/traditional-tribal-dance-madhuban-eco-retreat-bhopal5.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/Tribal/traditional-tribal-dance-madhuban-eco-retreat-bhopal6.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/Tribal/traditional-tribal-dance-madhuban-eco-retreat-bhopal6.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/Tribal/traditional-tribal-dance-madhuban-eco-retreat-bhopal7.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/Tribal/traditional-tribal-dance-madhuban-eco-retreat-bhopal7.jpg",
     },
   ],
   "Forest & Nature": [
     {
       type: "image",
-      src: "/images/gallery/nature/nature1.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature1.jpg",
     },
     {
       type: "video",
-      src: "/images/gallery/nature/nature-video.mp4",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature-video.mp4",
     },
     {
       type: "image",
-      src: "/images/gallery/nature/nature2.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature2.jpg",
     },
     {
       type: "video",
-      src: "/images/gallery/nature/nature.mp4",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature.mp4",
     },
     {
       type: "image",
-      src: "/images/gallery/nature/nature3.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature3.jpg",
     },
     {
       type: "video",
-      src: "/images/gallery/nature/nature-video1.mp4",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature-video1.mp4",
     },
     {
       type: "video",
-      src: "/images/gallery/nature/nature-video2.mp4",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature-video2.mp4",
     },
     {
       type: "image",
-      src: "/images/gallery/nature/nature6.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature6.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/nature/nature7.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature7.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/nature/nature8.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature8.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/nature/nature9.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature9.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/nature/nature10.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature10.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/nature/nature11.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature11.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/nature/nature12.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature12.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/nature/nature13.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature13.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/nature/nature14.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature14.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/nature/nature15.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature15.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/nature/nature16.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature16.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/nature/nature17.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature17.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/nature/nature18.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature18.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/nature/nature19.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature19.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/nature/nature20.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature20.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/nature/nature5.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/nature/nature5.jpg",
     },
   ],
   "Bhim Bettika": [
     {
       type: "image",
-      src: "/images/gallery/bhim-betika/bhimbetika-rock-shelter-image.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/bhim-betika/bhimbetika-rock-shelter-image.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/bhim-betika/bhimbetika-image-1-madhuban-eco-retreat.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/bhim-betika/bhimbetika-image-1-madhuban-eco-retreat.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/bhim-betika/bhimbetika-image-2-madhuban-eco-retreat.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/bhim-betika/bhimbetika-image-2-madhuban-eco-retreat.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/bhim-betika/bhimbetika-image-3-madhuban-eco-retreat.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/bhim-betika/bhimbetika-image-3-madhuban-eco-retreat.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/bhim-betika/bhimbetika-image-4-madhuban-eco-retreat.jpeg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/bhim-betika/bhimbetika-image-4-madhuban-eco-retreat.jpeg",
     },
     {
       type: "image",
-      src: "/images/gallery/bhim-betika/bhimbetika-image-5-madhuban-eco-retreat.jpeg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/bhim-betika/bhimbetika-image-5-madhuban-eco-retreat.jpeg",
     },
     {
       type: "image",
-      src: "/images/gallery/bhim-betika/bhimbetika-image-6-madhuban-eco-retreat.jpeg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/bhim-betika/bhimbetika-image-6-madhuban-eco-retreat.jpeg",
     },
     {
       type: "image",
-      src: "/images/gallery/bhim-betika/bhimbetika-image-madhuban-eco-retreat-1.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/bhim-betika/bhimbetika-image-madhuban-eco-retreat-1.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/bhim-betika/bhimbetika-image-madhuban-eco-retreat-bhopal.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/bhim-betika/bhimbetika-image-madhuban-eco-retreat-bhopal.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/bhim-betika/bhimbetika-image-madhuban-eco-retreat.jpeg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/bhim-betika/bhimbetika-image-madhuban-eco-retreat.jpeg",
     },
     {
       type: "image",
-      src: "/images/gallery/bhim-betika/bhimbetika-rock-shelter-image-1.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/bhim-betika/bhimbetika-rock-shelter-image-1.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/bhim-betika/bhimbetika-rock-shelter-madhuban-eco-retreat-1.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/bhim-betika/bhimbetika-rock-shelter-madhuban-eco-retreat-1.jpg",
     },
   ],
   "Saru Maru Caves": [
     {
       type: "image",
-      src: "/images/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal.jpg",
     },
     {
       type: "video",
-      src: "/images/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal-video1.mp4",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal-video1.mp4",
     },
     {
       type: "image",
-      src: "/images/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal2.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal2.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal3.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal3.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal4.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal4.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal5.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal5.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal6.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal6.jpg",
     },
     {
       type: "video",
-      src: "/images/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal-video2.mp4",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal-video2.mp4",
     },
     {
       type: "image",
-      src: "/images/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal7.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal7.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal8.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal8.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal9.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal9.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal11.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal11.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal12.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/saru-maru-caves/saru-maru-caves-madhuban-eco-retreat-bhopal12.jpg",
     },
   ],
   "Ginnorgarh Fort": [
     {
       type: "image",
-      src: "/images/gallery/ginnorgarh-fort/ginnorgarh-fort-ratapani-madhuban-eco-retreat-bhopal.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/ginnorgarh-fort/ginnorgarh-fort-ratapani-madhuban-eco-retreat-bhopal.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/ginnorgarh-fort/ginnorgarh-fort-ratapani-madhuban-eco-retreat-bhopal1.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/ginnorgarh-fort/ginnorgarh-fort-ratapani-madhuban-eco-retreat-bhopal1.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/ginnorgarh-fort/ginnorgarh-fort-ratapani-madhuban-eco-retreat-bhopal2.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/ginnorgarh-fort/ginnorgarh-fort-ratapani-madhuban-eco-retreat-bhopal2.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/ginnorgarh-fort/ginnorgarh-fort-ratapani-madhuban-eco-retreat-bhopal3.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/ginnorgarh-fort/ginnorgarh-fort-ratapani-madhuban-eco-retreat-bhopal3.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/ginnorgarh-fort/ginnorgarh-fort-ratapani-madhuban-eco-retreat-bhopal4.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/ginnorgarh-fort/ginnorgarh-fort-ratapani-madhuban-eco-retreat-bhopal4.jpg",
     },
     {
       type: "image",
-      src: "/images/gallery/ginnorgarh-fort/ginnorgarh-fort-ratapani-madhuban-eco-retreat-bhopal5.jpg",
+      src: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/ginnorgarh-fort/ginnorgarh-fort-ratapani-madhuban-eco-retreat-bhopal5.jpg",
     },
   ],
 };
@@ -395,7 +395,7 @@ const Gallery = () => {
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source
-            src="/images/home/welcome/madhuban-intro.mp4"
+            src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/welcome/madhuban-intro.mp4"
             type="video/mp4"
           />
         </video>

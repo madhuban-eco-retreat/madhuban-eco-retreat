@@ -116,7 +116,7 @@ const DiningSpacial = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.9 }}
               style={{
-                backgroundImage: `url(/images/dining/dinning-area-image-5-madhuban-eco-retreat.avif)`,
+                backgroundImage: `url(https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/dinning-area-image-5-madhuban-eco-retreat.avif)`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}

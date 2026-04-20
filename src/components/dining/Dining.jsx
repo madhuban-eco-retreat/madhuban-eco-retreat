@@ -54,87 +54,87 @@ const Dining = () => {
   const photos = [
     {
       id: 1,
-      url: "/images/dining/food-image-2-madhuban-eco-retreat-bhopal.avif",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/food-image-2-madhuban-eco-retreat-bhopal.avif",
     },
     {
       id: 2,
-      url: "/images/dining/food-image-3-madhuban-eco-retreat-bhopal.avif",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/food-image-3-madhuban-eco-retreat-bhopal.avif",
     },
     {
       id: 3,
-      url: "/images/dining/food-image-4-madhuban-eco-retreat-bhopal.webp",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/food-image-4-madhuban-eco-retreat-bhopal.webp",
     },
     {
       id: 4,
-      url: "/images/dining/food-image-5-madhuban-eco-retreat-bhopal.webp",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/food-image-5-madhuban-eco-retreat-bhopal.webp",
     },
     {
       id: 5,
-      url: "/images/dining/food-image-6-madhuban-eco-retreat-bhopal.avif",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/food-image-6-madhuban-eco-retreat-bhopal.avif",
     },
     {
       id: 6,
-      url: "/images/dining/food-image-7-madhuban-eco-retreat.avif",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/food-image-7-madhuban-eco-retreat.avif",
     },
     {
       id: 7,
-      url: "/images/dining/food-image-8-madhuban-eco-retreat-bhopal.avif",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/food-image-8-madhuban-eco-retreat-bhopal.avif",
     },
     {
       id: 8,
-      url: "/images/dining/food-image-9-madhuban-eco-retreat-bhopal.avif",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/food-image-9-madhuban-eco-retreat-bhopal.avif",
     },
     {
       id: 9,
-      url: "/images/dining/food-image-madhuban-eco-retreat-bhopal-1.avif",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/food-image-madhuban-eco-retreat-bhopal-1.avif",
     },
 
     {
       id: 10,
-      url: "/images/dining/food-image-madhuban-eco-retreat-bhopal.avif",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/food-image-madhuban-eco-retreat-bhopal.avif",
     },
     {
       id: 11,
-      url: "/images/dining/food-image-madhuban-eco-retreat-ratapani-bhopal.avif",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/food-image-madhuban-eco-retreat-ratapani-bhopal.avif",
     },
     {
       id: 12,
-      url: "/images/dining/food-image-madhuban-eco-retreat.avif",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/food-image-madhuban-eco-retreat.avif",
     },
     {
       id: 13,
-      url: "/images/dining/food-image-madhuban-eco-retreat2.avif",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/food-image-madhuban-eco-retreat2.avif",
     },
     {
       id: 14,
-      url: "/images/dining/dinning-area-image-4-madhuban-eco-retreat.webp",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/dinning-area-image-4-madhuban-eco-retreat.webp",
     },
     {
       id: 15,
-      url: "/images/dining/dinning-area-image-5-madhuban-eco-retreat.avif",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/dinning-area-image-5-madhuban-eco-retreat.avif",
     },
     {
       id: 16,
-      url: "/images/dining/dinning-area-image-6-madhuban-eco-retreat-bhopal.avif",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/dinning-area-image-6-madhuban-eco-retreat-bhopal.avif",
     },
     {
       id: 17,
-      url: "/images/dining/dinning-area-image-7-madhuban-eco-retreat-bhopal.avif",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/dinning-area-image-7-madhuban-eco-retreat-bhopal.avif",
     },
     {
       id: 18,
-      url: "/images/dining/dinning-area-image-8-madhuban-eco-retreat-bhopal.avif",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/dinning-area-image-8-madhuban-eco-retreat-bhopal.avif",
     },
   ];
 
   const videos = [
     {
       id: 1,
-      url: "/images/dining/dining.mp4",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/dining.mp4",
     },
     {
       id: 2,
-      url: "/images/dining/dining1.mp4",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/dining1.mp4",
     },
     // Add more if needed
   ];
@@ -160,9 +160,11 @@ const Dining = () => {
       <div className="farm-to-table bg-[#D1C8C1] flex flex-col items-center">
         <div className="relative w-full h-[85vh]  ">
           <Image
-            src={"/images/dining/dinning-area-image-madhuban-eco-retreat.webp"}
+            src={
+              "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/dinning-area-image-madhuban-eco-retreat.webp"
+            }
             alt={getAltFromUrl(
-              "/images/dining/dinning-area-image-madhuban-eco-retreat.webp",
+              "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/dinning-area-image-madhuban-eco-retreat.webp",
             )}
             className="w-full h-full object-cover"
             fill

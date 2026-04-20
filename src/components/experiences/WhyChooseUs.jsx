@@ -118,7 +118,7 @@ const WhyChooseUs = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.9 }}
             style={{
-              backgroundImage: `url(/images/experiences/madhuban-eco-retreat-top-view.jpg)`,
+              backgroundImage: `url(https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/madhuban-eco-retreat-top-view.jpg)`,
               backgroundSize: "cover",
             }}
           ></motion.div>

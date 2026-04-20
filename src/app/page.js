@@ -71,8 +71,7 @@ export const metadata = {
     "forest resort Ratapani",
     " nature resort Madhya Pradesh",
     "Ratapani eco lodge",
-    "best weekend getaway near Bhopal"
-
+    "best weekend getaway near Bhopal",
   ],
 
   alternates: {

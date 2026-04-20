@@ -18,7 +18,8 @@ const BlogBanner = () => {
     <section
       className="h-[90vh] bg-cover bg-center flex items-center justify-center"
       style={{
-        backgroundImage: "url('/images/blogs/hero-2.jpg')",
+        backgroundImage:
+          "url('https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/blogs/hero-2.jpg')",
       }}
     >
       <motion.div

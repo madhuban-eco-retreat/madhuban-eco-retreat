@@ -7,9 +7,9 @@ const ExperiencesBanner = () => {
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src="/images/experiences/banner/cultural-tribal-dance-madhuban-eco-retreat.avif"
+          src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/banner/cultural-tribal-dance-madhuban-eco-retreat.avif"
           alt={getAltFromUrl(
-            "/images/experiences/banner/cultural-tribal-dance-madhuban-eco-retreat.avif",
+            "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/banner/cultural-tribal-dance-madhuban-eco-retreat.avif",
           )}
           fill
           priority

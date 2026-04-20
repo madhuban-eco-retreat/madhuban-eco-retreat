@@ -43,7 +43,7 @@ const ReadyForEcoRetreat = () => {
       {/* 1. The Image Layer */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/home/readyForEco/mud-house-madhuban-eco-retreat-bhopal.webp"
+          src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/readyForEco/mud-house-madhuban-eco-retreat-bhopal.webp"
           alt="Madhuban Eco Retreat Mud House"
           fill
           priority // Added priority since it's a large background

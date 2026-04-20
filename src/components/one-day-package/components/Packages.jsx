@@ -28,17 +28,19 @@ const inclusions = [
 const heroSlides = [
   {
     image:
-      "/images/day-outing/package/adventure-activities-in-madhuban-eco-retreat-bhopal.avif",
-  },
-  {
-    image: "/images/day-outing/package/birds-in-madhuban-retreat.jpg",
-  },
-  {
-    image: "/images/day-outing/package/explore-caves.JPG",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/day-outing/package/adventure-activities-in-madhuban-eco-retreat-bhopal.avif",
   },
   {
     image:
-      "/images/day-outing/package/pool-side-image-madhuban-eco-retreat-bhopal.avif",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/day-outing/package/birds-in-madhuban-retreat.jpg",
+  },
+  {
+    image:
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/day-outing/package/explore-caves.JPG",
+  },
+  {
+    image:
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/day-outing/package/pool-side-image-madhuban-eco-retreat-bhopal.avif",
   },
 ];
 

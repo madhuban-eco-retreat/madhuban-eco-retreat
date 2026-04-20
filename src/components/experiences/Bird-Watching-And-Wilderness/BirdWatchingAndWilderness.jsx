@@ -17,19 +17,19 @@ const BirdWatchingAndWilderness = () => {
 
   const forestImages = [
     {
-      url: "/images/experiences/birds-watch/best-wildlife-view.jpg",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/birds-watch/best-wildlife-view.jpg",
       alt: "Forest View 1",
     },
     {
-      url: "/images/experiences/birds-watch/bird-watching-with-guides.jpg",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/birds-watch/bird-watching-with-guides.jpg",
       alt: "Forest View 1",
     },
     {
-      url: "/images/experiences/birds-watch/bird2.jpg",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/birds-watch/bird2.jpg",
       alt: "Forest View 2",
     },
     {
-      url: "/images/experiences/birds-watch/bird3.jpg",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/birds-watch/bird3.jpg",
       alt: "Forest View 3",
     },
   ];
@@ -194,7 +194,9 @@ const BirdWatchingAndWilderness = () => {
           className="w-full h-full object-cover"
         >
           <source
-            src={"/images/experiences/birds-watch/wilderness.mp4"}
+            src={
+              "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/birds-watch/wilderness.mp4"
+            }
             type="video/mp4"
           />
           Your browser does not support the video tag.

@@ -109,9 +109,9 @@ const VisionMission = () => {
                       transition={{ type: "spring", stiffness: 200 }}
                     >
                       <img
-                        src="/images/about/vision-mission/tourists-jungle-safari-jeep-madhuban-eco-retreat-ratapani.avif"
+                        src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/about/vision-mission/tourists-jungle-safari-jeep-madhuban-eco-retreat-ratapani.avif"
                         alt={getAltFromUrl(
-                          "/images/about/vision-mission/tourists-jungle-safari-jeep-madhuban-eco-retreat-ratapani.avif",
+                          "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/about/vision-mission/tourists-jungle-safari-jeep-madhuban-eco-retreat-ratapani.avif",
                         )}
                         className="w-full  object-cover h-100"
                       />
@@ -138,9 +138,9 @@ const VisionMission = () => {
                       transition={{ type: "spring", stiffness: 200 }}
                     >
                       <img
-                        src="/images/about/vision-mission/camping-tent-new-madhuban-eco-retreat-bhopal.avif"
+                        src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/about/vision-mission/camping-tent-new-madhuban-eco-retreat-bhopal.avif"
                         alt={getAltFromUrl(
-                          "/images/about/vision-mission/camping-tent-new-madhuban-eco-retreat-bhopal.avif",
+                          "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/about/vision-mission/camping-tent-new-madhuban-eco-retreat-bhopal.avif",
                         )}
                         className="w-full h-130  object-cover"
                       />

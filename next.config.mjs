@@ -21,6 +21,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "commons.wikimedia.org",
       },
+      {
+        protocol: "https",
+        hostname: "pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev",
+      },
     ],
     minimumCacheTTL: 31536000,
   },

@@ -17,23 +17,23 @@ const RecreationalFacilities = () => {
 
   const forestImages = [
     {
-      url: "/images/experiences/activities/Adventure_Activities_3_At_madhuban-eco-retreat.jpg",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/activities/Adventure_Activities_3_At_madhuban-eco-retreat.jpg",
       alt: "Forest View 1",
     },
     {
-      url: "/images/experiences/activities/adventure-hurdles-madhuban-eco-retreat-bhopal.jpg",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/activities/adventure-hurdles-madhuban-eco-retreat-bhopal.jpg",
       alt: "Forest View 2",
     },
     {
-      url: "/images/experiences/activities/balance-adventure-madhuban-eco-retreat-bhopal.jpg",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/activities/balance-adventure-madhuban-eco-retreat-bhopal.jpg",
       alt: "Forest View 3",
     },
     {
-      url: "/images/experiences/activities/obstacle-course-madhuban-eco-retreat-bhopal.jpg",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/activities/obstacle-course-madhuban-eco-retreat-bhopal.jpg",
       alt: "Forest View 4",
     },
     {
-      url: "/images/experiences/activities/rope-adventure-madhuban-eco-retreat-bhopal.jpg",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/activities/rope-adventure-madhuban-eco-retreat-bhopal.jpg",
       alt: "Forest View 5",
     },
   ];
@@ -205,7 +205,7 @@ const RecreationalFacilities = () => {
           playsInline
         >
           <source
-            src="/images/experiences/activities/PF.mp4"
+            src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/activities/PF.mp4"
             type="video/mp4"
           />
           Your browser does not support the video tag.

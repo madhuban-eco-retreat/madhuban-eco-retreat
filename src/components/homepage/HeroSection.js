@@ -59,7 +59,11 @@ export default function HeroSection({
           fill
           priority
           className="object-cover object-center"
-          onError={() => setImgSrc("/images/no-image/no-image-banner.png")}
+          onError={() =>
+            setImgSrc(
+              "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/no-image/no-image-banner.png",
+            )
+          }
         />
 
         {/* Everything below is unchanged */}

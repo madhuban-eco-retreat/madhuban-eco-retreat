@@ -104,8 +104,10 @@ const Story = () => {
             >
               <div className=" rounded-xl">
                 <img
-                  src="/images/logo/somaiya-group-logo.png"
-                  alt={getAltFromUrl("/images/logo/somaiya-group-logo.png")}
+                  src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/somaiya-group-logo.png"
+                  alt={getAltFromUrl(
+                    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/somaiya-group-logo.png",
+                  )}
                   className="w-64 h-auto object-contain"
                 />
               </div>

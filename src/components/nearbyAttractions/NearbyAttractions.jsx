@@ -10,16 +10,20 @@ import { getAltFromUrl } from "@/utills/helperFunctions";
 
 const heroSlides = [
   {
-    image: "/images/nearby-atterations/banner/smCaves1.jpg",
+    image:
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/nearby-atterations/banner/smCaves1.jpg",
   },
   {
-    image: "/images/nearby-atterations/banner/smCaves11.jpg",
+    image:
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/nearby-atterations/banner/smCaves11.jpg",
   },
   {
-    image: "/images/nearby-atterations/banner/smCaves12.jpg",
+    image:
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/nearby-atterations/banner/smCaves12.jpg",
   },
   {
-    image: "/images/nearby-atterations/banner/smCaves6.jpg",
+    image:
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/nearby-atterations/banner/smCaves6.jpg",
   },
 ];
 
@@ -27,7 +31,7 @@ const cardData = [
   {
     title: "Ratapani Widlife Sanctuary",
     image:
-      "/images/nearby-atterations/ratapani-wildlife-sanctuary-nearby-attraction-madhuban-eco-retreat.jpg",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/nearby-atterations/ratapani-wildlife-sanctuary-nearby-attraction-madhuban-eco-retreat.jpg",
     description:
       "A stunning 688 sq. km forest known for teak woodlands, wildlife diversity, and peaceful jungle landscapes. Apart from the tiger, you may spot leopards, jackals, hyenas, wild dogs, and unique species of birds.",
     bestFor: "Wildlife lovers, nature photographers, jungle drives.",
@@ -35,7 +39,7 @@ const cardData = [
   {
     title: "Ginnorgarh Tribal Fort",
     image:
-      "/images/nearby-atterations/ginnorgarh-tribal-fort-ratapani-tiger-reserve.jpg",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/nearby-atterations/ginnorgarh-tribal-fort-ratapani-tiger-reserve.jpg",
     description:
       "A historic 1200 BC hilltop fort rising over 700 meters, located inside Ratapani Tiger Reserve. The fort features ancient water bodies, palace remains, and stone gateways — offering a raw glimpse into tribal and medieval heritage.",
     bestFor: "Trekkers, history lovers, architecture enthusiasts.",
@@ -43,7 +47,7 @@ const cardData = [
   {
     title: "Bhimbetka Rock Shelters (UNESCO Site)",
     image:
-      "/images/nearby-atterations/bhimbetka-rock-shelters-nearby-attraction-madhuban-eco-retreat.jpg",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/nearby-atterations/bhimbetka-rock-shelters-nearby-attraction-madhuban-eco-retreat.jpg",
     description:
       "A world-renowned archaeological site with prehistoric rock art from the Paleolithic, Mesolithic, and early historic periods. These caves represent the earliest evidence of human life in India.",
     bestFor: "Historians, students, cultural explorers.",
@@ -51,7 +55,7 @@ const cardData = [
   {
     title: "Satpura Tiger Reserve / Satpura National Park",
     image:
-      "/images/nearby-atterations/satpura-tiger-reserve-nearby-attraction-madhuban-eco-retreat.jpg",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/nearby-atterations/satpura-tiger-reserve-nearby-attraction-madhuban-eco-retreat.jpg",
     description:
       "One of Central India’s finest forest belts, Satpura Tiger Reserve is known for its rugged landscapes, wildlife safaris, river boating, and deep forest trails.",
     bestFor: "Wildlife safaris, nature enthusiasts, adventure seekers.",
@@ -59,7 +63,7 @@ const cardData = [
   {
     title: "Saru Maru Caves",
     image:
-      "/images/nearby-atterations/saru-maru-caves-nearby-attraction-madhuban-eco-retreat.jpg",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/nearby-atterations/saru-maru-caves-nearby-attraction-madhuban-eco-retreat.jpg",
     description:
       "An ancient Buddhist monastic complex featuring meditation caves, inscriptions, and remnants of Ashokan-era history.",
     bestFor: "Archaeology lovers, cultural travelers, spiritual seekers.",
@@ -67,7 +71,7 @@ const cardData = [
   {
     title: "Narmada River Darshan (Sethani Ghat)",
     image:
-      "/images/nearby-atterations/narmada-river-darshan-nearby-attraction-madhuban-eco-retreat.jpg",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/nearby-atterations/narmada-river-darshan-nearby-attraction-madhuban-eco-retreat.jpg",
     description:
       "A magnificent 19th-century riverside ghat located at Narmadapuram. It is one of India’s largest ghats and a serene place to experience the spiritual aura of the holy Narmada River.",
     bestFor: "Pilgrims, sunset views, riverside relaxation.",
@@ -75,7 +79,7 @@ const cardData = [
   {
     title: "Salkanpur Devi Temple",
     image:
-      "/images/nearby-atterations/salkanpur-devi-temple-nearby-attraction-madhuban-eco-retreat.jpg",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/nearby-atterations/salkanpur-devi-temple-nearby-attraction-madhuban-eco-retreat.jpg",
     description:
       "A revered Shaktipeeth dedicated to Goddess Vindhyavasni Beejasan Devi. Located atop an 800-foot-high hill, the temple offers panoramic forest views and spiritual tranquility.",
     bestFor: "Devotees, trekking enthusiasts, sunrise/sunset views.",

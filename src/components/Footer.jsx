@@ -44,7 +44,7 @@ const Footer = () => {
                 <Image
                   width={120}
                   height={120}
-                  src="/images/logo/black-madhuban-eco-retreat-bhopal-logo.png"
+                  src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/black-madhuban-eco-retreat-bhopal-logo.png"
                   alt="Madhuban Eco Retreat Logo"
                   className="h-20 w-20 filter brightness-75"
                 />
@@ -75,7 +75,7 @@ const Footer = () => {
                 <Image
                   width={32}
                   height={32}
-                  src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+                  src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/insta-logo.webp"
                   alt="Instagram"
                   className="w-8 h-8 "
                 />
@@ -103,7 +103,7 @@ const Footer = () => {
                 <Image
                   width={32}
                   height={32}
-                  src="/images/logo/youtube-logo.png"
+                  src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/youtube-logo.png"
                   alt="Youtube"
                   className="w-9 h-8"
                 />
@@ -117,7 +117,7 @@ const Footer = () => {
                 <Image
                   width={32}
                   height={32}
-                  src="/images/logo/linkedin-logo.png"
+                  src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/linkedin-logo.png"
                   alt="Linkedin"
                   className="w-8 h-8"
                 />
@@ -294,8 +294,10 @@ const Footer = () => {
           {/* Newsletter Signup */}
           <div className="">
             <img
-              src="/images/logo/somaiya-group-logo.png"
-              alt={getAltFromUrl("/images/logo/somaiya-group-logo.png")}
+              src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/somaiya-group-logo.png"
+              alt={getAltFromUrl(
+                "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/somaiya-group-logo.png",
+              )}
               className="w-[70px] h-[70px] mt-3 mb-4 mx-auto filter brightness-75"
               style={{ filter: "brightness(0.75)" }}
             />

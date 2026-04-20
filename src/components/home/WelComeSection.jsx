@@ -96,8 +96,8 @@ const WelComeSection = () => {
             <video
               id="about-video"
               ref={videoRef}
-              src="/images/home/welcome/madhuban-intro.mp4"
-              poster="/images/home/welcome/video-preview.avif"
+              src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/welcome/madhuban-intro.mp4"
+              poster="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/welcome/video-preview.avif"
               preload="metadata"
               autoPlay
               className="rounded-lg shadow-xl w-full h-full object-cover"

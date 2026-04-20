@@ -66,7 +66,7 @@ const socialLinks = [
   {
     name: "Instagram",
     href: instagram,
-    img: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png",
+    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/insta-logo.webp",
     className: "w-5 h-5",
   },
   {
@@ -78,13 +78,13 @@ const socialLinks = [
   {
     name: "YouTube",
     href: youtube,
-    img: "/images/logo/youtube-logo.png",
+    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/youtube-logo.png",
     className: "w-6 h-5",
   },
   {
     name: "LinkedIn",
     href: linkedin,
-    img: "/images/logo/linkedin-logo.png",
+    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/linkedin-logo.png",
     className: "w-5 h-5",
   },
   {
@@ -151,7 +151,7 @@ const MainNavigation = () => {
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-4 z-20">
           <Image
-            src="/images/logo/madhuban-eco-retreat-bhopal-logo.png"
+            src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-eco-retreat-bhopal-logo.png"
             width={120}
             height={120}
             alt="Madhuban Eco Retreat Logo"

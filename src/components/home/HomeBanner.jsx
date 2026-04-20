@@ -7,10 +7,10 @@ import { getAltFromUrl } from "@/utills/helperFunctions";
 const heroSlides = [
   {
     image:
-      "/images/home/banner/desktop/madhuban-eco-retreat-forest-view-hero-section-1.avif",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/madhuban-eco-retreat-forest-view-hero-section-1.avif",
 
     mobile:
-      "/images/home/banner/mobile/madhuban-eco-retreat-forest-view-hero-section.avif",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/mobile/madhuban-eco-retreat-forest-view-hero-section.avif",
 
     title: "Madhuban Eco Retreat: Eco-Luxury Forest Resort",
 
@@ -20,10 +20,10 @@ const heroSlides = [
 
   {
     image:
-      "/images/home/banner/desktop/tourists-jungle-safari-jeep-madhuban-eco-retreat-ratapani.avif",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/tourists-jungle-safari-jeep-madhuban-eco-retreat-ratapani.avif",
 
     mobile:
-      "/images/home/banner/mobile/tourists-jungle-safari-jeep-madhuban-eco-retreat-ratapani.avif",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/mobile/tourists-jungle-safari-jeep-madhuban-eco-retreat-ratapani.avif",
 
     title: "Sustainable Travel in India: An Eco-Luxury Retreat",
 
@@ -32,10 +32,11 @@ const heroSlides = [
   },
 
   {
-    image: "/images/home/banner/desktop/hero-tiger-madhuban-eco-retreat.webp",
+    image:
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/hero-tiger-madhuban-eco-retreat.webp",
 
     mobile:
-      "/images/home/banner/mobile/mobile-hero-tiger-madhuban-eco-retreat-ratapani-bhopal.avif",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/mobile/mobile-hero-tiger-madhuban-eco-retreat-ratapani-bhopal.avif",
 
     title: "Connect With Wildlife & Nature",
 

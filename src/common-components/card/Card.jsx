@@ -13,7 +13,6 @@ const Card = ({
   createdAt = "",
 }) => {
   const [imgSrc, setImgSrc] = useState(imageUrl);
-
   return (
     <Link href={hrefLink} key={cardkey}>
       <div
@@ -23,12 +22,19 @@ const Card = ({
       >
         <div className="relative w-full h-[180px]   rounded-br-[20px]  overflow-hidden">
           <Image
-            src={imgSrc || "/images/no-image/no-image.png"}
+            src={
+              imgSrc ||
+              "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/no-image/no-image.png"
+            }
             fill
             quality={90}
             alt={altText}
             className="object-cover transition-transform duration-300 group-hover:scale-110 group-focus:scale-110 group-active:scale-110"
-            onError={() => setImgSrc("/images/no-image/no-image.png")}
+            onError={() =>
+              setImgSrc(
+                "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/no-image/no-image.png",
+              )
+            }
           />
         </div>
         <div className="p-3">

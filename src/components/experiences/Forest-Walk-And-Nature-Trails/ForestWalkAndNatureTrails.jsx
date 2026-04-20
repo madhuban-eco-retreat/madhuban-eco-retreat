@@ -16,15 +16,15 @@ const ForestWalkAndNatureTrails = () => {
 
   const forestImages = [
     {
-      url: "/images/experiences/forest-walk/Nature & Forest From Madhuban Eco Retreat - 1.avif",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/forest-walk/Nature & Forest From Madhuban Eco Retreat - 1.avif",
       alt: "Forest View 1",
     },
     {
-      url: "/images/experiences/forest-walk/nature-visit-ratapani-madhuban-eco-retreat-bhopal-2.avif",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/forest-walk/nature-visit-ratapani-madhuban-eco-retreat-bhopal-2.avif",
       alt: "Forest View 2",
     },
     {
-      url: "/images/experiences/forest-walk/Ratapani Forest Walk With Madhuban Eco Retreat Team.avif",
+      url: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/forest-walk/Ratapani Forest Walk With Madhuban Eco Retreat Team.avif",
       alt: "Forest View 3",
     },
   ];
@@ -187,7 +187,9 @@ const ForestWalkAndNatureTrails = () => {
           playsInline
         >
           <source
-            src={"/images/experiences/forest-walk/nature-trails1.mp4"}
+            src={
+              "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/forest-walk/nature-trails1.mp4"
+            }
             type="video/mp4"
           />
           Your browser does not support the video tag.
