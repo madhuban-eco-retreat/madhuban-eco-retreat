@@ -13,7 +13,7 @@ const Card = ({
   createdAt = "",
 }) => {
   const [imgSrc, setImgSrc] = useState(imageUrl);
-  console.log("Card Rendered with imageUrl:", { title, imageUrl });
+
   return (
     <Link href={hrefLink} key={cardkey}>
       <div
@@ -25,7 +25,7 @@ const Card = ({
           <Image
             src={imgSrc || "/images/no-image/no-image.png"}
             fill
-            // quality={90}
+            quality={90}
             alt={altText}
             className="object-cover transition-transform duration-300 group-hover:scale-110 group-focus:scale-110 group-active:scale-110"
             onError={() => setImgSrc("/images/no-image/no-image.png")}
