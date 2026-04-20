@@ -282,16 +282,7 @@ const nextConfig = {
           },
         ],
       },
-      // Blog pages - 24 hours
-      {
-        source: "/blog/(.*)",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, s-maxage=86400, stale-while-revalidate=604800",
-          },
-        ],
-      },
+
       // Event pages - 24 hours
       {
         source: "/events/(.*)",

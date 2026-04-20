@@ -9,7 +9,6 @@ export const getAllBlogs = async (pageCount, limit) => {
   }
   try {
     const res = await fetch(url, {
-      next: { revalidate: 60 * 60 * 12 },
       cache: "force-cache",
     }).then((response) => response.json());
 
@@ -23,7 +22,6 @@ export const getAllBlogs = async (pageCount, limit) => {
 export const getBlogById = async (id) => {
   try {
     const res = await fetch(`${serverUrl}/api/blogs/${id}/madhuban`, {
-      next: { revalidate: 60 * 60 * 12 },
       cache: "force-cache",
     }).then((response) => response.json());
     return res;
