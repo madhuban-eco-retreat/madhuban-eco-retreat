@@ -13,6 +13,7 @@ import {
   phone,
   youtube,
 } from "@/utills/constants";
+import { isLandingRoute } from "@/utills/landingRoutes";
 import Image from "next/image";
 
 const navigation = [
@@ -102,6 +103,8 @@ const MainNavigation = () => {
   useEffect(() => {
     setIsMenuOpen(false);
   }, [pathname]);
+
+  if (isLandingRoute(pathname)) return null;
 
   return (
     <header className="fixed top-0 w-full z-50 bg-primary-gray shadow-lg ">

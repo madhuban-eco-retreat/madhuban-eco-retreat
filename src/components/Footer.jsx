@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { MapPin, Phone, Mail, ChevronRight, ChevronDown } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   facebook,
   gmail,
@@ -11,12 +12,16 @@ import {
   phone,
   youtube,
 } from "@/utills/constants";
+import { isLandingRoute } from "@/utills/landingRoutes";
 import Image from "next/image";
 import { getAltFromUrl } from "@/utills/helperFunctions";
 
 const Footer = () => {
   const [open, setOpen] = useState(false); // dropdown state
   const currentYear = new Date().getFullYear();
+  const pathname = usePathname();
+
+  if (isLandingRoute(pathname)) return null;
 
   const buttonStyle = {
     backgroundColor: "#25D366",
