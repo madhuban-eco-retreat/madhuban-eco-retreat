@@ -72,32 +72,30 @@ const STAYS = [
   },
 ];
 
-// PLACEHOLDER REVIEWS — must be replaced with real Google reviews before going live.
-// Source: https://share.google/5u7E0QdYGlCa1dhik
 const REVIEWS = [
   {
-    text: "Drove from Indore for a weekend with my wife. The glamping tent was incredible — woke up to peacocks and the morning silence. Already planning our next visit.",
-    name: "Rajesh M.",
-    location: "Indore",
+    text: "One of the best experiences I've had near Bhopal. The stay, the food, pottery, yoga, the healing power of nature — everything was top notch. So therapeutic. Going back relaxed and grateful.",
+    name: "Shristi Pandey",
+    location: "Local Guide",
     date: "Feb 2026",
   },
   {
-    text: "Day outing with the family was perfect. Pool, lunch, pottery for the kids, naturalist walk. Much better than the usual resorts near Bhopal.",
-    name: "Priya S.",
-    location: "Bhopal",
-    date: "Mar 2026",
+    text: "Truly enriching — scenic surroundings, comfortable stay, nature walks, birding, delicious food. The respect for tribal communities of Madhya Pradesh is beautifully reflected in the architecture and cuisine.",
+    name: "Amit Jethwa",
+    location: "Local Guide",
+    date: "Feb 2026",
   },
   {
-    text: "The mud house was an experience we never expected. Cool inside even in May, farm-fresh food. The naturalist who took us on the walk knew every tree by name.",
-    name: "Anjali & Vikram",
-    location: "Gwalior",
+    text: "Stayed overnight and had a truly amazing experience. Meditation, yoga, swimming, food — everything was perfect. Staff was outstanding. Highly recommended for family stay and a peaceful getaway.",
+    name: "Anshul Agrawal",
+    location: "Bhopal",
     date: "Jan 2026",
   },
   {
-    text: "No mobile signal for two days and it was the best thing that happened to us. Pool villa is exactly what the website shows. Sattvic food was a surprise highlight.",
-    name: "Karthik R.",
-    location: "Nagpur",
-    date: "Dec 2025",
+    text: "Spent a few delightful hours at Madhuban. Close to Ratapani Tiger Reserve, beautifully designed property, hospitable staff. The film on the reserve was incredible — got us totally involved. Food was freshly made and amazing.",
+    name: "Sneh P",
+    location: "Visited Feb 2026",
+    date: "Feb 2026",
   },
 ];
 
@@ -163,7 +161,7 @@ const HERO_IMAGE =
 //   "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/welcome/madhuban-intro.mp4";
 const MAP_SRC =
   "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7356.4265978489275!2d77.490283!3d22.794559!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397db52b7cf3a4f1%3A0xb82cef7e7d9cfa61!2sMadhuban%20Resort%20By%20Somaiya!5e0!3m2!1sen!2sin!4v1747417125028!5m2!1sen!2sin";
-const REVIEWS_LINK = "https://share.google/5u7E0QdYGlCa1dhik";
+const REVIEWS_LINK = "https://maps.app.goo.gl/XzHJtayGt8NTkUiG9";
 const DIRECTIONS_LINK =
   "https://www.google.com/maps/dir/?api=1&destination=Madhuban+Eco+Retreat+Ratapani";
 
@@ -558,9 +556,9 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8 md:mb-12">
             <div className="inline-flex items-center gap-2 text-xs sm:text-sm text-stone-700 bg-white border border-stone-200 rounded-full px-3 py-1.5 shadow-sm">
-              <span className="font-bold text-green-800">4.8</span>
+              <span className="font-bold text-green-800">4.5</span>
               <Stars />
-              <span className="text-stone-500">on Google · 200+ reviews</span>
+              <span className="text-stone-500">on Google · 586 reviews</span>
             </div>
             <p className="text-[11px] tracking-[0.18em] font-semibold text-brown-700 mt-5 mb-2">
               REVIEWS
