@@ -7,6 +7,7 @@ import { IoMdCloseCircle } from "react-icons/io";
 import Cookies from "js-cookie";
 import { usePathname } from "next/navigation";
 import { phone } from "@/utills/constants";
+import { isLandingRoute } from "@/utills/landingRoutes";
 import "./ContactModal.css";
 
 const ADMIN_WHATSAPP = phone;
@@ -90,6 +91,7 @@ const ContactModal = () => {
   };
 
   if (!open) return null;
+  if (isLandingRoute(pathName)) return null;
 
   return (
     <Modal

@@ -3,8 +3,10 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import CloseIcon from "@mui/icons-material/Close";
 import Cookies from "js-cookie";
+import { isLandingRoute } from "@/utills/landingRoutes";
 import {
   Box,
   Dialog,
@@ -24,6 +26,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const CookiesPopup = () => {
+  const pathname = usePathname();
+  const onLandingRoute = isLandingRoute(pathname);
   const [showBanner, setShowBanner] = useState(false);
   const [showPreferences, setShowPreferences] = useState(false);
   const [preferences, setPreferences] = useState({
@@ -33,6 +37,7 @@ const CookiesPopup = () => {
   });
 
   useEffect(() => {
+    if (onLandingRoute) return;
     const cookiePref = Cookies.get(COOKIE_KEY);
     if (cookiePref) {
       try {
@@ -58,6 +63,7 @@ const CookiesPopup = () => {
     if (!showBanner) setShowPreferences(false);
   }, [showBanner]);
 
+  if (onLandingRoute) return null;
   if (!showBanner) return null;
   const savePreferencesToCookie = (prefs) => {
     Cookies.set(COOKIE_KEY, JSON.stringify(prefs), {
