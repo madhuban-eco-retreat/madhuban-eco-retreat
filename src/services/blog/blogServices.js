@@ -8,8 +8,11 @@ export const getAllBlogs = async (pageCount, limit) => {
     url = `${serverUrl}/api/blogs/all/madhuban?type=blog&status=Published&page=${pageCount}&limit=${limit}`;
   }
   try {
+    // Revalidate so newly published blogs appear. "force-cache" froze the
+    // list in the Data Cache indefinitely, hiding any blog published after
+    // the first render.
     const res = await fetch(url, {
-      cache: "force-cache",
+      next: { revalidate: 300 },
     }).then((response) => response.json());
 
     return res;
