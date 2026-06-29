@@ -3,7 +3,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading.jsx";
 import Image from "next/image";
-import { getAltFromUrl } from "@/utills/helperFunctions";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -59,16 +58,16 @@ const accommodations = [
   {
     title: "Pool Side Villa",
     image:
-      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/Pool_Image_2_-_Madhuban_Eco_Retreat_Bhopal_yl1tbg.webp",
-    alt: "Pool Side Room",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/Pool_Image_3_Madhuban_Eco_Retreat.webp",
+    alt: "Pool Side Villa - Madhuban Eco Retreat Bhopal",
     description:
       "For travelers seeking leisure and calm, our poolside villas combine scenic views, wellness-friendly spaces, and forest-side luxury.",
   },
   {
     title: "Glamping Tents",
     image:
-      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/madhuban-eco-retreat-glamping-tent-gallery-image-1.webp",
-    alt: "Glamping Tent",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/madhuban-glamping-tent-image-2.jpg",
+    alt: "Glamping Tents - Madhuban Eco Retreat Bhopal",
     description:
       "Enjoy boutique-style glamping with chic décor, ensuite bathrooms, and private sit-outs — perfect for a stylish forest experience.",
   },
@@ -127,7 +126,7 @@ const Accommodations = () => {
               <div className="h-64 xl:h-[200px] overflow-hidden relative">
                 <Image
                   src={item.image}
-                  alt={getAltFromUrl(item.image)}
+                  alt={item.alt}
                   fill // Use fill for better aspect ratio management in cards
                   className="object-cover transition-transform duration-500 hover:scale-110"
                   // OPTIMIZATION: Tell the browser exactly how small these images are
