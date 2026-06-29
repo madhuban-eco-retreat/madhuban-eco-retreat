@@ -1,31 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import { motion } from "framer-motion";
 import Card from "../card/Card";
 import CustomButton from "../CustomButton/CustomButton";
 import { getAllBlogs } from "@/services/blog/blogServices";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-      when: "beforeChildren",
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.6,
-    },
-  },
-};
 
 // Latest first (descending by createdAt).
 const sortByLatest = (list) =>
@@ -67,17 +44,16 @@ function BlogList({ initialBlogs, totalPages, limit }) {
     }
   };
 
+  // NOTE: cards are intentionally plain (no framer-motion reveal). A previous
+  // version rendered the grid at opacity:0 and faded it in via whileInView,
+  // which left blogs invisible whenever the client animation/hydration didn't
+  // run. Rendering visible markup guarantees the list shows and the Load More
+  // button stays interactive regardless of client-side JS timing.
   return (
     <div className="w-full">
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={containerVariants}
-      >
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
         {blogs?.map((val) => (
-          <motion.div variants={itemVariants} key={val?._id ?? val?.uid}>
+          <div key={val?._id ?? val?.uid}>
             <Card
               imageUrl={
                 val?.featuredImage?.url ||
@@ -89,9 +65,9 @@ function BlogList({ initialBlogs, totalPages, limit }) {
               createdAt={val?.createdAt?.split("T")[0]}
               cardkey={val?._id}
             />
-          </motion.div>
+          </div>
         ))}
-      </motion.div>
+      </div>
 
       {hasMore && (
         <div className="mt-8 flex justify-center md:mt-12">
