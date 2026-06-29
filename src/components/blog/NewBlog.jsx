@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 import React from "react";
-import BlogListWithPagination from "@/common-components/Pagination/BlogListWithPagination";
+import BlogList from "@/common-components/Pagination/BlogListWithPagination";
 import BlogBanner from "./BlogBanner";
 import NaturesStory from "./NaturesStory";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
@@ -28,9 +28,9 @@ const NewBlogPage = ({ blogs, posts }) => {
               </p>
             </div>
           ) : (
-            <BlogListWithPagination
+            <BlogList
               initialBlogs={blogs}
-              totalBlogs={posts.totalpages}
+              totalPages={posts.totalpages}
               limit={LIMIT}
             />
           )}
