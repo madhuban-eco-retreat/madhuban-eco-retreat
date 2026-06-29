@@ -1,3 +1,9 @@
+// Route-segment config: render /blogs on every request so newly published
+// blogs (and the correct totalpages, which drives the Load More button) are
+// always reflected. NOTE: this only takes effect in a route-segment file
+// (page/layout/route), not in a component.
+export const dynamic = "force-dynamic";
+
 import React from "react";
 import NewBlogPage from "@/components/blog/NewBlog";
 import SEO from "@/components/seo/Seo";
