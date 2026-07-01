@@ -4,6 +4,7 @@ import CommonFaqs from "@/common-components/faqs/CommonFaqs";
 import StayBanner from "./StayBanner";
 import Accommodations from "./Accommodations";
 import DiscoverIdeal from "./DiscoverIdeal";
+import TariffSection from "@/components/tariff/TariffSection";
 
 const stayFaqs = [
   {
@@ -55,6 +56,7 @@ const Stay = () => {
       <StayBanner />
       <DiscoverIdeal />
       <Accommodations />
+      <TariffSection />
       <WhyStayMadhuban />
       <CommonFaqs faqs={stayFaqs} />
     </div>

@@ -59,22 +59,33 @@ const t_and_c_data = {
       items: [
         "All reservations are subject to availability.",
         "A valid online booking, phone confirmation, or email confirmation constitutes a reservation.",
-        " Advance payment or security deposit may be required as per the booking terms provided at the time of reservation.",
+        "A 50% advance payment is required to confirm your booking.",
+        "The remaining balance must be paid at least one day prior to arrival.",
+        "If the booking is made within 45 days of arrival, full payment is required at the time of booking.",
+        "Safari and special experiences must be paid in full at the time of confirmation.",
+        "Room rates are per night on double occupancy and are exclusive of GST. GST is charged separately as applicable — 5% GST on rooms priced at ₹7,500 and below, and 18% GST on rooms priced above ₹7,500.",
         "Prices, offers, and packages are subject to change without prior notice unless confirmed in writing.",
       ],
     },
     {
       title: "2. Check-In & Check-Out",
       items: [
-        "Check-in and check-out times depend on final confirmation.",
-        "Early check-in or late check-out may be permitted subject to availability and may incur additional charges",
+        "Check-in time: 2:00 PM.",
+        "Check-out time: 11:30 AM.",
+        "Early check-in or late check-out may be permitted subject to availability and may incur additional charges.",
       ],
     },
     {
       title: "3. Cancellation & Refund",
       items: [
-        "Cancellations must be communicated to us in writing as per our Cancellation & Refund Policy.",
-        " Refunds, if eligible, will be processed through the original payment method as per policy timelines.",
+        "Cancellations must be communicated to us in writing.",
+        "More than 45 days before arrival: 10% cancellation charge.",
+        "Between 15 and 45 days before arrival: 50% cancellation charge.",
+        "Within 15 days of arrival or in case of a No Show: 100% cancellation charge.",
+        "Group bookings (more than 3 rooms) are strictly non-refundable.",
+        "Bookings for Christmas, New Year, Holi, Diwali, and long weekends are non-refundable.",
+        "Cancellation charges are calculated on the total booking value, not just the advance paid.",
+        "Approved refunds are processed via NEFT within 15 working days.",
       ],
     },
     {

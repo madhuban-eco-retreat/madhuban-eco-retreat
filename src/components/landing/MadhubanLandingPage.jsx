@@ -9,10 +9,10 @@ const VARIANTS = {
     h1Pre: "Wake up in the",
     h1Em: "Ratapani jungle",
     h1Post: "just 1 hour from Bhopal",
-    sub: "Eco-luxury stays inside India's tiger reserve. Glamping, mud houses, pool villa. From ₹7,500 per night.",
+    sub: "Eco-luxury stays inside India's tiger reserve. Glamping, mud houses, pool villa. From ₹7,500 per night + GST.",
   },
   dayout: {
-    badge: "DAY OUTING — ₹1,300 PER PERSON",
+    badge: "DAY OUTING — ₹1,500 PER PERSON",
     h1Pre: "A perfect day",
     h1Em: "in the jungle",
     h1Post: "just 1 hour from Bhopal",
@@ -23,7 +23,7 @@ const VARIANTS = {
     h1Pre: "Real jungle,",
     h1Em: "real quiet",
     h1Post: "just 1 hour from Bhopal",
-    sub: "A wilderness retreat in Madhya Pradesh's tiger country. Glamping, mud houses, and a poolside villa. From ₹7,500 per night.",
+    sub: "A wilderness retreat in Madhya Pradesh's tiger country. Glamping, mud houses, and a poolside villa. From ₹7,500 per night + GST.",
   },
 };
 
@@ -105,7 +105,7 @@ const FAQ = [
     a: "About 60 km — roughly 1 hour by car. The road is fully tarmac and accessible by any vehicle. We share directions and a Google Maps pin with every booking confirmation.",
   },
   {
-    q: "What is included in the ₹1,300 Day Outing?",
+    q: "What is included in the ₹1,500 Day Outing?",
     a: "Pool access, full vegetarian lunch, naturalist-led nature walk, on-site adventure activities, pottery session, and evening tea. Available 9 AM to 6 PM.",
   },
   {
@@ -118,7 +118,7 @@ const FAQ = [
   },
   {
     q: "What is the cancellation policy?",
-    a: "Free cancellation up to 7 days before check-in. Within 7 days, we offer full credit toward any future stay within 6 months. No hidden charges.",
+    a: "More than 45 days before arrival: 10% charge. Between 15 and 45 days: 50% charge. Within 15 days or no-show: 100% charge. Group bookings (more than 3 rooms) and festive/long-weekend bookings are non-refundable. Charges apply on the total booking value; approved refunds are processed via NEFT within 15 working days.",
   },
   {
     q: "Will I see wildlife?",
@@ -126,7 +126,7 @@ const FAQ = [
   },
   {
     q: "How do I book and pay?",
-    a: "Fill the booking form — our team replies on WhatsApp within 15 minutes during 9 AM to 9 PM with availability and a payment link. Confirm with ₹500 (refundable per policy) or pay in full.",
+    a: "Fill the booking form — our team replies on WhatsApp within 15 minutes during 9 AM to 9 PM with availability and a payment link. Confirm with a 50% advance; the balance is due at least one day before arrival. Bookings made within 45 days of arrival require full payment upfront.",
   },
   {
     q: "Do you have Jain or special-diet food?",
@@ -260,7 +260,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
   );
 
   const estimate = useMemo(() => {
-    if (tab === "dayout") return 1300 * guestCount;
+    if (tab === "dayout") return 1500 * guestCount;
     const found = STAY_TYPES.find((s) => s.value === stayType);
     if (!found || found.price == null) return 7500;
     return found.price;
@@ -415,7 +415,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
           </div>
           <div className="mt-7 pt-4 border-t border-white/20">
             <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.18em] font-medium text-white/70">
-              1 hour from Bhopal · From ₹7,500 per night · Replies in 15 min
+              1 hour from Bhopal · From ₹7,500 per night + GST · Replies in 15 min
             </p>
           </div>
         </div>
@@ -481,6 +481,12 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
             <h2 className="text-2xl sm:text-3xl md:text-4xl text-stone-900 leading-tight font-semibold">
               Where you&rsquo;ll sleep
             </h2>
+            <p className="mt-3 text-sm text-stone-600">
+              All rates are per night on double occupancy. GST extra as
+              applicable — 5% GST on ₹7,500 rooms, 18% GST on rooms above
+              ₹7,500. Stay 2 nights or more and get a flat 20% off room rent
+              (excludes peak season, Christmas/New Year and long weekends).
+            </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
             {STAYS.map((s) => (
@@ -533,7 +539,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
           <h2 className="text-2xl sm:text-3xl md:text-4xl leading-tight font-semibold">
             A full day in the wild —{" "}
             <em className="font-serif italic text-[#f1d28a]">
-              ₹1,300 per person
+              ₹1,500 per person
             </em>
           </h2>
           <p className="mt-4 md:mt-5 text-sm md:text-base text-white/85 leading-relaxed mx-auto max-w-2xl">
@@ -888,9 +894,12 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
                     {estimateSubtitle}
                   </p>
                 </div>
-                <p className="text-2xl md:text-3xl text-green-800 font-bold">
-                  {formatINR(estimate)}
-                </p>
+                <div className="text-right">
+                  <p className="text-2xl md:text-3xl text-green-800 font-bold">
+                    {formatINR(estimate)}
+                  </p>
+                  <p className="text-[11px] text-stone-500">+ GST as applicable</p>
+                </div>
               </div>
 
               <button

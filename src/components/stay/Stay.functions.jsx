@@ -4,7 +4,7 @@ const safariTentFaqs = [
   {
     question: "What is the price of the safari tent house in Ratapani?",
     answer:
-      "The safari tent stay at Madhuban Eco Retreat starts at ₹12,000 per night, with optional extra bedding available for ₹1,500 per person.",
+      "The safari tent stay at Madhuban Eco Retreat starts at ₹12,000 per night on double occupancy. Extra person charges apply — ₹1,500 per night for children (5–12 years) and ₹2,000 per night for adults. Rates are exclusive of GST, which is charged separately at 18% as applicable.",
   },
   {
     question: "Is this the best safari tent stay near Bhopal?",
@@ -42,7 +42,7 @@ const mudHouseFaqs = [
   {
     question: "What is the price of Mud House stay in Ratapani?",
     answer:
-      "Mud House 1 starts at ₹9,000 per night, and Mud House 2 (with bathtub) starts at ₹10,000 per night.",
+      "Mud House 1 (Standard) starts at ₹9,000 per night and Mud House 2 (Premium, with bathtub) at ₹10,000 per night on double occupancy. Extra person charges apply — ₹1,500 per night for children (5–12 years) and ₹2,000 per night for adults. Rates are exclusive of GST, which is charged separately at 18% as applicable.",
   },
   {
     question: "Are these the best mud houses near Bhopal?",
@@ -81,7 +81,7 @@ const poolSideVillaFaqs = [
   {
     question: "What is the price of a Pool Side Villa near Bhopal?",
     answer:
-      "The Pool Side Villa at Madhuban Eco Retreat is priced at ₹12,000 per night, with extra bedding available at ₹1,500 per person.",
+      "The Pool Side Villa at Madhuban Eco Retreat is priced at ₹12,000 per night on double occupancy. Extra person charges apply — ₹1,500 per night for children (5–12 years) and ₹2,000 per night for adults. Rates are exclusive of GST, which is charged separately at 18% as applicable.",
   },
   {
     question: "Is this the best pool villa stay near Bhopal?",
@@ -113,7 +113,7 @@ const glampingTentFaqs = [
   {
     question: "What is the price of Glamping Tent stay in Ratapani?",
     answer:
-      "The Glamping Tent at Madhuban Eco Retreat is priced at ₹7,500 per night, with extra bedding available for ₹1,500 per person.",
+      "The Glamping Tent at Madhuban Eco Retreat is priced at ₹7,500 per night on double occupancy. Extra person charges apply — ₹1,500 per night for children (5–12 years) and ₹2,000 per night for adults. Rates are exclusive of GST, which is charged separately at 5% as applicable.",
   },
   {
     question: "Are Glamping Tents good for couples?",
@@ -145,7 +145,7 @@ const nightCampingFaqs = [
   {
     question: "What is the price for night camping in Ratapani?",
     answer:
-      "Night camping starts at ₹2,500 per person, including food, a nature walk, an obstacle course, and infinity pool access.",
+      "Night camping starts at ₹2,500 per person, including food, a nature walk, an obstacle course, and infinity pool access. Rates are exclusive of GST, which is charged separately at 5% as applicable.",
   },
   {
     question: "Is this the best camping stay near Bhopal?",
@@ -381,7 +381,7 @@ const safariTentFaqSchema = {
       name: "What is the price of the safari tent house in Ratapani?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "The safari tent house stay at Madhuban Eco Retreat starts at ₹12,000 per night, with optional extra bedding available for ₹1,500 per person.",
+        text: "The safari tent house stay at Madhuban Eco Retreat starts at ₹12,000 per night on double occupancy. Extra person charges apply — ₹1,500 per night for children (5–12 years) and ₹2,000 per night for adults. Rates are exclusive of GST, which is charged separately at 18% as applicable.",
       },
     },
     {
@@ -530,7 +530,7 @@ const mudHouseFaqsSchema = {
       name: "What is the price of Mud House stay in Ratapani?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Mud House 1 starts at ₹9,000 per night, and Mud House 2 with bathtub starts at ₹10,000 per night.",
+        text: "Mud House 1 (Standard) starts at ₹9,000 per night and Mud House 2 (Premium, with bathtub) at ₹10,000 per night on double occupancy. Extra person charges apply — ₹1,500 per night for children (5–12 years) and ₹2,000 per night for adults. Rates are exclusive of GST, which is charged separately at 18% as applicable.",
       },
     },
     {
@@ -641,7 +641,7 @@ const poolSideVillaFaqsMetadata = {
       name: "What is the price of the Pool Side Villa near Bhopal?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "The Pool Side Villa at Madhuban Eco Retreat is priced at ₹12,000 per night, with extra bedding available for ₹1,500 per person.",
+        text: "The Pool Side Villa at Madhuban Eco Retreat is priced at ₹12,000 per night on double occupancy. Extra person charges apply — ₹1,500 per night for children (5–12 years) and ₹2,000 per night for adults. Rates are exclusive of GST, which is charged separately at 18% as applicable.",
       },
     },
     {
@@ -755,7 +755,7 @@ const glampingTentFaqsSchema = {
       name: "What is the price of Glamping Tent stay in Ratapani?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "The Glamping Tent stay is priced at ₹7,500 per night, with optional extra bedding at ₹1,500 per person.",
+        text: "The Glamping Tent stay is priced at ₹7,500 per night on double occupancy. Extra person charges apply — ₹1,500 per night for children (5–12 years) and ₹2,000 per night for adults. Rates are exclusive of GST, which is charged separately at 5% as applicable.",
       },
     },
     {
@@ -877,7 +877,7 @@ const nightCampingFaqsSchema = {
       name: "What is the price for night camping in Ratapani?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Night camping at Madhuban Eco Retreat costs ₹2,500 per person, including breakfast, dinner, pool access, nature walk and adventure activities.",
+        text: "Night camping at Madhuban Eco Retreat costs ₹2,500 per person, including breakfast, dinner, pool access, nature walk and adventure activities. Rates are exclusive of GST, which is charged separately at 5% as applicable.",
       },
     },
     {
@@ -966,7 +966,7 @@ export const accommodationsData = [
     whyChooseTitle: "Why Choose Our Safari Tent House Near Bhopal?",
     capacity: "Sleeps 2",
     pricePerNightSefari: "Rs. 12,000 per night",
-    extraBedding: "₹ 1500 per extra person",
+    extraBedding: "Infant (up to 5 yrs) free · Child 5–12 yrs ₹1,500/night · Adult ₹2,000/night (GST extra)",
     rating: 4.5,
     faqs: safariTentFaqs,
     faqsTitle: "FAQs – Safari Tent House",
@@ -1028,7 +1028,7 @@ export const accommodationsData = [
     capacity: "Sleeps 2",
     pricePerNightMud: "Mud House 1 ( Without Bathtub ): ₹ 9,000 per night",
     pricePerNightMud1: "Mud House 2 ( With Bathtub ): ₹ 10,000 per night",
-    extraBedding: "₹ 1500 per extra person",
+    extraBedding: "Infant (up to 5 yrs) free · Child 5–12 yrs ₹1,500/night · Adult ₹2,000/night (GST extra)",
     rating: 4.5,
     faqs: mudHouseFaqs,
     faqsTitle: "FAQs – Mud House",
@@ -1085,7 +1085,7 @@ export const accommodationsData = [
     ],
     capacity: "Sleeps 4",
     pricePerNightPool: "Pool Side Villa ( 2 Rooms ) : Rs. 12,000 per night",
-    extraBedding: "₹ 1500 per extra person",
+    extraBedding: "Infant (up to 5 yrs) free · Child 5–12 yrs ₹1,500/night · Adult ₹2,000/night (GST extra)",
     rating: 4.5,
     bookingOptions: [
       {
@@ -1144,7 +1144,7 @@ export const accommodationsData = [
     ],
     capacity: "Sleeps 2",
     pricePerNightGlamping: "Rs. 7,500",
-    extraBedding: "Rs. 1,500 per person",
+    extraBedding: "Infant (up to 5 yrs) free · Child 5–12 yrs ₹1,500/night · Adult ₹2,000/night (GST extra)",
     rating: 4.6,
 
     bookingOptions: [
@@ -1183,7 +1183,7 @@ export const accommodationsData = [
       "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/camping-tent/camping-tent-image-1-madhuban-eco-retreat-bhopal.webp",
     ],
     pricePerNight111: "One Night Comping: 2500/person",
-    pricePerNight22: "Day Package: 1100/person",
+    pricePerNight22: "Day Package: 1500/person",
     capacity: "Up to 2 per tent",
     rating: 4.5,
 
