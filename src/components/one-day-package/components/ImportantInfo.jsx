@@ -56,7 +56,10 @@ export const ImportantInfo = () => {
                     Price
                   </p>
                   <p className="text-sm md:text-xl font-bold text-white">
-                    ₹1300 per person
+                    ₹1500 per person
+                  </p>
+                  <p className="text-[10px] text-gray-300 mt-1">
+                    GST extra as applicable
                   </p>
                 </div>
               </div>

@@ -188,6 +188,13 @@ const AccommodationDetail = () => {
                     })}
                   </div>
 
+                  <p className="text-xs text-[rgb(110,97,70)] mt-3 mb-1">
+                    Per night on double occupancy. GST extra as applicable — 5%
+                    GST on ₹7,500 rooms, 18% GST on rooms above ₹7,500. Stay 2
+                    nights or more for a flat 20% off room rent (excludes peak
+                    season, Christmas/New Year &amp; long weekends).
+                  </p>
+
                   {accommodation.inclusions && (
                     <>
                       <div className="mb-4">

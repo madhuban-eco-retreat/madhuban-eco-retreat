@@ -1,6 +1,7 @@
 export const dynamic = "force-static";
 
 import NewBooking from "@/components/booking/NewBooking";
+import TariffSection from "@/components/tariff/TariffSection";
 import SEO from "@/components/seo/Seo";
 import { generateMataDataForSEO } from "@/utills/helperFunctions";
 
@@ -96,6 +97,7 @@ const BookingModal = () => {
     <>
       <SEO schemas={[schema]} />
       <NewBooking />
+      <TariffSection />
     </>
   );
 };

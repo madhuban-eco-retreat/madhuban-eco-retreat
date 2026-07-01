@@ -83,7 +83,7 @@ export const Packages = () => {
               ></motion.div>
             ))}
             <div className="absolute z-2 left-4 top-4 md:top-8 md:left-8 bg-(--primary-gray2) text-white px-4 py-2 rounded-xl font-bold flex items-center gap-1.5 shadow-xl">
-              <span className="text-sm md:text-xl">₹1300</span>
+              <span className="text-sm md:text-xl">₹1500</span>
               <span className="text-xs uppercase opacity-80">/ PERSON</span>
             </div>
             <div className="absolute z-2 bottom-0 w-full  ">
