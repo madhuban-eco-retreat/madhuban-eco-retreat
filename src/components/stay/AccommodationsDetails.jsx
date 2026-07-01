@@ -20,6 +20,13 @@ const getAccommodation = (slug) => {
   return accommodationsData.find((acc) => acc.slug === slug);
 };
 
+// Derive per-room GST slab and peak-season rate from the base price string.
+// 5% GST on rooms priced at ₹7,500 and below, 18% above. Peak season is +20%
+// and only applies to per-night room rates.
+const parsePrice = (p) => Number(String(p).replace(/[^\d]/g, ""));
+const formatINR = (n) => n.toLocaleString("en-IN");
+const getGstRate = (priceNum) => (priceNum <= 7500 ? 5 : 18);
+
 const AccommodationDetail = () => {
   const params = useParams();
   const { slug } = params;
@@ -166,6 +173,12 @@ const AccommodationDetail = () => {
                     </h3>
 
                     {accommodation.bookingOptions.map((bookOpt, i) => {
+                      const priceNum = parsePrice(bookOpt.price);
+                      const gstRate = getGstRate(priceNum);
+                      const isPerNight = /night/i.test(bookOpt.rateUnit || "");
+                      const peak = isPerNight
+                        ? Math.round(priceNum * 1.2)
+                        : null;
                       return (
                         <div
                           key={i}
@@ -177,23 +190,69 @@ const AccommodationDetail = () => {
                               {bookOpt.optionDetail}
                             </span>
                           </p>
-                          <div className="bg-[rgb(110,97,70)] text-white rounded-full  px-8 md:px-16 py-3 flex flex-col items-center">
-                            <span className="text-sm font-bold">
-                              Rs. {bookOpt.price}
-                            </span>
-                            <span className="text-xs">{bookOpt.rateUnit}</span>
+                          <div className="flex flex-col items-end gap-1">
+                            <div className="bg-[rgb(110,97,70)] text-white rounded-full  px-8 md:px-16 py-3 flex flex-col items-center">
+                              <span className="text-sm font-bold">
+                                Rs. {bookOpt.price}
+                              </span>
+                              <span className="text-xs">{bookOpt.rateUnit}</span>
+                            </div>
+                            <p className="text-xs font-medium text-[rgb(110,97,70)] text-right">
+                              + {gstRate}% GST
+                              {peak
+                                ? ` | Peak Season: Rs. ${formatINR(peak)}`
+                                : ""}
+                            </p>
                           </div>
                         </div>
                       );
                     })}
                   </div>
 
-                  <p className="text-xs text-[rgb(110,97,70)] mt-3 mb-1">
-                    Per night on double occupancy. GST extra as applicable — 5%
-                    GST on ₹7,500 rooms, 18% GST on rooms above ₹7,500. Stay 2
-                    nights or more for a flat 20% off room rent (excludes peak
-                    season, Christmas/New Year &amp; long weekends).
-                  </p>
+                  {accommodation.extraBedding && (
+                    <div className="mt-4 space-y-4">
+                      <div className="rounded-lg border border-[rgb(110,97,70)]/20 bg-[rgb(110,97,70)]/5 p-4 space-y-2">
+                        <p className="flex items-start gap-2 text-sm text-[rgb(110,97,70)]">
+                          <span className="font-semibold">✓</span>
+                          Double occupancy basis
+                        </p>
+                        <p className="flex items-start gap-2 text-sm text-[rgb(110,97,70)]">
+                          <span className="font-semibold">✓</span>
+                          <span>
+                            <strong>2+ nights stay — flat 20% off on room rent</strong>
+                            <br />
+                            <span className="text-xs">
+                              (excludes peak season, Christmas/New Year &amp; long
+                              weekends)
+                            </span>
+                          </span>
+                        </p>
+                      </div>
+
+                      <div>
+                        <p className="text-sm font-semibold text-[rgb(110,97,70)] mb-2">
+                          Extra Guest Charges:
+                        </p>
+                        <ul className="text-sm text-[rgb(110,97,70)]">
+                          <li className="flex justify-between border-b border-[rgb(110,97,70)]/10 py-1">
+                            <span>Infant (up to 5 yrs)</span>
+                            <span className="font-medium">Free</span>
+                          </li>
+                          <li className="flex justify-between border-b border-[rgb(110,97,70)]/10 py-1">
+                            <span>Child (5–12 yrs)</span>
+                            <span className="font-medium">₹1,500 / night</span>
+                          </li>
+                          <li className="flex justify-between border-b border-[rgb(110,97,70)]/10 py-1">
+                            <span>Adult (above 12 yrs)</span>
+                            <span className="font-medium">₹2,000 / night</span>
+                          </li>
+                        </ul>
+                        <p className="text-xs text-[rgb(110,97,70)]/80 mt-1">
+                          GST extra on above charges
+                        </p>
+                      </div>
+                    </div>
+                  )}
 
                   {accommodation.inclusions && (
                     <>
@@ -210,19 +269,6 @@ const AccommodationDetail = () => {
                         })}
                       </div>
                     </>
-                  )}
-
-                  {/* Show Camping Tent Packages Only if slug === 'camping-tent' */}
-
-                  {accommodation.extraBedding && (
-                    <div className="flex justify-between items-center">
-                      <p className=" text-[rgb(110,97,70)] mb-2">
-                        <strong className="  font-semibold">
-                          Extra Bedding -{" "}
-                        </strong>{" "}
-                        {accommodation.extraBedding}
-                      </p>
-                    </div>
                   )}
 
                   {accommodation.capacity && (
