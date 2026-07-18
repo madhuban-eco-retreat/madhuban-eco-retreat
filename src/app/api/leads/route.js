@@ -62,6 +62,8 @@ export async function POST(request) {
       utmTerm: body.utmTerm || "",
       utmContent: body.utmContent || "",
       gclid: body.gclid || "",
+      wbraid: body.wbraid || "",
+      gbraid: body.gbraid || "",
       landingPage: body.landingPage || "",
       userAgent: body.userAgent || "",
       ipAddress,

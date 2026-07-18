@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { phone } from "@/utills/constants";
+import { captureAttribution, readAttribution } from "@/utills/tracking";
 
 const VARIANTS = {
   weekend: {
@@ -225,17 +226,10 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
     setCheckin(tomorrowISO());
   }, []);
 
-  const readTracking = useCallback(() => {
-    if (typeof window === "undefined") return {};
-    const params = new URLSearchParams(window.location.search);
-    return {
-      utmSource: params.get("utm_source") || "",
-      utmMedium: params.get("utm_medium") || "",
-      utmCampaign: params.get("utm_campaign") || "",
-      utmTerm: params.get("utm_term") || "",
-      utmContent: params.get("utm_content") || "",
-      gclid: params.get("gclid") || "",
-    };
+  // Stash the attribution the visitor arrived with (gclid/wbraid/gbraid/utm_*)
+  // so it survives navigation within the session and is available at submit.
+  useEffect(() => {
+    captureAttribution();
   }, []);
 
   useEffect(() => {
@@ -312,7 +306,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
       checkin,
       guests: guestLabel,
       estimate: String(estimate),
-      ...readTracking(),
+      ...readAttribution(),
       landingPage:
         typeof window !== "undefined" ? window.location.pathname : "",
       userAgent:
