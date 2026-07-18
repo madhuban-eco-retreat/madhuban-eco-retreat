@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { phone } from "@/utills/constants";
 import { captureAttribution, readAttribution } from "@/utills/tracking";
+import { normalisePhoneE164 } from "@/utills/helperFunctions";
 
 const VARIANTS = {
   weekend: {
@@ -325,6 +326,14 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
     }
 
     try {
+      // Enhanced Conversions: hand gtag the lead's phone (unhashed — gtag applies
+      // SHA-256 client-side before sending) so a later booking can be matched back
+      // to the original Google Ads click. Skip silently if it doesn't normalise.
+      const e164 = normalisePhoneE164(trimmedPhone);
+      if (e164 && typeof window.gtag === "function") {
+        window.gtag("set", "user_data", { phone_number: e164 });
+      }
+
       const conversionLabel = process.env.NEXT_PUBLIC_GADS_LABEL_LEAD;
       if (
         typeof window !== "undefined" &&
@@ -333,7 +342,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
       ) {
         window.gtag("event", "conversion", {
           send_to: conversionLabel,
-          value: 50,
+          value: estimate,
           currency: "INR",
         });
       }
