@@ -46,5 +46,9 @@ export async function appendLead(lead) {
     UserAgent: lead.userAgent,
     IpAddress: lead.ipAddress,
     Status: lead.status || "new",
+    // Appended after the existing columns — do not reorder the ones above or
+    // historical rows in the Sheet will misalign.
+    Wbraid: lead.wbraid,
+    Gbraid: lead.gbraid,
   });
 }
