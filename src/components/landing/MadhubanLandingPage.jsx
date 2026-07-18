@@ -331,14 +331,14 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
     }
 
     try {
-      const conversionId = process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_ID;
+      const conversionLabel = process.env.NEXT_PUBLIC_GADS_LABEL_LEAD;
       if (
         typeof window !== "undefined" &&
         typeof window.gtag === "function" &&
-        conversionId
+        conversionLabel
       ) {
         window.gtag("event", "conversion", {
-          send_to: conversionId,
+          send_to: conversionLabel,
           value: 50,
           currency: "INR",
         });
