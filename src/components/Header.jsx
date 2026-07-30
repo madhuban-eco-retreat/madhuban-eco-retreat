@@ -28,7 +28,7 @@ const navigation = [
   },
   {
     name: "Stay",
-    path: "/stay",
+    path: "/stay-in-ratapani-tiger-reserve",
   },
   {
     name: "Experiences",

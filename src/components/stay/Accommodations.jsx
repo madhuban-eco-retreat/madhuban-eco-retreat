@@ -302,7 +302,7 @@ const Accommodations = () => {
                 </p>
 
                 <Link
-                  href={`/stay/${accommodation.slug}`}
+                  href={`/stay-in-ratapani-tiger-reserve/${accommodation.slug}`}
                   className="mt-auto relative inline-block w-full text-center bg-[rgb(110,97,70)] text-white font-medium py-3 px-6 rounded-md overflow-hidden"
                 >
                   <motion.span

@@ -31,6 +31,16 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: "/stay",
+        destination: "/stay-in-ratapani-tiger-reserve",
+        permanent: true,
+      },
+      {
+        source: "/stay/:slug",
+        destination: "/stay-in-ratapani-tiger-reserve/:slug",
+        permanent: true,
+      },
+      {
         source: "/about/:path*",
         destination: "/about-us",
         permanent: true,
@@ -53,7 +63,7 @@ const nextConfig = {
         permanent: true,
       },
 
-      { source: "/rooms", destination: "/stay", permanent: true },
+      { source: "/rooms", destination: "/stay-in-ratapani-tiger-reserve", permanent: true },
       { source: "/tag/charter", destination: "/experiences", permanent: true },
       { source: "/pricing-tables", destination: "/booking", permanent: true },
       { source: "/home-5", destination: "/", permanent: true },
@@ -72,24 +82,24 @@ const nextConfig = {
 
       {
         source: "/portfolio/luxury-suite",
-        destination: "/stay",
+        destination: "/stay-in-ratapani-tiger-reserve",
         permanent: true,
       },
       {
         source: "/category/yacht-charter",
-        destination: "/stay",
+        destination: "/stay-in-ratapani-tiger-reserve",
         permanent: true,
       },
       {
         source: "/rooms/swiss-cottages",
-        destination: "/stay",
+        destination: "/stay-in-ratapani-tiger-reserve",
         permanent: true,
       },
 
       { source: "/tag/madhuban-main-menu", destination: "/", permanent: true },
       {
         source: "/madhuban-bamboo-cafe-8",
-        destination: "/stay",
+        destination: "/stay-in-ratapani-tiger-reserve",
         permanent: true,
       },
 
@@ -108,7 +118,7 @@ const nextConfig = {
       { source: "/help/contact", destination: "/contact-us", permanent: true },
       { source: "/hotel-search", destination: "/contact-us", permanent: true },
 
-      { source: "/tabs-spa", destination: "/stay", permanent: true },
+      { source: "/tabs-spa", destination: "/stay-in-ratapani-tiger-reserve", permanent: true },
       { source: "/siver-logo", destination: "/gallery", permanent: true },
       {
         source: "/hotel/:path*",
@@ -117,18 +127,18 @@ const nextConfig = {
       },
       {
         source: "/rooms/camping-tents",
-        destination: "/stay/camping-tent",
+        destination: "/stay-in-ratapani-tiger-reserve/camping-tent",
         permanent: true,
       },
       {
         source: "/madhuban-camp-site",
-        destination: "/stay/camping-tent",
+        destination: "/stay-in-ratapani-tiger-reserve/camping-tent",
         permanent: true,
       },
 
       {
         source: "/rooms/mud-house",
-        destination: "/stay/mud-villa",
+        destination: "/stay-in-ratapani-tiger-reserve/mud-villa",
         permanent: true,
       },
 
@@ -188,7 +198,7 @@ const nextConfig = {
 
       {
         source: "/maldives-resort-and-spa",
-        destination: "/stay",
+        destination: "/stay-in-ratapani-tiger-reserve",
         permanent: true,
       },
 
@@ -211,17 +221,17 @@ const nextConfig = {
       },
       {
         source: "/madhuban-bamboo-cafe-8",
-        destination: "/stay",
+        destination: "/stay-in-ratapani-tiger-reserve",
         permanent: true,
       },
       {
         source: "/pexels-pok-rie-144681",
-        destination: "/stay",
+        destination: "/stay-in-ratapani-tiger-reserve",
         permanent: true,
       },
       {
         source: "/madhuban-camp-site-4",
-        destination: "/stay",
+        destination: "/stay-in-ratapani-tiger-reserve",
         permanent: true,
       },
       {

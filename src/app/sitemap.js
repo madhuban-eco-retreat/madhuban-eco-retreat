@@ -5,7 +5,7 @@ const sitemapUrls = [
   { url: "/", priority: 1.0 },
 
   { url: "/about-us", priority: 0.8 },
-  { url: "/stay", priority: 0.8 },
+  { url: "/stay-in-ratapani-tiger-reserve", priority: 0.8 },
   { url: "/experiences", priority: 0.8 },
   { url: "/dining", priority: 0.8 },
   { url: "/nearby-attractions", priority: 0.8 },
@@ -31,11 +31,11 @@ const sitemapUrls = [
   { url: "/terms-and-condition", priority: 0.8 },
   { url: "/cookies-and-consent-policy", priority: 0.8 },
   { url: "/disclaimer", priority: 0.8 },
-  { url: "/stay/safari-tent", priority: 0.64 },
-  { url: "/stay/mud-villa", priority: 0.64 },
-  { url: "/stay/pool-side-room", priority: 0.64 },
-  { url: "/stay/glamping-tents", priority: 0.64 },
-  { url: "/stay/camping-tent", priority: 0.64 },
+  { url: "/stay-in-ratapani-tiger-reserve/safari-tent", priority: 0.64 },
+  { url: "/stay-in-ratapani-tiger-reserve/mud-villa", priority: 0.64 },
+  { url: "/stay-in-ratapani-tiger-reserve/pool-side-room", priority: 0.64 },
+  { url: "/stay-in-ratapani-tiger-reserve/glamping-tents", priority: 0.64 },
+  { url: "/stay-in-ratapani-tiger-reserve/camping-tent", priority: 0.64 },
 ];
 
 export default async function sitemap() {

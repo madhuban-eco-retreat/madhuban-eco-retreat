@@ -496,7 +496,7 @@ ${formData.room_interested}`;
           )}
         </div>
         <Link
-          href="/stay"
+          href="/stay-in-ratapani-tiger-reserve"
           className="flex justify-center w-full  mt-4 max-w-2xl p-6"
         >
           <button

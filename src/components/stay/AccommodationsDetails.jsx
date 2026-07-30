@@ -47,7 +47,7 @@ const AccommodationDetail = () => {
           We couldn't find the accommodation you were looking for.
         </p>
         <Link
-          href="/stay"
+          href="/stay-in-ratapani-tiger-reserve"
           className="mt-[30px] font-primary inline-flex items-center bg-green-700 text-gray-500 font-medium py-3 px-6 rounded-md hover:bg-green-600 transition-colors duration-300"
         >
           <ChevronLeft size={20} className="mr-2" aria-label="Left" />
@@ -63,7 +63,7 @@ const AccommodationDetail = () => {
         <div className="container mx-auto max-w-7xl">
           <div className="mb-8">
             <Link
-              href="/stay"
+              href="/stay-in-ratapani-tiger-reserve"
               className="inline-flex items-center font-semibold text-[rgb(110,97,70)] mt-8 transition-colors duration-300 group"
             >
               <ChevronLeft

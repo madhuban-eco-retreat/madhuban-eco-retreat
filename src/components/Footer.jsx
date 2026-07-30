@@ -180,7 +180,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/stay"
+                  href="/stay-in-ratapani-tiger-reserve"
                   className="font-primary text-[#D1C8C1] footer-text flex items-center tracking-wider "
                 >
                   <ChevronRight className="w-4 h-4 mr-1" /> Accommodations
