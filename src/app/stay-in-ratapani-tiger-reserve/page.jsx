@@ -6,7 +6,7 @@ const staySchema = {
   "@context": "https://schema.org",
   "@type": "Resort",
   name: "Madhuban Eco Retreat",
-  url: "https://www.madhubanecoretreat.com/stay",
+  url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve",
   description:
     "Eco-friendly resort stay near Bhopal offering safari tents, mud houses, poolside villas, glamping tents, and jungle camping near Ratapani.",
   image: "https://www.madhubanecoretreat.com/assets/images/madhuban-stay.jpg",
@@ -66,35 +66,35 @@ const staySchema = {
         name: "Safari Tent",
         description:
           "Eco-friendly safari tent stay near Bhopal with forest views, cane furniture, vanity, open-sky shower, and peaceful wilderness setting.",
-        url: "https://www.madhubanecoretreat.com/stay/safari-tent",
+        url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/safari-tent",
       },
       {
         "@type": "Offer",
         name: "Mud House",
         description:
           "Traditional Gond-inspired mud house stay in Ratapani with air-conditioned rooms, large verandas, and 360-degree rooftop views.",
-        url: "https://www.madhubanecoretreat.com/stay/mud-house",
+        url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/mud-house",
       },
       {
         "@type": "Offer",
         name: "Pool Side Villa",
         description:
           "Private poolside villa near Bhopal offering serene eco-pool views, sustainable interiors, and forest-side ambiance.",
-        url: "https://www.madhubanecoretreat.com/stay/poolside-villa",
+        url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/poolside-villa",
       },
       {
         "@type": "Offer",
         name: "Glamping Tent",
         description:
           "Boutique glamping stay near Bhopal with chic interiors, ensuite bathroom, private lawn area, and curated eco-amenities.",
-        url: "https://www.madhubanecoretreat.com/stay/glamping-tent",
+        url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/glamping-tent",
       },
       {
         "@type": "Offer",
         name: "Camping Tent",
         description:
           "Eco-conscious camping experience in Ratapani with forest views, comfortable bedding, and a nature-immersive environment.",
-        url: "https://www.madhubanecoretreat.com/stay/camping",
+        url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/camping",
       },
     ],
   },
@@ -180,10 +180,10 @@ export default StayPage;
 
 export const metadata = {
   title:
-    " Eco Stays at Ratapani | Safari Tents, Villas & More",
+    "Jungle Stays Near Ratapani Tiger Reserve | Safari Tents, Villas & Mud Houses",
 
   description:
-    "Explore eco-luxury stays at Madhuban Ratapani — safari tents, mud villas, glamping tents & poolside villas. Book your perfect nature retreat near Bhopal today!",
+    "Choose from safari tents, glamping tents, mud houses & poolside villas at Madhuban Eco Retreat near Ratapani Tiger Reserve, Bhopal. Prices from ₹7,500/night. Book your nature stay today!",
 
   keywords: [
     " safari tent Ratapani",
@@ -195,7 +195,7 @@ export const metadata = {
   ],
 
   alternates: {
-    canonical: "https://www.madhubanecoretreat.com/stay",
+    canonical: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve",
   },
 
   robots: {

@@ -43,7 +43,7 @@ export default function NotFound() {
           </Link>
 
           <Link
-            href="/stay"
+            href="/stay-in-ratapani-tiger-reserve"
             className="block rounded-xl border border-[#6e6146ff]  p-4  font-medium hover:bg-[#d1c8c1] transition"
           >
             🏕️ Stay Options – Rooms, Tents & Mud Houses

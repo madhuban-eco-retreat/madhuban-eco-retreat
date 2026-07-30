@@ -158,7 +158,7 @@ const Accommodations = () => {
           variants={fadeInUp}
         >
           <Link
-            href="/stay"
+            href="/stay-in-ratapani-tiger-reserve"
             className="font-arial-narrow text-primary-gray2 px-8 py-3 bg-[#D1C8C1] hover:font-bold rounded-md font-medium p-text inline-block transition-all"
           >
             Explore All Accommodations
