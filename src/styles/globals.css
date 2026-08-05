@@ -2,9 +2,9 @@
 
 @import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* The @tailwind base/components/utilities trio was removed: those are v3
+   directives and are inert under v4, which this project uses via
+   @import "tailwindcss" and @tailwindcss/postcss. */
 
 :root {
   /* Custom color variables */
@@ -347,5 +347,126 @@ body {
     display: block !important;
     margin: auto;
   }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   BOOKING ENGINE DESIGN TOKENS
+   Ported from madhuban-web. Everything below is additive: it introduces new
+   utility names (bg-cream, text-earth-brown, border-border, ...) that the
+   booking flow and admin panel reference, and defines no name the marketing
+   site already uses. Two things from the source were deliberately left out:
+
+     - its @layer base rules (`* { @apply border-border }`, `body { @apply
+       bg-background }`), which would restyle every existing marketing page;
+     - its --radius-* remapping, which would override Tailwind's defaults and
+       change the footer, whose CSS reads var(--radius-md) directly.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Brand direct utilities ─────────────────────────────────────────────── */
+@theme {
+  --color-earth-brown: #6E6146;
+  --color-warm-beige: #D1C8C1;
+  --color-cream: #FAF7F2;
+  --color-charcoal: #2A2A2A;
+  --color-ivory: #FEFCF8;
+  --color-gold-accent: #C9A84C;
+  --color-moss-green: #4A6741;
+  --color-blush-dusk: #D4A76A;
+  --color-forest-green: #2D3B2D;
+  --color-success: #4A6741;
+  --color-warning: #C9A84C;
+  --color-error: #B84A4A;
+
+  /* The source mapped these to its Lato next/font variable. Lato is already
+     loaded here via the Google Fonts @import at the top of this file. */
+  --font-display: 'Lato', sans-serif;
+  --font-body: 'Lato', sans-serif;
+}
+
+/* ── Admin design system tokens ─────────────────────────────────────────── */
+@theme {
+  /* Sidebar — dark forest-green shell */
+  --color-admin-sidebar-bg: #1F2D1F;
+  --color-admin-sidebar-fg: #E8E4DC;
+  --color-admin-sidebar-fg-muted: #A8A099;
+  --color-admin-sidebar-active-bg: #2D3B2D;
+  --color-admin-sidebar-active-fg: #FAF7F2;
+
+  /* Canvas + cards */
+  --color-admin-canvas-bg: #FAF7F2;
+  --color-admin-card-bg: #FFFFFF;
+  --color-admin-card-border: #E8E1D8;
+
+  /* Status badge palette */
+  --color-admin-status-confirmed-bg: #DCEFDC;
+  --color-admin-status-confirmed-fg: #2D5A2D;
+  --color-admin-status-pending-bg: #FFF3D6;
+  --color-admin-status-pending-fg: #8B6914;
+  --color-admin-status-cancelled-bg: #F5DCDC;
+  --color-admin-status-cancelled-fg: #8B2D2D;
+  --color-admin-status-info-bg: #DCE6F5;
+  --color-admin-status-info-fg: #2D4A8B;
+  --color-admin-status-neutral-bg: #ECE8E0;
+  --color-admin-status-neutral-fg: #5A5247;
+}
+
+/* ── Semantic tokens mapped to the brand palette ────────────────────────── */
+:root {
+  --background: #FAF7F2;
+  --foreground: #2A2A2A;
+  --card: #FEFCF8;
+  --card-foreground: #2A2A2A;
+  --popover: #FEFCF8;
+  --popover-foreground: #2A2A2A;
+  --primary: #6E6146;
+  --primary-foreground: #FEFCF8;
+  --secondary: #D1C8C1;
+  --secondary-foreground: #2A2A2A;
+  --muted: #FAF7F2;
+  --muted-foreground: #8B8578;
+  --accent: #D1C8C1;
+  --accent-foreground: #2A2A2A;
+  --destructive: #B84A4A;
+  --border: #EAE5DC;
+  --input: #EAE5DC;
+  --ring: #6E6146;
+
+  --admin-sidebar-border: rgba(255, 255, 255, 0.08);
+  --admin-card-shadow: 0 1px 3px rgba(42, 42, 42, 0.04), 0 1px 2px rgba(42, 42, 42, 0.06);
+}
+
+/* ── Semantic names → Tailwind colour utilities ─────────────────────────── */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-sidebar: var(--background);
+  --color-sidebar-foreground: var(--foreground);
+  --color-sidebar-border: var(--border);
+}
+
+/* ── Engine helpers ─────────────────────────────────────────────────────── */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 
