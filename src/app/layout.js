@@ -1,11 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/globals.css";
 import "../styles/variables.css";
-import MainNavigation from "@/components/Header";
-import Footer from "@/components/Footer";
-import "./not-found";
-import ContactModal from "@/components/modals/ContactModal";
-import CookiesPopup from "@/common-components/cookies/cookies";
 import Script from "next/script";
 
 const geistSans = Geist({
@@ -26,6 +21,11 @@ export const metadata = {
   },
 };
 
+// Chrome-free on purpose: this layout owns only <html>/<body>, fonts, global CSS
+// and site-wide analytics. The marketing header/footer/modals live in
+// (marketing)/layout.js so /book and /admin do not inherit them. Analytics stays
+// here deliberately — the booking funnel is exactly where conversion tracking
+// has to keep firing.
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -71,11 +71,7 @@ export default function RootLayout({ children }) {
           }}
         />
 
-        <MainNavigation />
         {children}
-        <Footer />
-        <ContactModal />
-        <CookiesPopup />
       </body>
     </html>
   );
