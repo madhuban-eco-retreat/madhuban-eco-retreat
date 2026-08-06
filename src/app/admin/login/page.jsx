@@ -1,11 +1,20 @@
 import { createClient } from "@/lib/supabase/server";
+import { missingSupabaseEnv } from "@/lib/supabase/env";
 import { redirect } from "next/navigation";
 import { LoginForm } from "./login-form";
 export default async function LoginPage() {
-    const supabase = await createClient();
-    const { data: { user }, } = await supabase.auth.getUser();
-    if (user)
-        redirect("/admin");
+    // Check configuration before touching Supabase. Letting createClient throw
+    // here would surface as an opaque 500 ("server error") because Next strips
+    // Server Component error messages in production — an admin locked out of
+    // the panel would have nothing to act on. Rendering the shortfall instead
+    // keeps the diagnosis on the page.
+    const missing = missingSupabaseEnv();
+    if (missing.length === 0) {
+        const supabase = await createClient();
+        const { data: { user }, } = await supabase.auth.getUser();
+        if (user)
+            redirect("/admin");
+    }
     return (<div className="flex min-h-screen">
       {/* Left — forest hero panel */}
       <div className="hidden lg:flex lg:w-1/2 relative flex-col justify-between p-10">
@@ -71,7 +80,31 @@ export default async function LoginPage() {
             </p>
           </div>
 
-          <LoginForm />
+          {missing.length === 0 ? (<LoginForm />) : (<div className="bg-white rounded-2xl border border-[var(--color-error)]/30 p-8 shadow-sm">
+              <h3 className="font-display text-2xl text-[var(--color-charcoal)] mb-3">
+                Sign-in unavailable
+              </h3>
+              <p className="font-body text-sm text-[var(--color-charcoal)]/70 mb-4">
+                This deployment was built without its Supabase credentials, so
+                the sign-in service could not be reached.
+              </p>
+              <p className="font-body text-xs text-[var(--color-charcoal)]/60 mb-2">
+                Missing at build time:
+              </p>
+              <ul className="mb-4 space-y-1">
+                {missing.map((name) => (<li key={name} className="font-mono text-xs text-[var(--color-error)]">
+                    {name}
+                  </li>))}
+              </ul>
+              <p className="font-body text-xs text-[var(--color-charcoal)]/60">
+                These values are compiled in during the build. Set them in the
+                hosting project&rsquo;s environment settings, then{" "}
+                <strong className="text-[var(--color-charcoal)]">
+                  redeploy without build cache
+                </strong>{" "}
+                — updating them alone will not repair this deployment.
+              </p>
+            </div>)}
 
           <p className="mt-8 text-center font-body text-xs text-[var(--color-muted)]">
             Having trouble logging in? Contact System Administrator
