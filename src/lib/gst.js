@@ -15,14 +15,31 @@ export function gstRate(nightlyRate) {
 export function computeRoomGstRate(basePricePerNight) {
     return gstRate(basePricePerNight);
 }
-export function priceBreakdown(totalInclusive, gstRatePct) {
-    const base = +(totalInclusive / (1 + gstRatePct / 100)).toFixed(2);
-    const gst = +(totalInclusive - base).toFixed(2);
-    return { base, gst, total: totalInclusive };
-}
 /**
- * Back-calculates pre-GST base and GST amount from a GST-inclusive total.
- * Use this whenever room/addon prices are listed as inclusive (which is always).
+ * Adds GST on top of a pre-tax amount.
+ *
+ * Stored room tariffs are BASE prices that exclude GST — ₹12,000 for a Safari
+ * Tent means ₹12,000 + 18% = ₹14,160 payable. This replaced an inclusive model
+ * that divided the tax back out of the tariff, which under-collected: the same
+ * ₹12,000 yielded only ₹1,830 of GST against the ₹2,160 actually due.
+ */
+export function addGst(taxableAmount, ratePercent) {
+    const base = Math.round(taxableAmount * 100) / 100;
+    const gst = Math.round(base * ratePercent / 100 * 100) / 100;
+    return {
+        base,
+        gst,
+        total: Math.round((base + gst) * 100) / 100,
+        ratePercent,
+    };
+}
+
+/**
+ * Splits a GST-INCLUSIVE total back into base and tax.
+ *
+ * Retained only for reading bookings and invoices written before the switch to
+ * exclusive pricing — their stored totals already contain the tax. Do not use
+ * it to price anything new; use addGst.
  */
 export function priceBreakdownInclusive(total, ratePercent) {
     const base = total / (1 + ratePercent / 100);

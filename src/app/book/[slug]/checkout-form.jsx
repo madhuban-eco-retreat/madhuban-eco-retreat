@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Check, ChevronDown } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
+import { MAX_ADULTS, MAX_CHILDREN, MAX_INFANTS } from "@/lib/booking/occupancy";
 const TRUST_BADGES = [
     "Best rate, guaranteed",
     "No booking fees, ever",
@@ -25,7 +26,7 @@ const ERROR_CLS = "mt-1 font-body text-xs text-red-600";
 const NOTE_CLS = "mt-2 font-body text-xs text-earth-brown/80";
 const PHONE_RE = /^\d{10,15}$/;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-export function CheckoutForm({ slug, roomName, defaultCheckIn, defaultCheckOut, defaultAdults, defaultChildren, minNights, maxAdults, maxChildren, }) {
+export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCheckOut, defaultAdults, defaultChildren, minNights, }) {
     const router = useRouter();
     const today = todayStr();
     // Booking params
@@ -33,7 +34,13 @@ export function CheckoutForm({ slug, roomName, defaultCheckIn, defaultCheckOut, 
     const [checkOut, setCheckOut] = useState(defaultCheckOut || addDays(defaultCheckIn || today, Math.max(minNights, 1)));
     const [adults, setAdults] = useState(defaultAdults || 2);
     const [children, setChildren] = useState(defaultChildren || 0);
+    const [infants, setInfants] = useState(0);
     const [couponCode, setCouponCode] = useState("");
+    // Availability is resolved here, at step 1, rather than on submit at review:
+    // finding out the dates are gone after filling in the whole form is the
+    // worst possible moment to be told.
+    const [availability, setAvailability] = useState(null);
+    const [checkingAvailability, setCheckingAvailability] = useState(false);
     // Guest details
     const [guestName, setGuestName] = useState("");
     const [guestEmail, setGuestEmail] = useState("");
@@ -63,6 +70,7 @@ export function CheckoutForm({ slug, roomName, defaultCheckIn, defaultCheckOut, 
                     checkOut,
                     adults,
                     children,
+                    infants,
                     couponCode: couponCode.trim().toUpperCase() || undefined,
                 }),
             });
@@ -81,10 +89,60 @@ export function CheckoutForm({ slug, roomName, defaultCheckIn, defaultCheckOut, 
         finally {
             setLoadingPrice(false);
         }
-    }, [slug, checkIn, checkOut, adults, children, couponCode]);
+    }, [slug, checkIn, checkOut, adults, children, infants, couponCode]);
     // Fetch price on mount and when booking params change.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     useEffect(() => { void fetchPrice(); }, [fetchPrice]);
+    // Availability lookup, re-run whenever the date range changes. A failed
+    // request leaves availability null rather than false — the booking API
+    // re-checks authoritatively before taking money, so a network blip here
+    // must not block an otherwise valid booking.
+    useEffect(() => {
+        if (!roomId || !checkIn || !checkOut || checkOut <= checkIn) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setAvailability(null);
+            return;
+        }
+        let cancelled = false;
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setCheckingAvailability(true);
+        void (async () => {
+            try {
+                const res = await fetch("/api/booking/check-availability", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ roomId, checkIn, checkOut }),
+                });
+                const data = await res.json();
+                if (cancelled)
+                    return;
+                setAvailability(res.ok ? data : null);
+            }
+            catch {
+                if (!cancelled)
+                    setAvailability(null);
+            }
+            finally {
+                if (!cancelled)
+                    setCheckingAvailability(false);
+            }
+        })();
+        return () => { cancelled = true; };
+    }, [roomId, checkIn, checkOut]);
+    // If the review step bounced back with a 409, show that reason immediately
+    // rather than waiting for the re-check to catch up.
+    useEffect(() => {
+        try {
+            const bounced = sessionStorage.getItem("booking_unavailable");
+            if (bounced) {
+                sessionStorage.removeItem("booking_unavailable");
+                // eslint-disable-next-line react-hooks/set-state-in-effect
+                setAvailability({ available: false, reason: bounced });
+            }
+        }
+        catch { /* sessionStorage unavailable — the re-check still covers it */ }
+    }, []);
+    const datesUnavailable = availability?.available === false;
     // Field-level validators — return error string or empty for "valid"
     const validateName = (v) => (v.trim() ? "" : "Name is required");
     const validateEmail = (v) => !v.trim() || !EMAIL_RE.test(v.trim()) ? "Enter a valid email address" : "";
@@ -137,6 +195,10 @@ export function CheckoutForm({ slug, roomName, defaultCheckIn, defaultCheckOut, 
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // Belt and braces: the button is disabled in this state, but a stray
+        // Enter keypress must not push an unbookable stay into review either.
+        if (datesUnavailable)
+            return;
         if (!validate() || !pricing)
             return;
         setSubmitting(true);
@@ -193,32 +255,74 @@ export function CheckoutForm({ slug, roomName, defaultCheckIn, defaultCheckOut, 
               </div>
             </div>
 
+            {/* Availability verdict sits directly under the dates it refers to */}
+            {checkingAvailability && (<p className="mt-3 font-body text-xs text-muted-foreground">
+                Checking availability…
+              </p>)}
+
+            {datesUnavailable && (<p role="alert" className="mt-3 flex items-start gap-2 rounded-lg border border-red-300 bg-red-50 px-3 py-2.5 font-body text-xs font-medium text-red-700">
+                <svg className="mt-0.5 h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                </svg>
+                <span>
+                  {availability?.reason ?? "These dates are not available."}
+                </span>
+              </p>)}
+
+            {!checkingAvailability && availability?.available === true && (<p className="mt-3 flex items-center gap-1.5 font-body text-xs font-medium text-[var(--color-moss-green)]">
+                <Check className="h-3.5 w-3.5" aria-hidden="true"/>
+                These dates are available.
+              </p>)}
+
             {minNights > 1 && (<p className={NOTE_CLS}>
                 Minimum stay: {minNights} nights for this room.
               </p>)}
 
-            <div className="mt-4 grid grid-cols-2 gap-4">
+            {/* Rates are quoted on double occupancy, so the surcharges are
+                spelled out in the options themselves rather than surfacing as
+                an unexplained jump in the total. */}
+            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
               <div>
                 <label htmlFor="adults" className={LABEL_CLS}>
                   Adults
                 </label>
                 <select id="adults" value={adults} onChange={(e) => setAdults(Number(e.target.value))} className={INPUT_CLS}>
-                  {Array.from({ length: maxAdults }, (_, i) => i + 1).map((n) => (<option key={n} value={n}>
+                  {Array.from({ length: MAX_ADULTS }, (_, i) => i + 1).map((n) => (<option key={n} value={n}>
                       {n} adult{n > 1 ? "s" : ""}
+                      {n > 2 ? " (+₹2,000/night)" : ""}
                     </option>))}
                 </select>
               </div>
-              {maxChildren > 0 && (<div>
-                  <label htmlFor="children" className={LABEL_CLS}>
-                    Children
-                  </label>
-                  <select id="children" value={children} onChange={(e) => setChildren(Number(e.target.value))} className={INPUT_CLS}>
-                    {Array.from({ length: maxChildren + 1 }, (_, i) => i).map((n) => (<option key={n} value={n}>
-                        {n === 0 ? "No children" : `${n} child${n > 1 ? "ren" : ""}`}
-                      </option>))}
-                  </select>
-                </div>)}
+
+              <div>
+                <label htmlFor="children" className={LABEL_CLS}>
+                  Children <span className="font-normal text-muted-foreground">(5–12 yrs)</span>
+                </label>
+                <select id="children" value={children} onChange={(e) => setChildren(Number(e.target.value))} className={INPUT_CLS}>
+                  {Array.from({ length: MAX_CHILDREN + 1 }, (_, i) => i).map((n) => (<option key={n} value={n}>
+                      {n === 0
+                    ? "No children"
+                    : `${n} child${n > 1 ? "ren" : ""} (+₹${(1500 * n).toLocaleString("en-IN")}/night)`}
+                    </option>))}
+                </select>
+              </div>
+
+              <div>
+                <label htmlFor="infants" className={LABEL_CLS}>
+                  Infants <span className="font-normal text-muted-foreground">(under 5)</span>
+                </label>
+                <select id="infants" value={infants} onChange={(e) => setInfants(Number(e.target.value))} className={INPUT_CLS}>
+                  {Array.from({ length: MAX_INFANTS + 1 }, (_, i) => i).map((n) => (<option key={n} value={n}>
+                      {n === 0 ? "No infants" : `${n} infant${n > 1 ? "s" : ""} (Free)`}
+                    </option>))}
+                </select>
+              </div>
             </div>
+
+            <p className={NOTE_CLS}>
+              Rate covers two adults. Extra adult ₹2,000/night and child (5–12)
+              ₹1,500/night, plus GST. Infants stay free.
+            </p>
           </fieldset>
 
           {/* Guest details */}
@@ -317,6 +421,13 @@ export function CheckoutForm({ slug, roomName, defaultCheckIn, defaultCheckOut, 
                   <span>&#8377;{formatPrice(pricing.baseNightlyTotal)}</span>
                 </div>
 
+                {pricing.extraGuestLines?.map((line) => (<div key={line.key} className="flex justify-between text-charcoal/70">
+                    <span>
+                      {line.label} × {line.qty}
+                    </span>
+                    <span>&#8377;{formatPrice(line.amount)}</span>
+                  </div>))}
+
                 {pricing.discountAmount > 0 && (<div className="flex justify-between text-moss-green">
                     <span>Coupon ({pricing.couponCode})</span>
                     <span>−&#8377;{formatPrice(pricing.discountAmount)}</span>
@@ -350,7 +461,7 @@ export function CheckoutForm({ slug, roomName, defaultCheckIn, defaultCheckOut, 
             {errors.pricing && (<p className={`mt-2 ${ERROR_CLS}`}>{errors.pricing}</p>)}
             {errors.submit && (<p className={`mt-2 ${ERROR_CLS}`}>{errors.submit}</p>)}
 
-            <button type="submit" disabled={submitting || loadingPrice || !pricing} className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-lg bg-earth-brown font-body text-sm font-medium text-ivory transition-colors duration-200 hover:bg-earth-brown/90 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-earth-brown focus-visible:ring-offset-2">
+            <button type="submit" disabled={submitting || loadingPrice || !pricing || datesUnavailable} className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-lg bg-earth-brown font-body text-sm font-medium text-ivory transition-colors duration-200 hover:bg-earth-brown/90 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-earth-brown focus-visible:ring-offset-2">
               {submitting ? "Please wait…" : "Continue to Review"}
             </button>
 
@@ -373,6 +484,10 @@ export function CheckoutForm({ slug, roomName, defaultCheckIn, defaultCheckOut, 
                 </span>
                 <span>&#8377;{formatPrice(pricing.baseNightlyTotal)}</span>
               </div>
+              {pricing.extraGuestLines?.map((line) => (<div key={line.key} className="flex justify-between text-charcoal/70">
+                  <span>{line.label} × {line.qty}</span>
+                  <span>&#8377;{formatPrice(line.amount)}</span>
+                </div>))}
               {pricing.discountAmount > 0 && (<div className="flex justify-between text-moss-green">
                   <span>Coupon ({pricing.couponCode})</span>
                   <span>−&#8377;{formatPrice(pricing.discountAmount)}</span>
@@ -389,7 +504,7 @@ export function CheckoutForm({ slug, roomName, defaultCheckIn, defaultCheckOut, 
 
         {/* Compact row: Continue on top, tappable total below */}
         <div className="space-y-2 px-4 py-3">
-          <button type="submit" disabled={submitting || loadingPrice || !pricing} className="inline-flex h-12 w-full items-center justify-center rounded-lg bg-earth-brown font-body text-sm font-medium text-ivory transition-colors duration-200 hover:bg-earth-brown/90 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-earth-brown focus-visible:ring-offset-2">
+          <button type="submit" disabled={submitting || loadingPrice || !pricing || datesUnavailable} className="inline-flex h-12 w-full items-center justify-center rounded-lg bg-earth-brown font-body text-sm font-medium text-ivory transition-colors duration-200 hover:bg-earth-brown/90 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-earth-brown focus-visible:ring-offset-2">
             {submitting ? "Please wait…" : "Continue to Review"}
           </button>
 

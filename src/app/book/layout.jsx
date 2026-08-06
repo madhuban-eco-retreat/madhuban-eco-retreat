@@ -8,8 +8,17 @@ export default function BookingLayout({ children, }) {
       {/* Minimal booking header */}
       <header className="sticky top-0 z-40 border-b border-border bg-cream/95 backdrop-blur-sm">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6 lg:px-8">
-          <Link href="/" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-earth-brown focus-visible:ring-offset-2">
-            <Image src={`${process.env.NEXT_PUBLIC_R2_BASE ?? ""}/logo/madhuban-logo.webp`} alt="Madhuban Eco Retreat" width={120} height={40} className="h-10 w-auto" priority/>
+          {/* Same asset the site header uses. This previously pointed at
+              NEXT_PUBLIC_R2_BASE + /logo/madhuban-logo.webp, which is a
+              different bucket and a filename that does not exist there — the
+              request 404d and the funnel showed a broken image. Hardcoded to
+              match Header.jsx rather than rebuilt from an env var, so the two
+              cannot drift apart again. */}
+          <Link href="/" aria-label="Madhuban Eco Retreat — home" className="flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-earth-brown focus-visible:ring-offset-2">
+            <Image src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-eco-retreat-bhopal-logo.png" alt="Madhuban Eco Retreat" width={120} height={120} className="h-10 w-10 filter brightness-75" priority/>
+            <span className="font-primary text-sm font-bold leading-tight tracking-wide text-earth-brown sm:text-base">
+              Madhuban Eco Retreat
+            </span>
           </Link>
           <Link href={ALL_ROOMS_URL} className="font-body text-sm text-earth-brown underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-earth-brown focus-visible:ring-offset-2">
             ← Back to Rooms

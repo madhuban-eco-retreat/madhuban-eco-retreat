@@ -3,6 +3,7 @@ import { getRoomBySlug } from "@/lib/rooms/queries";
 import { buildMetadata } from "@/lib/seo";
 import { DataUnavailable } from "@/components/ui/data-unavailable";
 import { CheckoutForm } from "./checkout-form";
+import { MAX_ADULTS, MAX_CHILDREN } from "@/lib/booking/occupancy";
 export const revalidate = 60;
 export async function generateMetadata({ params }) {
     const { slug } = await params;
@@ -43,8 +44,11 @@ export default async function BookCheckoutPage({ params, searchParams }) {
     const checkOut = sp.checkOut && sp.checkOut > checkIn
         ? sp.checkOut
         : addDays(checkIn, minNights);
-    const adults = Math.min(Math.max(Number(sp.adults ?? 2), 1), room.max_occupancy);
-    const children = Math.min(Math.max(Number(sp.children ?? 0), 0), room.max_occupancy_children);
+    // Clamped to the resort-wide occupancy policy rather than the room's own
+    // max_occupancy: the extra-guest tariff only defines a third adult and a
+    // second child, so anything beyond that has no price to quote.
+    const adults = Math.min(Math.max(Number(sp.adults ?? 2), 1), MAX_ADULTS);
+    const children = Math.min(Math.max(Number(sp.children ?? 0), 0), MAX_CHILDREN);
     return (<div className="py-10 px-4">
       <div className="mx-auto max-w-7xl">
         <nav aria-label="Booking steps" className="mb-8">
@@ -66,7 +70,7 @@ export default async function BookCheckoutPage({ params, searchParams }) {
           </h1>
         </div>
 
-        <CheckoutForm slug={slug} roomName={room.name} defaultCheckIn={checkIn} defaultCheckOut={checkOut} defaultAdults={adults} defaultChildren={children} minNights={minNights} maxAdults={room.max_occupancy} maxChildren={room.max_occupancy_children}/>
+        <CheckoutForm slug={slug} roomId={room.id} roomName={room.name} defaultCheckIn={checkIn} defaultCheckOut={checkOut} defaultAdults={adults} defaultChildren={children} minNights={minNights}/>
       </div>
     </div>);
 }

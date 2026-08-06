@@ -51,6 +51,17 @@ export function bookingConfirmationGuestEmail(data) {
                 <td style="padding:16px 20px;">
                   <p style="margin:0 0 8px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#8B8578;">Payment Summary</p>
                   <table width="100%" cellpadding="0" cellspacing="0">
+                    ${data.baseAmount != null ? `<tr>
+                      <td style="font-size:13px;color:#2A2A2A;padding:4px 0;">Subtotal (excl. GST)</td>
+                      <td align="right" style="font-size:13px;color:#2A2A2A;">₹${formatAmount(data.baseAmount)}</td>
+                    </tr>` : ""}
+                    ${data.gstAmount != null ? `<tr>
+                      <td style="font-size:13px;color:#2A2A2A;padding:4px 0;">GST${data.gstRate ? ` (${data.gstRate}%)` : ""}</td>
+                      <td align="right" style="font-size:13px;color:#2A2A2A;">₹${formatAmount(data.gstAmount)}</td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" style="padding:4px 0;border-top:1px solid #EAE5DC;"></td>
+                    </tr>` : ""}
                     <tr>
                       <td style="font-size:13px;color:#4A6741;padding:4px 0;font-weight:600;">Total Paid</td>
                       <td align="right" style="font-size:14px;font-weight:700;color:#4A6741;">₹${formatAmount(data.totalAmount)}</td>
@@ -73,6 +84,20 @@ export function bookingConfirmationGuestEmail(data) {
                   <p style="margin:0 0 8px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#8B8578;">Getting Here</p>
                   <p style="margin:0 0 4px;font-size:13px;color:#2A2A2A;">Near Ratapani Wildlife Sanctuary, Village Bori, Salkanpur Road, Rehti, Sehore, MP — 466446</p>
                   <p style="margin:4px 0 0;font-size:13px;color:#2A2A2A;">📍 60 km from Bhopal · GPS: 22.88°N, 77.52°E</p>
+                </td>
+              </tr>
+            </table>
+
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:24px;background:#FFFBF0;border-radius:8px;border:1px solid #E8DCC0;">
+              <tr>
+                <td style="padding:16px 20px;">
+                  <p style="margin:0 0 8px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#8B8578;">Cancellation Policy</p>
+                  <p style="margin:0 0 3px;font-size:12px;color:#2A2A2A;">• More than 45 days before arrival — 10% charge</p>
+                  <p style="margin:0 0 3px;font-size:12px;color:#2A2A2A;">• 15 to 45 days before arrival — 50% charge</p>
+                  <p style="margin:0 0 3px;font-size:12px;color:#2A2A2A;">• Within 15 days of arrival / No Show — 100% charge</p>
+                  <p style="margin:0 0 3px;font-size:12px;color:#2A2A2A;">• Christmas, New Year, Holi, Diwali &amp; long weekends — non-refundable</p>
+                  <p style="margin:0 0 3px;font-size:12px;color:#2A2A2A;">• Group bookings over 3 rooms — non-refundable</p>
+                  <p style="margin:6px 0 0;font-size:11px;color:#8B8578;">Charges are calculated on the total booking value, not just the advance paid.</p>
                 </td>
               </tr>
             </table>

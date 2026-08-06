@@ -18,7 +18,7 @@ export async function POST(req) {
     if (!parsed.success) {
         return NextResponse.json({ error: parsed.error.issues[0]?.message ?? "Invalid input" }, { status: 400 });
     }
-    const { roomSlug, checkIn, checkOut, adults, children, guestName, guestEmail, guestPhone, specialRequests, couponCode, } = parsed.data;
+    const { roomSlug, checkIn, checkOut, adults, children, infants, guestName, guestEmail, guestPhone, specialRequests, couponCode, } = parsed.data;
     try {
         // Calculate pricing (also validates room exists)
         const pricing = await calculatePricing({
@@ -27,6 +27,7 @@ export async function POST(req) {
             checkOut,
             adults,
             children,
+            infants,
             couponCode,
         });
         // Re-check availability at point of booking
@@ -87,6 +88,12 @@ export async function POST(req) {
             coupon_code: pricing.couponCode ?? null,
             total_amount: pricing.totalAmount,
             special_requests: specialRequests ?? null,
+            // bookings has no infants column and they carry no charge, so the
+            // headcount is recorded as a staff note — housekeeping still needs
+            // to know a cot is coming.
+            internal_notes: infants > 0
+                ? `Infants (under 5, no charge): ${infants}`
+                : null,
             status: "PENDING_PAYMENT",
             payment_status: "pending",
             source: "website",
