@@ -224,7 +224,7 @@ const MainNavigation = () => {
 
         {/* Book Now Button - Desktop */}
         <Link
-          href="/booking"
+          href="/stay-in-ratapani-tiger-reserve"
           className="hidden xl:block px-4 py-2 rounded-md font-primary text-xl text-[#D1C8C1] bg-[rgb(110,97,70)]  transition"
         >
           Book Now
@@ -268,7 +268,7 @@ const MainNavigation = () => {
 
             {/* Book Now Button - Mobile */}
             <Link
-              href="/booking"
+              href="/stay-in-ratapani-tiger-reserve"
               onClick={() => setIsMenuOpen(false)}
               className="mt-6 w-full py-3 text-center rounded-md font-semibold  text-[#D1C8C1] bg-[rgb(110,97,70)] hover:bg-[rgb(132,116,85)] transition"
             >

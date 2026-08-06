@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Script from "next/script";
 import { formatPrice } from "@/lib/utils";
+import { stayPageForRoomSlug } from "@/lib/rooms/booking-links";
 export function PaymentClient({ bookingId, roomSlug, totalAmountRupees, guestName, guestEmail, guestMobile, bookingRef, }) {
     const router = useRouter();
     const [orderData, setOrderData] = useState(null);
@@ -100,7 +101,7 @@ export function PaymentClient({ bookingId, roomSlug, totalAmountRupees, guestNam
     if (orderError) {
         return (<div className="mx-auto max-w-md text-center">
         <p className="font-body text-sm text-red-600">{orderError}</p>
-        <a href={`/stay/${roomSlug}`} className="mt-4 inline-block font-body text-sm text-earth-brown underline-offset-4 hover:underline">
+        <a href={stayPageForRoomSlug(roomSlug)} className="mt-4 inline-block font-body text-sm text-earth-brown underline-offset-4 hover:underline">
           ← Back to room
         </a>
       </div>);

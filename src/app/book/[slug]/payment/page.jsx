@@ -1,6 +1,7 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { PaymentClient } from "./payment-client";
 import Link from "next/link";
+import { stayPageForRoomSlug } from "@/lib/rooms/booking-links";
 export const metadata = {
     robots: { index: false, follow: false },
 };
@@ -81,7 +82,7 @@ function NotFound({ slug, message }) {
     return (<div className="flex min-h-[60vh] items-center justify-center px-4">
       <div className="text-center">
         <p className="font-body text-sm text-charcoal/70">{message}</p>
-        <Link href={`/stay/${slug}`} className="mt-4 inline-block font-body text-sm text-earth-brown underline-offset-4 hover:underline">
+        <Link href={stayPageForRoomSlug(slug)} className="mt-4 inline-block font-body text-sm text-earth-brown underline-offset-4 hover:underline">
           ← Back to room
         </Link>
       </div>

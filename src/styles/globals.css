@@ -470,3 +470,36 @@ body {
   display: none;
 }
 
+
+/* ── Booking funnel typography ──────────────────────────────────────────────
+   /book/* was built against font-display / font-body, which both resolve to
+   Lato. The marketing site sets its headings in --font-primary ("Sitka Banner",
+   serif) via the .font-primary utility, so the booking funnel rendered every
+   heading in a sans face the rest of the site never uses — the two halves of a
+   single journey looked like two different sites.
+
+   Rather than rewrite the class on every heading in the funnel, this scopes a
+   remap onto the layout wrapper. The declarations set font-family outright
+   instead of only redefining the custom property, because Tailwind v4 may
+   inline a @theme value into the utility rather than emit var() — overriding
+   the property alone is not guaranteed to cascade. The extra class in the
+   selector also keeps these ahead of the plain utilities on specificity. */
+.booking-typography {
+  font-family: 'Lato', sans-serif;
+}
+
+.booking-typography .font-body,
+.booking-typography button,
+.booking-typography input,
+.booking-typography select,
+.booking-typography textarea {
+  font-family: 'Lato', sans-serif;
+}
+
+.booking-typography .font-display,
+.booking-typography h1,
+.booking-typography h2,
+.booking-typography h3,
+.booking-typography h4 {
+  font-family: var(--font-primary);
+}

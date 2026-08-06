@@ -42,7 +42,7 @@ const mudHouseFaqs = [
   {
     question: "What is the price of Mud House stay in Ratapani?",
     answer:
-      "Mud House 1 (Standard) starts at ₹9,000 per night and Mud House 2 (Premium, with bathtub) at ₹10,000 per night on double occupancy. Extra person charges apply — ₹1,500 per night for children (5–12 years) and ₹2,000 per night for adults. Rates are exclusive of GST, which is charged separately at 18% as applicable.",
+      "Mud House Standard starts at ₹9,000 per night and Mud House Premium (with bathtub) at ₹10,000 per night on double occupancy. Extra person charges apply — ₹1,500 per night for children (5–12 years) and ₹2,000 per night for adults. Rates are exclusive of GST, which is charged separately at 18% as applicable.",
   },
   {
     question: "Are these the best mud houses near Bhopal?",
@@ -223,7 +223,7 @@ const mudHouseMetadata = {
   ],
 
   alternates: {
-    canonical: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/mud-villa",
+    canonical: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/mud-house-standard",
   },
 
   robots: {
@@ -247,7 +247,7 @@ const poolSideMetadata = {
   ],
 
   alternates: {
-    canonical: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/pool-side-room",
+    canonical: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/pool-side-villa",
   },
 
   robots: {
@@ -467,7 +467,7 @@ const mudHouseSchema = {
     },
     {
       "@type": "LocationFeatureSpecification",
-      name: "Bathtub (Mud House 2)",
+      name: "Bathtub (Mud House Premium)",
       value: true,
     },
     {
@@ -484,7 +484,7 @@ const mudHouseSchema = {
   makesOffer: [
     {
       "@type": "Offer",
-      name: "Mud House 1",
+      name: "Mud House Standard",
       price: "9000",
       priceCurrency: "INR",
       availability: "https://schema.org/InStock",
@@ -493,14 +493,14 @@ const mudHouseSchema = {
         "Eco mud house stay without bathtub featuring AC room, verandas, orchard setting, and tribal-inspired design.",
       itemOffered: {
         "@type": "Product",
-        name: "Mud House 1 – Traditional Mud Cottage",
+        name: "Mud House Standard – Traditional Mud Cottage",
         brand: "Madhuban Eco Retreat",
         sku: "MUD-HOUSE-1",
       },
     },
     {
       "@type": "Offer",
-      name: "Mud House 2",
+      name: "Mud House Premium",
       price: "10000",
       priceCurrency: "INR",
       availability: "https://schema.org/InStock",
@@ -509,7 +509,7 @@ const mudHouseSchema = {
         "Luxury mud house with bathtub, AC room, verandas, orchard views, and 360-degree rooftop seating.",
       itemOffered: {
         "@type": "Product",
-        name: "Mud House 2 – Mud Cottage with Bathtub",
+        name: "Mud House Premium – Mud Cottage with Bathtub",
         brand: "Madhuban Eco Retreat",
         sku: "MUD-HOUSE-2",
       },
@@ -530,7 +530,7 @@ const mudHouseFaqsSchema = {
       name: "What is the price of Mud House stay in Ratapani?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Mud House 1 (Standard) starts at ₹9,000 per night and Mud House 2 (Premium, with bathtub) at ₹10,000 per night on double occupancy. Extra person charges apply — ₹1,500 per night for children (5–12 years) and ₹2,000 per night for adults. Rates are exclusive of GST, which is charged separately at 18% as applicable.",
+        text: "Mud House Standard starts at ₹9,000 per night and Mud House Premium (with bathtub) at ₹10,000 per night on double occupancy. Extra person charges apply — ₹1,500 per night for children (5–12 years) and ₹2,000 per night for adults. Rates are exclusive of GST, which is charged separately at 18% as applicable.",
       },
     },
     {
@@ -983,7 +983,7 @@ export const accommodationsData = [
   {
     id: 2,
     name: "Mud House – Traditional Gond Architecture with Modern Comfort",
-    slug: "mud-villa",
+    slug: "mud-house-standard",
     image:
       "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/mud-house/mud-villa.mp4",
     altText: "Exterior view of a charming safari tent nestled in greenery",
@@ -1002,7 +1002,7 @@ export const accommodationsData = [
       "King Size Bed",
       "Double Occupancy",
       "Infinity Pool",
-      "Bathtub (Mud House 2)",
+      "Bathtub (Mud House Premium)",
       "WiFi",
       "Breakfast Included",
       "Free Slippers",
@@ -1026,21 +1026,21 @@ export const accommodationsData = [
     ],
     whyChooseTitle: "Why Choose Our Mud Houses?",
     capacity: "Sleeps 2",
-    pricePerNightMud: "Mud House 1 ( Without Bathtub ): ₹ 9,000 per night",
-    pricePerNightMud1: "Mud House 2 ( With Bathtub ): ₹ 10,000 per night",
+    pricePerNightMud: "Mud House Standard ( Without Bathtub ): ₹ 9,000 per night",
+    pricePerNightMud1: "Mud House Premium ( With Bathtub ): ₹ 10,000 per night",
     extraBedding: "Infant (up to 5 yrs) free · Child 5–12 yrs ₹1,500/night · Adult ₹2,000/night (GST extra)",
     rating: 4.5,
     faqs: mudHouseFaqs,
     faqsTitle: "FAQs – Mud House",
     bookingOptions: [
       {
-        optionName: "MUD HOUSE 1",
+        optionName: "MUD HOUSE STANDARD",
         optionDetail: "(WITHOUT BATHHUB)",
         price: "9,000",
         rateUnit: "Per Night",
       },
       {
-        optionName: "MUD HOUSE 2",
+        optionName: "MUD HOUSE PREMIUM",
         optionDetail: "(WITH BATHHUB)",
         price: "10,000",
         rateUnit: "Per Night",
@@ -1052,7 +1052,7 @@ export const accommodationsData = [
   {
     id: 3,
     name: "Pool Side Villa – Luxury Eco Stay by the Water",
-    slug: "pool-side-room",
+    slug: "pool-side-villa",
     image:
       "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/pool/pool-side.mp4",
     altText: "A beautiful treehouse offering panoramic views of the forest",

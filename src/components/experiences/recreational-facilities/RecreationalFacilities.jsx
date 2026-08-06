@@ -108,7 +108,7 @@ const RecreationalFacilities = () => {
                       slows down the mind and refreshes the spirit.—{" "}
                     </p>
                     <Link
-                      href="/booking"
+                      href="/stay-in-ratapani-tiger-reserve"
                       className="list-disc list-inside underline text-primary-gray2 font-bold  space-y-2"
                     >
                       Book Your Stay at Madhuban Eco Retreat

@@ -1,5 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import Link from "next/link";
+import { ALL_ROOMS_URL, stayPageForRoomSlug } from "@/lib/rooms/booking-links";
 export const metadata = {
     title: "Booking Confirmed",
     robots: { index: false, follow: false },
@@ -21,7 +22,7 @@ export default async function ConfirmationPage({ searchParams }) {
         return (<div className="flex min-h-[60vh] items-center justify-center px-4">
         <div className="text-center">
           <p className="font-body text-sm text-charcoal/70">No booking reference provided.</p>
-          <Link href="/stay" className="mt-4 inline-block font-body text-sm text-earth-brown underline-offset-4 hover:underline">
+          <Link href={ALL_ROOMS_URL} className="mt-4 inline-block font-body text-sm text-earth-brown underline-offset-4 hover:underline">
             Browse rooms
           </Link>
         </div>
@@ -31,10 +32,11 @@ export default async function ConfirmationPage({ searchParams }) {
     const { data: booking } = await supabase
         .from("bookings")
         .select(`
-      id, booking_ref, status, total_amount, checkin, checkout,
+      id, booking_ref, status, base_amount, gst_amount, total_amount,
+      discount_amount, coupon_code, checkin, checkout,
       num_adults, num_children, special_requests, created_at,
       guests!guest_id ( name, email, mobile ),
-      rooms!room_id ( name, slug )
+      rooms!room_id ( name, slug, base_price_per_night )
     `)
         .eq("booking_ref", ref)
         .single();
@@ -42,7 +44,7 @@ export default async function ConfirmationPage({ searchParams }) {
         return (<div className="flex min-h-[60vh] items-center justify-center px-4">
         <div className="text-center">
           <p className="font-body text-sm text-charcoal/70">Booking not found.</p>
-          <Link href="/stay" className="mt-4 inline-block font-body text-sm text-earth-brown underline-offset-4 hover:underline">
+          <Link href={ALL_ROOMS_URL} className="mt-4 inline-block font-body text-sm text-earth-brown underline-offset-4 hover:underline">
             Browse rooms
           </Link>
         </div>
@@ -67,6 +69,21 @@ export default async function ConfirmationPage({ searchParams }) {
     const guest = Array.isArray(booking.guests) ? booking.guests[0] : booking.guests;
     const room = Array.isArray(booking.rooms) ? booking.rooms[0] : booking.rooms;
     const totalAmount = Number(booking.total_amount);
+    // base_amount/gst_amount are written at booking time, so a later change to
+    // the slab never rewrites history on an issued confirmation. Older rows
+    // predating those columns fall back to deriving the split from the total.
+    const gstAmount = booking.gst_amount != null
+        ? Number(booking.gst_amount)
+        : null;
+    const baseAmount = booking.base_amount != null
+        ? Number(booking.base_amount)
+        : gstAmount != null
+            ? Math.round((totalAmount - gstAmount) * 100) / 100
+            : null;
+    const gstRatePct = baseAmount && gstAmount != null && baseAmount > 0
+        ? Math.round((gstAmount / baseAmount) * 100)
+        : null;
+    const discountAmount = Number(booking.discount_amount ?? 0);
     const nights = Math.round((new Date(booking.checkout).getTime() - new Date(booking.checkin).getTime()) / 86400000);
     return (<div className="py-12 px-4">
       <div className="mx-auto max-w-2xl">
@@ -81,8 +98,12 @@ export default async function ConfirmationPage({ searchParams }) {
             Booking Confirmed
           </p>
           <h1 className="mt-2 font-display text-4xl font-medium text-charcoal">
-            See you in the forest!
+            Thank you{guest?.name ? `, ${guest.name.split(" ")[0]}` : ""}!
           </h1>
+          <p className="mt-2 font-body text-base text-charcoal/80">
+            Your booking is confirmed — we look forward to hosting you in the
+            forest.
+          </p>
           <p className="mt-3 font-body text-sm text-charcoal/70">
             A confirmation email has been sent to {guest?.email ?? "your email"}.
           </p>
@@ -133,10 +154,29 @@ export default async function ConfirmationPage({ searchParams }) {
             Payment Summary
           </h2>
           <div className="space-y-2 font-body text-sm">
-            <div className="flex justify-between">
-              <span className="text-charcoal/70">Total Amount</span>
-              <span className="font-medium">₹{formatAmount(totalAmount)}</span>
-            </div>
+            {discountAmount > 0 && (<div className="flex justify-between text-[var(--color-moss-green)]">
+                <span>
+                  Coupon discount{booking.coupon_code ? ` (${booking.coupon_code})` : ""}
+                </span>
+                <span>−₹{formatAmount(discountAmount)}</span>
+              </div>)}
+
+            {baseAmount != null && gstAmount != null ? (<>
+                <div className="flex justify-between">
+                  <span className="text-charcoal/70">Base price (excl. GST)</span>
+                  <span className="font-medium">₹{formatAmount(baseAmount)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-charcoal/70">
+                    GST{gstRatePct != null ? ` @ ${gstRatePct}%` : ""}
+                  </span>
+                  <span className="font-medium">+ ₹{formatAmount(gstAmount)}</span>
+                </div>
+              </>) : (<div className="flex justify-between">
+                <span className="text-charcoal/70">Total Amount</span>
+                <span className="font-medium">₹{formatAmount(totalAmount)}</span>
+              </div>)}
+
             <div className="flex justify-between border-t border-border pt-2 font-semibold text-[var(--color-moss-green)]">
               <span>Total Paid</span>
               <span>₹{formatAmount(totalAmount)}</span>
@@ -161,12 +201,25 @@ export default async function ConfirmationPage({ searchParams }) {
           </ul>
         </section>
 
-        {/* Contact */}
+        {/* Contact — the number is spelled out rather than hidden behind the
+            button, so it survives a printed or screenshotted confirmation. */}
+        <section className="mb-6 rounded-xl border border-border bg-white p-6 text-center">
+          <h2 className="mb-2 font-body text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            Need Help?
+          </h2>
+          <p className="font-body text-sm text-charcoal/70">
+            Message or call us any time on WhatsApp at{" "}
+            <a href="tel:+919770558419" className="font-medium text-earth-brown underline-offset-4 hover:underline">
+              +91 97705 58419
+            </a>
+          </p>
+        </section>
+
         <div className="grid grid-cols-2 gap-4">
           <a href={`https://wa.me/919770558419?text=${encodeURIComponent(`Hi, I have a confirmed booking at Madhuban (ref: ${booking.booking_ref}). Looking forward to my stay!`)}`} target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center justify-center rounded-xl bg-earth-brown font-body text-sm font-medium text-ivory transition-colors hover:bg-earth-brown/90">
             WhatsApp Us
           </a>
-          {room && (<Link href={`/stay/${room.slug}`} className="inline-flex h-12 items-center justify-center rounded-xl border border-earth-brown font-body text-sm font-medium text-earth-brown transition-colors hover:bg-earth-brown hover:text-ivory">
+          {room && (<Link href={stayPageForRoomSlug(room.slug)} className="inline-flex h-12 items-center justify-center rounded-xl border border-earth-brown font-body text-sm font-medium text-earth-brown transition-colors hover:bg-earth-brown hover:text-ivory">
               View Room Details
             </Link>)}
         </div>

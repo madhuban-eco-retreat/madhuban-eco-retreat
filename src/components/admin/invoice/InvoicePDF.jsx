@@ -2,26 +2,41 @@ import path from "path";
 import fs from "fs";
 import { Document, Page, View, Text, StyleSheet, Image, Font } from "@react-pdf/renderer";
 import { amountToWords, fmtINR } from "@/lib/gst";
-// Fonts read from public/fonts/ via Buffer — process.cwd() on Vercel resolves to the
-// function root where public/ is accessible. No network fetch, no env var dependency.
-// Two families required: latin for regular text, devanagari for ₹ (U+20B9).
+// Fonts are read off disk rather than fetched, so nothing here depends on the
+// network or on an env var. Two families are required: latin for regular text,
+// devanagari for ₹ (U+20B9), which the built-in Helvetica cannot render.
+//
+// next.config.mjs also pins ./public/fonts/** into this route's traced files.
+// That is belt-and-braces rather than a fix: the tracer already follows these
+// reads on its own today.
 const FONTS_DIR = path.join(process.cwd(), "public", "fonts");
 const toDataUri = (file) => `data:font/woff;base64,${fs.readFileSync(path.join(FONTS_DIR, file)).toString("base64")}`;
-Font.register({
-    family: "Noto Sans",
-    fonts: [
-        { src: toDataUri("noto-sans-latin-400-normal.woff"), fontWeight: 400 },
-        { src: toDataUri("noto-sans-latin-700-normal.woff"), fontWeight: 700 },
-    ],
-});
-Font.register({
-    family: "Noto Sans Devanagari",
-    fonts: [
-        { src: toDataUri("noto-sans-devanagari-400-normal.woff"), fontWeight: 400 },
-        { src: toDataUri("noto-sans-devanagari-700-normal.woff"), fontWeight: 700 },
-    ],
-});
-const FONT_STACK = ["Noto Sans", "Noto Sans Devanagari"];
+
+// Registration runs at module scope, so an unreadable font file used to throw
+// on import and take the whole PDF route down with a 500 that named only the
+// missing path. An invoice in Helvetica beats no invoice at all: fall back to
+// the built-in face and let the ₹ glyphs degrade rather than blocking billing.
+let FONT_STACK = ["Helvetica"];
+try {
+    Font.register({
+        family: "Noto Sans",
+        fonts: [
+            { src: toDataUri("noto-sans-latin-400-normal.woff"), fontWeight: 400 },
+            { src: toDataUri("noto-sans-latin-700-normal.woff"), fontWeight: 700 },
+        ],
+    });
+    Font.register({
+        family: "Noto Sans Devanagari",
+        fonts: [
+            { src: toDataUri("noto-sans-devanagari-400-normal.woff"), fontWeight: 400 },
+            { src: toDataUri("noto-sans-devanagari-700-normal.woff"), fontWeight: 700 },
+        ],
+    });
+    FONT_STACK = ["Noto Sans", "Noto Sans Devanagari"];
+}
+catch (err) {
+    console.error("[invoice-pdf] font registration failed — falling back to Helvetica.", err);
+}
 const R2_BASE = process.env.NEXT_PUBLIC_R2_BASE ?? "";
 const LOGO_URL = `${R2_BASE}/branding/logo/madhuban-mark-md.png`;
 const C = {

@@ -144,14 +144,23 @@ export function ReviewClient({ slug }) {
               <span>−&#8377;{formatPrice(pricing.discountAmount)}</span>
             </div>)}
 
-          <div className="flex justify-between border-t border-border pt-3 font-semibold text-charcoal">
-            <span>Total (incl. {pricing.gstRate}% GST)</span>
-            <span>&#8377;{formatPrice(pricing.totalAmount)}</span>
+          {/* Tariffs are stored GST-inclusive, so the base and tax are
+              back-calculated from the total. Showing all three lines makes the
+              arithmetic checkable rather than asking the guest to trust a
+              single "incl. GST" figure. */}
+          <div className="flex justify-between border-t border-border pt-3 text-charcoal/70">
+            <span>Base price (excl. GST)</span>
+            <span>&#8377;{formatPrice(pricing.subtotalBeforeGst)}</span>
           </div>
 
-          <div className="flex justify-between text-charcoal/50">
-            <span>GST included</span>
-            <span>&#8377;{formatPrice(pricing.gstAmount)}</span>
+          <div className="flex justify-between text-charcoal/70">
+            <span>GST @ {pricing.gstRate}%</span>
+            <span>+ &#8377;{formatPrice(pricing.gstAmount)}</span>
+          </div>
+
+          <div className="flex justify-between border-t border-border pt-3 text-base font-semibold text-charcoal">
+            <span>Total payable</span>
+            <span>&#8377;{formatPrice(pricing.totalAmount)}</span>
           </div>
 
           <div className="mt-4 rounded-lg bg-warm-beige/40 p-4 text-xs text-charcoal/70">
@@ -164,16 +173,31 @@ export function ReviewClient({ slug }) {
         </div>
       </section>
 
-      {/* Cancellation policy */}
-      <section className="rounded-xl bg-warm-beige/30 p-6">
-        <h2 className="mb-3 font-body text-sm font-semibold text-charcoal">
-          Cancellation Policy
-        </h2>
-        <ul className="space-y-1.5 font-body text-xs text-charcoal/70">
-          <li>7 or more days before check-in: 100% refund (free cancellation)</li>
-          <li>3 to 7 days before check-in: 50% refund</li>
-          <li>Less than 3 days or no-show: no refund</li>
+      {/* Cancellation policy — shown before the confirm button so the terms are
+          on screen at the moment of commitment, not linked away from it. */}
+      <section className="rounded-xl border border-[var(--color-warning)]/40 bg-[var(--color-warning)]/10 p-6">
+        <div className="mb-3 flex items-start gap-2">
+          <svg className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-warning)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+          </svg>
+          <h2 className="font-body text-sm font-semibold text-charcoal">
+            Cancellation Policy
+          </h2>
+        </div>
+        <ul className="ml-1 list-disc space-y-1.5 pl-4 font-body text-xs text-charcoal/80">
+          <li>More than 45 days before arrival: 10% cancellation charge</li>
+          <li>Between 15 and 45 days before arrival: 50% cancellation charge</li>
+          <li>Within 15 days of arrival / No Show: 100% cancellation charge</li>
+          <li>
+            Christmas, New Year, Holi, Diwali &amp; long weekend bookings:
+            Non-refundable
+          </li>
+          <li>Group bookings (more than 3 rooms): Non-refundable</li>
         </ul>
+        <p className="mt-3 font-body text-xs font-medium text-charcoal/80">
+          Charges are calculated on the total booking value, not just the
+          advance paid.
+        </p>
       </section>
 
       {error && (<p className="rounded-lg bg-red-50 px-4 py-3 font-body text-sm text-red-600">
