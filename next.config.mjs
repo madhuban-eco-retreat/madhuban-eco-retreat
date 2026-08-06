@@ -25,6 +25,12 @@ const nextConfig = {
         protocol: "https",
         hostname: "pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev",
       },
+      {
+        // Booking engine bucket. Room hero/gallery images stored in Supabase
+        // point at this host, so next/image rejects them without it.
+        protocol: "https",
+        hostname: "pub-988c0a6b938742458b908a7a49295f61.r2.dev",
+      },
     ],
     minimumCacheTTL: 31536000,
   },

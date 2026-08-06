@@ -1,0 +1,133 @@
+import { NextResponse } from "next/server";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { ADMIN_EMAIL } from "@/lib/admin/constants";
+import { verifyWebhookSignature } from "@/lib/razorpay";
+import { sendEmail } from "@/lib/resend";
+import { bookingConfirmationGuestEmail } from "@/lib/resend/templates/booking-confirmation-guest";
+import { bookingConfirmationAdminEmail } from "@/lib/resend/templates/booking-confirmation-admin";
+import { createNotification } from "@/lib/admin/notifications";
+// Razorpay sends raw body for signature verification — must read as text.
+export async function POST(req) {
+    const rawBody = await req.text();
+    const signature = req.headers.get("x-razorpay-signature") ?? "";
+    if (!verifyWebhookSignature(rawBody, signature)) {
+        return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
+    }
+    let event;
+    try {
+        event = JSON.parse(rawBody);
+    }
+    catch {
+        return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
+    }
+    // Only handle captured events as backup confirmation signal
+    if (event.event !== "payment.captured") {
+        return NextResponse.json({ received: true });
+    }
+    const paymentEntity = event.payload?.payment?.entity;
+    const orderId = typeof paymentEntity?.order_id === "string" ? paymentEntity.order_id : null;
+    const paymentId = typeof paymentEntity?.id === "string" ? paymentEntity.id : null;
+    if (!orderId || !paymentId) {
+        return NextResponse.json({ received: true });
+    }
+    const supabase = createAdminClient();
+    // Find the payment row by order id
+    const { data: paymentRow } = await supabase
+        .from("payments")
+        .select("id, booking_id, status")
+        .eq("razorpay_order_id", orderId)
+        .maybeSingle();
+    if (!paymentRow) {
+        return NextResponse.json({ received: true });
+    }
+    // Idempotency: skip if already captured
+    if (paymentRow.status === "captured") {
+        return NextResponse.json({ received: true });
+    }
+    const bookingId = paymentRow.booking_id;
+    const { data: booking } = await supabase
+        .from("bookings")
+        .select(`
+      id, booking_ref, status, total_amount,
+      checkin, checkout, num_adults, num_children, source, special_requests,
+      guests!guest_id ( name, email, mobile ),
+      rooms!room_id ( name, slug )
+    `)
+        .eq("id", bookingId)
+        .single();
+    if (!booking || booking.status === "CONFIRMED") {
+        return NextResponse.json({ received: true });
+    }
+    await supabase
+        .from("bookings")
+        .update({ status: "CONFIRMED", payment_status: "partial" })
+        .eq("id", bookingId);
+    await supabase
+        .from("payments")
+        .update({
+        razorpay_payment_id: paymentId,
+        status: "captured",
+        captured_at: new Date().toISOString(),
+    })
+        .eq("id", paymentRow.id);
+    await supabase.from("audit_log").insert({
+        admin_user_id: "system",
+        actor_email: "system",
+        action: "payment_confirmed_via_webhook",
+        entity_type: "booking",
+        entity_id: bookingId,
+        details: { orderId, paymentId },
+    });
+    const guest = Array.isArray(booking.guests) ? booking.guests[0] : booking.guests;
+    const room = Array.isArray(booking.rooms) ? booking.rooms[0] : booking.rooms;
+    if (guest && room) {
+        const totalAmount = Number(booking.total_amount);
+        const nights = Math.round((new Date(booking.checkout).getTime() - new Date(booking.checkin).getTime()) / 86400000);
+        const confirmationData = {
+            bookingRef: booking.booking_ref,
+            guestName: guest.name,
+            roomName: room.name,
+            checkIn: booking.checkin,
+            checkOut: booking.checkout,
+            nights,
+            adults: booking.num_adults,
+            children: booking.num_children,
+            totalAmount,
+            specialRequests: booking.special_requests,
+        };
+        const adminEmail = ADMIN_EMAIL;
+        try {
+            await sendEmail({ to: guest.email, ...bookingConfirmationGuestEmail(confirmationData) });
+        }
+        catch (err) {
+            console.error("[webhook] guest email:", err);
+        }
+        try {
+            await sendEmail({
+                to: adminEmail,
+                ...bookingConfirmationAdminEmail({
+                    ...confirmationData,
+                    guestEmail: guest.email,
+                    guestMobile: guest.mobile ?? "",
+                    source: booking.source,
+                    paidAmount: totalAmount,
+                }),
+            });
+        }
+        catch (err) {
+            console.error("[webhook] admin email:", err);
+        }
+        try {
+            await createNotification({
+                type: "payment_received",
+                title: `Payment received — ${booking.booking_ref}`,
+                body: `${guest.name} · ${room.name} · ₹${totalAmount.toLocaleString("en-IN")}`,
+                linkUrl: `/admin/bookings/${bookingId}`,
+            });
+        }
+        catch (err) {
+            console.error("[webhook] notification:", err);
+        }
+    }
+    return NextResponse.json({ received: true });
+}

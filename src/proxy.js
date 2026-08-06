@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
+import { updateSession } from "@/lib/supabase/middleware";
 
-export function proxy(request) {
+// Next 16 replaced middleware.js with proxy.js, and a project gets exactly one.
+// The booking engine's Supabase session refresh is therefore merged in here
+// rather than added as a second file. Redirects run first and return early;
+// only pass-through requests pay for the auth refresh.
+export async function proxy(request) {
   const { pathname } = request.nextUrl;
   if (pathname.includes("hotel")) {
     return NextResponse.redirect(new URL("/", request.url));
@@ -24,9 +29,15 @@ export function proxy(request) {
     }
   }
 
-  return NextResponse.next();
+  // Refresh the Supabase auth session so admin routes see a live cookie.
+  // updateSession never throws and is capped at 3s — a Supabase outage must not
+  // take the public site down with it.
+  const response = NextResponse.next({ request });
+  return updateSession(request, response);
 }
 
 export const config = {
-  matcher: "/:path*",
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|css|js|ico|woff|woff2)$).*)",
+  ],
 };

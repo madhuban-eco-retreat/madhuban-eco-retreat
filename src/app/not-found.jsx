@@ -1,7 +1,13 @@
 import Link from "next/link";
+import MainNavigation from "@/components/Header";
+import Footer from "@/components/Footer";
 
+// Renders inside the root layout, which is chrome-free, so this page brings its
+// own header and footer. Without them a 404 would arrive as a bare panel.
 export default function NotFound() {
   return (
+    <>
+      <MainNavigation />
     <section className="min-h-screen flex items-center justify-center  px-6 py-35 sm:py-40">
       <div className="text-center bg-white/80 backdrop-blur rounded-2xl p-0 sm:p-10">
         <h1 className="text-2xl sm:text-4xl font-bold text-primary-gray2 font-primary text-emerald-700 mb-4">
@@ -80,6 +86,8 @@ export default function NotFound() {
         </div>
       </div>
     </section>
+      <Footer />
+    </>
   );
 }
 
