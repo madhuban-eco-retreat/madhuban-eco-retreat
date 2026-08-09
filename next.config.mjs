@@ -1,3 +1,33 @@
+import { PHASE_PRODUCTION_BUILD } from "next/constants.js";
+
+/**
+ * NEXT_PUBLIC_* values are substituted into the output by `next build`; nothing
+ * re-reads them per request. A production build that runs without them emits
+ * bundles with `undefined` baked in, and the result is a site that looks fine
+ * publicly while /admin/* returns 500s and the proxy logs a skipped session
+ * refresh — a failure that survives every later env change until someone
+ * rebuilds. Failing the build is the only point where that is cheap to catch.
+ */
+function assertBuildEnv() {
+  const missing = [
+    "NEXT_PUBLIC_SUPABASE_URL",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+  ].filter((name) => !process.env[name]);
+
+  if (missing.length > 0) {
+    throw new Error(
+      `\n\nBuild aborted — required environment ${
+        missing.length === 1 ? "variable is" : "variables are"
+      } missing:\n` +
+        missing.map((name) => `  - ${name}`).join("\n") +
+        `\n\nThese are compiled into the bundle, so a build without them ships ` +
+        `a broken admin panel that later env changes cannot repair.\n` +
+        `Set them for this environment, then redeploy with the build cache ` +
+        `disabled so the values are re-substituted.\n`,
+    );
+  }
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   /* config options here */
@@ -385,4 +415,9 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+// Gated on the production-build phase so `next dev` and `next start` stay
+// usable in a checkout without a full .env.local.
+export default function config(phase) {
+  if (phase === PHASE_PRODUCTION_BUILD) assertBuildEnv();
+  return nextConfig;
+}

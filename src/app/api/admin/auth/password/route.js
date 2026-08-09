@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
+import { SUPABASE_URL, SUPABASE_ANON_KEY, missingSupabaseEnv } from "@/lib/supabase/env";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit, getClientIP } from "@/lib/ratelimit";
 import { ADMIN_EMAIL } from "@/lib/admin/constants";
@@ -57,16 +58,17 @@ export async function POST(req) {
         return NextResponse.json({ error: INVALID_CREDENTIALS }, { status: 401 });
     }
 
-    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    if (!url || !anonKey) {
-        console.error("[admin/auth/password] Supabase env vars missing");
+    // These are substituted at build time, so an unset one means the deployment
+    // needs rebuilding, not reconfiguring — see lib/supabase/env.
+    const missing = missingSupabaseEnv();
+    if (missing.length > 0) {
+        console.error(`[admin/auth/password] Supabase not configured — ${missing.join(" and ")} unset at build time`);
         return NextResponse.json({ error: "Login is temporarily unavailable." }, { status: 503 });
     }
 
     // Deliberately NOT the cookie-bound client from @/lib/supabase/server: that
     // one would persist the session this call creates.
-    const verifier = createSupabaseClient(url, anonKey, {
+    const verifier = createSupabaseClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
         auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
     });
 

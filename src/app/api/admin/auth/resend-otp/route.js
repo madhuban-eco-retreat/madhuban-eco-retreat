@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
+import { SUPABASE_URL, SUPABASE_ANON_KEY, isSupabaseConfigured } from "@/lib/supabase/env";
 import { checkRateLimit } from "@/lib/ratelimit";
 import {
     OTP_PENDING_COOKIE,
@@ -34,12 +35,10 @@ export async function POST(req) {
         return NextResponse.json({ error: "Your login attempt expired. Please sign in again." }, { status: 440 });
     }
 
-    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    if (!url || !anonKey) {
+    if (!isSupabaseConfigured()) {
         return NextResponse.json({ error: "Login is temporarily unavailable." }, { status: 503 });
     }
-    const client = createSupabaseClient(url, anonKey, {
+    const client = createSupabaseClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
         auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
     });
 

@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from "@/lib/supabase/env";
 
 /**
  * Exchanges a Supabase email link for a session.
@@ -28,7 +29,7 @@ export async function GET(request) {
 
     if (code) {
         const cookieStore = await cookies();
-        const supabase = createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, {
+        const supabase = createServerClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
             cookies: {
                 getAll() {
                     return cookieStore.getAll();
