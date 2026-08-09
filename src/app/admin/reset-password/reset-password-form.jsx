@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { Lock, Eye, EyeOff, CheckCircle2, ArrowLeft } from "lucide-react";
+import { Lock, Eye, EyeOff, CheckCircle2, ArrowLeft, KeyRound, Mail } from "lucide-react";
 import { createClient } from "@/lib/supabase/browser";
 
 /**
@@ -49,6 +49,17 @@ export function ResetPasswordForm() {
     const [error, setError] = useState(null);
     const [done, setDone] = useState(false);
     const [sessionState, setSessionState] = useState("checking");
+
+    // Manual code entry. The reset email leads with a six-digit code precisely
+    // because a code cannot be spent by anything that merely fetches a URL, so
+    // there has to be somewhere to type it — an email that says "enter this
+    // code" and a page with no field for it is a dead end. Verifying a bare
+    // token needs the address alongside it; only the hashed form identifies the
+    // account on its own.
+    const [manualEmail, setManualEmail] = useState("");
+    const [manualCode, setManualCode] = useState("");
+    const [manualBusy, setManualBusy] = useState(false);
+    const [manualError, setManualError] = useState(null);
 
     // One client for the lifetime of the page. Rebuilding it per effect run
     // would restart Supabase's URL detection and re-subscribe the listener.
@@ -149,6 +160,34 @@ export function ResetPasswordForm() {
         };
     }, [supabase, establishSession]);
 
+    async function handleManualCode(e) {
+        e.preventDefault();
+        const token = manualCode.replace(/\D/g, "");
+        const address = manualEmail.trim().toLowerCase();
+        if (manualBusy || !address || token.length !== 6)
+            return;
+        setManualBusy(true);
+        setManualError(null);
+        try {
+            const { error: verifyError } = await supabase.auth.verifyOtp({
+                email: address,
+                token,
+                type: "recovery",
+            });
+            if (verifyError) {
+                setManualError("That code is not valid, or it has expired. Request a new one below.");
+                return;
+            }
+            setSessionState("ready");
+        }
+        catch {
+            setManualError("Could not reach the server. Please try again.");
+        }
+        finally {
+            setManualBusy(false);
+        }
+    }
+
     async function handleSubmit(e) {
         e.preventDefault();
         if (loading)
@@ -201,19 +240,58 @@ export function ResetPasswordForm() {
       </div>);
     }
 
+    // Reached when the link carried nothing usable — including the case that
+    // matters most here, a link already spent by a mail scanner before anyone
+    // clicked it. The six-digit code in the same email survives that, so this
+    // offers it as a way through rather than only an apology.
     if (sessionState === "missing") {
-        return (<div className="bg-white rounded-2xl border border-[var(--color-border)] p-8 shadow-sm text-center">
-        <h3 className="font-display text-2xl text-[var(--color-charcoal)] mb-2">
-          This reset link has expired
-        </h3>
-        <p className="font-body text-sm text-[var(--color-charcoal)]/70">
-          Reset links can only be used once, and they run out after a short
-          while. Request a fresh one and it will work.
+        return (<div className="bg-white rounded-2xl border border-[var(--color-border)] p-8 shadow-sm">
+        <div className="text-center">
+          <div className="w-12 h-12 bg-[var(--color-forest-green)]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <KeyRound className="w-5 h-5 text-[var(--color-forest-green)]" aria-hidden="true"/>
+          </div>
+          <h3 className="font-display text-2xl text-[var(--color-charcoal)] mb-2">
+            Enter your reset code
+          </h3>
+          <p className="font-body text-sm text-[var(--color-charcoal)]/70">
+            We couldn&rsquo;t verify that link — it may have expired or already
+            been opened. Use the 6-digit code from the same email instead.
+          </p>
+        </div>
+
+        <form onSubmit={handleManualCode} className="mt-6 space-y-4">
+          <div>
+            <label htmlFor="recoveryEmail" className={LABEL_CLS}>
+              Email Address
+            </label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted)]" aria-hidden="true"/>
+              <input id="recoveryEmail" type="email" autoComplete="username" value={manualEmail} onChange={(e) => { setManualEmail(e.target.value); setManualError(null); }} placeholder="admin@madhubanecoretreat.com" required className={INPUT_CLS}/>
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="recoveryCode" className={LABEL_CLS}>
+              6-Digit Code
+            </label>
+            <input id="recoveryCode" type="text" inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={manualCode} onChange={(e) => { setManualCode(e.target.value.replace(/\D/g, "")); setManualError(null); }} placeholder="000000" required className="w-full px-4 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-cream)] text-center font-body text-xl font-semibold tracking-[0.4em] text-[var(--color-charcoal)] placeholder:tracking-[0.4em] placeholder:text-[var(--color-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-earth-brown)]/30 focus:border-[var(--color-earth-brown)] transition-colors"/>
+          </div>
+
+          {manualError && (<p role="alert" className="font-body text-xs text-[var(--color-error)]">
+              {manualError}
+            </p>)}
+
+          <button type="submit" disabled={manualBusy || !manualEmail || manualCode.length !== 6} className="w-full py-3 rounded-xl bg-[var(--color-forest-green)] text-[var(--color-ivory)] font-body font-medium text-sm tracking-wide transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed">
+            {manualBusy ? "Verifying…" : "Verify Code"}
+          </button>
+        </form>
+
+        <p className="mt-5 text-center">
+          <Link href="/admin/forgot-password" className="font-body text-xs text-[var(--color-earth-brown)] underline-offset-4 hover:underline">
+            Request new link
+          </Link>
         </p>
-        <Link href="/admin/forgot-password" className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-xl bg-[var(--color-forest-green)] font-body text-sm font-medium text-[var(--color-ivory)] transition-opacity hover:opacity-90">
-          Request new link
-        </Link>
-        <p className="mt-4">
+        <p className="mt-3 text-center">
           <Link href="/admin/login" className="inline-flex items-center gap-1.5 font-body text-xs text-[var(--color-charcoal)]/60 transition-colors hover:text-[var(--color-charcoal)]">
             <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true"/>
             Back to login
