@@ -2,7 +2,7 @@
 import "server-only";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { computeRoomGstRate, computeGst } from "@/lib/gst";
-import { extraGuestCharges } from "@/lib/booking/occupancy";
+import { extraGuestCharges, adultsIncludedFor, maxAdultsFor } from "@/lib/booking/occupancy";
 function diffDays(a, b) {
     const msPerDay = 86400000;
     return Math.round((new Date(b).getTime() - new Date(a).getTime()) / msPerDay);
@@ -25,6 +25,13 @@ export async function calculatePricing(params) {
     const minNights = room.min_nights ?? 1;
     if (nights < minNights)
         throw new Error(`Minimum stay is ${minNights} night${minNights > 1 ? "s" : ""}`);
+    // The request schema can only bound adults by the largest figure any room
+    // allows, because it has no room in hand. The authoritative per-room cap is
+    // here, where the slug is known — without it a hand-crafted request could
+    // put six adults in a Safari Tent at the double-occupancy rate.
+    const maxAdults = maxAdultsFor(room.slug);
+    if (adults > maxAdults)
+        throw new Error(`This room takes up to ${maxAdults} adult${maxAdults > 1 ? "s" : ""}`);
     // Apply pricing rules — take the highest multiplier that applies to the date range.
     // pricing_rules has: rule_type, date_from, date_to, multiplier (no is_active/priority columns).
     const { data: rules } = await supabase
@@ -48,7 +55,7 @@ export async function calculatePricing(params) {
     const baseNightlyTotal = +(effectiveNightlyRate * nights).toFixed(2);
     // Extra occupants are taxable base, so they are added before GST — not
     // after, and not inside the room line.
-    const extras = extraGuestCharges({ adults, children, nights });
+    const extras = extraGuestCharges({ adults, children, nights, roomSlug: room.slug });
     // Apply coupon
     let discountAmount = 0;
     let appliedCouponCode = null;
@@ -96,6 +103,10 @@ export async function calculatePricing(params) {
         adults,
         children,
         infants,
+        // Surfaced so the summary can say what the tariff already covers rather
+        // than leaving a guest to infer it from the absence of a surcharge.
+        adultsIncluded: adultsIncludedFor(room.slug),
+        maxAdults,
         pricePerNight: effectiveNightlyRate,
         baseNightlyTotal,
         extraGuestLines: extras.lines,

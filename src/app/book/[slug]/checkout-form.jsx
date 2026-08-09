@@ -3,7 +3,13 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Check, ChevronDown } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
-import { MAX_ADULTS, MAX_CHILDREN, MAX_INFANTS } from "@/lib/booking/occupancy";
+import { MAX_CHILDREN, MAX_INFANTS, EXTRA_ADULT_RATE, DEFAULT_ADULTS_INCLUDED, DEFAULT_MAX_ADULTS } from "@/lib/booking/occupancy";
+
+/** "two" reads better than "2" in a sentence; anything unexpected falls back to the digit. */
+const ADULT_WORDS = ["zero", "one", "two", "three", "four", "five", "six"];
+function adultWord(n) {
+    return ADULT_WORDS[n] ?? String(n);
+}
 const TRUST_BADGES = [
     "Best rate, guaranteed",
     "No booking fees, ever",
@@ -38,13 +44,13 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  */
 const COUPON_RETRY_DELAY_MS = 500;
 const COUPON_WARN_AFTER_ATTEMPTS = 3;
-export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCheckOut, defaultAdults, defaultChildren, minNights, }) {
+export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCheckOut, defaultAdults, defaultChildren, minNights, adultsIncluded = DEFAULT_ADULTS_INCLUDED, maxAdults = DEFAULT_MAX_ADULTS, }) {
     const router = useRouter();
     const today = todayStr();
     // Booking params
     const [checkIn, setCheckIn] = useState(defaultCheckIn || today);
     const [checkOut, setCheckOut] = useState(defaultCheckOut || addDays(defaultCheckIn || today, Math.max(minNights, 1)));
-    const [adults, setAdults] = useState(defaultAdults || 2);
+    const [adults, setAdults] = useState(defaultAdults || adultsIncluded);
     const [children, setChildren] = useState(defaultChildren || 0);
     const [infants, setInfants] = useState(0);
     const [couponCode, setCouponCode] = useState("");
@@ -333,19 +339,25 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
                 Minimum stay: {minNights} nights for this room.
               </p>)}
 
-            {/* Rates are quoted on double occupancy, so the surcharges are
-                spelled out in the options themselves rather than surfacing as
-                an unexplained jump in the total. */}
+            {/* The surcharge is spelled out in each option rather than surfacing
+                as an unexplained jump in the total. Where it starts depends on
+                the room: most include two adults, the Pool Side Villa four. */}
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
               <div>
                 <label htmlFor="adults" className={LABEL_CLS}>
                   Adults
                 </label>
                 <select id="adults" value={adults} onChange={(e) => setAdults(Number(e.target.value))} className={INPUT_CLS}>
-                  {Array.from({ length: MAX_ADULTS }, (_, i) => i + 1).map((n) => (<option key={n} value={n}>
-                      {n} adult{n > 1 ? "s" : ""}
-                      {n > 2 ? " (+₹2,000/night)" : ""}
-                    </option>))}
+                  {Array.from({ length: maxAdults }, (_, i) => i + 1).map((n) => {
+            const extra = Math.max(0, n - adultsIncluded);
+            return (<option key={n} value={n}>
+                        {n} adult{n > 1 ? "s" : ""}
+                        {n === adultsIncluded ? " (included in base price)" : ""}
+                        {extra > 0
+                    ? ` (+₹${(EXTRA_ADULT_RATE * extra).toLocaleString("en-IN")}/night)`
+                    : ""}
+                      </option>);
+        })}
                 </select>
               </div>
 
@@ -375,7 +387,8 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
             </div>
 
             <p className={NOTE_CLS}>
-              Rate covers two adults. Extra adult ₹2,000/night and child (5–12)
+              Rate covers {adultWord(adultsIncluded)} adults. Extra adult
+              ₹{EXTRA_ADULT_RATE.toLocaleString("en-IN")}/night and child (5–12)
               ₹1,500/night, plus GST. Infants stay free.
             </p>
           </fieldset>
