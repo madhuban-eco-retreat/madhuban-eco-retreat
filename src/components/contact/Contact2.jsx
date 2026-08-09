@@ -183,7 +183,7 @@ Message: ${data.message}
                 mind and body.
               </p>
               <Link
-                href="/booking"
+                href="/stay-in-ratapani-tiger-reserve"
                 className="inline-block rounded-full bg-[#6e6146] px-6 py-3 text-white font-semibold hover:bg-[#5b503a] transition "
               >
                 Book Now

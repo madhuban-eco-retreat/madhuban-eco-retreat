@@ -1,14 +1,17 @@
 import Link from "next/link";
 import Image from "next/image";
+import { ALL_ROOMS_URL } from "@/lib/rooms/booking-links";
 export default function BookingLayout({ children, }) {
-    return (<div className="min-h-screen bg-cream">
+    // booking-typography maps this subtree's font utilities onto the marketing
+    // site's faces — see the matching block in styles/globals.css.
+    return (<div className="booking-typography min-h-screen bg-cream">
       {/* Minimal booking header */}
       <header className="sticky top-0 z-40 border-b border-border bg-cream/95 backdrop-blur-sm">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6 lg:px-8">
           <Link href="/" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-earth-brown focus-visible:ring-offset-2">
             <Image src={`${process.env.NEXT_PUBLIC_R2_BASE ?? ""}/logo/madhuban-logo.webp`} alt="Madhuban Eco Retreat" width={120} height={40} className="h-10 w-auto" priority/>
           </Link>
-          <Link href="/stay" className="font-body text-sm text-earth-brown underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-earth-brown focus-visible:ring-offset-2">
+          <Link href={ALL_ROOMS_URL} className="font-body text-sm text-earth-brown underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-earth-brown focus-visible:ring-offset-2">
             ← Back to Rooms
           </Link>
         </div>

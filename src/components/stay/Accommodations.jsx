@@ -70,7 +70,7 @@ const accommodationsData = [
   {
     id: 2,
     name: "Mud Houses",
-    slug: "mud-villa",
+    slug: "mud-house-standard",
     image:
       "/images/stay/accommodations/mud-house-madhuban-eco-retreat-bhopal.avif",
     altText: "Exterior view of a charming mud villa nestled in greenery",
@@ -99,7 +99,7 @@ const accommodationsData = [
   {
     id: 3,
     name: "Pool Side Villa",
-    slug: "pool-side-room",
+    slug: "pool-side-villa",
     image:
       "/images/stay/accommodations/madhuban-eco-retreat-pool-side-view.webp",
     altText: "Poolside room with beautiful garden views",

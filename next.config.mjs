@@ -32,6 +32,23 @@ function assertBuildEnv() {
 const nextConfig = {
   /* config options here */
 
+  // @react-pdf/renderer stays a real Node dependency rather than being bundled.
+  // It is not currently broken without this — the build succeeds either way —
+  // but it is the documented handling for a server-only package that resolves
+  // fonts and internal assets at runtime, and it removes a class of bundler
+  // regression from a path that issues tax documents.
+  serverExternalPackages: ["@react-pdf/renderer"],
+
+  // InvoicePDF reads the Noto woff files with fs.readFileSync at module scope.
+  // The tracer does currently follow path.join(process.cwd(), "public", "fonts")
+  // and pulls all four files into the function on its own — verified against the
+  // route's .nft.json with this entry removed. It is pinned anyway because that
+  // inference is a heuristic rather than a guarantee, and if it ever stops
+  // holding the failure is an ENOENT at import that takes invoicing down.
+  outputFileTracingIncludes: {
+    "/api/admin/invoices/[id]/pdf": ["./public/fonts/**"],
+  },
+
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
@@ -66,6 +83,36 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // ── Room slug renames ──────────────────────────────────────────────
+      // The rooms table was re-slugged (mud-villa → mud-house-standard,
+      // mud-house-2 → mud-house-premium, pool-side-room → pool-side-villa).
+      // These keep old indexed URLs and any shared booking links alive.
+      {
+        source: "/book/mud-villa",
+        destination: "/book/mud-house-standard",
+        permanent: true,
+      },
+      {
+        source: "/book/mud-house-2",
+        destination: "/book/mud-house-premium",
+        permanent: true,
+      },
+      {
+        source: "/book/pool-side-room",
+        destination: "/book/pool-side-villa",
+        permanent: true,
+      },
+      {
+        source: "/stay-in-ratapani-tiger-reserve/mud-villa",
+        destination: "/stay-in-ratapani-tiger-reserve/mud-house-standard",
+        permanent: true,
+      },
+      {
+        source: "/stay-in-ratapani-tiger-reserve/pool-side-room",
+        destination: "/stay-in-ratapani-tiger-reserve/pool-side-villa",
+        permanent: true,
+      },
+
       {
         source: "/stay",
         destination: "/stay-in-ratapani-tiger-reserve",
@@ -173,8 +220,9 @@ const nextConfig = {
       },
 
       {
+        // Retargeted to the new slug so this does not 301 into another 301.
         source: "/rooms/mud-house",
-        destination: "/stay-in-ratapani-tiger-reserve/mud-villa",
+        destination: "/stay-in-ratapani-tiger-reserve/mud-house-standard",
         permanent: true,
       },
 

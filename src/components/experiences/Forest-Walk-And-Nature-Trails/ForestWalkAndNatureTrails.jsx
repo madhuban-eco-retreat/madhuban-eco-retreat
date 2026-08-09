@@ -92,7 +92,7 @@ const ForestWalkAndNatureTrails = () => {
                       natural treasures. —{" "}
                     </p>
                     <Link
-                      href="/booking"
+                      href="/stay-in-ratapani-tiger-reserve"
                       className="text-primary-gray2 underline "
                     >
                       Book Your Nature Trail Experience Now

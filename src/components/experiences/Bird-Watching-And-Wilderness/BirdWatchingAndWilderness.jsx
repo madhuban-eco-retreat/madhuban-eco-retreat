@@ -98,7 +98,7 @@ const BirdWatchingAndWilderness = () => {
                       the forest.—{" "}
                     </p>
                     <Link
-                      href="/booking"
+                      href="/stay-in-ratapani-tiger-reserve"
                       className="list-disc list-inside underline text-primary-gray2  space-y-2"
                     >
                       Book Your Bird Watching Experience Now

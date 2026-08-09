@@ -89,7 +89,7 @@ const ReadyForEcoRetreat = () => {
           >
             <motion.div variants={itemVariants}>
               <Link
-                href="/booking"
+                href="/stay-in-ratapani-tiger-reserve"
                 className="px-10 py-4 bg-[#D1C8C1] hover:bg-[#b8ada5] text-[rgb(110,97,70)] transition-all rounded-md font-primary font-extrabold text-xl tracking-wider inline-block shadow-lg"
               >
                 Book Your Stay

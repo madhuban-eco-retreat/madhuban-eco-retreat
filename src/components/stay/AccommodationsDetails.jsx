@@ -15,6 +15,7 @@ import StayWhyChooseUs from "@/components/stay/Stay-WhyChooseUs";
 import CommonFaqs from "@/common-components/faqs/CommonFaqs";
 import { accommodationsData } from "./Stay.functions";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
+import { STAY_PAGE_CTAS, ALL_ROOMS_URL } from "@/lib/rooms/booking-links";
 
 const getAccommodation = (slug) => {
   return accommodationsData.find((acc) => acc.slug === slug);
@@ -35,6 +36,11 @@ const AccommodationDetail = () => {
     accommodation?.galleryImages[
       Math.floor(Math.random() * accommodation.galleryImages.length)
     ];
+  // Falls back to the room index rather than a dead /book/[slug] if a page is
+  // ever added to the data array before it exists in the booking engine.
+  const ctas = STAY_PAGE_CTAS[slug] ?? [
+    { label: "Book Your Stay", href: ALL_ROOMS_URL },
+  ];
 
   if (!accommodation) {
     return (
@@ -280,17 +286,46 @@ const AccommodationDetail = () => {
                     </div>
                   )}
 
-                  <Link
-                    href="/booking"
-                    className="font-inter w-full flex items-center justify-center bg-[rgb(110,97,70)] text-white font-medium py-3 px-6 rounded-md hover:bg-[rgb(123,108,80)] p-text"
+                  {/* Each room books its own inventory. The mud house page
+                      sells two room types, so it renders two CTAs side by side;
+                      camping is enquiry-only and leaves for WhatsApp. */}
+                  <div
+                    className={`flex flex-col gap-3 ${
+                      ctas.length > 1 ? "sm:flex-row" : ""
+                    }`}
                   >
-                    <CalendarDays
-                      size={20}
-                      className="mr-2"
-                      aria-label="calender"
-                    />
-                    Book Your Stay
-                  </Link>
+                    {ctas.map((cta) =>
+                      cta.external ? (
+                        <a
+                          key={cta.href}
+                          href={cta.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-inter w-full flex items-center justify-center bg-[rgb(110,97,70)] text-white font-medium py-3 px-6 rounded-md hover:bg-[rgb(123,108,80)] p-text"
+                        >
+                          <CalendarDays
+                            size={20}
+                            className="mr-2"
+                            aria-label="calender"
+                          />
+                          {cta.label}
+                        </a>
+                      ) : (
+                        <Link
+                          key={cta.href}
+                          href={cta.href}
+                          className="font-inter w-full flex items-center justify-center bg-[rgb(110,97,70)] text-white font-medium py-3 px-6 rounded-md hover:bg-[rgb(123,108,80)] p-text"
+                        >
+                          <CalendarDays
+                            size={20}
+                            className="mr-2"
+                            aria-label="calender"
+                          />
+                          {cta.label}
+                        </Link>
+                      ),
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

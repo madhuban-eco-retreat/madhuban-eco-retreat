@@ -1,6 +1,15 @@
 // @ts-check
+/**
+ * GST slab for a room by its nightly tariff: 5% at ₹7,500 and below, 18% above.
+ *
+ * This read 12% for the lower slab, which is the pre-reform rate and disagreed
+ * with the 5% the stay pages have always advertised — the same room was quoted
+ * one way in marketing and taxed another in the booking engine. Room prices are
+ * stored GST-inclusive, so correcting the rate moves the base/GST split on the
+ * breakdown without changing what a guest is charged.
+ */
 export function gstRate(nightlyRate) {
-    return nightlyRate > 7500 ? 18 : 12;
+    return nightlyRate > 7500 ? 18 : 5;
 }
 /** Always derived from base price — never read stored gst_rate column. */
 export function computeRoomGstRate(basePricePerNight) {

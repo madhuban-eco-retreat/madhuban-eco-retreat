@@ -32,8 +32,8 @@ const sitemapUrls = [
   { url: "/cookies-and-consent-policy", priority: 0.8 },
   { url: "/disclaimer", priority: 0.8 },
   { url: "/stay-in-ratapani-tiger-reserve/safari-tent", priority: 0.64 },
-  { url: "/stay-in-ratapani-tiger-reserve/mud-villa", priority: 0.64 },
-  { url: "/stay-in-ratapani-tiger-reserve/pool-side-room", priority: 0.64 },
+  { url: "/stay-in-ratapani-tiger-reserve/mud-house-standard", priority: 0.64 },
+  { url: "/stay-in-ratapani-tiger-reserve/pool-side-villa", priority: 0.64 },
   { url: "/stay-in-ratapani-tiger-reserve/glamping-tents", priority: 0.64 },
   { url: "/stay-in-ratapani-tiger-reserve/camping-tent", priority: 0.64 },
 ];
