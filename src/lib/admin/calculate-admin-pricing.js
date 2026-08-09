@@ -1,6 +1,6 @@
 import "server-only";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { computeRoomGstRate, priceBreakdown } from "@/lib/gst";
+import { computeRoomGstRate, addGst } from "@/lib/gst";
 function diffDays(a, b) {
     return Math.round((new Date(b).getTime() - new Date(a).getTime()) / 86400000);
 }
@@ -27,9 +27,11 @@ export async function calculateAdminPricing(params) {
     const basePricePerNight = Number(room.base_price_per_night);
     const roomTotal = +(basePricePerNight * nights).toFixed(2);
     const addonsTotal = +calcAddonTotal(addons, nights).toFixed(2);
-    const subtotalInclusive = +(roomTotal + addonsTotal).toFixed(2);
+    // Room tariffs and addon prices are both pre-GST, so the subtotal is the
+    // taxable base and the tax goes on top of it.
+    const subtotalBeforeGst = +(roomTotal + addonsTotal).toFixed(2);
     const gstRatePct = computeRoomGstRate(basePricePerNight);
-    const { base: subtotalBeforeGst, gst: gstAmount } = priceBreakdown(subtotalInclusive, gstRatePct);
+    const { gst: gstAmount, total: totalAmount } = addGst(subtotalBeforeGst, gstRatePct);
     return {
         roomId: room.id,
         roomName: room.name,
@@ -39,10 +41,12 @@ export async function calculateAdminPricing(params) {
         basePricePerNight,
         roomTotal,
         addonsTotal,
-        subtotalInclusive,
         gstRatePct,
         subtotalBeforeGst,
         gstAmount,
-        totalAmount: subtotalInclusive,
+        totalAmount,
+        // Kept as an alias so existing admin callers reading `subtotalInclusive`
+        // get the payable figure rather than a stale pre-tax one.
+        subtotalInclusive: totalAmount,
     };
 }

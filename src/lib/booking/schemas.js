@@ -1,6 +1,13 @@
 import { z } from "zod";
 import { isValidPhone, PHONE_ERROR } from "@/lib/validation/phone";
+import { MAX_ADULTS, MAX_CHILDREN, MAX_INFANTS } from "@/lib/booking/occupancy";
 const dateStr = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Use YYYY-MM-DD format");
+// Occupancy caps are enforced server-side as well as in the form: the counts
+// drive extra-guest charges, so a hand-crafted request must not be able to book
+// five adults at the double-occupancy rate.
+const adults = z.number().int().min(1).max(MAX_ADULTS);
+const children = z.number().int().min(0).max(MAX_CHILDREN);
+const infants = z.number().int().min(0).max(MAX_INFANTS).optional().default(0);
 export const checkAvailabilitySchema = z.object({
     roomId: z.string().uuid(),
     checkIn: dateStr,
@@ -13,8 +20,9 @@ export const calculatePriceSchema = z.object({
     roomSlug: z.string().min(1),
     checkIn: dateStr,
     checkOut: dateStr,
-    adults: z.number().int().min(1).max(10),
-    children: z.number().int().min(0).max(10),
+    adults,
+    children,
+    infants,
     couponCode: z.string().max(30).optional(),
 }).refine((d) => d.checkOut > d.checkIn, {
     message: "Check-out must be after check-in",
@@ -24,8 +32,9 @@ export const createBookingSchema = z.object({
     roomSlug: z.string().min(1),
     checkIn: dateStr,
     checkOut: dateStr,
-    adults: z.number().int().min(1).max(10),
-    children: z.number().int().min(0).max(10),
+    adults,
+    children,
+    infants,
     guestName: z.string().min(1).max(100),
     guestEmail: z.string().email(),
     guestPhone: z.string().refine(isValidPhone, PHONE_ERROR),

@@ -1,6 +1,7 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import Link from "next/link";
 import { ALL_ROOMS_URL, stayPageForRoomSlug } from "@/lib/rooms/booking-links";
+import { DownloadConfirmationButton } from "./download-pdf";
 export const metadata = {
     title: "Booking Confirmed",
     robots: { index: false, follow: false },
@@ -200,6 +201,24 @@ export default async function ConfirmationPage({ searchParams }) {
             <li>• 60 km from Bhopal via NH-46 · GPS: 22.88°N, 77.52°E</li>
           </ul>
         </section>
+
+        {/* Downloadable copy — guests routinely need this at the gate or for
+            an expense claim, and the email can be slow or filtered. */}
+        <div className="mb-6">
+          <DownloadConfirmationButton booking={{
+            bookingRef: booking.booking_ref,
+            guestName: guest?.name ?? "Guest",
+            roomName: room?.name ?? "Room",
+            checkIn: formatDate(booking.checkin),
+            checkOut: formatDate(booking.checkout),
+            nights,
+            guestSummary: `${booking.num_adults} adult${booking.num_adults !== 1 ? "s" : ""}${booking.num_children > 0 ? `, ${booking.num_children} child${booking.num_children !== 1 ? "ren" : ""}` : ""}`,
+            baseAmount,
+            gstAmount,
+            gstRate: gstRatePct,
+            totalAmount,
+        }}/>
+        </div>
 
         {/* Contact — the number is spelled out rather than hidden behind the
             button, so it survives a printed or screenshotted confirmation. */}

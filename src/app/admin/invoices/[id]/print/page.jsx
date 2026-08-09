@@ -1,10 +1,9 @@
-import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { redirect, notFound } from "next/navigation";
 import { amountToWords, fmtINR } from "@/lib/gst";
 import { PrintControls } from "./print-controls";
 export const metadata = { title: "Invoice — Madhuban Eco Retreat" };
-import { ADMIN_EMAIL } from "@/lib/admin/constants";
+import { assertAdmin } from "@/lib/admin/auth";
 const R2_BASE = process.env.NEXT_PUBLIC_R2_BASE ?? "";
 function fmtDate(iso) {
     return new Date(iso + "T00:00:00").toLocaleDateString("en-IN", {
@@ -13,10 +12,11 @@ function fmtDate(iso) {
 }
 export default async function InvoicePrintPage({ params }) {
     const { id } = await params;
-    // Auth check (outside (authed) layout — must verify manually)
-    const authClient = await createClient();
-    const { data: { user } } = await authClient.auth.getUser();
-    if (!user || user.email !== ADMIN_EMAIL)
+    // Outside the (authed) layout, so this verifies for itself — but via the
+    // shared rule. It previously demanded an exact ADMIN_EMAIL match, which
+    // locked out provisioned staff whose address simply is not that one.
+    const user = await assertAdmin();
+    if (!user)
         redirect("/admin/login");
     const supabase = createAdminClient();
     const { data, error } = await supabase

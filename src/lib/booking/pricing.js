@@ -1,13 +1,14 @@
 // @ts-check
 import "server-only";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { computeRoomGstRate, priceBreakdown } from "@/lib/gst";
+import { computeRoomGstRate, addGst } from "@/lib/gst";
+import { extraGuestCharges } from "@/lib/booking/occupancy";
 function diffDays(a, b) {
     const msPerDay = 86400000;
     return Math.round((new Date(b).getTime() - new Date(a).getTime()) / msPerDay);
 }
 export async function calculatePricing(params) {
-    const { roomSlug, checkIn, checkOut, adults, children, couponCode } = params;
+    const { roomSlug, checkIn, checkOut, adults, children, infants = 0, couponCode } = params;
     const supabase = createAdminClient();
     // Fetch room
     const { data: room, error: roomError } = await supabase
@@ -41,8 +42,13 @@ export async function calculatePricing(params) {
     }
     const baseNightlyRate = Number(room.base_price_per_night);
     const effectiveNightlyRate = +(baseNightlyRate * multiplier).toFixed(2);
+    // Slab is keyed to the room's own nightly tariff, not the post-extras total,
+    // so adding a guest never silently moves a room into a higher bracket.
     const gstRatePct = computeRoomGstRate(baseNightlyRate);
     const baseNightlyTotal = +(effectiveNightlyRate * nights).toFixed(2);
+    // Extra occupants are taxable base, so they are added before GST — not
+    // after, and not inside the room line.
+    const extras = extraGuestCharges({ adults, children, nights });
     // Apply coupon
     let discountAmount = 0;
     let appliedCouponCode = null;
@@ -72,9 +78,11 @@ export async function calculatePricing(params) {
             }
         }
     }
-    const discountedTotal = +(baseNightlyTotal - discountAmount).toFixed(2);
-    const { base: subtotalBeforeGst, gst: gstAmount } = priceBreakdown(discountedTotal, gstRatePct);
-    const totalAmount = discountedTotal;
+    // Taxable base = room nights + extra occupants − discount. GST is then
+    // charged on top of that, so the guest pays base + GST rather than the
+    // tariff having the tax carved out of it.
+    const subtotalBeforeGst = +(baseNightlyTotal + extras.total - discountAmount).toFixed(2);
+    const { gst: gstAmount, total: totalAmount } = addGst(subtotalBeforeGst, gstRatePct);
     return {
         roomId: room.id,
         roomSlug: room.slug,
@@ -84,8 +92,11 @@ export async function calculatePricing(params) {
         nights,
         adults,
         children,
+        infants,
         pricePerNight: effectiveNightlyRate,
         baseNightlyTotal,
+        extraGuestLines: extras.lines,
+        extraGuestTotal: extras.total,
         discountAmount,
         couponCode: appliedCouponCode,
         gstRate: gstRatePct,

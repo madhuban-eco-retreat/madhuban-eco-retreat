@@ -42,6 +42,7 @@ export function ReviewClient({ slug }) {
                     checkOut: draft.pricing.checkOut,
                     adults: draft.pricing.adults,
                     children: draft.pricing.children,
+                    infants: draft.pricing.infants ?? 0,
                     guestName: draft.guest.name,
                     guestEmail: draft.guest.email,
                     guestPhone: draft.guest.phone,
@@ -50,6 +51,20 @@ export function ReviewClient({ slug }) {
                 }),
             });
             const data = (await res.json());
+            // Availability is settled on step 1, but the server re-checks before
+            // taking money because another guest can take the dates in between.
+            // That verdict belongs back on the date picker, not here — this page
+            // has no way to change dates, so showing the error would strand the
+            // guest. 409 sends them to step 1 with the reason carried across.
+            if (res.status === 409) {
+                const reason = data.error ?? "These dates are no longer available.";
+                try {
+                    sessionStorage.setItem("booking_unavailable", reason);
+                }
+                catch { /* non-fatal — step 1 re-checks on load anyway */ }
+                router.replace(`/book/${slug}?checkIn=${draft.pricing.checkIn}&checkOut=${draft.pricing.checkOut}`);
+                return;
+            }
             if (!res.ok) {
                 setError(data.error ?? "Could not create booking. Please try again.");
                 setSubmitting(false);
@@ -139,27 +154,33 @@ export function ReviewClient({ slug }) {
             <span>&#8377;{formatPrice(pricing.baseNightlyTotal)}</span>
           </div>
 
+          {pricing.extraGuestLines?.map((line) => (<div key={line.key} className="flex justify-between text-charcoal/70">
+              <span>
+                {line.label} × {line.qty}
+              </span>
+              <span>&#8377;{formatPrice(line.amount)}</span>
+            </div>))}
+
           {pricing.discountAmount > 0 && (<div className="flex justify-between text-[var(--color-moss-green)]">
               <span>Coupon discount ({pricing.couponCode})</span>
               <span>−&#8377;{formatPrice(pricing.discountAmount)}</span>
             </div>)}
 
-          {/* Tariffs are stored GST-inclusive, so the base and tax are
-              back-calculated from the total. Showing all three lines makes the
-              arithmetic checkable rather than asking the guest to trust a
-              single "incl. GST" figure. */}
+          {/* Tariffs exclude GST, so the tax is a line added on top rather than
+              a share carved out of the total. Showing all three lines makes the
+              arithmetic checkable. */}
           <div className="flex justify-between border-t border-border pt-3 text-charcoal/70">
-            <span>Base price (excl. GST)</span>
+            <span>Subtotal (excl. GST)</span>
             <span>&#8377;{formatPrice(pricing.subtotalBeforeGst)}</span>
           </div>
 
           <div className="flex justify-between text-charcoal/70">
-            <span>GST @ {pricing.gstRate}%</span>
+            <span>GST ({pricing.gstRate}%)</span>
             <span>+ &#8377;{formatPrice(pricing.gstAmount)}</span>
           </div>
 
           <div className="flex justify-between border-t border-border pt-3 text-base font-semibold text-charcoal">
-            <span>Total payable</span>
+            <span>Total</span>
             <span>&#8377;{formatPrice(pricing.totalAmount)}</span>
           </div>
 

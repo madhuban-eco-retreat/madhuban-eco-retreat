@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { computeRoomGstRate, isInterStateGuest, computeTaxBreakdown, getFinancialYear, priceBreakdownInclusive } from "@/lib/gst";
+import { computeRoomGstRate, isInterStateGuest, computeTaxBreakdown, getFinancialYear } from "@/lib/gst";
+import { extraGuestCharges } from "@/lib/booking/occupancy";
 import { assertAdmin } from "@/lib/admin/auth";
 const ISSUER = {
     legal_name: "Somaiya Properties And Investments Private Limited",
@@ -71,8 +72,16 @@ export async function POST(req) {
     // Format dates for description
     const checkinLabel = checkinDate.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
     const checkoutLabel = checkoutDate.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
-    // Build line items — amounts are GST-inclusive (what the guest paid)
+    // Build line items — amounts are pre-GST, matching how rooms are tariffed.
     const addons = (Array.isArray(booking.addons) ? booking.addons : []);
+    // Extra occupants are charged on the booking but are not addon rows, so they
+    // are reconstructed from the stored headcount. Without these the invoice
+    // total would fall short of what the guest actually paid.
+    const extras = extraGuestCharges({
+        adults: booking.num_adults ?? 0,
+        children: booking.num_children ?? 0,
+        nights,
+    });
     const lineItems = [
         {
             description: `${room.name} · ${nights} Night${nights > 1 ? "s" : ""} · ${checkinLabel} to ${checkoutLabel}`,
@@ -81,6 +90,13 @@ export async function POST(req) {
             rate: room.base_price_per_night,
             amount: Math.round(room.base_price_per_night * nights * 100) / 100,
         },
+        ...extras.lines.map((l) => ({
+            description: `${l.label} × ${l.qty} · ${nights} night${nights > 1 ? "s" : ""}`,
+            hsn: "9963",
+            qty: l.qty * nights,
+            rate: l.ratePerNight,
+            amount: l.amount,
+        })),
         ...addons.map((a) => ({
             description: `${a.label} × ${a.qty}`,
             hsn: "9963",
@@ -91,9 +107,9 @@ export async function POST(req) {
     ];
     // GST rate always computed from base price — never read stored column
     const gstRatePct = computeRoomGstRate(room.base_price_per_night);
-    // Inclusive total → back-calculate pre-tax base and GST portion
-    const inclusiveTotal = Math.round(lineItems.reduce((s, i) => s + i.amount, 0) * 100) / 100;
-    const { base: taxableAmount } = priceBreakdownInclusive(inclusiveTotal, gstRatePct);
+    // Line amounts exclude GST, so their sum IS the taxable value; the tax is
+    // added on top by computeTaxBreakdown below.
+    const taxableAmount = Math.round(lineItems.reduce((s, i) => s + i.amount, 0) * 100) / 100;
     // Determine guest state for intra/inter-state split
     const isCorporate = !!booking.corporate_gstin;
     const rawAddress = isCorporate ? booking.corporate_address : guest?.address ?? null;
