@@ -10,6 +10,11 @@ export default async function AuthedLayout({ children }) {
     const { user, authorized, reason } = await resolveAdminUser();
     if (!user)
         redirect('/admin/login');
+    // An expired admin window is not an authorisation problem — the account is
+    // fine, the login has simply run out. Signing in again fixes it, so send
+    // them to do that rather than showing a wall that offers no way forward.
+    if (reason === 'session_expired')
+        redirect('/admin/login?expired=1');
     if (!authorized)
         return <NotProvisioned email={user.email} reason={reason}/>;
     return (<div className="flex min-h-screen bg-admin-canvas-bg">

@@ -24,6 +24,18 @@ const LIMITS = {
      * leaving room for a guest mistyping one off an email.
      */
     coupon: { tokens: 5, window: "1 h", prefix: "madhuban:coupon" },
+    /**
+     * Admin password attempts. The panel has a handful of staff accounts, so
+     * ten tries a quarter-hour is generous for a human and useless for a
+     * dictionary run against a known address.
+     */
+    adminPassword: { tokens: 10, window: "15 m", prefix: "madhuban:admin-pw" },
+    /**
+     * OTP submissions. A six-digit code is a million possibilities; capping
+     * guesses at ten per quarter-hour keeps the odds of hitting one inside its
+     * ten-minute life negligible.
+     */
+    adminOtp: { tokens: 10, window: "15 m", prefix: "madhuban:admin-otp" },
 };
 
 const _limiters = new Map();
