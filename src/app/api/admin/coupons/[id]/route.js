@@ -2,8 +2,11 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { assertAdmin } from "@/lib/admin/auth";
+import { couponCodeSchema } from "@/lib/admin/coupon-code";
 const updateSchema = z.object({
-    code: z.string().min(2).max(30).transform((v) => v.trim().toUpperCase()).optional(),
+    // Same floor as creation — otherwise a long code could be created and then
+    // renamed to a two-character one, putting it straight back in guessing range.
+    code: couponCodeSchema.optional(),
     discount_type: z.enum(["percentage", "flat"]).optional(),
     discount_value: z.number().positive().optional(),
     min_booking_value: z.number().min(0).optional(),

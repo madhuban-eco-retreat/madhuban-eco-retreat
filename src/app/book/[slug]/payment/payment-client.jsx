@@ -143,7 +143,7 @@ export function PaymentClient({ bookingId, roomSlug, totalAmountRupees, guestNam
             </p>)}
 
           <p className="mb-3 text-center font-body text-xs text-charcoal/70">
-            Free cancellation up to 7 days before check-in — full refund, no questions asked.
+            Cancellation policy applies · See details at checkout
           </p>
 
           <button onClick={handlePay} disabled={paying || !scriptReady || !orderData} className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-earth-brown font-body text-base font-medium text-ivory transition-colors duration-200 hover:bg-earth-brown/90 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-earth-brown focus-visible:ring-offset-2">
@@ -173,7 +173,7 @@ export function PaymentClient({ bookingId, roomSlug, totalAmountRupees, guestNam
               <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 text-earth-brown" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                 <path d="M5 12l4 4L19 6" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-              <span>Free cancellation up to 7 days before check-in</span>
+              <span>Cancellation policy applies · See details at checkout</span>
             </li>
           </ul>
 

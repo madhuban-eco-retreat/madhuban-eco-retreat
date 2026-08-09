@@ -166,17 +166,23 @@ export function ReviewClient({ slug }) {
               <span>−&#8377;{formatPrice(pricing.discountAmount)}</span>
             </div>)}
 
-          {/* Tariffs exclude GST, so the tax is a line added on top rather than
-              a share carved out of the total. Showing all three lines makes the
-              arithmetic checkable. */}
+          {/* Tariffs exclude GST, so the tax is added on top rather than carved
+              out of the total, and it is shown as the CGST and SGST halves the
+              supply is actually taxed as. Listing every line makes the
+              arithmetic checkable against the invoice that follows. */}
           <div className="flex justify-between border-t border-border pt-3 text-charcoal/70">
             <span>Subtotal (excl. GST)</span>
             <span>&#8377;{formatPrice(pricing.subtotalBeforeGst)}</span>
           </div>
 
           <div className="flex justify-between text-charcoal/70">
-            <span>GST ({pricing.gstRate}%)</span>
-            <span>+ &#8377;{formatPrice(pricing.gstAmount)}</span>
+            <span>CGST ({pricing.cgstRate}%)</span>
+            <span>+ &#8377;{formatPrice(pricing.cgstAmount)}</span>
+          </div>
+
+          <div className="flex justify-between text-charcoal/70">
+            <span>SGST ({pricing.sgstRate}%)</span>
+            <span>+ &#8377;{formatPrice(pricing.sgstAmount)}</span>
           </div>
 
           <div className="flex justify-between border-t border-border pt-3 text-base font-semibold text-charcoal">

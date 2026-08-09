@@ -52,7 +52,13 @@ const styles = StyleSheet.create({
 });
 
 function money(n) {
-  return `Rs. ${Number(n).toLocaleString("en-IN")}`;
+  const v = Number(n);
+  // A 2.5% CGST half lands on a paisa (Rs. 187.50), so fractions are padded.
+  return `Rs. ${
+    Number.isInteger(v)
+      ? v.toLocaleString("en-IN")
+      : v.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+  }`;
 }
 
 function Row({ label, value }) {
@@ -100,11 +106,24 @@ function ConfirmationDoc({ booking }) {
         {booking.baseAmount != null && (
           <Row label="Subtotal (excl. GST)" value={money(booking.baseAmount)} />
         )}
-        {booking.gstAmount != null && (
-          <Row
-            label={booking.gstRate ? `GST (${booking.gstRate}%)` : "GST"}
-            value={money(booking.gstAmount)}
-          />
+        {booking.cgstAmount != null && booking.sgstAmount != null ? (
+          <>
+            <Row
+              label={`CGST (${booking.cgstRate}%)`}
+              value={money(booking.cgstAmount)}
+            />
+            <Row
+              label={`SGST (${booking.sgstRate}%)`}
+              value={money(booking.sgstAmount)}
+            />
+          </>
+        ) : (
+          booking.gstAmount != null && (
+            <Row
+              label={booking.gstRate ? `GST (${booking.gstRate}%)` : "GST"}
+              value={money(booking.gstAmount)}
+            />
+          )
         )}
         <View style={styles.totalRow}>
           <Text style={styles.totalLabel}>TOTAL PAID</Text>

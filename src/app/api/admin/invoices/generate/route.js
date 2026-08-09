@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { computeRoomGstRate, isInterStateGuest, computeTaxBreakdown, getFinancialYear } from "@/lib/gst";
+import { computeRoomGstRate, isInterStateGuest, computeTaxBreakdown, getFinancialYear, HSN_ACCOMMODATION } from "@/lib/gst";
 import { extraGuestCharges } from "@/lib/booking/occupancy";
 import { assertAdmin } from "@/lib/admin/auth";
 const ISSUER = {
@@ -85,21 +85,21 @@ export async function POST(req) {
     const lineItems = [
         {
             description: `${room.name} · ${nights} Night${nights > 1 ? "s" : ""} · ${checkinLabel} to ${checkoutLabel}`,
-            hsn: "9963",
+            hsn: HSN_ACCOMMODATION,
             qty: nights,
             rate: room.base_price_per_night,
             amount: Math.round(room.base_price_per_night * nights * 100) / 100,
         },
         ...extras.lines.map((l) => ({
             description: `${l.label} × ${l.qty} · ${nights} night${nights > 1 ? "s" : ""}`,
-            hsn: "9963",
+            hsn: HSN_ACCOMMODATION,
             qty: l.qty * nights,
             rate: l.ratePerNight,
             amount: l.amount,
         })),
         ...addons.map((a) => ({
             description: `${a.label} × ${a.qty}`,
-            hsn: "9963",
+            hsn: HSN_ACCOMMODATION,
             qty: a.qty,
             rate: a.price,
             amount: Math.round(a.price * a.qty * 100) / 100,

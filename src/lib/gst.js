@@ -2,11 +2,10 @@
 /**
  * GST slab for a room by its nightly tariff: 5% at ₹7,500 and below, 18% above.
  *
- * This read 12% for the lower slab, which is the pre-reform rate and disagreed
- * with the 5% the stay pages have always advertised — the same room was quoted
- * one way in marketing and taxed another in the booking engine. Room prices are
- * stored GST-inclusive, so correcting the rate moves the base/GST split on the
- * breakdown without changing what a guest is charged.
+ * The threshold is exclusive at the top of the lower slab — a ₹7,500 Glamping
+ * Tent is taxed at 5%, and only a tariff strictly above ₹7,500 moves to 18%.
+ * The slab is keyed to the nightly tariff alone, never to the booking total, so
+ * a longer stay or an extra guest cannot push a room into the higher bracket.
  */
 export function gstRate(nightlyRate) {
     return nightlyRate > 7500 ? 18 : 5;
@@ -35,6 +34,54 @@ export function addGst(taxableAmount, ratePercent) {
 }
 
 /**
+ * Adds GST on top of a pre-tax amount and splits it into its CGST and SGST
+ * halves — the form a guest and the GST portal both expect.
+ *
+ * A single "GST 18%" line is not what an accommodation supply is actually
+ * taxed as: it is 9% central plus 9% state, and an invoice that does not name
+ * both is not a compliant one. Returning the split from the same call that
+ * computes the tax keeps checkout, the review step, the confirmation and the
+ * invoice quoting one set of numbers instead of each halving the total on its
+ * own and rounding differently.
+ *
+ * Intra-state (Madhya Pradesh) only. For a guest outside MP the supply is IGST
+ * and the split does not apply — use computeTaxBreakdown, which handles both.
+ */
+export function computeGst(taxableAmount, ratePercent) {
+    const tax = computeTaxBreakdown(roundTo2(taxableAmount), ratePercent, false);
+    return {
+        gstRate: tax.gstRate,
+        cgstRate: tax.cgstRate,
+        sgstRate: tax.sgstRate,
+        cgstAmount: tax.cgstAmount,
+        sgstAmount: tax.sgstAmount,
+        totalGst: tax.totalGst,
+        totalAmount: tax.totalAmount,
+    };
+}
+
+/**
+ * Splits an already-charged GST figure into CGST and SGST.
+ *
+ * Bookings store one gst_amount column, so anything rendering a past booking
+ * has the total but not the halves. Splitting the stored figure rather than
+ * recomputing from the base guarantees the two lines still add up to what the
+ * guest was actually charged, even if the slab has moved since.
+ */
+export function splitGst(totalGst, ratePercent) {
+    const total = roundTo2(totalGst);
+    const cgstAmount = roundTo2(total / 2);
+    const halfRate = ratePercent / 2;
+    return {
+        cgstRate: halfRate,
+        sgstRate: halfRate,
+        cgstAmount,
+        sgstAmount: roundTo2(total - cgstAmount),
+        totalGst: total,
+    };
+}
+
+/**
  * Splits a GST-INCLUSIVE total back into base and tax.
  *
  * Retained only for reading bookings and invoices written before the switch to
@@ -51,6 +98,14 @@ export function priceBreakdownInclusive(total, ratePercent) {
     };
 }
 // ── A7: Invoice GST utilities ─────────────────────────────────────────────────
+/**
+ * SAC for hotel accommodation services.
+ *
+ * The four-digit 9963 covers all of "accommodation, food and beverage" and is
+ * too coarse for an invoice line — 996311 is the specific heading for room or
+ * unit accommodation, which is what is being supplied here.
+ */
+export const HSN_ACCOMMODATION = "996311";
 function roundTo2(n) {
     return Math.round(n * 100) / 100;
 }

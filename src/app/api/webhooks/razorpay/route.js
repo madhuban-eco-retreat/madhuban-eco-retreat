@@ -48,7 +48,7 @@ export async function POST(req) {
     const { data: booking } = await supabase
         .from("bookings")
         .select(`
-      id, booking_ref, status, total_amount,
+      id, booking_ref, status, total_amount, base_amount, gst_amount,
       checkin, checkout, num_adults, num_children, source, special_requests,
       guests!guest_id ( name, email, mobile ),
       rooms!room_id ( name, slug )
@@ -83,6 +83,12 @@ export async function POST(req) {
     if (guest && room) {
         const totalAmount = Number(booking.total_amount);
         const nights = Math.round((new Date(booking.checkout).getTime() - new Date(booking.checkin).getTime()) / 86400000);
+        // Amounts come off the row rather than being recalculated, so the email
+        // states what was actually charged. Without these the webhook path — the
+        // fallback when the browser never returns from Razorpay — sent a
+        // confirmation carrying no tax breakdown at all.
+        const baseAmount = booking.base_amount != null ? Number(booking.base_amount) : null;
+        const gstAmount = booking.gst_amount != null ? Number(booking.gst_amount) : null;
         const confirmationData = {
             bookingRef: booking.booking_ref,
             guestName: guest.name,
@@ -92,6 +98,11 @@ export async function POST(req) {
             nights,
             adults: booking.num_adults,
             children: booking.num_children,
+            baseAmount,
+            gstAmount,
+            gstRate: baseAmount && gstAmount != null && baseAmount > 0
+                ? Math.round((gstAmount / baseAmount) * 100)
+                : null,
             totalAmount,
             specialRequests: booking.special_requests,
         };

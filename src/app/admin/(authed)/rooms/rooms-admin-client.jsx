@@ -3,7 +3,7 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import { Plus, GripVertical, Pencil, Check, X as XIcon, CalendarOff, BedDouble, } from "lucide-react";
 import { toast } from "sonner";
-import { Card, Badge, Button, Tabs } from "@/components/admin/ui";
+import { Card, Button, Tabs, Toggle } from "@/components/admin/ui";
 import { computeRoomGstRate } from "@/lib/gst";
 import { RoomQuickEditDrawer } from "./room-quick-edit-drawer";
 // ─── helpers ────────────────────────────────────────────────────────────────
@@ -28,7 +28,45 @@ const TABS = [
     { value: "seasonal", label: "Seasonal Rules" },
     { value: "inventory", label: "Inventory" },
 ];
-function RoomTypesTab({ rooms, saving, onDragStart, onDrop, onQuickEdit }) {
+/**
+ * Availability switch for one room, saved the moment it is flipped.
+ *
+ * The Status column was a read-only badge, so the only way to take a room off
+ * sale was to open the quick-edit drawer, flip a toggle and remember to press
+ * Save — which reads as a broken switch when what you wanted was one click. The
+ * new state is shown immediately and rolled back if the PATCH does not stick,
+ * so the row never claims a change the database refused.
+ */
+function AvailabilityToggle({ room, onToggled }) {
+    const [saving, setSaving] = useState(false);
+    async function handleChange(next) {
+        if (saving)
+            return;
+        setSaving(true);
+        onToggled(room.id, next);
+        try {
+            const res = await fetch(`/api/admin/rooms/${room.id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ is_active: next }),
+            });
+            if (!res.ok) {
+                const data = await res.json().catch(() => ({}));
+                throw new Error(data.error ?? "Request failed");
+            }
+            toast.success(next ? `${room.name} is now bookable` : `${room.name} hidden from booking`);
+        }
+        catch (err) {
+            onToggled(room.id, !next);
+            toast.error(err instanceof Error ? err.message : "Failed to update availability");
+        }
+        finally {
+            setSaving(false);
+        }
+    }
+    return (<Toggle checked={room.is_active} disabled={saving} onChange={handleChange} id={`room-active-${room.id}`} label={room.is_active ? "Active" : "Draft"}/>);
+}
+function RoomTypesTab({ rooms, saving, onDragStart, onDrop, onQuickEdit, onToggleActive }) {
     if (rooms.length === 0) {
         return (<Card>
         <div className="py-12 text-center">
@@ -60,7 +98,7 @@ function RoomTypesTab({ rooms, saving, onDragStart, onDrop, onQuickEdit }) {
               Units
             </th>
             <th className="hidden px-4 py-3 text-left font-body text-xs font-semibold uppercase tracking-wider text-charcoal/50 md:table-cell">
-              Status
+              Bookable
             </th>
             <th className="px-4 py-3"/>
           </tr>
@@ -87,9 +125,7 @@ function RoomTypesTab({ rooms, saving, onDragStart, onDrop, onQuickEdit }) {
                   </span>
                 </td>
                 <td className="hidden px-4 py-3 md:table-cell">
-                  <Badge variant={room.is_active ? "confirmed" : "neutral"}>
-                    {room.is_active ? "Active" : "Draft"}
-                  </Badge>
+                  <AvailabilityToggle room={room} onToggled={onToggleActive}/>
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex items-center justify-end gap-3">
@@ -112,7 +148,8 @@ function RatesTab({ rooms, editingId, editingVal, onStartEdit, onEditValChange, 
     return (<Card className="overflow-hidden p-0">
       <div className="border-b border-admin-card-border bg-admin-status-neutral-bg/40 px-6 py-3">
         <p className="font-body text-xs text-charcoal/50">
-          GST is always auto-computed from base price — 12% if ≤ ₹7,500, 18% above. The stored{" "}
+          GST is always auto-computed from base price — 5% (2.5% CGST + 2.5% SGST) at ₹7,500 and
+          below, 18% (9% + 9%) above. The stored{" "}
           <code className="font-mono">gst_rate</code> column is not used in display or pricing.
         </p>
       </div>
@@ -190,7 +227,7 @@ function SeasonalRulesTab() {
       </div>
     </Card>);
 }
-function InventoryTab({ rooms, editingId, editingVal, onStartEdit, onEditValChange, onSave, onCancel }) {
+function InventoryTab({ rooms, editingId, editingVal, onStartEdit, onEditValChange, onSave, onCancel, onToggleActive }) {
     const totalUnits = rooms.reduce((s, r) => s + r.inventory_count, 0);
     return (<Card className="overflow-hidden p-0">
       <div className="border-b border-admin-card-border bg-admin-status-neutral-bg/40 px-6 py-3">
@@ -205,7 +242,7 @@ function InventoryTab({ rooms, editingId, editingVal, onStartEdit, onEditValChan
             <th className="px-6 py-3 text-left font-body text-xs font-semibold uppercase tracking-wider text-charcoal/50">Room</th>
             <th className="px-6 py-3 text-left font-body text-xs font-semibold uppercase tracking-wider text-charcoal/50">Units</th>
             <th className="hidden px-6 py-3 text-left font-body text-xs font-semibold uppercase tracking-wider text-charcoal/50 sm:table-cell">
-              Status
+              Bookable
             </th>
             <th className="px-6 py-3"/>
           </tr>
@@ -239,9 +276,7 @@ function InventoryTab({ rooms, editingId, editingVal, onStartEdit, onEditValChan
                     </span>)}
                 </td>
                 <td className="hidden px-6 py-4 sm:table-cell">
-                  <Badge variant={room.is_active ? "confirmed" : "neutral"}>
-                    {room.is_active ? "Active" : "Draft"}
-                  </Badge>
+                  <AvailabilityToggle room={room} onToggled={onToggleActive}/>
                 </td>
                 <td className="px-6 py-4 text-right">
                   {!isEditing && (<button type="button" onClick={() => onStartEdit(room)} className="inline-flex items-center gap-1 font-body text-xs text-charcoal/50 transition-colors hover:text-earth-brown" aria-label={`Edit inventory for ${room.name}`}>
@@ -294,6 +329,11 @@ export function RoomsAdminClient({ initialRooms }) {
     }
     function handleQuickEditSaved(id, updated) {
         setRooms((prev) => prev.map((r) => r.id === id ? { ...r, ...updated } : r));
+    }
+    // Applied optimistically by the toggle and re-applied in reverse if the
+    // PATCH fails, so the switch always reflects what the database holds.
+    function handleToggleActive(id, isActive) {
+        setRooms((prev) => prev.map((r) => r.id === id ? { ...r, is_active: isActive } : r));
     }
     async function saveRate(id) {
         const val = parseFloat(editingRateVal);
@@ -367,12 +407,12 @@ export function RoomsAdminClient({ initialRooms }) {
       <Tabs tabs={TABS} value={activeTab} onChange={switchTab} className="mb-6"/>
 
       {/* Tab content */}
-      {activeTab === "rooms" && (<RoomTypesTab rooms={rooms} saving={saving} onDragStart={handleDragStart} onDrop={handleDrop} onQuickEdit={(r) => setQuickEditRoom(r)}/>)}
+      {activeTab === "rooms" && (<RoomTypesTab rooms={rooms} saving={saving} onDragStart={handleDragStart} onDrop={handleDrop} onQuickEdit={(r) => setQuickEditRoom(r)} onToggleActive={handleToggleActive}/>)}
 
       {activeTab === "rates" && (<RatesTab rooms={rooms} editingId={editingRateId} editingVal={editingRateVal} onStartEdit={(r) => { setEditingRateId(r.id); setEditingRateVal(String(r.base_price_per_night)); }} onEditValChange={setEditingRateVal} onSave={saveRate} onCancel={() => setEditingRateId(null)}/>)}
 
       {activeTab === "seasonal" && <SeasonalRulesTab />}
 
-      {activeTab === "inventory" && (<InventoryTab rooms={rooms} editingId={editingInvId} editingVal={editingInvVal} onStartEdit={(r) => { setEditingInvId(r.id); setEditingInvVal(String(r.inventory_count)); }} onEditValChange={setEditingInvVal} onSave={saveInventory} onCancel={() => setEditingInvId(null)}/>)}
+      {activeTab === "inventory" && (<InventoryTab rooms={rooms} editingId={editingInvId} editingVal={editingInvVal} onStartEdit={(r) => { setEditingInvId(r.id); setEditingInvVal(String(r.inventory_count)); }} onEditValChange={setEditingInvVal} onSave={saveInventory} onCancel={() => setEditingInvId(null)} onToggleActive={handleToggleActive}/>)}
     </>);
 }

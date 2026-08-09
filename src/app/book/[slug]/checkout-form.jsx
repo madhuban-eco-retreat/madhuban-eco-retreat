@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Check, ChevronDown } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
@@ -7,7 +7,7 @@ import { MAX_ADULTS, MAX_CHILDREN, MAX_INFANTS } from "@/lib/booking/occupancy";
 const TRUST_BADGES = [
     "Best rate, guaranteed",
     "No booking fees, ever",
-    "Free cancellation up to 7 days before arrival",
+    "Cancellation policy applies · See details at checkout",
     "Instant confirmation by email",
 ];
 function todayStr() {
@@ -26,6 +26,18 @@ const ERROR_CLS = "mt-1 font-body text-xs text-red-600";
 const NOTE_CLS = "mt-2 font-body text-xs text-earth-brown/80";
 const PHONE_RE = /^\d{10,15}$/;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+/**
+ * Enforced pause between coupon attempts, and the number of failures after
+ * which the guest is nudged rather than left guessing.
+ *
+ * The server allows five wrong codes an hour; a guest who has already missed
+ * three is far more likely to be reading a code wrong than to be one keystroke
+ * from the right one, and is better off being told so before they are locked
+ * out. The pause is short enough to feel like the form responding and long
+ * enough that the field cannot be driven at machine speed.
+ */
+const COUPON_RETRY_DELAY_MS = 500;
+const COUPON_WARN_AFTER_ATTEMPTS = 3;
 export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCheckOut, defaultAdults, defaultChildren, minNights, }) {
     const router = useRouter();
     const today = todayStr();
@@ -36,6 +48,15 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
     const [children, setChildren] = useState(defaultChildren || 0);
     const [infants, setInfants] = useState(0);
     const [couponCode, setCouponCode] = useState("");
+    // Coupon attempt state. The code that is actually sent lives in a ref rather
+    // than in the fetchPrice deps: changing dates must re-price the stay without
+    // that counting as another go at the coupon. A rejected code is dropped from
+    // the ref so the next re-price does not resend it and burn a second attempt.
+    const activeCouponRef = useRef("");
+    const [couponError, setCouponError] = useState("");
+    const [couponFailCount, setCouponFailCount] = useState(0);
+    const [couponCooling, setCouponCooling] = useState(false);
+    const couponTimerRef = useRef(null);
     // Availability is resolved here, at step 1, rather than on submit at review:
     // finding out the dates are gone after filling in the whole form is the
     // worst possible moment to be told.
@@ -55,9 +76,10 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
     const [submitting, setSubmitting] = useState(false);
     // Mobile sticky-bar expanded breakdown panel (only used on <lg viewports)
     const [mobilePriceExpanded, setMobilePriceExpanded] = useState(false);
-    const fetchPrice = useCallback(async () => {
+    const fetchPrice = useCallback(async (couponOverride) => {
         if (!checkIn || !checkOut || checkOut <= checkIn)
             return;
+        const code = couponOverride !== undefined ? couponOverride : activeCouponRef.current;
         setLoadingPrice(true);
         setPricingError("");
         try {
@@ -71,16 +93,37 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
                     adults,
                     children,
                     infants,
-                    couponCode: couponCode.trim().toUpperCase() || undefined,
+                    couponCode: code || undefined,
                 }),
             });
             const data = (await res.json());
             if (!res.ok) {
-                setPricingError(data.error ?? "Could not calculate price");
-                setPricing(null);
+                // A coupon-throttle 429 says nothing about the stay itself, so the
+                // quote already on screen is kept and the message is shown against
+                // the coupon field rather than blanking the whole summary.
+                if (res.status === 429 && code) {
+                    activeCouponRef.current = "";
+                    setCouponError(data.error ?? "Too many coupon attempts. Please try again later.");
+                }
+                else {
+                    setPricingError(data.error ?? "Could not calculate price");
+                    setPricing(null);
+                }
             }
             else {
                 setPricing(data);
+                if (data.couponError) {
+                    activeCouponRef.current = "";
+                    setCouponError(data.couponError);
+                    setCouponFailCount((n) => n + 1);
+                    setCouponCooling(true);
+                    if (couponTimerRef.current)
+                        clearTimeout(couponTimerRef.current);
+                    couponTimerRef.current = setTimeout(() => setCouponCooling(false), COUPON_RETRY_DELAY_MS);
+                }
+                else if (code) {
+                    setCouponError("");
+                }
             }
         }
         catch {
@@ -89,10 +132,22 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
         finally {
             setLoadingPrice(false);
         }
-    }, [slug, checkIn, checkOut, adults, children, infants, couponCode]);
+    }, [slug, checkIn, checkOut, adults, children, infants]);
     // Fetch price on mount and when booking params change.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     useEffect(() => { void fetchPrice(); }, [fetchPrice]);
+    // Clear a pending retry timer so it cannot fire against an unmounted form.
+    useEffect(() => () => {
+        if (couponTimerRef.current)
+            clearTimeout(couponTimerRef.current);
+    }, []);
+    const applyCoupon = useCallback(() => {
+        const code = couponCode.trim().toUpperCase();
+        if (!code || couponCooling || loadingPrice)
+            return;
+        activeCouponRef.current = code;
+        void fetchPrice(code);
+    }, [couponCode, couponCooling, loadingPrice, fetchPrice]);
     // Availability lookup, re-run whenever the date range changes. A failed
     // request leaves availability null rather than false — the booking API
     // re-checks authoritatively before taking money, so a network blip here
@@ -372,18 +427,43 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
           </fieldset>
 
           {/* Coupon */}
-          <div className="flex gap-3">
-            <div className="flex-1">
-              <label htmlFor="couponCode" className={LABEL_CLS}>
-                Coupon code
-              </label>
-              <input id="couponCode" type="text" value={couponCode} onChange={(e) => setCouponCode(e.target.value.toUpperCase())} placeholder="FOREST20" className={INPUT_CLS}/>
+          <div>
+            <div className="flex gap-3">
+              <div className="flex-1">
+                <label htmlFor="couponCode" className={LABEL_CLS}>
+                  Coupon code
+                </label>
+                <input id="couponCode" type="text" value={couponCode} onChange={(e) => {
+            setCouponCode(e.target.value.toUpperCase());
+            setCouponError("");
+        }} onKeyDown={(e) => {
+            // Enter inside the coupon field must apply the code, not submit
+            // the booking form and skip straight to review.
+            if (e.key === "Enter") {
+                e.preventDefault();
+                applyCoupon();
+            }
+        }} placeholder="FOREST20" aria-invalid={couponError ? true : undefined} aria-describedby={couponError ? "couponError" : undefined} className={couponError ? INPUT_ERR_CLS : INPUT_CLS}/>
+              </div>
+              <div className="flex items-end">
+                <button type="button" onClick={applyCoupon} disabled={couponCooling || loadingPrice || !couponCode.trim()} className="h-[42px] rounded-lg border border-earth-brown px-4 font-body text-sm font-medium text-earth-brown transition-colors hover:bg-earth-brown hover:text-ivory disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-earth-brown">
+                  Apply
+                </button>
+              </div>
             </div>
-            <div className="flex items-end">
-              <button type="button" onClick={() => void fetchPrice()} className="h-[42px] rounded-lg border border-earth-brown px-4 font-body text-sm font-medium text-earth-brown transition-colors hover:bg-earth-brown hover:text-ivory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-earth-brown">
-                Apply
-              </button>
-            </div>
+
+            {couponError && (<p id="couponError" role="alert" className={ERROR_CLS}>
+                {couponError}
+              </p>)}
+
+            {couponFailCount >= COUPON_WARN_AFTER_ATTEMPTS && (<p className="mt-1 font-body text-xs font-medium text-earth-brown">
+                Please double-check your coupon code
+              </p>)}
+
+            {pricing?.couponCode && !couponError && (<p className="mt-1 flex items-center gap-1.5 font-body text-xs font-medium text-[var(--color-moss-green)]">
+                <Check className="h-3.5 w-3.5" aria-hidden="true"/>
+                Coupon {pricing.couponCode} applied.
+              </p>)}
           </div>
 
           {/* Why book direct? — trust block above Continue (BOOKING audit) */}
@@ -433,9 +513,17 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
                     <span>−&#8377;{formatPrice(pricing.discountAmount)}</span>
                   </div>)}
 
+                {/* CGST and SGST are shown as separate lines because that is
+                    what the supply is actually taxed as — a single "GST 18%"
+                    line cannot be reconciled against an invoice. */}
                 <div className="flex justify-between text-charcoal/70">
-                  <span>GST ({pricing.gstRate}%)</span>
-                  <span>&#8377;{formatPrice(pricing.gstAmount)}</span>
+                  <span>CGST ({pricing.cgstRate}%)</span>
+                  <span>&#8377;{formatPrice(pricing.cgstAmount)}</span>
+                </div>
+
+                <div className="flex justify-between text-charcoal/70">
+                  <span>SGST ({pricing.sgstRate}%)</span>
+                  <span>&#8377;{formatPrice(pricing.sgstAmount)}</span>
                 </div>
 
                 <div className="border-t border-border pt-3">
@@ -493,8 +581,12 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
                   <span>−&#8377;{formatPrice(pricing.discountAmount)}</span>
                 </div>)}
               <div className="flex justify-between text-charcoal/70">
-                <span>GST ({pricing.gstRate}%)</span>
-                <span>&#8377;{formatPrice(pricing.gstAmount)}</span>
+                <span>CGST ({pricing.cgstRate}%)</span>
+                <span>&#8377;{formatPrice(pricing.cgstAmount)}</span>
+              </div>
+              <div className="flex justify-between text-charcoal/70">
+                <span>SGST ({pricing.sgstRate}%)</span>
+                <span>&#8377;{formatPrice(pricing.sgstAmount)}</span>
               </div>
               <p className="pt-1 text-xs text-charcoal/60">
                 Full payment now. No balance at check-in.
