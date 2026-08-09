@@ -49,7 +49,7 @@ export async function POST(req) {
         .select(`
       *,
       guests!guest_id ( id, name, mobile, email, address, gstin ),
-      rooms!room_id ( id, name, base_price_per_night )
+      rooms!room_id ( id, name, slug, base_price_per_night )
     `)
         .eq("id", booking_id)
         .single();
@@ -77,10 +77,14 @@ export async function POST(req) {
     // Extra occupants are charged on the booking but are not addon rows, so they
     // are reconstructed from the stored headcount. Without these the invoice
     // total would fall short of what the guest actually paid.
+    // roomSlug matters: the Pool Side Villa's tariff covers four adults, so
+    // without it the invoice would bill a surcharge for the third and fourth
+    // that the guest was never charged, and overshoot what they actually paid.
     const extras = extraGuestCharges({
         adults: booking.num_adults ?? 0,
         children: booking.num_children ?? 0,
         nights,
+        roomSlug: room.slug,
     });
     const lineItems = [
         {

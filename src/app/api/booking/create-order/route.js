@@ -39,6 +39,18 @@ export async function POST(req) {
         return NextResponse.json({ error: "This booking has expired. Please start a new booking." }, { status: 410 });
     }
     const totalAmount = Number(booking.total_amount);
+    // Razorpay rejects anything under ₹1 with "Order amount less than minimum
+    // amount allowed", so a coupon covering the whole stay used to dead-end
+    // here. Zero-value bookings settle through /api/booking/confirm-free
+    // instead; this guard makes the wrong route say so plainly rather than
+    // surfacing the gateway's error as an unexplained failure to take payment.
+    if (totalAmount <= 0) {
+        return NextResponse.json({
+            error: "Use /api/booking/confirm-free for zero-amount bookings",
+            zeroAmount: true,
+            bookingRef: booking.booking_ref,
+        }, { status: 400 });
+    }
     const amountPaise = Math.round(totalAmount * 100);
     let orderId;
     let amountFromOrder;

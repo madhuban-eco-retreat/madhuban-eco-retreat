@@ -13,12 +13,34 @@ export function PaymentClient({ bookingId, roomSlug, totalAmountRupees, guestNam
     const [payError, setPayError] = useState("");
     const [scriptReady, setScriptReady] = useState(false);
     const hasFetched = useRef(false);
+    // A stay fully covered by a coupon has nothing to charge. Razorpay will not
+    // accept an order under ₹1, so this path skips the gateway entirely rather
+    // than asking it for a ₹0 order and failing.
+    const isFree = Number(totalAmountRupees) <= 0;
     useEffect(() => {
         if (hasFetched.current)
             return;
         hasFetched.current = true;
         void (async () => {
             try {
+                if (isFree) {
+                    const res = await fetch("/api/booking/confirm-free", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ bookingId }),
+                    });
+                    const data = (await res.json());
+                    if (!res.ok) {
+                        setOrderError(data.error ?? "Could not confirm booking.");
+                        setLoadingOrder(false);
+                        return;
+                    }
+                    // Kept in the loading state through the redirect: the booking
+                    // is already confirmed, and dropping to a payment card for a
+                    // moment would suggest there is still something to pay.
+                    router.replace(`/book/confirmation?ref=${data.bookingRef}`);
+                    return;
+                }
                 const res = await fetch("/api/booking/create-order", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -31,15 +53,14 @@ export function PaymentClient({ bookingId, roomSlug, totalAmountRupees, guestNam
                 else {
                     setOrderData(data);
                 }
+                setLoadingOrder(false);
             }
             catch {
                 setOrderError("Network error. Please refresh and try again.");
-            }
-            finally {
                 setLoadingOrder(false);
             }
         })();
-    }, [bookingId]);
+    }, [bookingId, isFree, router]);
     const handlePay = () => {
         if (!orderData || !scriptReady || typeof window.Razorpay === "undefined")
             return;
@@ -94,7 +115,9 @@ export function PaymentClient({ bookingId, roomSlug, totalAmountRupees, guestNam
         return (<div className="flex min-h-[40vh] items-center justify-center">
         <div className="text-center">
           <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-2 border-earth-brown border-t-transparent"/>
-          <p className="font-body text-sm text-muted-foreground">Preparing secure payment…</p>
+          <p className="font-body text-sm text-muted-foreground">
+            {isFree ? "Confirming your booking…" : "Preparing secure payment…"}
+          </p>
         </div>
       </div>);
     }

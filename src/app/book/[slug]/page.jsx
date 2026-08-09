@@ -3,7 +3,7 @@ import { getRoomBySlug } from "@/lib/rooms/queries";
 import { buildMetadata } from "@/lib/seo";
 import { DataUnavailable } from "@/components/ui/data-unavailable";
 import { CheckoutForm } from "./checkout-form";
-import { MAX_ADULTS, MAX_CHILDREN } from "@/lib/booking/occupancy";
+import { MAX_CHILDREN, adultsIncludedFor, maxAdultsFor } from "@/lib/booking/occupancy";
 export const revalidate = 60;
 export async function generateMetadata({ params }) {
     const { slug } = await params;
@@ -44,10 +44,15 @@ export default async function BookCheckoutPage({ params, searchParams }) {
     const checkOut = sp.checkOut && sp.checkOut > checkIn
         ? sp.checkOut
         : addDays(checkIn, minNights);
-    // Clamped to the resort-wide occupancy policy rather than the room's own
-    // max_occupancy: the extra-guest tariff only defines a third adult and a
-    // second child, so anything beyond that has no price to quote.
-    const adults = Math.min(Math.max(Number(sp.adults ?? 2), 1), MAX_ADULTS);
+    // Clamped to this room's own occupancy policy rather than a resort-wide
+    // constant: the Pool Side Villa takes six adults and includes four, where
+    // every other room takes three and includes two.
+    const adultsIncluded = adultsIncludedFor(slug);
+    const maxAdults = maxAdultsFor(slug);
+    // Defaulting to the included count rather than a flat two means the villa
+    // opens on the party its rate is actually quoted for, instead of showing a
+    // price for two that jumps as soon as the guest picks their real number.
+    const adults = Math.min(Math.max(Number(sp.adults ?? adultsIncluded), 1), maxAdults);
     const children = Math.min(Math.max(Number(sp.children ?? 0), 0), MAX_CHILDREN);
     return (<div className="py-10 px-4">
       <div className="mx-auto max-w-7xl">
@@ -70,7 +75,7 @@ export default async function BookCheckoutPage({ params, searchParams }) {
           </h1>
         </div>
 
-        <CheckoutForm slug={slug} roomId={room.id} roomName={room.name} defaultCheckIn={checkIn} defaultCheckOut={checkOut} defaultAdults={adults} defaultChildren={children} minNights={minNights}/>
+        <CheckoutForm slug={slug} roomId={room.id} roomName={room.name} defaultCheckIn={checkIn} defaultCheckOut={checkOut} defaultAdults={adults} defaultChildren={children} minNights={minNights} adultsIncluded={adultsIncluded} maxAdults={maxAdults}/>
       </div>
     </div>);
 }
