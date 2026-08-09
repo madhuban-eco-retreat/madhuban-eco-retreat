@@ -1,7 +1,7 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { Lock, Eye, EyeOff, CheckCircle2, ArrowLeft } from "lucide-react";
+import { Lock, Eye, EyeOff, CheckCircle2, ArrowLeft, KeyRound, Mail } from "lucide-react";
 import { createClient } from "@/lib/supabase/browser";
 
 /**
@@ -13,10 +13,33 @@ import { createClient } from "@/lib/supabase/browser";
  */
 const MIN_PASSWORD_LENGTH = 10;
 
+/**
+ * How long to wait for a recovery session before calling the link dead.
+ *
+ * Long enough to cover the token exchange round trip, short enough that a
+ * genuinely expired link does not leave someone staring at a spinner. An
+ * exchange still in flight when this fires is allowed to win — the timeout
+ * decides what to show, not what to stop doing.
+ */
+const RECOVERY_TIMEOUT_MS = 3000;
+
 const INPUT_CLS =
     "w-full pl-10 pr-11 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-cream)] font-body text-sm text-[var(--color-charcoal)] placeholder:text-[var(--color-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-earth-brown)]/30 focus:border-[var(--color-earth-brown)] transition-colors";
 const LABEL_CLS =
     "block font-body text-xs font-semibold tracking-wider uppercase text-[var(--color-charcoal)]/60 mb-2";
+
+/**
+ * Strips the credentials out of the address bar once they have been redeemed.
+ *
+ * A recovery token in window.location outlives the page: it goes into history,
+ * and into the Referer header of anything the page loads afterwards. Replacing
+ * the entry rather than pushing keeps Back from returning to a URL carrying it.
+ */
+function scrubUrl() {
+    if (typeof window === "undefined")
+        return;
+    window.history.replaceState({}, document.title, window.location.pathname);
+}
 
 export function ResetPasswordForm() {
     const [password, setPassword] = useState("");
@@ -27,26 +50,143 @@ export function ResetPasswordForm() {
     const [done, setDone] = useState(false);
     const [sessionState, setSessionState] = useState("checking");
 
-    // The recovery session is established by the auth callback before this page
-    // renders. Checking for it up front means an expired or already-used link
-    // is called out immediately, rather than after the visitor has typed a
-    // password twice and pressed the button.
+    // Manual code entry. The reset email leads with a six-digit code precisely
+    // because a code cannot be spent by anything that merely fetches a URL, so
+    // there has to be somewhere to type it — an email that says "enter this
+    // code" and a page with no field for it is a dead end. Verifying a bare
+    // token needs the address alongside it; only the hashed form identifies the
+    // account on its own.
+    const [manualEmail, setManualEmail] = useState("");
+    const [manualCode, setManualCode] = useState("");
+    const [manualBusy, setManualBusy] = useState(false);
+    const [manualError, setManualError] = useState(null);
+
+    // One client for the lifetime of the page. Rebuilding it per effect run
+    // would restart Supabase's URL detection and re-subscribe the listener.
+    const [supabase] = useState(() => createClient());
+
+    /**
+     * Establishes the recovery session, whichever shape the link arrived in.
+     *
+     * Supabase has three, and which one a given email produces depends on the
+     * template and on how the reset was requested:
+     *
+     *   ?code=…                  PKCE, from resetPasswordForEmail in this app
+     *   ?token_hash=…&type=…     the {{ .TokenHash }} template
+     *   #access_token=…&type=…   implicit, and what the dashboard's own
+     *                            "Send password recovery" button produces
+     *
+     * The hash form never reaches the server — fragments are not sent in the
+     * request — so it can only be redeemed here. detectSessionInUrl handles it
+     * during client construction, and getSession waits on that initialisation,
+     * so the third case needs no explicit branch; the first two do, because a
+     * PKCE code may still be sitting unexchanged if the callback route could
+     * not do it.
+     */
+    const establishSession = useCallback(async () => {
+        const url = new URL(window.location.href);
+        const code = url.searchParams.get("code");
+        const tokenHash = url.searchParams.get("token_hash");
+        const type = url.searchParams.get("type");
+
+        if (code) {
+            const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
+            if (exchangeError) {
+                console.error("[reset-password] code exchange failed:", exchangeError);
+                return false;
+            }
+            return true;
+        }
+
+        if (tokenHash) {
+            const { error: verifyError } = await supabase.auth.verifyOtp({
+                token_hash: tokenHash,
+                type: type === "invite" ? "invite" : "recovery",
+            });
+            if (verifyError) {
+                console.error("[reset-password] token_hash verify failed:", verifyError);
+                return false;
+            }
+            return true;
+        }
+
+        // Implicit hash, or a session already put in place by the callback
+        // route. getSession awaits the client's own initialisation, which is
+        // where the fragment is read, so this covers both without a race.
+        const { data: { session } } = await supabase.auth.getSession();
+        return !!session;
+    }, [supabase]);
+
     useEffect(() => {
-        let cancelled = false;
+        let settled = false;
+
+        function markReady() {
+            if (settled)
+                return;
+            settled = true;
+            setSessionState("ready");
+            scrubUrl();
+        }
+
+        // Subscribed before anything is redeemed, so a PASSWORD_RECOVERY fired
+        // by the client's own URL detection cannot land before anyone is
+        // listening for it.
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+            if (event === "PASSWORD_RECOVERY" || (session && (event === "SIGNED_IN" || event === "INITIAL_SESSION"))) {
+                markReady();
+            }
+        });
+
         void (async () => {
             try {
-                const supabase = createClient();
-                const { data: { session } } = await supabase.auth.getSession();
-                if (!cancelled)
-                    setSessionState(session ? "ready" : "missing");
+                if (await establishSession())
+                    markReady();
             }
-            catch {
-                if (!cancelled)
-                    setSessionState("missing");
+            catch (err) {
+                console.error("[reset-password] could not establish recovery session:", err);
             }
         })();
-        return () => { cancelled = true; };
-    }, []);
+
+        // Only decides what to render. An exchange that resolves after this
+        // still calls markReady and flips the form back on.
+        const timer = setTimeout(() => {
+            if (!settled)
+                setSessionState("missing");
+        }, RECOVERY_TIMEOUT_MS);
+
+        return () => {
+            clearTimeout(timer);
+            subscription.unsubscribe();
+        };
+    }, [supabase, establishSession]);
+
+    async function handleManualCode(e) {
+        e.preventDefault();
+        const token = manualCode.replace(/\D/g, "");
+        const address = manualEmail.trim().toLowerCase();
+        if (manualBusy || !address || token.length !== 6)
+            return;
+        setManualBusy(true);
+        setManualError(null);
+        try {
+            const { error: verifyError } = await supabase.auth.verifyOtp({
+                email: address,
+                token,
+                type: "recovery",
+            });
+            if (verifyError) {
+                setManualError("That code is not valid, or it has expired. Request a new one below.");
+                return;
+            }
+            setSessionState("ready");
+        }
+        catch {
+            setManualError("Could not reach the server. Please try again.");
+        }
+        finally {
+            setManualBusy(false);
+        }
+    }
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -63,7 +203,6 @@ export function ResetPasswordForm() {
         setLoading(true);
         setError(null);
         try {
-            const supabase = createClient();
             const { error: updateError } = await supabase.auth.updateUser({ password });
             if (updateError) {
                 setError(updateError.message);
@@ -101,19 +240,58 @@ export function ResetPasswordForm() {
       </div>);
     }
 
+    // Reached when the link carried nothing usable — including the case that
+    // matters most here, a link already spent by a mail scanner before anyone
+    // clicked it. The six-digit code in the same email survives that, so this
+    // offers it as a way through rather than only an apology.
     if (sessionState === "missing") {
-        return (<div className="bg-white rounded-2xl border border-[var(--color-border)] p-8 shadow-sm text-center">
-        <h3 className="font-display text-2xl text-[var(--color-charcoal)] mb-2">
-          This reset link has expired
-        </h3>
-        <p className="font-body text-sm text-[var(--color-charcoal)]/70">
-          Reset links can only be used once, and they run out after a short
-          while. Request a fresh one and it will work.
+        return (<div className="bg-white rounded-2xl border border-[var(--color-border)] p-8 shadow-sm">
+        <div className="text-center">
+          <div className="w-12 h-12 bg-[var(--color-forest-green)]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <KeyRound className="w-5 h-5 text-[var(--color-forest-green)]" aria-hidden="true"/>
+          </div>
+          <h3 className="font-display text-2xl text-[var(--color-charcoal)] mb-2">
+            Enter your reset code
+          </h3>
+          <p className="font-body text-sm text-[var(--color-charcoal)]/70">
+            We couldn&rsquo;t verify that link — it may have expired or already
+            been opened. Use the 6-digit code from the same email instead.
+          </p>
+        </div>
+
+        <form onSubmit={handleManualCode} className="mt-6 space-y-4">
+          <div>
+            <label htmlFor="recoveryEmail" className={LABEL_CLS}>
+              Email Address
+            </label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted)]" aria-hidden="true"/>
+              <input id="recoveryEmail" type="email" autoComplete="username" value={manualEmail} onChange={(e) => { setManualEmail(e.target.value); setManualError(null); }} placeholder="admin@madhubanecoretreat.com" required className={INPUT_CLS}/>
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="recoveryCode" className={LABEL_CLS}>
+              6-Digit Code
+            </label>
+            <input id="recoveryCode" type="text" inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={manualCode} onChange={(e) => { setManualCode(e.target.value.replace(/\D/g, "")); setManualError(null); }} placeholder="000000" required className="w-full px-4 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-cream)] text-center font-body text-xl font-semibold tracking-[0.4em] text-[var(--color-charcoal)] placeholder:tracking-[0.4em] placeholder:text-[var(--color-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-earth-brown)]/30 focus:border-[var(--color-earth-brown)] transition-colors"/>
+          </div>
+
+          {manualError && (<p role="alert" className="font-body text-xs text-[var(--color-error)]">
+              {manualError}
+            </p>)}
+
+          <button type="submit" disabled={manualBusy || !manualEmail || manualCode.length !== 6} className="w-full py-3 rounded-xl bg-[var(--color-forest-green)] text-[var(--color-ivory)] font-body font-medium text-sm tracking-wide transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed">
+            {manualBusy ? "Verifying…" : "Verify Code"}
+          </button>
+        </form>
+
+        <p className="mt-5 text-center">
+          <Link href="/admin/forgot-password" className="font-body text-xs text-[var(--color-earth-brown)] underline-offset-4 hover:underline">
+            Request new link
+          </Link>
         </p>
-        <Link href="/admin/forgot-password" className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-xl bg-[var(--color-forest-green)] font-body text-sm font-medium text-[var(--color-ivory)] transition-opacity hover:opacity-90">
-          Request a new link
-        </Link>
-        <p className="mt-4">
+        <p className="mt-3 text-center">
           <Link href="/admin/login" className="inline-flex items-center gap-1.5 font-body text-xs text-[var(--color-charcoal)]/60 transition-colors hover:text-[var(--color-charcoal)]">
             <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true"/>
             Back to login
@@ -155,7 +333,7 @@ export function ResetPasswordForm() {
           </p>)}
 
         <button type="submit" disabled={loading || sessionState !== "ready" || !password || !confirm} className="w-full py-3 rounded-xl bg-[var(--color-forest-green)] text-[var(--color-ivory)] font-body font-medium text-sm tracking-wide transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed">
-          {sessionState === "checking" ? "Checking link…" : loading ? "Updating…" : "Update Password"}
+          {sessionState === "checking" ? "Verifying link…" : loading ? "Updating…" : "Update Password"}
         </button>
       </form>
     </div>);
