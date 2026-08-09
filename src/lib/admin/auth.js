@@ -1,6 +1,8 @@
+import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { ADMIN_EMAIL } from "@/lib/admin/constants";
+import { ADMIN_SESSION_COOKIE, readAdminSession } from "@/lib/admin/session";
 const ROLE_RANK = { admin: 3, front_desk: 2, read_only: 1 };
 
 /**
@@ -24,6 +26,21 @@ export async function resolveAdminUser() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { user: null, profile: null, authorized: false, reason: "signed_out" };
+
+  // A live Supabase session is necessary but no longer sufficient. The admin
+  // marker is written only by the OTP step and carries its own 24-hour expiry,
+  // so a session obtained any other way — a recovery link, a leftover magic
+  // link cookie, a Supabase session that outlived its admin window — gets no
+  // further than here. The proxy slides the expiry forward on each request, so
+  // this only bites a login that has actually gone quiet for a day.
+  const marker = await readAdminSession((await cookies()).get(ADMIN_SESSION_COOKIE)?.value);
+  if (!marker) {
+    return { user, profile: null, authorized: false, reason: "session_expired" };
+  }
+  // Guards against a marker outliving a switch of account in the same browser.
+  if (user.email && marker.email !== user.email.toLowerCase()) {
+    return { user, profile: null, authorized: false, reason: "session_expired" };
+  }
 
   const db = createAdminClient();
   const { data: profile } = await db
