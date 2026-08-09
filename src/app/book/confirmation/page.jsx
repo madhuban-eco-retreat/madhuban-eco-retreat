@@ -1,6 +1,7 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import Link from "next/link";
 import { ALL_ROOMS_URL, stayPageForRoomSlug } from "@/lib/rooms/booking-links";
+import { splitGst } from "@/lib/gst";
 import { DownloadConfirmationButton } from "./download-pdf";
 export const metadata = {
     title: "Booking Confirmed",
@@ -15,7 +16,11 @@ function formatDate(iso) {
     });
 }
 function formatAmount(n) {
-    return n.toLocaleString("en-IN");
+    // Half of a 5% GST figure lands on a paisa (₹187.50), so fractions are
+    // padded rather than rendered as a bare "187.5".
+    return Number.isInteger(n)
+        ? n.toLocaleString("en-IN")
+        : n.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 export default async function ConfirmationPage({ searchParams }) {
     const { ref } = await searchParams;
@@ -83,6 +88,12 @@ export default async function ConfirmationPage({ searchParams }) {
             : null;
     const gstRatePct = baseAmount && gstAmount != null && baseAmount > 0
         ? Math.round((gstAmount / baseAmount) * 100)
+        : null;
+    // bookings stores one gst_amount, so the CGST/SGST halves are split off the
+    // charged figure rather than recomputed — the two lines then always sum to
+    // exactly what was taken, whatever the slab has done since.
+    const taxSplit = gstAmount != null && gstRatePct != null
+        ? splitGst(gstAmount, gstRatePct)
         : null;
     const discountAmount = Number(booking.discount_amount ?? 0);
     const nights = Math.round((new Date(booking.checkout).getTime() - new Date(booking.checkin).getTime()) / 86400000);
@@ -167,12 +178,19 @@ export default async function ConfirmationPage({ searchParams }) {
                   <span className="text-charcoal/70">Base price (excl. GST)</span>
                   <span className="font-medium">₹{formatAmount(baseAmount)}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-charcoal/70">
-                    GST{gstRatePct != null ? ` @ ${gstRatePct}%` : ""}
-                  </span>
-                  <span className="font-medium">+ ₹{formatAmount(gstAmount)}</span>
-                </div>
+                {taxSplit ? (<>
+                    <div className="flex justify-between">
+                      <span className="text-charcoal/70">CGST ({taxSplit.cgstRate}%)</span>
+                      <span className="font-medium">+ ₹{formatAmount(taxSplit.cgstAmount)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-charcoal/70">SGST ({taxSplit.sgstRate}%)</span>
+                      <span className="font-medium">+ ₹{formatAmount(taxSplit.sgstAmount)}</span>
+                    </div>
+                  </>) : (<div className="flex justify-between">
+                    <span className="text-charcoal/70">GST</span>
+                    <span className="font-medium">+ ₹{formatAmount(gstAmount)}</span>
+                  </div>)}
               </>) : (<div className="flex justify-between">
                 <span className="text-charcoal/70">Total Amount</span>
                 <span className="font-medium">₹{formatAmount(totalAmount)}</span>
@@ -216,6 +234,10 @@ export default async function ConfirmationPage({ searchParams }) {
             baseAmount,
             gstAmount,
             gstRate: gstRatePct,
+            cgstRate: taxSplit?.cgstRate ?? null,
+            sgstRate: taxSplit?.sgstRate ?? null,
+            cgstAmount: taxSplit?.cgstAmount ?? null,
+            sgstAmount: taxSplit?.sgstAmount ?? null,
             totalAmount,
         }}/>
         </div>

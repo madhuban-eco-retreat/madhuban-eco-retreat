@@ -4,20 +4,24 @@ import { toast } from "sonner";
 import { UserPlus, CalendarX, ListChecks, FileSpreadsheet, AlertTriangle } from "lucide-react";
 import { Card } from "@/components/admin/ui";
 // ─── Quick Actions ────────────────────────────────────────────────────────────
+// Three of these still announced the feature as unbuilt and did nothing when
+// clicked, long after the pages they point at shipped — a dashboard tile that
+// answers a click with "coming soon" reads as a broken control. Each now goes
+// to the screen that does the job.
 const QUICK_ACTIONS = [
     {
         icon: UserPlus,
         label: "Walk-in",
         description: "Manual booking entry",
-        toastMsg: "Coming in Phase A4 — Manual Booking Creation",
-        href: null,
+        toastMsg: null,
+        href: "/admin/bookings/new",
     },
     {
         icon: CalendarX,
         label: "Block Dates",
         description: "Reserve dates for maintenance or events",
-        toastMsg: "Coming in Phase A6 — Availability Calendar",
-        href: null,
+        toastMsg: null,
+        href: "/admin/availability",
     },
     {
         icon: ListChecks,
@@ -30,8 +34,8 @@ const QUICK_ACTIONS = [
         icon: FileSpreadsheet,
         label: "GST Report",
         description: "Download tax summary",
-        toastMsg: "Coming in Phase A7 — Invoices & GST",
-        href: null,
+        toastMsg: null,
+        href: "/admin/invoices",
     },
 ];
 export function QuickActions() {

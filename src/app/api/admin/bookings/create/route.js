@@ -227,6 +227,11 @@ export async function POST(req) {
                 nights,
                 adults: numAdults,
                 children: numChildren,
+                // A walk-in confirmation carried no tax breakdown, so the guest
+                // had no CGST/SGST figures to reconcile against their invoice.
+                baseAmount: pricing.subtotalBeforeGst,
+                gstAmount: pricing.gstAmount,
+                gstRate: pricing.gstRatePct,
                 totalAmount,
                 specialRequests: specialRequests ?? null,
             };

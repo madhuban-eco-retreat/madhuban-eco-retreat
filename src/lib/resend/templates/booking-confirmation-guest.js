@@ -1,5 +1,13 @@
+import { splitGst } from "@/lib/gst";
 export function bookingConfirmationGuestEmail(data) {
     const subject = `Your Madhuban booking is confirmed — ${data.bookingRef}`;
+    // Accommodation is taxed as CGST plus SGST, so the email names both halves —
+    // a guest reconciling this against their invoice needs the same two lines.
+    // Bookings store a single gst_amount, so the halves are split off the figure
+    // actually charged and therefore always add back up to it.
+    const tax = data.gstAmount != null && data.gstRate
+        ? splitGst(data.gstAmount, data.gstRate)
+        : null;
     const html = `<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
@@ -55,8 +63,18 @@ export function bookingConfirmationGuestEmail(data) {
                       <td style="font-size:13px;color:#2A2A2A;padding:4px 0;">Subtotal (excl. GST)</td>
                       <td align="right" style="font-size:13px;color:#2A2A2A;">₹${formatAmount(data.baseAmount)}</td>
                     </tr>` : ""}
-                    ${data.gstAmount != null ? `<tr>
-                      <td style="font-size:13px;color:#2A2A2A;padding:4px 0;">GST${data.gstRate ? ` (${data.gstRate}%)` : ""}</td>
+                    ${tax ? `<tr>
+                      <td style="font-size:13px;color:#2A2A2A;padding:4px 0;">CGST (${tax.cgstRate}%)</td>
+                      <td align="right" style="font-size:13px;color:#2A2A2A;">₹${formatAmount(tax.cgstAmount)}</td>
+                    </tr>
+                    <tr>
+                      <td style="font-size:13px;color:#2A2A2A;padding:4px 0;">SGST (${tax.sgstRate}%)</td>
+                      <td align="right" style="font-size:13px;color:#2A2A2A;">₹${formatAmount(tax.sgstAmount)}</td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" style="padding:4px 0;border-top:1px solid #EAE5DC;"></td>
+                    </tr>` : data.gstAmount != null ? `<tr>
+                      <td style="font-size:13px;color:#2A2A2A;padding:4px 0;">GST</td>
                       <td align="right" style="font-size:13px;color:#2A2A2A;">₹${formatAmount(data.gstAmount)}</td>
                     </tr>
                     <tr>
@@ -141,5 +159,8 @@ function formatDate(iso) {
     return `${parts[2]} ${months[m] ?? ""} ${parts[0]}`;
 }
 function formatAmount(n) {
-    return n.toLocaleString("en-IN");
+    // Half of a 5% GST figure lands on a paisa (₹187.50), so fractions are padded.
+    return Number.isInteger(n)
+        ? n.toLocaleString("en-IN")
+        : n.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }

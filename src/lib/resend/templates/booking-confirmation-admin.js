@@ -1,5 +1,11 @@
+import { splitGst } from "@/lib/gst";
 export function bookingConfirmationAdminEmail(data) {
     const subject = `New booking confirmed — ${data.guestName} | ${data.bookingRef}`;
+    // Staff reconcile these against the GST return, so the tax is broken out as
+    // the CGST and SGST halves rather than a single combined figure.
+    const tax = data.gstAmount != null && data.gstRate
+        ? splitGst(data.gstAmount, data.gstRate)
+        : null;
     const html = `<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
@@ -40,6 +46,9 @@ export function bookingConfirmationAdminEmail(data) {
               ${row("Guests", `${data.adults} adult${data.adults !== 1 ? "s" : ""}${data.children > 0 ? `, ${data.children} child${data.children !== 1 ? "ren" : ""}` : ""}`)}
               ${row("Source", escapeHtml(data.source))}
               ${data.specialRequests ? row("Special requests", `<span style="white-space:pre-wrap;">${escapeHtml(data.specialRequests)}</span>`) : ""}
+              ${data.baseAmount != null ? row("Taxable Amount", `₹${formatAmount(data.baseAmount)}`) : ""}
+              ${tax ? row(`CGST (${tax.cgstRate}%)`, `₹${formatAmount(tax.cgstAmount)}`) : ""}
+              ${tax ? row(`SGST (${tax.sgstRate}%)`, `₹${formatAmount(tax.sgstAmount)}`) : ""}
               ${row("Total Amount", `₹${formatAmount(data.totalAmount)}`)}
               ${row("Payment Received", `<strong style="color:#4A6741;">₹${formatAmount(data.paidAmount ?? data.totalAmount)}</strong>`)}
               ${row("Balance at Check-in", `₹0`)}
@@ -79,5 +88,8 @@ function formatDate(iso) {
     return `${parts[2]} ${months[m] ?? ""} ${parts[0]}`;
 }
 function formatAmount(n) {
-    return n.toLocaleString("en-IN");
+    // Half of a 5% GST figure lands on a paisa (₹187.50), so fractions are padded.
+    return Number.isInteger(n)
+        ? n.toLocaleString("en-IN")
+        : n.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }

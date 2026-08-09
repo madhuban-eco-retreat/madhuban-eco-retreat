@@ -39,12 +39,21 @@ export const BUSINESS = {
         'https://www.reddit.com/user/Naive-Transition-394/',
         'https://www.quora.com/profile/Madhuban-Eco-Retreat',
     ],
-    /** Cancellation policy — surfaced in UI copy, terms, review step, and FAQ schema. */
+    /**
+     * Cancellation policy — surfaced in UI copy, terms, review step, and FAQ schema.
+     *
+     * These tiers previously described a seven-day free-cancellation window that
+     * the property has never operated: the terms page, the review step and the
+     * confirmation email all quote the 45/15-day schedule below. Keeping the old
+     * figures here risked them being picked up as the canonical copy.
+     */
     cancellationPolicy: {
-        sevenPlusDays: '100% refund (free cancellation)',
-        threeToSevenDays: '50% refund',
-        lessThanThreeDays: 'No refund',
-        noShow: 'No refund',
+        moreThan45Days: '10% cancellation charge',
+        between15And45Days: '50% cancellation charge',
+        within15Days: '100% cancellation charge',
+        noShow: '100% cancellation charge',
+        festiveAndGroup: 'Non-refundable (festive, long weekend, or more than 3 rooms)',
+        note: 'Charges are calculated on the total booking value, not just the advance paid.',
     },
     /** Booking model */
     advancePayment: '100% at booking — no balance at check-in',

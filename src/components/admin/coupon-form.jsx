@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-const INPUT = "w-full rounded-lg border border-border bg-white px-3 py-2.5 font-body text-sm text-charcoal focus:outline-none focus:ring-2 focus:ring-earth-brown";
+import { MIN_COUPON_CODE_LENGTH, MAX_COUPON_CODE_LENGTH } from "@/lib/admin/constants";
+const INPUT ="w-full rounded-lg border border-border bg-white px-3 py-2.5 font-body text-sm text-charcoal focus:outline-none focus:ring-2 focus:ring-earth-brown";
 const LABEL = "mb-1 block font-body text-xs font-medium text-charcoal/70";
 export function CouponForm({ initial, couponId, mode }) {
     const router = useRouter();
@@ -23,8 +24,16 @@ export function CouponForm({ initial, couponId, mode }) {
         e.preventDefault();
         setSaving(true);
         setError("");
+        const code = values.code.trim().toUpperCase();
+        // Mirrors the server rule so the length is caught before a round trip.
+        // The API rejects a short code regardless — this only saves the wait.
+        if (code.length < MIN_COUPON_CODE_LENGTH) {
+            setError(`Coupon code must be at least ${MIN_COUPON_CODE_LENGTH} characters`);
+            setSaving(false);
+            return;
+        }
         const payload = {
-            code: values.code.trim().toUpperCase(),
+            code,
             discount_type: values.discount_type,
             discount_value: Number(values.discount_value),
             min_booking_value: Number(values.min_booking_value) || 0,
@@ -75,7 +84,11 @@ export function CouponForm({ initial, couponId, mode }) {
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         <div>
           <label className={LABEL}>Coupon Code *</label>
-          <input type="text" value={values.code} onChange={(e) => set("code", e.target.value.toUpperCase())} placeholder="FOREST20" className={INPUT} required/>
+          <input type="text" value={values.code} onChange={(e) => set("code", e.target.value.toUpperCase())} placeholder="FOREST2026" minLength={MIN_COUPON_CODE_LENGTH} maxLength={MAX_COUPON_CODE_LENGTH} className={INPUT} required/>
+          <p className="mt-1 font-body text-xs text-charcoal/50">
+            Minimum {MIN_COUPON_CODE_LENGTH} characters — short codes can be guessed
+            against the public booking form.
+          </p>
         </div>
 
         <div>

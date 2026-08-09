@@ -1,14 +1,18 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { redirect, notFound } from "next/navigation";
-import { amountToWords, fmtINR } from "@/lib/gst";
+import { amountToWords, fmtINR, HSN_ACCOMMODATION } from "@/lib/gst";
 import { PrintControls } from "./print-controls";
-export const metadata = { title: "Invoice — Madhuban Eco Retreat" };
+export const metadata = { title: "Booking Confirmation — Madhuban Eco Retreat" };
 import { assertAdmin } from "@/lib/admin/auth";
 const R2_BASE = process.env.NEXT_PUBLIC_R2_BASE ?? "";
 function fmtDate(iso) {
     return new Date(iso + "T00:00:00").toLocaleDateString("en-IN", {
         day: "numeric", month: "short", year: "numeric",
     });
+}
+/** Older rows stored the coarse 9963 group; print the accommodation heading. */
+function fmtHsn(hsn) {
+    return !hsn || hsn === "9963" ? HSN_ACCOMMODATION : hsn;
 }
 export default async function InvoicePrintPage({ params }) {
     const { id } = await params;
@@ -56,7 +60,7 @@ export default async function InvoicePrintPage({ params }) {
             <div style={{ fontSize: 12, marginTop: 1 }}>State: {invoice.issuer_state} (23)</div>
           </div>
           <div style={{ textAlign: "right" }}>
-            <div style={{ fontSize: 22, fontWeight: 700, color: "#3D4A2B", letterSpacing: 1 }}>TAX INVOICE</div>
+            <div style={{ fontSize: 22, fontWeight: 700, color: "#3D4A2B", letterSpacing: 1 }}>BOOKING CONFIRMATION</div>
           </div>
         </div>
 
@@ -111,7 +115,7 @@ export default async function InvoicePrintPage({ params }) {
           <tbody>
             {lineItems.map((item, i) => (<tr key={i} style={{ backgroundColor: i % 2 === 1 ? "#F5F5F0" : "#fff", borderBottom: "1px solid #D9D4C8" }}>
                 <td style={{ padding: "8px 8px", fontSize: 12 }}>{item.description}</td>
-                <td style={{ padding: "8px 6px", textAlign: "center", fontSize: 12 }}>{item.hsn}</td>
+                <td style={{ padding: "8px 6px", textAlign: "center", fontSize: 12 }}>{fmtHsn(item.hsn)}</td>
                 <td style={{ padding: "8px 6px", textAlign: "center", fontSize: 12 }}>{item.qty}</td>
                 <td style={{ padding: "8px 8px", textAlign: "right", fontSize: 12 }}>{item.rate.toLocaleString("en-IN")}</td>
                 <td style={{ padding: "8px 8px", textAlign: "right", fontSize: 12 }}>{item.amount.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</td>
@@ -176,7 +180,7 @@ export default async function InvoicePrintPage({ params }) {
 
         {/* ── Footnote ──────────────────────────────────────────────────── */}
         <div style={{ borderTop: "1px solid #D9D4C8", marginTop: 20, paddingTop: 10, textAlign: "center" }}>
-          <div style={{ fontSize: 10, color: "#999" }}>This is a computer-generated invoice and does not require a physical signature.</div>
+          <div style={{ fontSize: 10, color: "#999" }}>This is a computer-generated document and does not require a physical signature.</div>
           <div style={{ fontSize: 10, color: "#999", marginTop: 3 }}>GSTIN: {invoice.issuer_gstin} | {invoice.issuer_address}</div>
         </div>
 

@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
 import { Document, Page, View, Text, StyleSheet, Image, Font } from "@react-pdf/renderer";
-import { amountToWords, fmtINR } from "@/lib/gst";
+import { amountToWords, fmtINR, HSN_ACCOMMODATION } from "@/lib/gst";
 // Fonts are read off disk rather than fetched, so nothing here depends on the
 // network or on an env var. Two families are required: latin for regular text,
 // devanagari for ₹ (U+20B9), which the built-in Helvetica cannot render.
@@ -118,10 +118,18 @@ function fmtDate(iso) {
         day: "2-digit", month: "short", year: "numeric",
     });
 }
+/**
+ * Invoices written before the SAC was narrowed stored the four-digit 9963,
+ * which covers all of accommodation, food and beverage. Reprinting one should
+ * show the specific accommodation heading rather than the group it sits in.
+ */
+function fmtHsn(hsn) {
+    return !hsn || hsn === "9963" ? HSN_ACCOMMODATION : hsn;
+}
 export function InvoicePDF({ invoice }) {
     const lineItems = (Array.isArray(invoice.line_items) ? invoice.line_items : []);
     const invoiceDateStr = fmtDate(invoice.generated_at.slice(0, 10));
-    return (<Document title={`Invoice ${invoice.invoice_number}`} author="Madhuban Eco Retreat" subject="GST Tax Invoice">
+    return (<Document title={`Booking Confirmation ${invoice.invoice_number}`} author="Madhuban Eco Retreat" subject="GST Booking Confirmation">
       <Page size="A4" style={styles.page}>
 
         {/* ── Header ─────────────────────────────────────────────────────── */}
@@ -142,7 +150,7 @@ export function InvoicePDF({ invoice }) {
             </View>
           </View>
           <View style={styles.headerRight}>
-            <Text style={styles.invoiceTitle}>TAX INVOICE</Text>
+            <Text style={styles.invoiceTitle}>BOOKING CONFIRMATION</Text>
           </View>
         </View>
 
@@ -201,7 +209,7 @@ export function InvoicePDF({ invoice }) {
           </View>
           {lineItems.map((item, i) => (<View key={i} style={[styles.tableRow, i % 2 === 1 ? styles.tableRowAlt : {}]}>
               <Text style={[{ fontSize: 9, color: C.charcoal }, styles.colDesc]}>{item.description}</Text>
-              <Text style={[{ fontSize: 9, color: C.charcoal }, styles.colHsn]}>{item.hsn}</Text>
+              <Text style={[{ fontSize: 9, color: C.charcoal }, styles.colHsn]}>{fmtHsn(item.hsn)}</Text>
               <Text style={[{ fontSize: 9, color: C.charcoal }, styles.colQty]}>{item.qty}</Text>
               <Text style={[{ fontSize: 9, color: C.charcoal }, styles.colRate]}>
                 {item.rate.toLocaleString("en-IN")}
@@ -271,7 +279,7 @@ export function InvoicePDF({ invoice }) {
         {/* ── Footnote ────────────────────────────────────────────────────── */}
         <View style={styles.footnote}>
           <Text style={styles.footnoteText}>
-            This is a computer-generated invoice and does not require a physical signature.
+            This is a computer-generated document and does not require a physical signature.
           </Text>
           <Text style={[styles.footnoteText, { marginTop: 2 }]}>
             GSTIN: {invoice.issuer_gstin} | {invoice.issuer_address}

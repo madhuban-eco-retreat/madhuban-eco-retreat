@@ -1,7 +1,7 @@
 // @ts-check
 import "server-only";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { computeRoomGstRate, addGst } from "@/lib/gst";
+import { computeRoomGstRate, computeGst } from "@/lib/gst";
 import { extraGuestCharges } from "@/lib/booking/occupancy";
 function diffDays(a, b) {
     const msPerDay = 86400000;
@@ -82,7 +82,10 @@ export async function calculatePricing(params) {
     // charged on top of that, so the guest pays base + GST rather than the
     // tariff having the tax carved out of it.
     const subtotalBeforeGst = +(baseNightlyTotal + extras.total - discountAmount).toFixed(2);
-    const { gst: gstAmount, total: totalAmount } = addGst(subtotalBeforeGst, gstRatePct);
+    // Split into CGST and SGST here rather than letting each surface halve the
+    // total itself — one rounding decision, taken once, so checkout, review,
+    // confirmation and the invoice cannot drift a paisa apart.
+    const gst = computeGst(subtotalBeforeGst, gstRatePct);
     return {
         roomId: room.id,
         roomSlug: room.slug,
@@ -101,7 +104,15 @@ export async function calculatePricing(params) {
         couponCode: appliedCouponCode,
         gstRate: gstRatePct,
         subtotalBeforeGst,
-        gstAmount,
-        totalAmount,
+        // Alias for the taxable base under the name the pricing API documents.
+        baseAmount: subtotalBeforeGst,
+        cgstRate: gst.cgstRate,
+        sgstRate: gst.sgstRate,
+        cgstAmount: gst.cgstAmount,
+        sgstAmount: gst.sgstAmount,
+        totalGst: gst.totalGst,
+        // Retained under its original name for callers written before the split.
+        gstAmount: gst.totalGst,
+        totalAmount: gst.totalAmount,
     };
 }
