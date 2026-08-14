@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { assertAdmin } from "@/lib/admin/auth";
+import { OCCUPYING_STATUSES, availableUnits, fetchOverlappingBlocks, totalBlockedUnits, } from "@/lib/booking/inventory";
 export async function GET(req) {
     const user = await assertAdmin();
     if (!user)
@@ -29,7 +30,7 @@ export async function GET(req) {
     const { data: conflicts, error: conflictsError } = await supabase
         .from("bookings")
         .select("room_id")
-        .in("status", ["CONFIRMED", "CHECKED_IN"])
+        .in("status", OCCUPYING_STATUSES)
         .lt("checkin", to)
         .gt("checkout", from);
     if (conflictsError) {
@@ -40,18 +41,21 @@ export async function GET(req) {
     for (const c of conflicts ?? []) {
         bookedCountByRoom[c.room_id] = (bookedCountByRoom[c.room_id] ?? 0) + 1;
     }
-    // Also check manual_blocks
-    const { data: blocks } = await supabase
-        .from("manual_blocks")
-        .select("room_id")
-        .lt("date_from", to)
-        .gt("date_to", from);
-    for (const b of blocks ?? []) {
-        bookedCountByRoom[b.room_id] = (bookedCountByRoom[b.room_id] ?? 0) + 1;
+    // Manual blocks hold however many units they were written for. Counting each
+    // row as one unit — as this did — was wrong in both directions: it undercounted
+    // a four-unit block and overcounted a whole-room-type block on a single-unit
+    // room only by luck.
+    let blocks;
+    try {
+        blocks = await fetchOverlappingBlocks(supabase, { from, to });
+    }
+    catch {
+        return NextResponse.json({ error: "Failed to check availability" }, { status: 500 });
     }
     const result = rooms.map((room) => {
+        const inventory = Math.max(room.inventory_count ?? 1, 1);
         const booked = bookedCountByRoom[room.id] ?? 0;
-        const available = Math.max(0, (room.inventory_count ?? 1) - booked);
+        const blocked = Math.min(totalBlockedUnits(blocks, room.id, inventory), inventory);
         return {
             id: room.id,
             name: room.name,
@@ -59,8 +63,10 @@ export async function GET(req) {
             base_price_per_night: Number(room.base_price_per_night),
             max_occupancy: room.max_occupancy,
             max_occupancy_children: room.max_occupancy_children,
-            inventory_count: room.inventory_count ?? 1,
-            available_units: available,
+            inventory_count: inventory,
+            booked_units: booked,
+            blocked_units: blocked,
+            available_units: availableUnits({ inventoryCount: inventory, bookedUnits: booked, blockedUnits: blocked }),
         };
     });
     return NextResponse.json({ rooms: result });

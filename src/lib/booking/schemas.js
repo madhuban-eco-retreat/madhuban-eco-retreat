@@ -16,6 +16,10 @@ export const checkAvailabilitySchema = z.object({
     roomId: z.string().uuid(),
     checkIn: dateStr,
     checkOut: dateStr,
+    // Multi-unit room types can be asked for more than one tent at a time. The
+    // ceiling is deliberately loose — the real cap is the room's own inventory,
+    // which only the server-side check knows.
+    units: z.number().int().min(1).max(20).optional().default(1),
 }).refine((d) => d.checkOut > d.checkIn, {
     message: "Check-out must be after check-in",
     path: ["checkOut"],

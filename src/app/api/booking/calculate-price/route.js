@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { calculatePriceSchema } from "@/lib/booking/schemas";
 import { calculatePricing } from "@/lib/booking/pricing";
+import { checkAvailability } from "@/lib/booking/availability";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit, peekRateLimit, consumeRateLimit, getClientIP } from "@/lib/ratelimit";
 
@@ -45,6 +46,30 @@ async function logFailedCoupon({ code, ip, roomSlug }) {
     }
 }
 
+/**
+ * Availability facts for the quoted room and dates.
+ *
+ * The quote panel is where a guest decides, so it is where "only 1 tent left"
+ * belongs — previously they learned the dates were gone a screen later, at
+ * booking creation. Best-effort by design: a failed lookup drops the availability
+ * fields rather than failing an otherwise valid price, and booking creation
+ * re-checks anyway, so nothing here is load-bearing for overselling.
+ */
+async function availabilityFor(pricing) {
+    try {
+        const { available, availableUnits, totalUnits } = await checkAvailability({
+            roomId: pricing.roomId,
+            checkIn: pricing.checkIn,
+            checkOut: pricing.checkOut,
+        });
+        return { available, availableUnits, totalUnits };
+    }
+    catch (err) {
+        console.error("[calculate-price] availability lookup failed:", err);
+        return {};
+    }
+}
+
 export async function POST(req) {
     // Overall ceiling first: an exhausted caller should not reach the database
     // at all, whether or not the request carries a coupon.
@@ -75,6 +100,7 @@ export async function POST(req) {
     }
     try {
         const pricing = await calculatePricing(parsed.data);
+        const availability = await availabilityFor(pricing);
         // calculatePricing returns couponCode: null when the code does not exist,
         // has expired, is exhausted or misses its minimum — every one of those is
         // a failed attempt from a rate-limiting point of view.
@@ -89,11 +115,12 @@ export async function POST(req) {
             // is returned with the coupon reported as rejected rather than 4xx'd.
             return NextResponse.json({
                 ...pricing,
+                ...availability,
                 couponError: "That coupon code is not valid for this booking.",
                 couponAttemptsRemaining: spent.remaining,
             });
         }
-        return NextResponse.json(pricing);
+        return NextResponse.json({ ...pricing, ...availability });
     }
     catch (err) {
         const message = err instanceof Error ? err.message : "Unable to calculate price";

@@ -27,5 +27,9 @@ export default async function AvailabilityPage({ searchParams, }) {
         toDate = format(addDays(monthEnd, 1), "yyyy-MM-dd");
     }
     const { rooms, bookings, blocks } = await getAvailabilityData(fromDate, toDate);
-    return (<AvailabilityClient rooms={rooms} bookings={bookings} blocks={blocks} view={view} fromDate={fromDate} toDate={toDate} today={todayStr}/>);
+    // ?room=<id> arrives from the "Block dates" link on the rooms list and opens
+    // the block form already pointed at that room. Validated against the loaded
+    // rooms so a stale or hand-typed id opens nothing rather than an empty form.
+    const blockRoomId = rooms.some((r) => r.id === params.room) ? params.room : null;
+    return (<AvailabilityClient rooms={rooms} bookings={bookings} blocks={blocks} view={view} fromDate={fromDate} toDate={toDate} today={todayStr} blockRoomId={blockRoomId}/>);
 }
