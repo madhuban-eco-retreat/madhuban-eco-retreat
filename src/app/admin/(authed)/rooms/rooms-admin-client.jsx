@@ -21,6 +21,32 @@ function getThumbnailUrl(room) {
     return null;
 }
 function fmtPrice(n) { return `₹${n.toLocaleString("en-IN")}`; }
+/**
+ * Tonight's free-unit count for one room type.
+ *
+ * Reads as a traffic light so a full house is visible at a glance rather than
+ * having to be parsed out of "0 of 4". Single-unit rooms get "Available today"
+ * instead of "1 available today", which is the same fact said twice.
+ */
+function AvailabilityPill({ stats }) {
+    if (!stats) {
+        return <span className="font-body text-xs text-charcoal/30">—</span>;
+    }
+    const { available, inventory } = stats;
+    const tone = available === 0
+        ? "bg-error/10 text-error"
+        : available < inventory
+            ? "bg-gold-accent/25 text-charcoal"
+            : "bg-forest-green/10 text-forest-green";
+    const label = available === 0
+        ? "Fully booked today"
+        : inventory === 1
+            ? "Available today"
+            : `${available} available today`;
+    return (<span className={`inline-flex items-center whitespace-nowrap rounded-full px-2.5 py-0.5 font-body text-xs font-medium ${tone}`} title={`${available} of ${inventory} free · ${stats.booked} booked · ${stats.blocked} blocked`}>
+      {label}
+    </span>);
+}
 // ─── Tab definitions ─────────────────────────────────────────────────────────
 const TABS = [
     { value: "rooms", label: "Room Types" },
@@ -66,7 +92,7 @@ function AvailabilityToggle({ room, onToggled }) {
     }
     return (<Toggle checked={room.is_active} disabled={saving} onChange={handleChange} id={`room-active-${room.id}`} label={room.is_active ? "Active" : "Draft"}/>);
 }
-function RoomTypesTab({ rooms, saving, onDragStart, onDrop, onQuickEdit, onToggleActive }) {
+function RoomTypesTab({ rooms, availability, saving, onDragStart, onDrop, onQuickEdit, onToggleActive }) {
     if (rooms.length === 0) {
         return (<Card>
         <div className="py-12 text-center">
@@ -97,6 +123,9 @@ function RoomTypesTab({ rooms, saving, onDragStart, onDrop, onQuickEdit, onToggl
             <th className="hidden px-4 py-3 text-left font-body text-xs font-semibold uppercase tracking-wider text-charcoal/50 sm:table-cell">
               Units
             </th>
+            <th className="hidden px-4 py-3 text-left font-body text-xs font-semibold uppercase tracking-wider text-charcoal/50 lg:table-cell">
+              Today
+            </th>
             <th className="hidden px-4 py-3 text-left font-body text-xs font-semibold uppercase tracking-wider text-charcoal/50 md:table-cell">
               Bookable
             </th>
@@ -120,9 +149,12 @@ function RoomTypesTab({ rooms, saving, onDragStart, onDrop, onQuickEdit, onToggl
                   <p className="font-body text-xs text-charcoal/40">/stay/{room.slug}</p>
                 </td>
                 <td className="hidden px-4 py-3 sm:table-cell">
-                  <span className="font-body text-sm text-charcoal">
+                  <span className="whitespace-nowrap font-body text-sm text-charcoal">
                     {room.inventory_count} unit{room.inventory_count !== 1 ? "s" : ""}
                   </span>
+                </td>
+                <td className="hidden px-4 py-3 lg:table-cell">
+                  <AvailabilityPill stats={availability[room.id]}/>
                 </td>
                 <td className="hidden px-4 py-3 md:table-cell">
                   <AvailabilityToggle room={room} onToggled={onToggleActive}/>
@@ -133,6 +165,12 @@ function RoomTypesTab({ rooms, saving, onDragStart, onDrop, onQuickEdit, onToggl
                       <Pencil className="h-3 w-3"/>
                       Quick Edit
                     </Button>
+                    {/* Deep-links the availability calendar to this room so blocking
+                        a tent no longer means finding its row by eye. */}
+                    <Link href={`/admin/availability?view=week&room=${room.id}`} className="inline-flex items-center gap-1 whitespace-nowrap font-body text-xs text-charcoal/50 transition-colors hover:text-earth-brown hover:underline">
+                      <CalendarOff className="h-3 w-3"/>
+                      Block dates
+                    </Link>
                     <Link href={`/admin/rooms/${room.id}/edit`} className="whitespace-nowrap font-body text-xs text-charcoal/50 transition-colors hover:text-earth-brown hover:underline">
                       Edit details →
                     </Link>
@@ -227,7 +265,7 @@ function SeasonalRulesTab() {
       </div>
     </Card>);
 }
-function InventoryTab({ rooms, editingId, editingVal, onStartEdit, onEditValChange, onSave, onCancel, onToggleActive }) {
+function InventoryTab({ rooms, availability, editingId, editingVal, onStartEdit, onEditValChange, onSave, onCancel, onToggleActive }) {
     const totalUnits = rooms.reduce((s, r) => s + r.inventory_count, 0);
     return (<Card className="overflow-hidden p-0">
       <div className="border-b border-admin-card-border bg-admin-status-neutral-bg/40 px-6 py-3">
@@ -241,6 +279,9 @@ function InventoryTab({ rooms, editingId, editingVal, onStartEdit, onEditValChan
           <tr className="border-b border-admin-card-border">
             <th className="px-6 py-3 text-left font-body text-xs font-semibold uppercase tracking-wider text-charcoal/50">Room</th>
             <th className="px-6 py-3 text-left font-body text-xs font-semibold uppercase tracking-wider text-charcoal/50">Units</th>
+            <th className="hidden px-6 py-3 text-left font-body text-xs font-semibold uppercase tracking-wider text-charcoal/50 md:table-cell">
+              Today
+            </th>
             <th className="hidden px-6 py-3 text-left font-body text-xs font-semibold uppercase tracking-wider text-charcoal/50 sm:table-cell">
               Bookable
             </th>
@@ -275,6 +316,9 @@ function InventoryTab({ rooms, editingId, editingVal, onStartEdit, onEditValChan
                       {room.inventory_count} unit{room.inventory_count !== 1 ? "s" : ""}
                     </span>)}
                 </td>
+                <td className="hidden px-6 py-4 md:table-cell">
+                  <AvailabilityPill stats={availability[room.id]}/>
+                </td>
                 <td className="hidden px-6 py-4 sm:table-cell">
                   <AvailabilityToggle room={room} onToggled={onToggleActive}/>
                 </td>
@@ -291,7 +335,7 @@ function InventoryTab({ rooms, editingId, editingVal, onStartEdit, onEditValChan
     </Card>);
 }
 // ─── Main exported component ─────────────────────────────────────────────────
-export function RoomsAdminClient({ initialRooms }) {
+export function RoomsAdminClient({ initialRooms, availability = {} }) {
     const [rooms, setRooms] = useState(initialRooms);
     const [activeTab, setActiveTab] = useState("rooms");
     // Quick edit drawer
@@ -407,12 +451,12 @@ export function RoomsAdminClient({ initialRooms }) {
       <Tabs tabs={TABS} value={activeTab} onChange={switchTab} className="mb-6"/>
 
       {/* Tab content */}
-      {activeTab === "rooms" && (<RoomTypesTab rooms={rooms} saving={saving} onDragStart={handleDragStart} onDrop={handleDrop} onQuickEdit={(r) => setQuickEditRoom(r)} onToggleActive={handleToggleActive}/>)}
+      {activeTab === "rooms" && (<RoomTypesTab rooms={rooms} availability={availability} saving={saving} onDragStart={handleDragStart} onDrop={handleDrop} onQuickEdit={(r) => setQuickEditRoom(r)} onToggleActive={handleToggleActive}/>)}
 
       {activeTab === "rates" && (<RatesTab rooms={rooms} editingId={editingRateId} editingVal={editingRateVal} onStartEdit={(r) => { setEditingRateId(r.id); setEditingRateVal(String(r.base_price_per_night)); }} onEditValChange={setEditingRateVal} onSave={saveRate} onCancel={() => setEditingRateId(null)}/>)}
 
       {activeTab === "seasonal" && <SeasonalRulesTab />}
 
-      {activeTab === "inventory" && (<InventoryTab rooms={rooms} editingId={editingInvId} editingVal={editingInvVal} onStartEdit={(r) => { setEditingInvId(r.id); setEditingInvVal(String(r.inventory_count)); }} onEditValChange={setEditingInvVal} onSave={saveInventory} onCancel={() => setEditingInvId(null)} onToggleActive={handleToggleActive}/>)}
+      {activeTab === "inventory" && (<InventoryTab rooms={rooms} availability={availability} editingId={editingInvId} editingVal={editingInvVal} onStartEdit={(r) => { setEditingInvId(r.id); setEditingInvVal(String(r.inventory_count)); }} onEditValChange={setEditingInvVal} onSave={saveInventory} onCancel={() => setEditingInvId(null)} onToggleActive={handleToggleActive}/>)}
     </>);
 }

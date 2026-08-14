@@ -5,30 +5,47 @@ import { format, parseISO, addMonths, subMonths, addDays, subDays, startOfMonth,
 import { ChevronLeft, ChevronRight, CalendarRange, X, AlertTriangle, } from "lucide-react";
 import { toast } from "sonner";
 import { Button, Modal, Select, TextArea, Input, Badge, Card, } from "@/components/admin/ui";
-import { computeCellState, } from "@/lib/admin/availability-utils";
+import { computeCellState, blockedUnitsFor, } from "@/lib/admin/availability-utils";
+import { BLOCK_REASON_OPTIONS, CUSTOM_BLOCK_REASON } from "@/lib/admin/block-reasons";
 // ─── Color mapping ────────────────────────────────────────────────────────────
+// Traffic-light reading of what is left: green = every unit free, amber = some
+// free, red/charcoal = none free.
 const CELL_CLASSES = {
-    available: "bg-white border border-admin-card-border text-charcoal/40",
-    partial: "bg-warm-beige text-charcoal",
-    "fully-booked": "bg-forest-green text-ivory",
+    available: "bg-forest-green/15 border border-forest-green/30 text-forest-green",
+    partial: "bg-gold-accent/30 border border-gold-accent/50 text-charcoal",
+    "fully-booked": "bg-error/80 text-ivory",
     blocked: "bg-charcoal text-ivory",
     "check-in": "bg-gold-accent text-charcoal",
 };
 const LEGEND = [
-    { state: "available", label: "Available" },
-    { state: "partial", label: "Partial" },
-    { state: "fully-booked", label: "Fully Booked" },
-    { state: "check-in", label: "Check-in" },
+    { state: "available", label: "All units available" },
+    { state: "partial", label: "Some units left" },
+    { state: "fully-booked", label: "Fully booked" },
+    { state: "check-in", label: "Check-in day" },
     { state: "blocked", label: "Blocked" },
 ];
-const REASON_OPTIONS = [
-    { value: "Maintenance", label: "Maintenance" },
-    { value: "Private Event", label: "Private Event" },
-    { value: "Owner / Staff Stay", label: "Owner / Staff Stay" },
-    { value: "Renovation", label: "Renovation" },
-    { value: "Off-Season Closure", label: "Off-Season Closure" },
-    { value: "Other", label: "Other" },
-];
+const REASON_OPTIONS = BLOCK_REASON_OPTIONS;
+/** "2/4 available" — the number staff actually need off a calendar cell. */
+function availabilityLabel(cellState) {
+    return `${cellState.available}/${cellState.inventory} available`;
+}
+/**
+ * Hover summary for a cell: how many units are gone, to what, and on whose say-so.
+ *
+ * title= is plain text, so the lines are joined with newlines rather than markup.
+ */
+function cellTooltip(room, date, cellState) {
+    const lines = [`${room.name} — ${format(parseISO(date), "d MMM yyyy")}`, availabilityLabel(cellState)];
+    if (cellState.occupied > 0) {
+        lines.push(`${cellState.occupied} booked`);
+    }
+    for (const bl of cellState.blocks) {
+        const units = blockedUnitsFor(bl, cellState.inventory);
+        const who = bl.created_by_name ? ` · by ${bl.created_by_name}` : "";
+        lines.push(`Blocked ${units} unit${units === 1 ? "" : "s"} — ${bl.reason ?? "no reason given"}${who}`, `   ${format(parseISO(bl.date_from), "d MMM")} – ${format(parseISO(bl.date_to), "d MMM yyyy")}`);
+    }
+    return lines.join("\n");
+}
 function statusLabel(status) {
     switch (status) {
         case "CONFIRMED": return "Confirmed";
@@ -60,12 +77,21 @@ function formatWeekLabel(fromDate, toDate) {
     }
     return `${format(from, "d MMM")} – ${format(to, "d MMM yyyy")}`;
 }
-export function AvailabilityClient({ rooms, bookings, blocks, view, fromDate, toDate, today, }) {
+export function AvailabilityClient({ rooms, bookings, blocks, view, fromDate, toDate, today, blockRoomId = null, }) {
     const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const [selectedCell, setSelectedCell] = useState(null);
-    const [blockModalOpen, setBlockModalOpen] = useState(false);
-    const [blockPrefill, setBlockPrefill] = useState({});
+    // Arriving from a room's "Block dates" link opens the form straight away,
+    // seeded from the initial state rather than an effect so the modal is never
+    // painted closed for a frame first.
+    const [blockModalOpen, setBlockModalOpen] = useState(blockRoomId !== null);
+    const [blockPrefill, setBlockPrefill] = useState(blockRoomId
+        ? {
+            room_id: blockRoomId,
+            start_date: today,
+            end_date: format(addDays(parseISO(today), 1), "yyyy-MM-dd"),
+        }
+        : {});
     const [blockModalKey, setBlockModalKey] = useState(0);
     // Compute days to display
     const lastDay = subDays(parseISO(toDate), 1);
@@ -256,29 +282,31 @@ function CalendarGrid({ rooms, days, bookings, blocks, today, view, selectedCell
               <span className="font-body text-xs font-medium text-charcoal truncate block">
                 {room.name}
               </span>
+              <span className="font-body text-[10px] text-charcoal/40">
+                {room.inventory_count} unit{room.inventory_count === 1 ? "" : "s"}
+              </span>
             </td>
             {days.map((day) => {
                 const cellState = computeCellState(room, day, bookings, blocks);
                 const isToday = day === today;
                 const isSelected = selectedCell?.roomId === room.id && selectedCell?.date === day;
-                const tooltip = cellState.state === "blocked"
-                    ? `Blocked — ${cellState.blocks[0]?.reason ?? ""}`
-                    : cellState.state === "available"
-                        ? "Available"
-                        : `${cellState.occupied}/${room.inventory_count} occupied`;
+                const tooltip = cellTooltip(room, day, cellState);
                 return (<td key={day} className={`${cellW} py-0.5`}>
-                  <button type="button" onClick={() => onCellClick(room, day)} title={tooltip} aria-label={`${room.name} on ${format(parseISO(day), "d MMM yyyy")}: ${tooltip}`} className={`
+                  <button type="button" onClick={() => onCellClick(room, day)} title={tooltip} aria-label={`${room.name} on ${format(parseISO(day), "d MMM yyyy")}: ${availabilityLabel(cellState)}`} className={`
                       w-full ${cellH} rounded-md flex items-center justify-center
                       font-body text-xs transition-all cursor-pointer
                       ${CELL_CLASSES[cellState.state]}
                       ${isToday ? "ring-2 ring-gold-accent ring-offset-1" : ""}
                       ${isSelected ? "ring-2 ring-forest-green ring-offset-1 scale-110" : "hover:scale-105"}
                     `}>
-                    {view === "week" && cellState.state !== "available" && (<span className="text-[11px] font-medium">
-                        {cellState.state === "blocked"
-                            ? "Blocked"
-                            : `${cellState.occupied}/${room.inventory_count}`}
+                    {/* Week view has room for the count; month view keeps the colour
+                        alone and puts the numbers in the tooltip and side panel.
+                        Single-unit rooms say nothing — "0/1" adds no information a
+                        red cell has not already given. */}
+                    {view === "week" && room.inventory_count > 1 && (<span className="text-[11px] font-medium">
+                        {cellState.available}/{cellState.inventory}
                       </span>)}
+                    {view === "week" && room.inventory_count === 1 && cellState.state === "blocked" && (<span className="text-[10px] font-medium">Blocked</span>)}
                   </button>
                 </td>);
             })}
@@ -321,13 +349,13 @@ function SidePanel({ rooms, selectedCell, onClose, onBlock, onRemoveBlock, }) {
           {/* Status summary */}
           <div>
             <StatePill state={cellState.state}/>
-            {cellState.state === "blocked" ? (<p className="mt-1 font-body text-sm text-charcoal/70">
-                Blocked — whole room type unavailable
-              </p>) : cellState.state === "available" ? (<p className="mt-1 font-body text-sm text-charcoal/70">
-                All {room.inventory_count} units available
-              </p>) : (<p className="mt-1 font-body text-sm text-charcoal/70">
-                {cellState.occupied} of {room.inventory_count} units occupied
-              </p>)}
+            <p className="mt-1.5 font-body text-sm font-medium text-charcoal">
+              {cellState.available} of {cellState.inventory} unit
+              {cellState.inventory === 1 ? "" : "s"} available
+            </p>
+            <p className="mt-0.5 font-body text-xs text-charcoal/50">
+              {cellState.occupied} booked · {cellState.blocked} blocked
+            </p>
           </div>
 
           {/* Bookings list */}
@@ -365,28 +393,42 @@ function SidePanel({ rooms, selectedCell, onClose, onBlock, onRemoveBlock, }) {
                 Blocks
               </h4>
               <ul className="space-y-2">
-                {cellState.blocks.map((bl) => (<li key={bl.id} className="rounded-xl border border-admin-card-border p-3">
-                    <p className="font-body text-sm font-medium text-charcoal">
-                      {bl.reason ?? "No reason given"}
-                    </p>
+                {cellState.blocks.map((bl) => {
+                const units = blockedUnitsFor(bl, cellState.inventory);
+                return (<li key={bl.id} className="rounded-xl border border-admin-card-border p-3">
+                    <div className="flex items-start justify-between gap-2">
+                      <p className="font-body text-sm font-medium text-charcoal">
+                        {bl.reason ?? "No reason given"}
+                      </p>
+                      <Badge variant="neutral">
+                        {units} unit{units === 1 ? "" : "s"}
+                      </Badge>
+                    </div>
                     <p className="font-body text-xs text-charcoal/50 mt-0.5">
                       {format(parseISO(bl.date_from), "d MMM")} –{" "}
                       {format(parseISO(bl.date_to), "d MMM yyyy")}
                     </p>
+                    {bl.created_by_name && (<p className="font-body text-xs text-charcoal/50 mt-0.5">
+                        Blocked by {bl.created_by_name}
+                        {bl.created_at && ` on ${format(parseISO(bl.created_at), "d MMM yyyy")}`}
+                      </p>)}
                     {bl.notes && (<p className="font-body text-xs text-charcoal/60 mt-1">
                         {bl.notes}
                       </p>)}
                     <button type="button" disabled={removing === bl.id} onClick={() => handleRemove(bl.id)} className="mt-2 font-body text-xs text-error hover:underline underline-offset-4 disabled:opacity-50">
                       {removing === bl.id ? "Removing…" : "Remove block"}
                     </button>
-                  </li>))}
+                  </li>);
+            })}
               </ul>
             </div>)}
         </div>
 
         {/* Footer actions */}
         <div className="flex-shrink-0 border-t border-admin-card-border px-5 py-4 space-y-2">
-          {cellState.state !== "blocked" && (<Button variant="secondary" size="sm" className="w-full" onClick={() => onBlock(room, date)}>
+          {/* Offered whenever a unit is still free — on a multi-unit room that
+              includes days that are already partly blocked. */}
+          {cellState.available > 0 && (<Button variant="secondary" size="sm" className="w-full" onClick={() => onBlock(room, date)}>
               <CalendarRange className="w-4 h-4"/>
               Block This Day for {room.name}
             </Button>)}
@@ -399,8 +441,8 @@ function SidePanel({ rooms, selectedCell, onClose, onBlock, onRemoveBlock, }) {
 }
 function StatePill({ state }) {
     const labels = {
-        available: "Available",
-        partial: "Partially Occupied",
+        available: "All Units Available",
+        partial: "Partially Available",
         "fully-booked": "Fully Booked",
         blocked: "Blocked",
         "check-in": "Check-in Day",
@@ -414,11 +456,23 @@ function BlockDatesModal({ open, rooms, prefill, today, onClose, onSuccess, }) {
     const [startDate, setStartDate] = useState(prefill.start_date ?? today);
     const [endDate, setEndDate] = useState(prefill.end_date ?? "");
     const [reason, setReason] = useState(prefill.reason ?? "");
+    const [customReason, setCustomReason] = useState("");
+    const [units, setUnits] = useState(1);
     const [notes, setNotes] = useState(prefill.notes ?? "");
     const [submitting, setSubmitting] = useState(false);
     const [serverError, setServerError] = useState(null);
     const roomOptions = rooms.map((r) => ({ value: r.id, label: r.name }));
     const isPrefillRoom = !!prefill.room_id;
+    const selectedRoom = rooms.find((r) => r.id === roomId);
+    const maxUnits = Math.max(selectedRoom?.inventory_count ?? 1, 1);
+    const isCustomReason = reason === CUSTOM_BLOCK_REASON;
+    // Switching from Glamping Tent (4) to a single-unit room must not leave a
+    // stale "3" behind that the server would then reject.
+    function handleRoomChange(nextRoomId) {
+        setRoomId(nextRoomId);
+        const nextMax = Math.max(rooms.find((r) => r.id === nextRoomId)?.inventory_count ?? 1, 1);
+        setUnits((u) => Math.min(u, nextMax));
+    }
     async function handleSubmit(e) {
         e.preventDefault();
         setServerError(null);
@@ -442,6 +496,10 @@ function BlockDatesModal({ open, rooms, prefill, today, onClose, onSuccess, }) {
             setServerError("Reason category is required.");
             return;
         }
+        if (isCustomReason && !customReason.trim()) {
+            setServerError("Please describe the custom reason.");
+            return;
+        }
         setSubmitting(true);
         try {
             const res = await fetch("/api/admin/availability/block", {
@@ -451,7 +509,9 @@ function BlockDatesModal({ open, rooms, prefill, today, onClose, onSuccess, }) {
                     room_id: roomId,
                     start_date: startDate,
                     end_date: endDate,
+                    units: Math.min(Math.max(units, 1), maxUnits),
                     reason,
+                    custom_reason: isCustomReason ? customReason.trim() : undefined,
                     notes: notes.trim() || undefined,
                 }),
             });
@@ -481,8 +541,28 @@ function BlockDatesModal({ open, rooms, prefill, today, onClose, onSuccess, }) {
               <p className="font-body text-sm text-charcoal px-3 h-10 flex items-center border border-admin-card-border rounded-xl bg-charcoal/5">
                 {rooms.find((r) => r.id === prefill.room_id)?.name ?? "—"}
               </p>
-            </div>) : (<Select label="Room Type" required placeholder="Select a room type" options={roomOptions} value={roomId} onChange={(e) => setRoomId(e.target.value)}/>)}
+            </div>) : (<Select label="Room Type" required placeholder="Select a room type" options={roomOptions} value={roomId} onChange={(e) => handleRoomChange(e.target.value)}/>)}
         </div>
+
+        {/* Units to block — pointless on a single-unit room, where the only
+            possible answer is 1. */}
+        {maxUnits > 1 && (<div>
+            <label className="font-body text-xs font-semibold uppercase tracking-wider text-charcoal block mb-1.5">
+              Units to Block
+            </label>
+            <div className="flex flex-wrap gap-2">
+              {Array.from({ length: maxUnits }, (_, i) => i + 1).map((n) => (<button key={n} type="button" onClick={() => setUnits(n)} aria-pressed={units === n} className={`h-9 min-w-[2.5rem] rounded-xl border px-3 font-body text-sm transition-colors ${units === n
+                    ? "border-forest-green bg-forest-green text-ivory"
+                    : "border-admin-card-border text-charcoal/70 hover:bg-charcoal/5 hover:text-charcoal"}`}>
+                  {n}
+                </button>))}
+            </div>
+            <p className="mt-1.5 font-body text-xs text-charcoal/50">
+              {units === maxUnits
+                ? `Blocks all ${maxUnits} units — the room type is off sale for these dates.`
+                : `${maxUnits - units} unit${maxUnits - units === 1 ? "" : "s"} stay bookable.`}
+            </p>
+          </div>)}
 
         {/* Date range */}
         <div className="grid grid-cols-2 gap-3">
@@ -492,6 +572,10 @@ function BlockDatesModal({ open, rooms, prefill, today, onClose, onSuccess, }) {
 
         {/* Reason */}
         <Select label="Reason" required placeholder="Select a reason" options={REASON_OPTIONS} value={reason} onChange={(e) => setReason(e.target.value)}/>
+
+        {/* Custom reason — this text is what gets stored as the block's reason,
+            so it is what shows on the calendar rather than the word "Custom". */}
+        {isCustomReason && (<Input label="Custom Reason" required placeholder="e.g. Tent floor replacement" maxLength={200} value={customReason} onChange={(e) => setCustomReason(e.target.value)}/>)}
 
         {/* Notes */}
         <TextArea label="Additional Notes" placeholder="Optional details for staff reference" helperText="Optional" value={notes} maxLength={500} currentLength={notes.length} onChange={(e) => setNotes(e.target.value)}/>

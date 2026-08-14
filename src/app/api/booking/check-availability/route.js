@@ -19,7 +19,15 @@ export async function POST(req) {
         return NextResponse.json({ error: parsed.error.issues[0]?.message ?? "Invalid input" }, { status: 400 });
     }
     try {
-        const result = await checkAvailability(parsed.data);
+        const { roomId, checkIn, checkOut, units } = parsed.data;
+        // Returns { available, availableUnits, totalUnits, reason? } so the caller
+        // can distinguish "sold out" from "one tent left".
+        const result = await checkAvailability({
+            roomId,
+            checkIn,
+            checkOut,
+            unitsRequested: units,
+        });
         return NextResponse.json(result);
     }
     catch (err) {
