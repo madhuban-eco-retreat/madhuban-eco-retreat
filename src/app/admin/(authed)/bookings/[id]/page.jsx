@@ -339,8 +339,10 @@ export default async function BookingDetailPage({ params }) {
                     {room ? ` + ${derivedGstRate}% GST` : ""}
                   </p>
                 </div>
+                {/* Gross, so the discount below reads as a deduction from it.
+                    base_amount is stored already net of any discount. */}
                 <span className="flex-shrink-0 font-body text-sm font-medium text-charcoal">
-                  ₹{fmtAmt(Number(booking.base_amount))}
+                  ₹{fmtAmt(Number(booking.base_amount) + Number(booking.discount_amount ?? 0))}
                 </span>
               </div>
 
@@ -358,7 +360,7 @@ export default async function BookingDetailPage({ params }) {
             <div className="mt-4 space-y-1.5 border-t border-admin-card-border pt-4">
               <div className="flex justify-between font-body text-sm text-charcoal/70">
                 <span>Subtotal</span>
-                <span>₹{fmtAmt(Number(booking.base_amount) - Number(booking.discount_amount))}</span>
+                <span>₹{fmtAmt(Number(booking.base_amount))}</span>
               </div>
               <div className="flex justify-between font-body text-sm text-charcoal/70">
                 <span>GST ({derivedGstRate}%)</span>

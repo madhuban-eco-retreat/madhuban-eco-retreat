@@ -521,10 +521,25 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
                     <span>&#8377;{formatPrice(line.amount)}</span>
                   </div>))}
 
+                {/* Named as its own saving rather than folded into the room
+                    line, so a guest can see what the second night bought them
+                    and that it came off the tariff, not the extra-guest fees. */}
+                {pricing.multiNightDiscount > 0 && (<div className="flex justify-between text-[var(--color-moss-green)]">
+                    <span>
+                      2+ nights discount ({Math.round(pricing.multiNightDiscountRate * 100)}%)
+                    </span>
+                    <span>−&#8377;{formatPrice(pricing.multiNightDiscount)}</span>
+                  </div>)}
+
                 {pricing.discountAmount > 0 && (<div className="flex justify-between text-moss-green">
                     <span>Coupon ({pricing.couponCode})</span>
                     <span>−&#8377;{formatPrice(pricing.discountAmount)}</span>
                   </div>)}
+
+                <div className="flex justify-between border-t border-border pt-3 text-charcoal/70">
+                  <span>Subtotal</span>
+                  <span>&#8377;{formatPrice(pricing.subtotalBeforeGst)}</span>
+                </div>
 
                 {/* CGST and SGST are shown as separate lines because that is
                     what the supply is actually taxed as — a single "GST 18%"
@@ -589,10 +604,20 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
                   <span>{line.label} × {line.qty}</span>
                   <span>&#8377;{formatPrice(line.amount)}</span>
                 </div>))}
+              {pricing.multiNightDiscount > 0 && (<div className="flex justify-between text-[var(--color-moss-green)]">
+                  <span>
+                    2+ nights discount ({Math.round(pricing.multiNightDiscountRate * 100)}%)
+                  </span>
+                  <span>−&#8377;{formatPrice(pricing.multiNightDiscount)}</span>
+                </div>)}
               {pricing.discountAmount > 0 && (<div className="flex justify-between text-moss-green">
                   <span>Coupon ({pricing.couponCode})</span>
                   <span>−&#8377;{formatPrice(pricing.discountAmount)}</span>
                 </div>)}
+              <div className="flex justify-between border-t border-border pt-2 text-charcoal/70">
+                <span>Subtotal</span>
+                <span>&#8377;{formatPrice(pricing.subtotalBeforeGst)}</span>
+              </div>
               <div className="flex justify-between text-charcoal/70">
                 <span>CGST ({pricing.cgstRate}%)</span>
                 <span>&#8377;{formatPrice(pricing.cgstAmount)}</span>
