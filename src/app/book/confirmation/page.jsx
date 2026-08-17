@@ -168,7 +168,7 @@ export default async function ConfirmationPage({ searchParams }) {
           <div className="space-y-2 font-body text-sm">
             {discountAmount > 0 && (<div className="flex justify-between text-[var(--color-moss-green)]">
                 <span>
-                  Coupon discount{booking.coupon_code ? ` (${booking.coupon_code})` : ""}
+                  {booking.coupon_code ? `Coupon discount (${booking.coupon_code})` : "Discount"}
                 </span>
                 <span>−₹{formatAmount(discountAmount)}</span>
               </div>)}

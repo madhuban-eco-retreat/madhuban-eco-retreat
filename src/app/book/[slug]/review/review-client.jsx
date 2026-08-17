@@ -161,6 +161,13 @@ export function ReviewClient({ slug }) {
               <span>&#8377;{formatPrice(line.amount)}</span>
             </div>))}
 
+          {pricing.multiNightDiscount > 0 && (<div className="flex justify-between text-[var(--color-moss-green)]">
+              <span>
+                2+ nights discount ({Math.round(pricing.multiNightDiscountRate * 100)}%)
+              </span>
+              <span>−&#8377;{formatPrice(pricing.multiNightDiscount)}</span>
+            </div>)}
+
           {pricing.discountAmount > 0 && (<div className="flex justify-between text-[var(--color-moss-green)]">
               <span>Coupon discount ({pricing.couponCode})</span>
               <span>−&#8377;{formatPrice(pricing.discountAmount)}</span>

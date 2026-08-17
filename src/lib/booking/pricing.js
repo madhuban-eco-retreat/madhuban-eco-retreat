@@ -7,6 +7,71 @@ function diffDays(a, b) {
     const msPerDay = 86400000;
     return Math.round((new Date(b).getTime() - new Date(a).getTime()) / msPerDay);
 }
+
+/** Fraction taken off room rent for a qualifying multi-night stay. */
+export const MULTI_NIGHT_DISCOUNT_RATE = 0.2;
+/** Nights required before the multi-night discount applies at all. */
+export const MULTI_NIGHT_MIN_NIGHTS = 2;
+
+/**
+ * Date ranges in which the multi-night discount is withheld.
+ *
+ * `end` is a departure date, not a stayed night — the same half-open convention
+ * the pricing_rules overlap below already uses. A Dussehra block of 17–20 Oct
+ * therefore covers the nights of the 17th, 18th and 19th, and a stay checking in
+ * on the 20th is outside it. Getting this wrong in the other direction would
+ * quietly hand out 20% on the single busiest night of each period.
+ *
+ * These are the fixed festival and long-weekend periods. They are deliberately
+ * hard-coded rather than read from pricing_rules: a rate multiplier is a
+ * commercial decision staff can edit in the admin, while these blackout dates
+ * are a policy the discount must honour even if nobody has loaded a rule for
+ * them yet.
+ */
+export const LONG_WEEKEND_BLOCKS = [
+    { label: "Dussehra", start: "2026-10-17", end: "2026-10-20" },
+    { label: "Diwali", start: "2026-11-06", end: "2026-11-14" },
+    { label: "Christmas & New Year", start: "2026-12-21", end: "2027-01-04" },
+    { label: "Holi", start: "2027-03-19", end: "2027-03-22" },
+];
+
+/** The first blackout period the stay touches, or null when it touches none. */
+function blockedPeriodFor(checkIn, checkOut) {
+    return (LONG_WEEKEND_BLOCKS.find((block) => checkIn < block.end && checkOut > block.start) ?? null);
+}
+
+/**
+ * The multi-night discount, as a rupee figure off room rent alone.
+ *
+ * Extra adults and children are excluded by construction — this is handed
+ * baseNightlyTotal, never the post-extras taxable base — so a family of four
+ * gets 20% off the tent, not 20% off the surcharges for occupying it.
+ *
+ * A peak multiplier withholds it too: peak season is expressed in this system
+ * as a pricing_rules multiplier above 1, and marking a date up 40% only to hand
+ * 20% straight back is not a rate the property ever intended to sell.
+ */
+export function calculateMultiNightDiscount({ baseNightlyTotal, nights, checkIn, checkOut, multiplier = 1, }) {
+    if (nights < MULTI_NIGHT_MIN_NIGHTS) {
+        return { amount: 0, applied: false, reason: null };
+    }
+    const blocked = blockedPeriodFor(checkIn, checkOut);
+    if (blocked) {
+        return {
+            amount: 0,
+            applied: false,
+            reason: `Not available for ${blocked.label} dates`,
+        };
+    }
+    if (multiplier > 1) {
+        return { amount: 0, applied: false, reason: "Not available on peak season dates" };
+    }
+    return {
+        amount: +(baseNightlyTotal * MULTI_NIGHT_DISCOUNT_RATE).toFixed(2),
+        applied: true,
+        reason: `${Math.round(MULTI_NIGHT_DISCOUNT_RATE * 100)}% off for ${MULTI_NIGHT_MIN_NIGHTS}+ nights stay`,
+    };
+}
 export async function calculatePricing(params) {
     const { roomSlug, checkIn, checkOut, adults, children, infants = 0, couponCode } = params;
     const supabase = createAdminClient();
@@ -56,6 +121,20 @@ export async function calculatePricing(params) {
     // Extra occupants are taxable base, so they are added before GST — not
     // after, and not inside the room line.
     const extras = extraGuestCharges({ adults, children, nights, roomSlug: room.slug });
+    // Length-of-stay discount, off room rent only and before any coupon.
+    const multiNight = calculateMultiNightDiscount({
+        baseNightlyTotal,
+        nights,
+        checkIn,
+        checkOut,
+        multiplier,
+    });
+    const multiNightDiscount = multiNight.amount;
+    // What a coupon can still reach. Charging a percentage coupon against the
+    // undiscounted tariff would stack to 40% off room rent, and a fixed-value
+    // coupon capped at the undiscounted figure could drive the room line below
+    // zero once the multi-night cut is also taken.
+    const discountableRoomTotal = +(baseNightlyTotal - multiNightDiscount).toFixed(2);
     // Apply coupon
     let discountAmount = 0;
     let appliedCouponCode = null;
@@ -76,10 +155,10 @@ export async function calculatePricing(params) {
             const meetsMinAmount = baseNightlyTotal >= Number(coupon.min_booking_value);
             if (notExpired && notBeforeStart && notExhausted && meetsMinAmount) {
                 if (coupon.discount_type === "percentage") {
-                    discountAmount = +(baseNightlyTotal * Number(coupon.discount_value) / 100).toFixed(2);
+                    discountAmount = +(discountableRoomTotal * Number(coupon.discount_value) / 100).toFixed(2);
                 }
                 else {
-                    discountAmount = Math.min(Number(coupon.discount_value), baseNightlyTotal);
+                    discountAmount = Math.min(Number(coupon.discount_value), discountableRoomTotal);
                 }
                 appliedCouponCode = code;
             }
@@ -88,7 +167,8 @@ export async function calculatePricing(params) {
     // Taxable base = room nights + extra occupants − discount. GST is then
     // charged on top of that, so the guest pays base + GST rather than the
     // tariff having the tax carved out of it.
-    const subtotalBeforeGst = +(baseNightlyTotal + extras.total - discountAmount).toFixed(2);
+    const totalDiscount = +(multiNightDiscount + discountAmount).toFixed(2);
+    const subtotalBeforeGst = +(baseNightlyTotal + extras.total - totalDiscount).toFixed(2);
     // Split into CGST and SGST here rather than letting each surface halve the
     // total itself — one rounding decision, taken once, so checkout, review,
     // confirmation and the invoice cannot drift a paisa apart.
@@ -111,8 +191,19 @@ export async function calculatePricing(params) {
         baseNightlyTotal,
         extraGuestLines: extras.lines,
         extraGuestTotal: extras.total,
+        // Coupon only, under the name every existing caller already reads.
         discountAmount,
         couponCode: appliedCouponCode,
+        // Length-of-stay discount, kept as its own line so the summary can name
+        // it rather than folding it into a coupon the guest never entered.
+        multiNightDiscount,
+        multiNightDiscountApplied: multiNight.applied,
+        multiNightDiscountRate: MULTI_NIGHT_DISCOUNT_RATE,
+        // Set even when nothing came off, so the UI can explain the absence on
+        // blackout dates instead of silently showing no line at all.
+        discountReason: multiNight.reason,
+        // Every reduction to the taxable base, for anything storing one figure.
+        totalDiscount,
         gstRate: gstRatePct,
         subtotalBeforeGst,
         // Alias for the taxable base under the name the pricing API documents.

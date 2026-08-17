@@ -84,7 +84,10 @@ export async function POST(req) {
             num_children: children,
             base_amount: pricing.subtotalBeforeGst,
             gst_amount: pricing.gstAmount,
-            discount_amount: pricing.discountAmount,
+            // Every reduction, not just the coupon: base_amount is already net of
+            // the multi-night discount, so storing the coupon alone would leave a
+            // booking whose stored figures do not reconcile.
+            discount_amount: pricing.totalDiscount,
             coupon_code: pricing.couponCode ?? null,
             total_amount: pricing.totalAmount,
             special_requests: specialRequests ?? null,
