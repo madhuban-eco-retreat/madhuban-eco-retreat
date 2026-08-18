@@ -2,7 +2,9 @@ import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { computeRoomGstRate, isInterStateGuest, computeTaxBreakdown, getFinancialYear, HSN_ACCOMMODATION } from "@/lib/gst";
 import { extraGuestCharges } from "@/lib/booking/occupancy";
+import { calculateMultiNightDiscount, MULTI_NIGHT_DISCOUNT_RATE } from "@/lib/booking/pricing";
 import { assertAdmin } from "@/lib/admin/auth";
+const roundTo2 = (n) => Math.round(n * 100) / 100;
 const ISSUER = {
     legal_name: "Somaiya Properties And Investments Private Limited",
     trade_name: "Madhuban Eco Retreat",
@@ -86,13 +88,73 @@ export async function POST(req) {
         nights,
         roomSlug: room.slug,
     });
+    // The booking row, not the room catalogue, is what the guest was actually
+    // charged. base_amount is stored NET of discount_amount, so the gross room
+    // rent is the two added back together with the extra-occupant surcharges
+    // taken out again. Reading room.base_price_per_night instead — as this route
+    // used to — ignored the multi-night discount entirely and billed the full
+    // tariff, and would also reprint an old invoice at today's rate if the
+    // tariff moved. A booking predating the stored-figures model, or one whose
+    // columns do not add up, falls back to the catalogue rate.
+    const storedBase = Number(booking.base_amount ?? 0);
+    const storedDiscount = Math.max(0, Number(booking.discount_amount ?? 0));
+    const derivedRoomTotal = roundTo2(storedBase + storedDiscount - extras.total);
+    const roomTotal = Number.isFinite(derivedRoomTotal) && derivedRoomTotal > 0
+        ? derivedRoomTotal
+        : roundTo2(room.base_price_per_night * nights);
+    const nightlyRate = roundTo2(roomTotal / nights);
+    // A single stored discount_amount covers both reductions, so the two are
+    // separated back out for the invoice: staff and guests both read "20% off"
+    // and a coupon code as different things. calculateMultiNightDiscount is the
+    // same function checkout priced with, so the blackout dates are honoured
+    // here too. When the split does not reconcile — a peak-season booking, say,
+    // where the multiplier that suppressed the discount is not stored — the
+    // reduction is shown as one combined line rather than a guess.
+    const multiNight = calculateMultiNightDiscount({
+        baseNightlyTotal: roomTotal,
+        nights,
+        checkIn: booking.checkin,
+        checkOut: booking.checkout,
+    });
+    const couponPortion = roundTo2(storedDiscount - multiNight.amount);
+    const splitReconciles = multiNight.applied && multiNight.amount > 0 && couponPortion >= 0;
+    const discountLines = [];
+    if (storedDiscount > 0) {
+        if (splitReconciles) {
+            discountLines.push({
+                description: `Less: ${Math.round(MULTI_NIGHT_DISCOUNT_RATE * 100)}% multi-night stay discount on room rent`,
+                hsn: HSN_ACCOMMODATION,
+                qty: 1,
+                rate: -multiNight.amount,
+                amount: -multiNight.amount,
+            });
+            if (couponPortion > 0) {
+                discountLines.push({
+                    description: `Less: Coupon discount${booking.coupon_code ? ` (${booking.coupon_code})` : ""}`,
+                    hsn: HSN_ACCOMMODATION,
+                    qty: 1,
+                    rate: -couponPortion,
+                    amount: -couponPortion,
+                });
+            }
+        }
+        else {
+            discountLines.push({
+                description: `Less: Discount${booking.coupon_code ? ` (coupon ${booking.coupon_code})` : ""}`,
+                hsn: HSN_ACCOMMODATION,
+                qty: 1,
+                rate: -storedDiscount,
+                amount: -storedDiscount,
+            });
+        }
+    }
     const lineItems = [
         {
             description: `${room.name} · ${nights} Night${nights > 1 ? "s" : ""} · ${checkinLabel} to ${checkoutLabel}`,
             hsn: HSN_ACCOMMODATION,
             qty: nights,
-            rate: room.base_price_per_night,
-            amount: Math.round(room.base_price_per_night * nights * 100) / 100,
+            rate: nightlyRate,
+            amount: roomTotal,
         },
         ...extras.lines.map((l) => ({
             description: `${l.label} × ${l.qty} · ${nights} night${nights > 1 ? "s" : ""}`,
@@ -108,11 +170,18 @@ export async function POST(req) {
             rate: a.price,
             amount: Math.round(a.price * a.qty * 100) / 100,
         })),
+        // Last, so the table reads as charges then deductions. Carried as a
+        // negative line rather than its own column because the invoices table
+        // has no discount field — this way the stored taxable_amount is the sum
+        // of the lines either way, and every existing invoice still renders.
+        ...discountLines,
     ];
     // GST rate always computed from base price — never read stored column
     const gstRatePct = computeRoomGstRate(room.base_price_per_night);
     // Line amounts exclude GST, so their sum IS the taxable value; the tax is
-    // added on top by computeTaxBreakdown below.
+    // added on top by computeTaxBreakdown below. With the discount carried as a
+    // negative line, that sum is the DISCOUNTED base — which is what GST is
+    // charged on, and what the admin folio already shows as the subtotal.
     const taxableAmount = Math.round(lineItems.reduce((s, i) => s + i.amount, 0) * 100) / 100;
     // Determine guest state for intra/inter-state split
     const isCorporate = !!booking.corporate_gstin;

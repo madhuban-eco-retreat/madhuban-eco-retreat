@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { ADMIN_EMAIL } from "@/lib/admin/constants";
+import { BOOKING_NOTIFICATION_EMAILS } from "@/lib/admin/constants";
 import { sendEmail } from "@/lib/resend";
 import { bookingConfirmationGuestEmail } from "@/lib/resend/templates/booking-confirmation-guest";
 import { bookingConfirmationAdminEmail } from "@/lib/resend/templates/booking-confirmation-admin";
@@ -161,9 +161,12 @@ export async function POST(req) {
         }
         try {
             await sendEmail({
-                to: ADMIN_EMAIL,
+                to: BOOKING_NOTIFICATION_EMAILS,
                 ...bookingConfirmationAdminEmail({
                     ...confirmationData,
+                    bookingId,
+                    discountAmount: booking.discount_amount != null ? Number(booking.discount_amount) : null,
+                    couponCode: booking.coupon_code ?? null,
                     guestEmail: guest.email,
                     guestMobile: guest.mobile ?? "",
                     source: booking.source,

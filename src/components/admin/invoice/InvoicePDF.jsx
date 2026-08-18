@@ -15,8 +15,28 @@ const toDataUri = (file) => `data:font/woff;base64,${fs.readFileSync(path.join(F
 // Registration runs at module scope, so an unreadable font file used to throw
 // on import and take the whole PDF route down with a 500 that named only the
 // missing path. An invoice in Helvetica beats no invoice at all: fall back to
-// the built-in face and let the ₹ glyphs degrade rather than blocking billing.
+// the built-in face rather than blocking billing — see RUPEE for what that
+// costs and how the amounts stay readable when it happens.
 let FONT_STACK = ["Helvetica"];
+/**
+ * How to draw ₹, and what to draw instead when we cannot.
+ *
+ * Amounts were printing a stray glyph where the rupee sign belongs. U+20B9 is
+ * absent from the latin subset in public/fonts and present only in the
+ * devanagari one, and the built-in Helvetica cannot draw it at all: it is a
+ * single-byte WinAnsi font, so the codepoint goes into the content stream as
+ * the raw bytes 0x20 0xB9 and the viewer paints whatever those happen to mean.
+ * That is the `*`. It appears exactly when font registration above has thrown —
+ * a missing woff in the serverless bundle — which is also the case no amount of
+ * font-stack juggling can rescue.
+ *
+ * So: when the faces did register, the symbol is drawn in its own Text naming
+ * the devanagari family outright (see Rupee) rather than trusting the page-level
+ * stack to fall back for one glyph. When they did not, the amounts say "Rs.",
+ * which every font can draw. Either way nothing reaches the page that the
+ * active font cannot render.
+ */
+let RUPEE = { fontFamily: null, symbol: "Rs." };
 try {
     Font.register({
         family: "Noto Sans",
@@ -33,6 +53,7 @@ try {
         ],
     });
     FONT_STACK = ["Noto Sans", "Noto Sans Devanagari"];
+    RUPEE = { fontFamily: "Noto Sans Devanagari", symbol: "₹" };
 }
 catch (err) {
     console.error("[invoice-pdf] font registration failed — falling back to Helvetica.", err);
@@ -126,9 +147,38 @@ function fmtDate(iso) {
 function fmtHsn(hsn) {
     return !hsn || hsn === "9963" ? HSN_ACCOMMODATION : hsn;
 }
+/** The currency symbol alone, in whichever face can actually draw it. */
+function Rupee() {
+    return <Text style={RUPEE.fontFamily ? { fontFamily: RUPEE.fontFamily } : {}}>{RUPEE.symbol}</Text>;
+}
+/**
+ * A rupee amount, with the symbol drawn separately from the digits.
+ *
+ * fmtINR already returns "₹1,00,000.00", so the symbol is stripped back off and
+ * re-emitted through Rupee — the digits stay in the latin face where the Indian
+ * grouping and the comma render correctly, and only the one glyph switches.
+ * Negatives (discount lines) carry the sign ahead of the symbol.
+ */
+function Money({ value, style }) {
+    const negative = value < 0;
+    const digits = fmtINR(Math.abs(value)).replace("₹", "");
+    return (<Text style={style}>
+      {negative ? "-" : ""}
+      <Rupee />
+      {digits}
+    </Text>);
+}
 export function InvoicePDF({ invoice }) {
     const lineItems = (Array.isArray(invoice.line_items) ? invoice.line_items : []);
     const invoiceDateStr = fmtDate(invoice.generated_at.slice(0, 10));
+    // Discounts are carried as negative line items, because the invoices table
+    // has no discount column. Summing the two signs apart lets the totals block
+    // state the gross, the reduction and the taxable base separately — an
+    // invoice that only showed the net would leave a guest unable to see the
+    // 20% they were promised. Invoices written without a discount have no
+    // negative lines, so these rows simply do not appear.
+    const grossAmount = Math.round(lineItems.reduce((s, i) => s + Math.max(0, i.amount), 0) * 100) / 100;
+    const discountAmount = Math.round(lineItems.reduce((s, i) => s + Math.min(0, i.amount), 0) * -100) / 100;
     return (<Document title={`Booking Confirmation ${invoice.invoice_number}`} author="Madhuban Eco Retreat" subject="GST Booking Confirmation">
       <Page size="A4" style={styles.page}>
 
@@ -204,17 +254,17 @@ export function InvoicePDF({ invoice }) {
             <Text style={[styles.tableHeaderCell, styles.colDesc]}>Description</Text>
             <Text style={[styles.tableHeaderCell, styles.colHsn]}>HSN</Text>
             <Text style={[styles.tableHeaderCell, styles.colQty]}>Qty</Text>
-            <Text style={[styles.tableHeaderCell, styles.colRate]}>Rate (₹)</Text>
-            <Text style={[styles.tableHeaderCell, styles.colAmt]}>Amount (₹)</Text>
+            <Text style={[styles.tableHeaderCell, styles.colRate]}>Rate (<Rupee />)</Text>
+            <Text style={[styles.tableHeaderCell, styles.colAmt]}>Amount (<Rupee />)</Text>
           </View>
           {lineItems.map((item, i) => (<View key={i} style={[styles.tableRow, i % 2 === 1 ? styles.tableRowAlt : {}]}>
-              <Text style={[{ fontSize: 9, color: C.charcoal }, styles.colDesc]}>{item.description}</Text>
+              <Text style={[{ fontSize: 9, color: item.amount < 0 ? C.olive : C.charcoal }, styles.colDesc]}>{item.description}</Text>
               <Text style={[{ fontSize: 9, color: C.charcoal }, styles.colHsn]}>{fmtHsn(item.hsn)}</Text>
               <Text style={[{ fontSize: 9, color: C.charcoal }, styles.colQty]}>{item.qty}</Text>
-              <Text style={[{ fontSize: 9, color: C.charcoal }, styles.colRate]}>
+              <Text style={[{ fontSize: 9, color: item.amount < 0 ? C.olive : C.charcoal }, styles.colRate]}>
                 {item.rate.toLocaleString("en-IN")}
               </Text>
-              <Text style={[{ fontSize: 9, color: C.charcoal }, styles.colAmt]}>
+              <Text style={[{ fontSize: 9, color: item.amount < 0 ? C.olive : C.charcoal }, styles.colAmt]}>
                 {item.amount.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
               </Text>
             </View>))}
@@ -223,31 +273,42 @@ export function InvoicePDF({ invoice }) {
         {/* ── Totals ──────────────────────────────────────────────────────── */}
         <View style={styles.totalsSection}>
           <View style={styles.totalsBlock}>
+            {discountAmount > 0 && (<>
+                <View style={styles.totalsRow}>
+                  <Text style={styles.totalsLabel}>Gross Amount</Text>
+                  <Money value={grossAmount} style={styles.totalsValue}/>
+                </View>
+                <View style={styles.totalsRow}>
+                  <Text style={[styles.totalsLabel, { color: C.olive }]}>Discount</Text>
+                  <Money value={-discountAmount} style={[styles.totalsValue, { color: C.olive }]}/>
+                </View>
+              </>)}
+
             <View style={styles.totalsRow}>
               <Text style={styles.totalsLabel}>Taxable Amount</Text>
-              <Text style={styles.totalsValue}>{fmtINR(invoice.taxable_amount)}</Text>
+              <Money value={invoice.taxable_amount} style={styles.totalsValue}/>
             </View>
 
             {!invoice.is_inter_state && invoice.cgst_rate != null && invoice.cgst_amount != null && (<>
                 <View style={styles.totalsRow}>
                   <Text style={styles.totalsLabel}>CGST @ {invoice.cgst_rate}%</Text>
-                  <Text style={styles.totalsValue}>{fmtINR(invoice.cgst_amount)}</Text>
+                  <Money value={invoice.cgst_amount} style={styles.totalsValue}/>
                 </View>
                 <View style={styles.totalsRow}>
                   <Text style={styles.totalsLabel}>SGST @ {invoice.sgst_rate}%</Text>
-                  <Text style={styles.totalsValue}>{fmtINR(invoice.sgst_amount)}</Text>
+                  <Money value={invoice.sgst_amount} style={styles.totalsValue}/>
                 </View>
               </>)}
 
             {invoice.is_inter_state && invoice.igst_rate != null && invoice.igst_amount != null && (<View style={styles.totalsRow}>
                 <Text style={styles.totalsLabel}>IGST @ {invoice.igst_rate}%</Text>
-                <Text style={styles.totalsValue}>{fmtINR(invoice.igst_amount)}</Text>
+                <Money value={invoice.igst_amount} style={styles.totalsValue}/>
               </View>)}
 
             <View style={styles.totalsDivider}/>
             <View style={styles.grandTotalRow}>
               <Text style={styles.grandTotalLabel}>TOTAL</Text>
-              <Text style={styles.grandTotalValue}>{fmtINR(invoice.total_amount)}</Text>
+              <Money value={invoice.total_amount} style={styles.grandTotalValue}/>
             </View>
           </View>
         </View>

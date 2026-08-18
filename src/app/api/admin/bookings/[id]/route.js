@@ -1,6 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { NextResponse } from "next/server";
-import { ADMIN_EMAIL } from "@/lib/admin/constants";
+import { BOOKING_NOTIFICATION_EMAILS } from "@/lib/admin/constants";
 import { sendEmail } from "@/lib/resend";
 import { bookingCancelledGuestEmail } from "@/lib/resend/templates/booking-cancelled-guest";
 import { bookingCancelledAdminEmail } from "@/lib/resend/templates/booking-cancelled-admin";
@@ -192,7 +192,7 @@ export async function PATCH(req, { params }) {
                     checkOut: booking.checkout,
                     refundAmount,
                 };
-                const notifyEmail = ADMIN_EMAIL;
+                const notifyEmail = BOOKING_NOTIFICATION_EMAILS;
                 try {
                     await sendEmail({ to: guest.email, ...bookingCancelledGuestEmail(data) });
                 }

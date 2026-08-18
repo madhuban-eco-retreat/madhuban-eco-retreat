@@ -33,6 +33,12 @@ export default async function InvoiceDetailPage({ params }) {
         notFound();
     const invoice = data;
     const statusVariant = invoice.status === "ISSUED" ? "confirmed" : "cancelled";
+    // Discounts are stored as negative line items — the invoices table has no
+    // discount column — so the gross and the reduction are recovered by summing
+    // the two signs apart, exactly as the PDF and the print view do.
+    const invoiceLines = Array.isArray(invoice.line_items) ? invoice.line_items : [];
+    const grossAmount = Math.round(invoiceLines.reduce((s, i) => s + Math.max(0, i.amount), 0) * 100) / 100;
+    const discountAmount = Math.round(invoiceLines.reduce((s, i) => s + Math.min(0, i.amount), 0) * -100) / 100;
     return (<div className="space-y-6">
 
       {/* ── Top bar ───────────────────────────────────────────────────────── */}
@@ -86,6 +92,16 @@ export default async function InvoiceDetailPage({ params }) {
         <Card className="p-6">
           <h2 className="mb-4 font-body text-sm font-semibold text-charcoal">Tax Breakdown</h2>
           <div className="space-y-2">
+            {discountAmount > 0 && (<>
+                <div className="flex justify-between font-body text-sm">
+                  <span className="text-charcoal/70">Gross Amount</span>
+                  <span className="text-charcoal">{fmtINR(grossAmount)}</span>
+                </div>
+                <div className="flex justify-between font-body text-sm text-forest-green">
+                  <span>Discount</span>
+                  <span>−{fmtINR(discountAmount)}</span>
+                </div>
+              </>)}
             <div className="flex justify-between font-body text-sm">
               <span className="text-charcoal/70">Taxable Amount</span>
               <span className="text-charcoal">{fmtINR(invoice.taxable_amount)}</span>

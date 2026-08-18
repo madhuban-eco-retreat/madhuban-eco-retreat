@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { ADMIN_EMAIL } from "@/lib/admin/constants";
+import { BOOKING_NOTIFICATION_EMAILS } from "@/lib/admin/constants";
 import { calculateAdminPricing } from "@/lib/admin/calculate-admin-pricing";
 import { checkAvailability } from "@/lib/booking/availability";
 import { generateBookingReference } from "@/lib/booking/reference";
@@ -243,9 +243,12 @@ export async function POST(req) {
             }
             try {
                 await sendEmail({
-                    to: ADMIN_EMAIL,
+                    to: BOOKING_NOTIFICATION_EMAILS,
                     ...bookingConfirmationAdminEmail({
                         ...confirmationData,
+                        // Manual bookings are priced without coupons or the
+                        // multi-night discount, so there is no reduction to show.
+                        bookingId: booking.id,
                         guestEmail: normalizedEmail,
                         guestMobile: normalizedMobile,
                         source,
