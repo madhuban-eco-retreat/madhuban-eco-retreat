@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { ADMIN_EMAIL } from "@/lib/admin/constants";
+import { BOOKING_NOTIFICATION_EMAILS } from "@/lib/admin/constants";
 import { verifyPaymentSignature } from "@/lib/razorpay";
 import { sendEmail } from "@/lib/resend";
 import { bookingConfirmationGuestEmail } from "@/lib/resend/templates/booking-confirmation-guest";
@@ -42,6 +42,7 @@ export async function POST(req) {
         .from("bookings")
         .select(`
       id, booking_ref, status, payment_status, total_amount, base_amount, gst_amount,
+      discount_amount, coupon_code,
       checkin, checkout, num_adults, num_children, source, special_requests,
       guests!guest_id ( name, email, mobile ),
       rooms!room_id ( name, slug )
@@ -122,7 +123,6 @@ export async function POST(req) {
                 totalAmount,
                 specialRequests: booking.special_requests,
             };
-            const adminEmail = ADMIN_EMAIL;
             try {
                 await sendEmail({
                     to: guest.email,
@@ -134,9 +134,15 @@ export async function POST(req) {
             }
             try {
                 await sendEmail({
-                    to: adminEmail,
+                    to: BOOKING_NOTIFICATION_EMAILS,
                     ...bookingConfirmationAdminEmail({
                         ...confirmationData,
+                        // Staff open this from a phone, so the mail carries a
+                        // deep link rather than asking them to go and find the
+                        // booking in a list.
+                        bookingId,
+                        discountAmount: booking.discount_amount != null ? Number(booking.discount_amount) : null,
+                        couponCode: booking.coupon_code ?? null,
                         guestEmail: guest.email,
                         guestMobile: guest.mobile ?? "",
                         source: booking.source,

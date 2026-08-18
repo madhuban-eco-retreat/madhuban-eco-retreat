@@ -33,6 +33,12 @@ export default async function InvoicePrintPage({ params }) {
     const invoice = data;
     const lineItems = (Array.isArray(invoice.line_items) ? invoice.line_items : []);
     const invoiceDateStr = fmtDate(invoice.generated_at.slice(0, 10));
+    // Discounts ride as negative line items — the invoices table has no discount
+    // column — so the gross and the reduction are recovered by summing the two
+    // signs apart. Kept identical to InvoicePDF so the printed page and the
+    // downloaded PDF cannot state different figures.
+    const grossAmount = Math.round(lineItems.reduce((s, i) => s + Math.max(0, i.amount), 0) * 100) / 100;
+    const discountAmount = Math.round(lineItems.reduce((s, i) => s + Math.min(0, i.amount), 0) * -100) / 100;
     return (<>
       <style>{`
         @page { size: A4; margin: 18mm; }
@@ -113,7 +119,7 @@ export default async function InvoicePrintPage({ params }) {
             </tr>
           </thead>
           <tbody>
-            {lineItems.map((item, i) => (<tr key={i} style={{ backgroundColor: i % 2 === 1 ? "#F5F5F0" : "#fff", borderBottom: "1px solid #D9D4C8" }}>
+            {lineItems.map((item, i) => (<tr key={i} style={{ backgroundColor: i % 2 === 1 ? "#F5F5F0" : "#fff", borderBottom: "1px solid #D9D4C8", color: item.amount < 0 ? "#3D4A2B" : "inherit" }}>
                 <td style={{ padding: "8px 8px", fontSize: 12 }}>{item.description}</td>
                 <td style={{ padding: "8px 6px", textAlign: "center", fontSize: 12 }}>{fmtHsn(item.hsn)}</td>
                 <td style={{ padding: "8px 6px", textAlign: "center", fontSize: 12 }}>{item.qty}</td>
@@ -126,6 +132,17 @@ export default async function InvoicePrintPage({ params }) {
         {/* ── Totals ────────────────────────────────────────────────────── */}
         <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 12 }}>
           <div style={{ width: 280 }}>
+            {discountAmount > 0 && (<>
+                <div style={{ display: "flex", justifyContent: "space-between", padding: "4px 0" }}>
+                  <span style={{ fontSize: 13 }}>Gross Amount</span>
+                  <span style={{ fontSize: 13 }}>{fmtINR(grossAmount)}</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", padding: "4px 0", color: "#3D4A2B" }}>
+                  <span style={{ fontSize: 13 }}>Discount</span>
+                  <span style={{ fontSize: 13 }}>−{fmtINR(discountAmount)}</span>
+                </div>
+              </>)}
+
             <div style={{ display: "flex", justifyContent: "space-between", padding: "5px 0", borderBottom: "1px solid #D9D4C8" }}>
               <span style={{ fontSize: 13 }}>Taxable Amount</span>
               <span style={{ fontSize: 13 }}>{fmtINR(invoice.taxable_amount)}</span>

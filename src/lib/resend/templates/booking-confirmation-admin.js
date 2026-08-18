@@ -1,6 +1,11 @@
 import { splitGst } from "@/lib/gst";
+import { BUSINESS } from "@/lib/content/business";
 export function bookingConfirmationAdminEmail(data) {
     const subject = `New booking confirmed — ${data.guestName} | ${data.bookingRef}`;
+    // Always the live admin panel, never NEXT_PUBLIC_SITE_URL: this mail is read
+    // on a phone away from the machine that sent it, and a localhost link — or a
+    // preview-deployment one — is no link at all to the person opening it.
+    const adminUrl = data.bookingId ? `${BUSINESS.url}/admin/bookings/${data.bookingId}` : null;
     // Staff reconcile these against the GST return, so the tax is broken out as
     // the CGST and SGST halves rather than a single combined figure.
     const tax = data.gstAmount != null && data.gstRate
@@ -46,6 +51,7 @@ export function bookingConfirmationAdminEmail(data) {
               ${row("Guests", `${data.adults} adult${data.adults !== 1 ? "s" : ""}${data.children > 0 ? `, ${data.children} child${data.children !== 1 ? "ren" : ""}` : ""}`)}
               ${row("Source", escapeHtml(data.source))}
               ${data.specialRequests ? row("Special requests", `<span style="white-space:pre-wrap;">${escapeHtml(data.specialRequests)}</span>`) : ""}
+              ${data.discountAmount ? row("Discount", `<span style="color:#4A6741;">−₹${formatAmount(data.discountAmount)}${data.couponCode ? ` (coupon ${escapeHtml(data.couponCode)})` : ""}</span>`) : ""}
               ${data.baseAmount != null ? row("Taxable Amount", `₹${formatAmount(data.baseAmount)}`) : ""}
               ${tax ? row(`CGST (${tax.cgstRate}%)`, `₹${formatAmount(tax.cgstAmount)}`) : ""}
               ${tax ? row(`SGST (${tax.sgstRate}%)`, `₹${formatAmount(tax.sgstAmount)}`) : ""}
@@ -53,11 +59,21 @@ export function bookingConfirmationAdminEmail(data) {
               ${row("Payment Received", `<strong style="color:#4A6741;">₹${formatAmount(data.paidAmount ?? data.totalAmount)}</strong>`)}
               ${row("Balance at Check-in", `₹0`)}
             </table>
+            ${adminUrl ? `<table width="100%" cellpadding="0" cellspacing="0" style="margin-top:24px;">
+              <tr><td align="center">
+                <a href="${adminUrl}" style="display:inline-block;background:#6E6146;color:#FEFCF8;font-size:14px;font-weight:600;text-decoration:none;padding:12px 28px;border-radius:8px;">Open booking in admin panel</a>
+              </td></tr>
+              <tr><td align="center" style="padding-top:8px;">
+                <a href="${adminUrl}" style="font-size:11px;color:#8B8578;word-break:break-all;">${adminUrl}</a>
+              </td></tr>
+            </table>` : ""}
           </td>
         </tr>
         <tr>
           <td style="background:#FAF7F2;padding:16px 32px;border-top:1px solid #EAE5DC;">
-            <p style="margin:0;font-size:11px;color:#8B8578;">Log in to the admin panel to view and manage this booking.</p>
+            <p style="margin:0;font-size:11px;color:#8B8578;">${adminUrl
+        ? "Open the booking above to view payments, add notes or generate the invoice."
+        : "Log in to the admin panel to view and manage this booking."}</p>
           </td>
         </tr>
       </table>
