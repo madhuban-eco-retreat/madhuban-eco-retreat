@@ -65,7 +65,10 @@ const AccommodationDetail = () => {
 
   return (
     <>
-      <div className="bg-stone-50 min-h-screen py-12 pt-20 md:pt-24 md:pt-32 px-4">
+      {/* The pt-20/md:pt-32 that used to sit here was clearing the old fixed
+          header. The header is sticky now and occupies real layout space, so
+          that padding would read as a large empty gap. */}
+      <div className="bg-stone-50 min-h-screen py-12 md:py-16 px-4">
         <div className="container mx-auto max-w-7xl">
           <div className="mb-8">
             <Link

@@ -1,357 +1,195 @@
 // src/components/Footer.jsx
 "use client";
-import React, { useState } from "react";
-import {
-  MapPin,
-  Phone,
-  Mail,
-  ChevronRight,
-  ChevronDown,
-  Instagram,
-  Facebook,
-  Youtube,
-  Linkedin,
-  Check,
-} from "lucide-react";
+
 import Link from "next/link";
+import Image from "next/image";
+import { MapPin } from "lucide-react";
 import { usePathname } from "next/navigation";
 import {
-  facebook,
-  gmail,
-  instagram,
-  linkedin,
-  phone,
-  youtube,
-} from "@/utills/constants";
+  IconInstagram,
+  IconFacebook,
+  IconYouTube,
+  IconLinkedIn,
+  IconWhatsApp,
+} from "@/components/icons/SocialIcons";
+import { BUSINESS } from "@/lib/content/business";
+import {
+  FOOTER_EXPLORE,
+  FOOTER_VISIT,
+  LEGAL_NAV,
+} from "@/lib/content/navigation";
 import { isLandingRoute } from "@/utills/landingRoutes";
-import Image from "next/image";
-import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
+import { facebook, instagram, linkedin, youtube } from "@/utills/constants";
+import { NewsletterForm } from "@/components/footer/NewsletterForm";
 
-// Inline SVG, matching the header. Replaces the raster PNGs and the two marks
-// that were hotlinked from upload.wikimedia.org.
-const socialLinks = [
-  { name: "Instagram", href: instagram, Icon: Instagram },
-  { name: "Facebook", href: facebook, Icon: Facebook },
-  { name: "YouTube", href: youtube, Icon: Youtube },
-  { name: "LinkedIn", href: linkedin, Icon: Linkedin },
-];
-
-const quickLinks = [
-  { name: "About Us", href: "/about-us" },
-  { name: "Accommodations", href: "/stay-in-ratapani-tiger-reserve" },
-];
-
-const experienceLinks = [
+const SOCIAL_LINKS = [
+  { href: instagram, label: "Instagram", Icon: IconInstagram },
+  { href: facebook, label: "Facebook", Icon: IconFacebook },
+  { href: youtube, label: "YouTube", Icon: IconYouTube },
+  { href: linkedin, label: "LinkedIn", Icon: IconLinkedIn },
   {
-    name: "Forest Walks & Nature Trails",
-    href: "/experiences/forest-walks-and-nature-trails",
+    href: `https://wa.me/${BUSINESS.whatsapp.replace(/\D/g, "")}`,
+    label: "WhatsApp",
+    Icon: IconWhatsApp,
   },
-  {
-    name: "Bird Watching & Wilderness",
-    href: "/experiences/bird-watching-and-wilderness",
-  },
-  { name: "Recreational Facilities", href: "/experiences/recreational-facilities" },
 ];
 
-const quickLinksTail = [
-  { name: "Gallery", href: "/gallery" },
-  { name: "Contact Us", href: "/contact-us" },
-  { name: "Blogs", href: "/blogs" },
-];
+function FooterHeading({ children }) {
+  return (
+    <h2 className="text-sm font-semibold uppercase tracking-widest text-earth-brown mb-4">
+      {children}
+    </h2>
+  );
+}
 
-const legalLinks = [
-  { name: "Privacy Policy", href: "/privacy-policy" },
-  { name: "Terms & Conditions", href: "/terms-and-condition" },
-  { name: "Cookie Policy", href: "/cookies-and-consent-policy" },
-  { name: "Disclaimer", href: "/disclaimer" },
-];
-
-function FooterLink({ href, children }) {
+function FooterLink({ href, external, children }) {
+  const externalProps = external
+    ? { target: "_blank", rel: "noopener noreferrer" }
+    : {};
   return (
     <li>
       <Link
         href={href}
-        className="flex items-center font-body text-sm tracking-wider text-brand-light transition-colors hover:text-white"
+        {...externalProps}
+        className="text-sm text-charcoal/80 hover:text-earth-brown transition-colors duration-200 flex items-center gap-1.5"
       >
-        <ChevronRight className="mr-1 h-4 w-4 shrink-0 text-brand-dark" aria-hidden="true" />
+        {external && (
+          <MapPin className="size-3 shrink-0 text-earth-brown" aria-hidden="true" />
+        )}
         {children}
       </Link>
     </li>
   );
 }
 
-function FooterHeading({ children }) {
-  return (
-    <h2 className="mb-4 border-b border-white/15 pb-2 font-heading text-lg font-medium tracking-widest text-white">
-      {children}
-    </h2>
-  );
-}
-
 const Footer = () => {
-  const [open, setOpen] = useState(false); // experiences disclosure
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
-  const [error, setError] = useState("");
   const currentYear = new Date().getFullYear();
   const pathname = usePathname();
 
   if (isLandingRoute(pathname)) return null;
 
-  // NOTE: there is no newsletter endpoint yet — /api/leads requires a name and
-  // a 10-digit phone, so an email-only POST would be rejected. This validates
-  // and confirms in the UI; wiring it to a real list still needs a route.
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    const value = email.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) {
-      setError("Enter a valid email address.");
-      return;
-    }
-    setError("");
-    setSubscribed(true);
-    setEmail("");
-  };
-
   return (
-    <footer className="bg-brand-ink text-brand-light footer-section">
-      <div className="mx-auto max-w-[1400px] px-6 py-12 lg:px-12">
-        {/* Footer Top Section */}
-        <div className="mb-12 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
-          {/* About Section */}
-          <div>
-            <Link href="/" className="mb-5 flex items-center gap-3">
-              {/* The gold lockup, not the black one: the footer ground is dark
-                  now, and black-madhuban-...png is solid black on transparent,
-                  so it would disappear. 1978x1452 source (1.362), height-driven
-                  with width auto and object-contain to keep its proportions. */}
+    <footer role="contentinfo" className="bg-cream border-t border-border">
+      {/* Main columns */}
+      <div className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-8 py-12 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] gap-10 lg:gap-8">
+          {/* Column 1 — Brand */}
+          <div className="space-y-5">
+            <Link
+              href="/"
+              className="flex items-center gap-3"
+              aria-label="Madhuban Eco Retreat — home"
+            >
               <Image
-                width={272}
-                height={200}
-                src="/images/logo/madhuban-eco-retreat-bhopal-logo.png"
-                alt="Madhuban Eco Retreat"
-                className="h-14 w-auto object-contain"
+                src="/images/logo/madhuban-mark.webp"
+                alt=""
+                width={36}
+                height={36}
               />
-              <span className="flex flex-col justify-center">
-                <span className="font-heading text-base font-bold leading-tight text-white">
-                  Madhuban Eco Retreat
-                </span>
-                <span className="font-body text-sm leading-tight tracking-wider text-brand-muted">
-                  Ratapani Tiger Reserve,
-                </span>
-                <span className="font-body text-sm leading-tight tracking-wider text-brand-muted">
-                  Bhopal, Madhya Pradesh, India
-                </span>
+              <span className="font-display text-2xl font-medium text-earth-brown leading-tight">
+                Madhuban Eco Retreat
               </span>
             </Link>
 
-            <p className="mb-6 font-body text-sm leading-relaxed tracking-wide text-brand-light">
-              An eco-luxury retreat nestled near Ratapani Wildlife Sanctuary,
-              offering sustainable luxury and immersive nature experiences.
+            <address className="not-italic text-sm text-charcoal/80 leading-relaxed space-y-1">
+              <p>Village Bori, Salkanpur Road</p>
+              <p>Rehti, Sehore, Madhya Pradesh — 466446</p>
+            </address>
+
+            <p className="text-sm text-charcoal/70 leading-relaxed max-w-xs">
+              Eco-luxury forest retreat adjacent to Ratapani Tiger Reserve, 60 km
+              from Bhopal.
             </p>
 
-            <div className="flex items-center gap-4">
-              {socialLinks.map(({ name, href, Icon }) => (
-                <a
-                  key={name}
+            <div className="flex items-center gap-3">
+              {SOCIAL_LINKS.map(({ href, label, Icon }) => (
+                <Link
+                  key={label}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={name}
-                  className="text-brand-light transition-colors hover:text-white"
+                  aria-label={label}
+                  className="text-earth-brown hover:text-blush-dusk transition-colors duration-200"
                 >
-                  <Icon className="h-6 w-6" aria-hidden="true" />
-                </a>
+                  <Icon className="size-5" />
+                </Link>
               ))}
             </div>
 
-            <a
-              href={`https://wa.me/${phone}`}
+            <Link
+              href={`https://wa.me/${BUSINESS.whatsapp.replace(/\D/g, "")}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-2.5 rounded-md border border-brand-dark px-5 py-2.5 font-body text-sm font-semibold uppercase tracking-widest text-brand-light transition-colors hover:bg-brand-dark hover:text-brand-deep"
+              className="inline-flex shrink-0 items-center justify-center gap-2 h-12 px-4 rounded-[1rem] border border-earth-brown text-earth-brown text-sm font-medium whitespace-nowrap transition-all hover:bg-earth-brown hover:text-ivory active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-earth-brown"
             >
-              <WhatsAppIcon className="h-5 w-5" />
+              <IconWhatsApp className="size-4" />
               Chat on WhatsApp
-            </a>
+            </Link>
           </div>
 
-          {/* Quick Links */}
+          {/* Column 2 — Explore */}
           <div>
-            <FooterHeading>Quick Links</FooterHeading>
-            <ul className="space-y-2">
-              {quickLinks.map((item) => (
+            <FooterHeading>Explore</FooterHeading>
+            <ul className="space-y-2.5">
+              {FOOTER_EXPLORE.map((item) => (
                 <FooterLink key={item.href} href={item.href}>
-                  {item.name}
-                </FooterLink>
-              ))}
-
-              {/* Experiences disclosure */}
-              <li>
-                <button
-                  type="button"
-                  onClick={() => setOpen(!open)}
-                  aria-expanded={open}
-                  className="flex items-center font-body text-sm tracking-wider text-brand-light transition-colors hover:text-white"
-                >
-                  {open ? (
-                    <ChevronDown className="mr-1 h-4 w-4 shrink-0 text-brand-dark" aria-hidden="true" />
-                  ) : (
-                    <ChevronRight className="mr-1 h-4 w-4 shrink-0 text-brand-dark" aria-hidden="true" />
-                  )}
-                  Experiences
-                </button>
-
-                {open && (
-                  <ul className="mt-2 space-y-2 border-l border-white/15 pl-4">
-                    {experienceLinks.map((item) => (
-                      <li key={item.href}>
-                        <Link
-                          href={item.href}
-                          className="block font-body text-sm tracking-wide text-brand-muted transition-colors hover:text-white"
-                        >
-                          {item.name}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-
-              {quickLinksTail.map((item) => (
-                <FooterLink key={item.href} href={item.href}>
-                  {item.name}
+                  {item.label}
                 </FooterLink>
               ))}
             </ul>
           </div>
 
-          {/* Contact Information */}
+          {/* Column 3 — Visit */}
           <div>
-            <FooterHeading>Contact Us</FooterHeading>
-            <ul className="space-y-4">
-              <li className="flex items-start">
-                <MapPin className="mr-3 h-5 w-5 shrink-0 text-brand-dark" aria-hidden="true" />
-                <address className="font-body text-sm not-italic leading-relaxed tracking-wider text-brand-light">
-                  Near Ratapani Wildlife Sanctuary, Bhopal, Madhya Pradesh, India
-                </address>
-              </li>
-              <li className="flex items-center">
-                <Phone className="mr-3 h-5 w-5 shrink-0 text-brand-dark" aria-hidden="true" />
-                <a
-                  href={`tel:+${phone}`}
-                  className="font-body text-sm tracking-wider text-brand-light transition-colors hover:text-white"
-                >
-                  +{phone}
-                </a>
-              </li>
-              <li className="flex items-center">
-                <Mail className="mr-3 h-5 w-5 shrink-0 text-brand-dark" aria-hidden="true" />
-                <a
-                  href={`mailto:${gmail}`}
-                  className="font-body text-sm tracking-wider text-brand-light transition-colors hover:text-white"
-                >
-                  {gmail}
-                </a>
-              </li>
-              <li className="font-body text-sm leading-relaxed tracking-wider text-brand-muted">
-                Subscribe to receive updates on special offers, new experiences,
-                and sustainability initiatives.
-              </li>
+            <FooterHeading>Visit</FooterHeading>
+            <ul className="space-y-2.5">
+              {FOOTER_VISIT.map((item) => (
+                <FooterLink key={item.href} href={item.href} external={item.external}>
+                  {item.label}
+                </FooterLink>
+              ))}
             </ul>
           </div>
 
-          {/* Somaiya + Newsletter */}
-          <div>
-            {/* 151x112 source (1.348) — was forced into a 70x70 square. The
-                partner mark is fixed-colour (blue block, black "GROUP"), so it
-                sits on a light plate rather than directly on the dark ground. */}
-            <div className="mx-auto mb-4 mt-3 w-fit rounded-md bg-white px-3 py-2">
-              <Image
-                src="/images/logo/somaiya-group-logo.png"
-                alt="Somaiya Group"
-                width={151}
-                height={112}
-                className="h-[60px] w-auto object-contain"
-              />
-            </div>
-            <p className="mb-6 text-center font-heading text-lg leading-snug text-white">
-              A Somaiya Group Initiative <br /> Where Sustainability Meets
-              Hospitality.
+          {/* Column 4 — Newsletter */}
+          <div id="footer-newsletter">
+            <FooterHeading>Stay Updated</FooterHeading>
+            <p className="text-sm text-charcoal/70 mb-4 leading-relaxed">
+              Get updates on offers, new experiences, and sustainability
+              initiatives.
             </p>
-
-            <form className="mb-4" onSubmit={handleSubscribe} noValidate>
-              <label htmlFor="footer-email" className="sr-only">
-                Your email
-              </label>
-              <div className="footer-input-con">
-                <input
-                  id="footer-email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                    if (error) setError("");
-                  }}
-                  placeholder="Your email"
-                  aria-invalid={error ? "true" : undefined}
-                  aria-describedby={error ? "footer-email-error" : undefined}
-                  className="w-full flex-grow border border-white/20 bg-white/10 px-4 py-2 font-body tracking-wider text-white placeholder-brand-muted focus:border-brand-dark focus:outline-none focus:ring-2 focus:ring-brand-dark md:py-4"
-                />
-                <button
-                  type="submit"
-                  className="cursor-pointer bg-brand-dark px-4 py-4 font-body font-semibold uppercase tracking-widest text-brand-deep transition-colors hover:bg-[#8A7856]"
-                >
-                  Subscribe
-                </button>
-              </div>
-
-              {error && (
-                <p
-                  id="footer-email-error"
-                  role="alert"
-                  className="mt-2 font-body text-sm text-[#F0B4AC]"
-                >
-                  {error}
-                </p>
-              )}
-              {subscribed && !error && (
-                <p
-                  role="status"
-                  className="mt-2 flex items-center gap-1.5 font-body text-sm text-white"
-                >
-                  <Check className="h-4 w-4 shrink-0 text-brand-dark" aria-hidden="true" />
-                  Thanks — we&apos;ll be in touch.
-                </p>
-              )}
-            </form>
-
-            <p className="font-body text-sm leading-relaxed tracking-wider text-brand-muted">
-              By subscribing, you agree to our Privacy Policy. You can
-              unsubscribe at any time.
-            </p>
+            <NewsletterForm />
           </div>
         </div>
+      </div>
 
-        {/* Bottom Section */}
-        <div className="flex flex-col-reverse items-center justify-between gap-6 border-t border-white/15 pt-6 md:flex-row">
-          <p className="text-center font-body text-sm tracking-wider text-brand-muted">
-            &copy; {currentYear} Madhuban Eco Retreat. All rights reserved.
-          </p>
-          <nav
-            aria-label="Legal"
-            className="flex w-full flex-col items-center gap-4 md:w-auto md:flex-row"
-          >
-            {legalLinks.map((item) => (
+      {/* Bottom strip */}
+      <div className="bg-earth-brown text-ivory">
+        <div className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-8 py-5">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="text-center md:text-left">
+              <p className="text-sm font-medium">{BUSINESS.parent}</p>
+              <p className="text-xs text-ivory/70 mt-0.5">
+                A Somaiya Group Initiative · Where Sustainability Meets
+                Hospitality
+              </p>
+            </div>
+            <p className="text-xs text-ivory/70 shrink-0">
+              © {currentYear} {BUSINESS.name}. All rights reserved.
+            </p>
+          </div>
+
+          <div className="mt-4 pt-4 border-t border-ivory/20 flex flex-wrap justify-center md:justify-start gap-x-5 gap-y-2">
+            {LEGAL_NAV.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="font-body text-sm tracking-wider text-brand-muted transition-colors hover:text-white"
+                className="text-xs text-ivory/60 hover:text-ivory transition-colors duration-200"
               >
-                {item.name}
+                {item.label}
               </Link>
             ))}
-          </nav>
+          </div>
         </div>
       </div>
     </footer>

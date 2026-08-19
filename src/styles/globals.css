@@ -163,59 +163,7 @@ h6 {
     background: var(--primary-gray);
 }
 
-/* footer */
-
-.footer-section .footer-text{
-  font-size: var(--text-sm)
-}
-
-.footer-section .footer-heading{
-   font-size: var(--text-base)
-}
-
-.footer-section .footer-input-con{
-  display:flex ;
-  
-}
-
-.footer-section .footer-input-con input{
-   border-top-left-radius: var(--radius-md) ;
-    border-bottom-left-radius: var(--radius-md);
-     padding-block: calc(var(--spacing) * 1) ;
-}
-.footer-section .footer-input-con button{
-  padding-block: calc(var(--spacing) * 1) ;
-  border-radius: var(--radius-md);
-}
-
-@media (min-width: 768px) {
-.footer-section .footer-heading{
-   font-size: var(--text-xl)
-}
-.footer-section .footer-text{
-  font-size: var(--text-lg)
-}
-
-}
-
-@media (max-width: 400px) {
-.footer-section .footer-input-con{
-  display:flex ;
-  flex-direction: column;
-  gap: 8;
-}
-
-.footer-section .footer-input-con button{
-  padding-block: calc(var(--spacing) * 2) ;
-  border-radius: var(--radius-md);
-}
-.footer-section .footer-input-con input{
-   border-radius: var(--radius-md) ;
-   padding-block: calc(var(--spacing) * 2) ;
-}
-}
-
- .glass{
+.glass{
             background: #ffffff2e;
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
