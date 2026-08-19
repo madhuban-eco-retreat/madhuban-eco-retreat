@@ -1,7 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins&display=swap');
-
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-body);
   background-color: #D1C8C1; /* warm beige/taupe (changed from green) */
   margin: 0;
   padding: 0;
@@ -60,7 +58,7 @@ body {
 }
 
 .banner-overlay h1 {
-  /* font-family: 'Playfair Display', serif; */
+  /* font-family: var(--font-heading); */
   font-size: 4rem;
   margin-bottom: 1rem;
   letter-spacing: 0.05em;
@@ -134,7 +132,7 @@ body {
   text-align: center;
   font-weight: 600;
   font-size: 1.25rem;
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading);
   letter-spacing: 0.03em;
   user-select: none;
   text-shadow: 0 1px 3px rgba(0,0,0,0.45);
@@ -186,7 +184,7 @@ body {
   color: #2E4D25;
   margin-top: 1.5rem;
   font-size: 2rem;
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading);
   letter-spacing: 0.04em;
   user-select: none;
 }
