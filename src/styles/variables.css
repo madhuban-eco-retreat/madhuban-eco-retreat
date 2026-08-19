@@ -122,5 +122,5 @@
 }
 
 .primary-font-family{
-  font-family: 'sikta banner' ,serif;
+  font-family: var(--font-heading);
 }

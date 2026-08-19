@@ -1,10 +1,19 @@
-// src/components/MainNavigation.js
+// src/components/Header.jsx
 "use client";
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone } from "lucide-react";
+import {
+  Menu,
+  X,
+  Phone,
+  Mail,
+  Instagram,
+  Facebook,
+  Youtube,
+  Linkedin,
+} from "lucide-react";
 import {
   facebook,
   gmail,
@@ -15,6 +24,7 @@ import {
 } from "@/utills/constants";
 import { isLandingRoute } from "@/utills/landingRoutes";
 import Image from "next/image";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 
 const navigation = [
   {
@@ -63,219 +73,260 @@ const navigation = [
   },
 ];
 
+// Inline SVG throughout. The previous markup pulled the Facebook and WhatsApp
+// marks from upload.wikimedia.org — a third-party host, on every page view —
+// and the rest as raster PNGs that could not inherit a hover colour.
 const socialLinks = [
-  {
-    name: "Instagram",
-    href: instagram,
-    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/insta-logo.webp",
-    className: "w-5 h-5",
-  },
-  {
-    name: "Facebook",
-    href: facebook,
-    img: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg",
-    className: "w-5 h-5",
-  },
-  {
-    name: "YouTube",
-    href: youtube,
-    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/youtube-logo.png",
-    className: "w-6 h-5",
-  },
-  {
-    name: "LinkedIn",
-    href: linkedin,
-    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/linkedin-logo.png",
-    className: "w-5 h-5",
-  },
-  {
-    name: "WhatsApp",
-    href: `https://wa.me/${phone}`,
-    img: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg",
-    className: "w-5 h-5",
-  },
+  { name: "Instagram", href: instagram, Icon: Instagram },
+  { name: "Facebook", href: facebook, Icon: Facebook },
+  { name: "YouTube", href: youtube, Icon: Youtube },
+  { name: "LinkedIn", href: linkedin, Icon: Linkedin },
+  { name: "WhatsApp", href: `https://wa.me/${phone}`, Icon: WhatsAppIcon },
 ];
 
 const MainNavigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  useEffect(() => {
+  // Close the drawer when the route changes. Adjusted during render rather than
+  // in an effect: an effect here fires a second render pass on every navigation
+  // (and trips react-hooks/set-state-in-effect). This covers back/forward too,
+  // which per-link onClick handlers alone would miss.
+  const [menuPathname, setMenuPathname] = useState(pathname);
+  if (pathname !== menuPathname) {
+    setMenuPathname(pathname);
     setIsMenuOpen(false);
-  }, [pathname]);
+  }
+
+  // Lock body scroll behind the mobile drawer.
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [isMenuOpen]);
+
+  // Close the drawer on Escape.
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const onKey = (e) => e.key === "Escape" && setIsMenuOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isMenuOpen]);
 
   if (isLandingRoute(pathname)) return null;
 
+  const isActive = (itemPath) =>
+    itemPath === "/" ? pathname === "/" : pathname.startsWith(itemPath);
+
   return (
-    <header className="fixed top-0 w-full z-50 bg-primary-gray shadow-lg ">
-      {/* Top Info Bar */}
-      <div className="hidden lg:block bg-primary-gray2 text-white py-1 px-4">
-        <div className="container mx-auto flex justify-between items-center text-sm">
-          <div className="flex items-center space-x-4">
-            <a
-              href="tel:+917895432160"
-              className="flex items-center hover:text-[#D1C8C1]"
-            >
-              <Phone className="w-4 h-4 mr-1" />
-              <span>+{phone}</span>
-            </a>
-            <a
-              href={`mailto:${gmail}`}
-              aria-label="send us a message on this email"
-              className="hover:text-[#D1C8C1]"
-            >
-              {gmail}
-            </a>
-          </div>
-          <div className="flex items-center space-x-3">
-            {socialLinks.map((item, index) => (
+    <header className="fixed top-0 w-full z-50 bg-brand-light shadow-md">
+      {/* Top Info Bar — brand.ink ground so the small text clears WCAG AA */}
+      <div className="hidden lg:block bg-brand-ink text-brand-light">
+        <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
+          <div className="flex h-9 items-center justify-between font-body text-xs tracking-wider">
+            <div className="flex items-center gap-6">
               <a
-                key={index}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`tel:+${phone}`}
+                className="flex items-center gap-1.5 transition-colors hover:text-white"
               >
-                <Image
-                  width={20}
-                  height={20}
-                  src={item.img}
-                  alt={item.name}
-                  className={item.className}
-                  loading="lazy"
-                />
+                <Phone className="h-3.5 w-3.5" aria-hidden="true" />
+                <span>+{phone}</span>
               </a>
-            ))}
+              <a
+                href={`mailto:${gmail}`}
+                aria-label="Send us an email"
+                className="flex items-center gap-1.5 transition-colors hover:text-white"
+              >
+                <Mail className="h-3.5 w-3.5" aria-hidden="true" />
+                <span>{gmail}</span>
+              </a>
+            </div>
+            <div className="flex items-center gap-4">
+              {socialLinks.map(({ name, href, Icon }) => (
+                <a
+                  key={name}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={name}
+                  className="transition-colors hover:text-white"
+                >
+                  <Icon className="h-4 w-4" aria-hidden="true" />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Main Navbar */}
-      <div className="container mx-auto px-4 py-3 flex justify-between items-center relative xl:justify-between 2xl:justify-between xl:min-w-full">
-        {/* Logo */}
-        <Link href="/" className="flex items-center space-x-4 z-20">
-          <Image
-            src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-eco-retreat-bhopal-logo.png"
-            width={120}
-            height={120}
-            alt="Madhuban Eco Retreat Logo"
-            className="h-12 w-12 md:h-20  md:w-20 filter brightness-75"
-          />
-          <div className="flex flex-col justify-center">
-            <div className="font-primary tracking-wide text-base  md:text-xl font-bold text-[rgb(110,97,70)] leading-tight">
-              Madhuban Eco Retreat
+      {/* Main Navbar — 64px mobile / 80px desktop */}
+      <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
+        <div className="flex h-16 items-center justify-between gap-4 lg:h-20">
+          {/* Logo */}
+          <Link
+            href="/"
+            className="z-20 flex shrink-0 items-center gap-3"
+            aria-label="Madhuban Eco Retreat — home"
+          >
+            {/* Intrinsic ratio is 1978x1452 (1.362). Height is driven by CSS and
+                width left auto, so the lockup is never squeezed into a square. */}
+            <Image
+              src="/images/logo/madhuban-eco-retreat-bhopal-logo.png"
+              width={272}
+              height={200}
+              alt="Madhuban Eco Retreat"
+              className="h-10 w-auto object-contain lg:h-12"
+              priority
+            />
+            <div className="flex flex-col justify-center">
+              <span className="font-heading text-base font-bold leading-tight tracking-wide text-brand-ink lg:text-xl">
+                Madhuban Eco Retreat
+              </span>
+              <span className="font-body text-[11px] leading-tight tracking-wider text-[#5C4F3A]">
+                Ratapani Tiger Reserve, Bhopal
+              </span>
             </div>
+          </Link>
 
-            <p className="font-primary tracking-wider text-xs text-[rgb(110,97,70)] leading-tight">
-              Ratapani Tiger Reserve,
-            </p>
-            <p className="font-primary tracking-wide text-xs text-[rgb(110,97,70)] leading-tight">
-              Bhopal, Madhya Pradesh, India
-            </p>
-          </div>
-        </Link>
-
-        {/* Mobile Menu Toggle Button */}
-        <button
-          className="xl:hidden z-20"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? (
-            <X className="w-6 h-6 text-[rgb(110,97,70)]" />
-          ) : (
-            <Menu className="w-6 h-6 text-[rgb(110,97,70)]" />
-          )}
-        </button>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden xl:flex xl:justify-between xl:flex-1 xl:ml-8 2xl:ml-12 items-center space-x-6 font-inter xl:max-w-[62vw]">
-          {navigation
-            .filter((item) => !item.hideOnDesktop)
-            .map((item) => {
-              const isActive = (itemPath) => {
-                if (itemPath === "/") {
-                  return pathname === "/";
-                }
-                return pathname.startsWith(itemPath);
-              };
-
-              return (
-                <div key={item.name} className="relative group">
+          {/* Desktop Navigation — switches at lg (1024px) */}
+          <nav
+            aria-label="Primary"
+            className="hidden flex-1 items-center justify-center gap-x-3 lg:flex xl:gap-x-5"
+          >
+            {navigation
+              .filter((item) => !item.hideOnDesktop)
+              .map((item) => {
+                const active = isActive(item.path);
+                return (
                   <Link
+                    key={item.name}
                     href={item.path}
-                    className={`
-                              text-[20px] font-primary text-[rgb(120,100,60)]
-                              relative  font-medium tracking-wide cursor-pointer
-                              after:content-[''] after:absolute after:w-full  ${
-                                isActive(item.path)
-                                  ? "after:scale-x-100"
-                                  : "after:scale-x-0"
-                              } after:h-[2px] after:-bottom-2 after:left-0
-                              after:bg-[rgb(120,100,60)] after:origin-bottom-right after:transition-transform after:duration-300
-                             hover:after:scale-x-100
-                             hover:after:origin-bottom-left`}
+                    aria-current={active ? "page" : undefined}
+                    className={`group relative whitespace-nowrap font-body text-xs font-medium uppercase tracking-widest text-brand-ink transition-colors xl:text-sm ${
+                      active ? "" : "hover:text-[#5C4F3A]"
+                    }`}
                   >
                     {item.name}
-                  </Link>
-                </div>
-              );
-            })}
-        </nav>
-
-        {/* Book Now Button - Desktop */}
-        <Link
-          href="/stay-in-ratapani-tiger-reserve"
-          className="hidden xl:block px-4 py-2 rounded-md font-primary text-xl text-[#D1C8C1] bg-[rgb(110,97,70)]  transition"
-        >
-          Book Now
-        </Link>
-
-        {/* Mobile Menu */}
-        <div
-          className={`fixed inset-0 z-40 bg-white transform transition-transform duration-300 ease-in-out min-h-screen pt-20 px-6 ${
-            isMenuOpen ? "translate-x-0" : "translate-x-full"
-          }`}
-        >
-          {/* Close Button */}
-          <button
-            onClick={() => setIsMenuOpen(false)}
-            className="absolute top-4 right-4 text-[rgb(110,97,70)] hover:text-[rgb(110,97,70)]"
-            aria-label="Close menu"
-          >
-            <X className="w-6 h-6" />
-          </button>
-
-          <nav className="flex flex-col space-y-4">
-            <div className="border-l-3 border-l-[rgb(110,97,70)] ">
-              {navigation.map((item, index) => {
-                return (
-                  <div key={item.name}>
-                    <Link
-                      href={item.path}
-                      onClick={() => setIsMenuOpen(false)}
-                      className={`block  text-lg px-4 py-2  p-text border-b-1 border-b-gray-200 ml-4 ${
-                        pathname === item.path
-                          ? "text-white bg-primary-gray2 rounded-lg"
-                          : "text-gray-800 hover:text-[rgb(110,97,70)]"
+                    <span
+                      className={`absolute -bottom-1.5 left-0 h-[2px] w-full origin-bottom-right bg-brand-dark transition-transform duration-300 group-hover:origin-bottom-left group-hover:scale-x-100 ${
+                        active ? "scale-x-100" : "scale-x-0"
                       }`}
-                    >
-                      {item.name}
-                    </Link>
-                  </div>
+                      aria-hidden="true"
+                    />
+                  </Link>
                 );
               })}
-            </div>
-
-            {/* Book Now Button - Mobile */}
-            <Link
-              href="/stay-in-ratapani-tiger-reserve"
-              onClick={() => setIsMenuOpen(false)}
-              className="mt-6 w-full py-3 text-center rounded-md font-semibold  text-[#D1C8C1] bg-[rgb(110,97,70)] hover:bg-[rgb(132,116,85)] transition"
-            >
-              Book Now
-            </Link>
           </nav>
+
+          {/* Book Now — desktop */}
+          <Link
+            href="/stay-in-ratapani-tiger-reserve"
+            className="hidden shrink-0 rounded-md bg-brand-dark px-5 py-2.5 font-body text-xs font-semibold uppercase tracking-widest text-brand-deep transition-colors hover:bg-[#8A7856] lg:block xl:text-sm"
+          >
+            Book Now
+          </Link>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            type="button"
+            className="z-20 -mr-1 flex h-10 w-10 items-center justify-center rounded-md text-brand-ink transition-colors hover:bg-black/5 lg:hidden"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMenuOpen}
+          >
+            {isMenuOpen ? (
+              <X className="h-6 w-6" aria-hidden="true" />
+            ) : (
+              <Menu className="h-6 w-6" aria-hidden="true" />
+            )}
+          </button>
         </div>
+      </div>
+
+      {/* Mobile Menu */}
+      <div
+        className={`fixed inset-0 z-40 min-h-screen transform bg-brand-light px-6 pt-20 transition-transform duration-300 ease-in-out lg:hidden ${
+          isMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+        aria-hidden={!isMenuOpen}
+      >
+        <button
+          type="button"
+          onClick={() => setIsMenuOpen(false)}
+          className="absolute right-5 top-4 flex h-10 w-10 items-center justify-center rounded-md text-brand-ink hover:bg-black/5"
+          aria-label="Close menu"
+        >
+          <X className="h-6 w-6" aria-hidden="true" />
+        </button>
+
+        <nav
+          aria-label="Mobile primary"
+          className="flex h-[calc(100vh-6rem)] flex-col overflow-y-auto pb-10"
+        >
+          <div className="border-l-2 border-brand-dark">
+            {navigation.map((item) => {
+              const active = isActive(item.path);
+              return (
+                <Link
+                  key={item.name}
+                  href={item.path}
+                  onClick={() => setIsMenuOpen(false)}
+                  aria-current={active ? "page" : undefined}
+                  className={`ml-4 flex min-h-[48px] items-center border-b border-black/10 px-4 font-body text-sm uppercase tracking-widest transition-colors ${
+                    active
+                      ? "rounded-r-md bg-brand-dark font-semibold text-brand-deep"
+                      : "text-brand-ink hover:text-[#5C4F3A]"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
+          </div>
+
+          <Link
+            href="/stay-in-ratapani-tiger-reserve"
+            onClick={() => setIsMenuOpen(false)}
+            className="mt-6 w-full rounded-md bg-brand-dark py-3 text-center font-body text-sm font-semibold uppercase tracking-widest text-brand-deep transition-colors hover:bg-[#8A7856]"
+          >
+            Book Now
+          </Link>
+
+          {/* Contact + socials */}
+          <div className="mt-8 space-y-3 border-t border-black/10 pt-6">
+            <a
+              href={`tel:+${phone}`}
+              className="flex items-center gap-2 font-body text-sm text-brand-ink"
+            >
+              <Phone className="h-4 w-4 shrink-0 text-[#5C4F3A]" aria-hidden="true" />
+              <span>+{phone}</span>
+            </a>
+            <a
+              href={`mailto:${gmail}`}
+              className="flex items-center gap-2 font-body text-sm text-brand-ink"
+            >
+              <Mail className="h-4 w-4 shrink-0 text-[#5C4F3A]" aria-hidden="true" />
+              <span>{gmail}</span>
+            </a>
+            <div className="flex items-center gap-5 pt-2">
+              {socialLinks.map(({ name, href, Icon }) => (
+                <a
+                  key={name}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={name}
+                  className="text-[#5C4F3A] transition-colors hover:text-brand-ink"
+                >
+                  <Icon className="h-5 w-5" aria-hidden="true" />
+                </a>
+              ))}
+            </div>
+          </div>
+        </nav>
       </div>
     </header>
   );
