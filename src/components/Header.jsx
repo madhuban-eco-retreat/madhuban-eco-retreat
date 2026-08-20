@@ -1,283 +1,132 @@
-// src/components/MainNavigation.js
+// src/components/Header.jsx
 "use client";
 
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone } from "lucide-react";
-import {
-  facebook,
-  gmail,
-  instagram,
-  linkedin,
-  phone,
-  youtube,
-} from "@/utills/constants";
-import { isLandingRoute } from "@/utills/landingRoutes";
+import Link from "next/link";
 import Image from "next/image";
+import { Menu } from "lucide-react";
+import { isLandingRoute } from "@/utills/landingRoutes";
+import { isExploreActive } from "@/lib/content/navigation";
+import { TopBar } from "@/components/header/TopBar";
+import { NavDesktop } from "@/components/header/NavDesktop";
+import { MobileDrawer } from "@/components/header/MobileDrawer";
 
-const navigation = [
-  {
-    name: "Home",
-    path: "/",
-    dropdown: null,
-  },
-  {
-    name: "About",
-    path: "/about-us",
-  },
-  {
-    name: "Stay",
-    path: "/stay-in-ratapani-tiger-reserve",
-  },
-  {
-    name: "Experiences",
-    path: "/experiences",
-  },
-  {
-    name: "Dining",
-    path: "/dining",
-  },
-  {
-    name: "Nearby Attractions",
-    path: "/nearby-attractions",
-  },
-  {
-    name: "Gallery",
-    path: "/gallery",
-  },
-  {
-    name: "Blogs",
-    path: "/blogs",
-    hideOnDesktop: true,
-  },
-  {
-    name: "Day Outing",
-    path: "/day-outing",
-    dropdown: null,
-  },
-  {
-    name: "Contact",
-    path: "/contact-us",
-    dropdown: null,
-  },
-];
-
-const socialLinks = [
-  {
-    name: "Instagram",
-    href: instagram,
-    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/insta-logo.webp",
-    className: "w-5 h-5",
-  },
-  {
-    name: "Facebook",
-    href: facebook,
-    img: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg",
-    className: "w-5 h-5",
-  },
-  {
-    name: "YouTube",
-    href: youtube,
-    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/youtube-logo.png",
-    className: "w-6 h-5",
-  },
-  {
-    name: "LinkedIn",
-    href: linkedin,
-    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/linkedin-logo.png",
-    className: "w-5 h-5",
-  },
-  {
-    name: "WhatsApp",
-    href: `https://wa.me/${phone}`,
-    img: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg",
-    className: "w-5 h-5",
-  },
-];
-
+/**
+ * Structure ported from the reference build: a non-sticky top bar that scrolls
+ * away, then a sticky main bar that shrinks 80px -> 64px past 40px of scroll.
+ *
+ * Note this is `sticky`, not `fixed` as before, which is what lets the top bar
+ * scroll out while the main bar stays. It also means page content now begins
+ * below the header rather than underneath it.
+ */
 const MainNavigation = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
-    setIsMenuOpen(false);
-  }, [pathname]);
+    const handleScroll = () => setScrolled(window.scrollY > 40);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Close the drawer on navigation. Adjusted during render rather than in an
+  // effect so it does not trigger a second render pass on every route change.
+  const [drawerPathname, setDrawerPathname] = useState(pathname);
+  if (pathname !== drawerPathname) {
+    setDrawerPathname(pathname);
+    setDrawerOpen(false);
+  }
 
   if (isLandingRoute(pathname)) return null;
 
   return (
-    <header className="fixed top-0 w-full z-50 bg-primary-gray shadow-lg ">
-      {/* Top Info Bar */}
-      <div className="hidden lg:block bg-primary-gray2 text-white py-1 px-4">
-        <div className="container mx-auto flex justify-between items-center text-sm">
-          <div className="flex items-center space-x-4">
-            <a
-              href="tel:+917895432160"
-              className="flex items-center hover:text-[#D1C8C1]"
-            >
-              <Phone className="w-4 h-4 mr-1" />
-              <span>+{phone}</span>
-            </a>
-            <a
-              href={`mailto:${gmail}`}
-              aria-label="send us a message on this email"
-              className="hover:text-[#D1C8C1]"
-            >
-              {gmail}
-            </a>
-          </div>
-          <div className="flex items-center space-x-3">
-            {socialLinks.map((item, index) => (
-              <a
-                key={index}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Image
-                  width={20}
-                  height={20}
-                  src={item.img}
-                  alt={item.name}
-                  className={item.className}
-                  loading="lazy"
-                />
-              </a>
-            ))}
-          </div>
-        </div>
-      </div>
+    <>
+      {/* Skip to content — first focusable element on the page */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-[0.8rem] focus:bg-earth-brown focus:text-ivory focus:font-medium focus:text-sm"
+      >
+        Skip to content
+      </a>
 
-      {/* Main Navbar */}
-      <div className="container mx-auto px-4 py-3 flex justify-between items-center relative xl:justify-between 2xl:justify-between xl:min-w-full">
-        {/* Logo */}
-        <Link href="/" className="flex items-center space-x-4 z-20">
-          <Image
-            src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-eco-retreat-bhopal-logo.png"
-            width={120}
-            height={120}
-            alt="Madhuban Eco Retreat Logo"
-            className="h-12 w-12 md:h-20  md:w-20 filter brightness-75"
-          />
-          <div className="flex flex-col justify-center">
-            <div className="font-primary tracking-wide text-base  md:text-xl font-bold text-[rgb(110,97,70)] leading-tight">
-              Madhuban Eco Retreat
-            </div>
+      {/* Top bar — non-sticky, scrolls out naturally */}
+      <TopBar />
 
-            <p className="font-primary tracking-wider text-xs text-[rgb(110,97,70)] leading-tight">
-              Ratapani Tiger Reserve,
-            </p>
-            <p className="font-primary tracking-wide text-xs text-[rgb(110,97,70)] leading-tight">
-              Bhopal, Madhya Pradesh, India
-            </p>
-          </div>
-        </Link>
-
-        {/* Mobile Menu Toggle Button */}
-        <button
-          className="xl:hidden z-20"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? (
-            <X className="w-6 h-6 text-[rgb(110,97,70)]" />
-          ) : (
-            <Menu className="w-6 h-6 text-[rgb(110,97,70)]" />
-          )}
-        </button>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden xl:flex xl:justify-between xl:flex-1 xl:ml-8 2xl:ml-12 items-center space-x-6 font-inter xl:max-w-[62vw]">
-          {navigation
-            .filter((item) => !item.hideOnDesktop)
-            .map((item) => {
-              const isActive = (itemPath) => {
-                if (itemPath === "/") {
-                  return pathname === "/";
-                }
-                return pathname.startsWith(itemPath);
-              };
-
-              return (
-                <div key={item.name} className="relative group">
-                  <Link
-                    href={item.path}
-                    className={`
-                              text-[20px] font-primary text-[rgb(120,100,60)]
-                              relative  font-medium tracking-wide cursor-pointer
-                              after:content-[''] after:absolute after:w-full  ${
-                                isActive(item.path)
-                                  ? "after:scale-x-100"
-                                  : "after:scale-x-0"
-                              } after:h-[2px] after:-bottom-2 after:left-0
-                              after:bg-[rgb(120,100,60)] after:origin-bottom-right after:transition-transform after:duration-300
-                             hover:after:scale-x-100
-                             hover:after:origin-bottom-left`}
-                  >
-                    {item.name}
-                  </Link>
-                </div>
-              );
-            })}
-        </nav>
-
-        {/* Book Now Button - Desktop */}
-        <Link
-          href="/stay-in-ratapani-tiger-reserve"
-          className="hidden xl:block px-4 py-2 rounded-md font-primary text-xl text-[#D1C8C1] bg-[rgb(110,97,70)]  transition"
-        >
-          Book Now
-        </Link>
-
-        {/* Mobile Menu */}
-        <div
-          className={`fixed inset-0 z-40 bg-white transform transition-transform duration-300 ease-in-out min-h-screen pt-20 px-6 ${
-            isMenuOpen ? "translate-x-0" : "translate-x-full"
-          }`}
-        >
-          {/* Close Button */}
-          <button
-            onClick={() => setIsMenuOpen(false)}
-            className="absolute top-4 right-4 text-[rgb(110,97,70)] hover:text-[rgb(110,97,70)]"
-            aria-label="Close menu"
+      {/* Main header — sticky */}
+      <header
+        role="banner"
+        className={`sticky top-0 z-40 w-full transition-all duration-200 ${
+          scrolled ? "h-16 bg-cream shadow-md" : "h-20 bg-cream/95"
+        }`}
+      >
+        <div className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-8 h-full flex items-center justify-between gap-4">
+          {/* Logo + name + tagline */}
+          <Link
+            href="/"
+            className="shrink-0 flex items-center gap-3"
+            aria-label="Madhuban Eco Retreat — Ratapani Tiger Reserve, Bhopal — home"
           >
-            <X className="w-6 h-6" />
-          </button>
-
-          <nav className="flex flex-col space-y-4">
-            <div className="border-l-3 border-l-[rgb(110,97,70)] ">
-              {navigation.map((item, index) => {
-                return (
-                  <div key={item.name}>
-                    <Link
-                      href={item.path}
-                      onClick={() => setIsMenuOpen(false)}
-                      className={`block  text-lg px-4 py-2  p-text border-b-1 border-b-gray-200 ml-4 ${
-                        pathname === item.path
-                          ? "text-white bg-primary-gray2 rounded-lg"
-                          : "text-gray-800 hover:text-[rgb(110,97,70)]"
-                      }`}
-                    >
-                      {item.name}
-                    </Link>
-                  </div>
-                );
-              })}
+            {/* Square, mark-only asset (256x256, transparent) so it drops into a
+                square box without the wordmark being squeezed. */}
+            <Image
+              src="/images/logo/madhuban-mark.webp"
+              alt="Madhuban Eco Retreat logo"
+              width={48}
+              height={48}
+              className="w-10 h-10 md:w-12 md:h-12"
+              priority
+            />
+            <div className="flex flex-col leading-tight">
+              <span className="font-heading text-base md:text-lg font-bold text-charcoal tracking-tight">
+                Madhuban Eco Retreat
+              </span>
+              <span className="hidden md:block text-[10px] md:text-xs font-normal text-earth-brown/70 tracking-wide">
+                Ratapani Tiger Reserve, Bhopal, Madhya Pradesh, India
+              </span>
             </div>
+          </Link>
 
-            {/* Book Now Button - Mobile */}
+          {/* Desktop nav — center/right */}
+          <NavDesktop pathname={pathname} exploreActive={isExploreActive(pathname)} />
+
+          {/* Right actions */}
+          <div className="flex items-center gap-2 shrink-0">
+            {/* Book Now — desktop */}
             <Link
               href="/stay-in-ratapani-tiger-reserve"
-              onClick={() => setIsMenuOpen(false)}
-              className="mt-6 w-full py-3 text-center rounded-md font-semibold  text-[#D1C8C1] bg-[rgb(110,97,70)] hover:bg-[rgb(132,116,85)] transition"
+              className="hidden lg:inline-flex shrink-0 items-center justify-center gap-1.5 h-12 px-4 rounded-[1rem] border border-transparent bg-primary text-primary-foreground text-sm font-semibold whitespace-nowrap transition-all hover:bg-primary/80 active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               Book Now
             </Link>
-          </nav>
+
+            {/* Book — mobile compact */}
+            <Link
+              href="/stay-in-ratapani-tiger-reserve"
+              className="lg:hidden inline-flex shrink-0 items-center justify-center gap-1 h-9 px-3 rounded-[0.75rem] border border-transparent bg-primary text-primary-foreground text-[0.8rem] font-semibold whitespace-nowrap transition-all hover:bg-primary/80 active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              Book
+            </Link>
+
+            {/* Hamburger — mobile only */}
+            <button
+              type="button"
+              aria-label="Open navigation menu"
+              aria-expanded={drawerOpen}
+              onClick={() => setDrawerOpen(true)}
+              className="lg:hidden flex items-center justify-center w-10 h-10 rounded-[0.8rem] hover:bg-earth-brown/10 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-earth-brown"
+            >
+              <Menu className="size-5 text-charcoal" aria-hidden="true" />
+            </button>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+
+      {/* Mobile drawer — rendered outside header to avoid stacking context issues */}
+      <MobileDrawer open={drawerOpen} onOpenChange={setDrawerOpen} pathname={pathname} />
+    </>
   );
 };
 

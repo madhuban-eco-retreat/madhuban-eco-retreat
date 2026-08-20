@@ -1,9 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins&display=swap');
-
 .contact-page {
   width: 100%;
   overflow-x: hidden;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-body);
 }
 
 /* Contact Section */

@@ -10,7 +10,7 @@ export default function MarketingLayout({ children }) {
   return (
     <>
       <MainNavigation />
-      {children}
+      <main id="main-content">{children}</main>
       <Footer />
       <ContactModal />
       <CookiesPopup />

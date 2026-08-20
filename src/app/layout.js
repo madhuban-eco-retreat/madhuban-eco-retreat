@@ -1,16 +1,27 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Playfair_Display, Barlow_Condensed } from "next/font/google";
 import "../styles/globals.css";
 import "../styles/variables.css";
 import Script from "next/script";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Brand typefaces. The stationery sets headings in Sitka Banner and body in
+// Arial Narrow -- both Windows-only. Playfair Display and Barlow Condensed
+// are the cross-platform stand-ins, self-hosted by next/font so they preload
+// with a metric-matched fallback instead of blocking on a Google CDN @import.
+// The full stacks (Sitka/Arial Narrow first, these second) live in
+// tailwind.config.js -> theme.extend.fontFamily.
+const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
+  variable: "--font-heading-family",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const barlowCondensed = Barlow_Condensed({
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-body-family",
+  display: "swap",
 });
 
 export const metadata = {
@@ -28,7 +39,10 @@ export const metadata = {
 // has to keep firing.
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${playfairDisplay.variable} ${barlowCondensed.variable}`}
+    >
       <head>
         <Script
           strategy="afterInteractive"
@@ -55,9 +69,7 @@ export default function RootLayout({ children }) {
         </Script>
       </head>
 
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className="antialiased">
         <noscript
           dangerouslySetInnerHTML={{
             __html: `
