@@ -36,7 +36,7 @@ const SOCIAL_LINKS = [
 
 function FooterHeading({ children }) {
   return (
-    <h2 className="font-heading text-sm font-bold uppercase tracking-widest text-earth-brown mb-4">
+    <h2 className="text-sm font-semibold uppercase tracking-widest text-earth-brown mb-4">
       {children}
     </h2>
   );
@@ -51,7 +51,7 @@ function FooterLink({ href, external, children }) {
       <Link
         href={href}
         {...externalProps}
-        className="text-sm font-medium text-charcoal/80 hover:text-earth-brown transition-colors duration-200 flex items-center gap-1.5"
+        className="text-sm text-charcoal/80 hover:text-earth-brown transition-colors duration-200 flex items-center gap-1.5"
       >
         {external && (
           <MapPin className="size-3 shrink-0 text-earth-brown" aria-hidden="true" />
@@ -86,12 +86,12 @@ const Footer = () => {
                 width={36}
                 height={36}
               />
-              <span className="font-heading text-2xl font-bold text-earth-brown leading-tight">
+              <span className="font-display text-2xl font-medium text-earth-brown leading-tight">
                 Madhuban Eco Retreat
               </span>
             </Link>
 
-            <address className="font-body not-italic text-sm text-charcoal/80 leading-relaxed space-y-1">
+            <address className="not-italic text-sm text-charcoal/80 leading-relaxed space-y-1">
               <p>Village Bori, Salkanpur Road</p>
               <p>Rehti, Sehore, Madhya Pradesh — 466446</p>
             </address>

@@ -80,7 +80,7 @@ const MainNavigation = () => {
               priority
             />
             <div className="flex flex-col leading-tight">
-              <span className="font-heading text-base md:text-lg font-bold text-charcoal tracking-tight">
+              <span className="text-base md:text-lg font-bold text-charcoal tracking-tight">
                 Madhuban Eco Retreat
               </span>
               <span className="hidden md:block text-[10px] md:text-xs font-normal text-earth-brown/70 tracking-wide">
@@ -97,7 +97,7 @@ const MainNavigation = () => {
             {/* Book Now — desktop */}
             <Link
               href="/stay-in-ratapani-tiger-reserve"
-              className="hidden lg:inline-flex shrink-0 items-center justify-center gap-1.5 h-12 px-4 rounded-[1rem] border border-transparent bg-primary text-primary-foreground text-sm font-semibold whitespace-nowrap transition-all hover:bg-primary/80 active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="hidden lg:inline-flex shrink-0 items-center justify-center gap-1.5 h-12 px-4 rounded-[1rem] border border-transparent bg-primary text-primary-foreground text-sm font-medium whitespace-nowrap transition-all hover:bg-primary/80 active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               Book Now
             </Link>
@@ -105,7 +105,7 @@ const MainNavigation = () => {
             {/* Book — mobile compact */}
             <Link
               href="/stay-in-ratapani-tiger-reserve"
-              className="lg:hidden inline-flex shrink-0 items-center justify-center gap-1 h-9 px-3 rounded-[0.75rem] border border-transparent bg-primary text-primary-foreground text-[0.8rem] font-semibold whitespace-nowrap transition-all hover:bg-primary/80 active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="lg:hidden inline-flex shrink-0 items-center justify-center gap-1 h-9 px-3 rounded-[0.75rem] border border-transparent bg-primary text-primary-foreground text-[0.8rem] font-medium whitespace-nowrap transition-all hover:bg-primary/80 active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               Book
             </Link>

@@ -63,45 +63,12 @@ module.exports = {
         },
       },
       fontFamily: {
-        // Brand stacks. Sitka Banner and Arial Narrow are the stationery faces
-        // and are picked up on Windows where they are installed; everywhere
-        // else the browser falls through to the next/font webfonts, whose
-        // families are exposed as --font-heading-family / --font-body-family
-        // by src/app/layout.js.
-        heading: [
-          "Sitka Banner",
-          "var(--font-heading-family)",
-          "Playfair Display",
-          "Georgia",
-          "serif",
-        ],
-        display: [
-          "Sitka Banner",
-          "var(--font-heading-family)",
-          "Playfair Display",
-          "Georgia",
-          "serif",
-        ],
-        body: [
-          "Arial Narrow",
-          "var(--font-body-family)",
-          "Barlow Condensed",
-          "Arial",
-          "sans-serif",
-        ],
-        // Legacy aliases. These classes are still scattered through the pages;
-        // pointing them at the brand stacks stops them rendering as unstyled
-        // fallbacks now that the config is actually being loaded.
-        poppins: ["var(--font-body-family)", "Barlow Condensed", "Arial", "sans-serif"],
-        openSans: ["var(--font-body-family)", "Barlow Condensed", "Arial", "sans-serif"],
-        inter: ["var(--font-body-family)", "Barlow Condensed", "Arial", "sans-serif"],
-        "arial-narrow": [
-          "Arial Narrow",
-          "var(--font-body-family)",
-          "Barlow Condensed",
-          "Arial",
-          "sans-serif",
-        ],
+        // Default font families
+        poppins: ["Poppins", "sans-serif"], // custom "font-poppins"
+        openSans: ["Open Sans", "sans-serif"], // custom "font-openSans"
+        inter: ["Inter", "sans-serif"], // custom "font-inter"
+        // "sitka-banner": ['"Sitka Banner"', "serif"], // Quotes needed because of space in name
+        "arial-narrow": ['"Arial Narrow"', "sans-serif"], // custom "font-cinzel"
       },
 
       boxShadow: {
