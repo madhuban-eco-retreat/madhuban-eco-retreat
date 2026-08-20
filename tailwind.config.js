@@ -71,14 +71,14 @@ module.exports = {
         heading: [
           "Sitka Banner",
           "var(--font-heading-family)",
-          "Cormorant Garamond",
+          "Playfair Display",
           "Georgia",
           "serif",
         ],
         display: [
           "Sitka Banner",
           "var(--font-heading-family)",
-          "Cormorant Garamond",
+          "Playfair Display",
           "Georgia",
           "serif",
         ],

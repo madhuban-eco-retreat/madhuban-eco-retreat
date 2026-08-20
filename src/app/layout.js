@@ -1,17 +1,17 @@
-import { Cormorant_Garamond, Barlow_Condensed } from "next/font/google";
+import { Playfair_Display, Barlow_Condensed } from "next/font/google";
 import "../styles/globals.css";
 import "../styles/variables.css";
 import Script from "next/script";
 
 // Brand typefaces. The stationery sets headings in Sitka Banner and body in
-// Arial Narrow -- both Windows-only. Cormorant Garamond and Barlow Condensed
+// Arial Narrow -- both Windows-only. Playfair Display and Barlow Condensed
 // are the cross-platform stand-ins, self-hosted by next/font so they preload
 // with a metric-matched fallback instead of blocking on a Google CDN @import.
 // The full stacks (Sitka/Arial Narrow first, these second) live in
 // tailwind.config.js -> theme.extend.fontFamily.
-const cormorantGaramond = Cormorant_Garamond({
+const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800", "900"],
   style: ["normal", "italic"],
   variable: "--font-heading-family",
   display: "swap",
@@ -41,7 +41,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${cormorantGaramond.variable} ${barlowCondensed.variable}`}
+      className={`${playfairDisplay.variable} ${barlowCondensed.variable}`}
     >
       <head>
         <Script

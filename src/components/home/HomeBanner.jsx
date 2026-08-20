@@ -58,6 +58,9 @@ export default function HomeBanner() {
   return (
     <>
       <section className="relative min-h-screen overflow-hidden bg-gray-900">
+        {/* Crossfade. This wrapper holds the slide IMAGE, so the active slide
+            must stay at opacity-100 -- dimming it here would dim the photo.
+            The dark scrim for text contrast is the separate div below. */}
         {heroSlides.map((slide, index) => (
           <div
             key={index}
@@ -76,7 +79,7 @@ export default function HomeBanner() {
                 fetchPriority={index === 0 ? "high" : "low"}
                 sizes="100vw"
                 className="object-cover"
-                quality={85} // Reduced from 100 to save ~40% file size with no visible loss
+                quality={90}
               />
             </div>
 
@@ -91,19 +94,22 @@ export default function HomeBanner() {
                 fetchPriority={index === 0 ? "high" : "low"}
                 sizes="100vw"
                 className="object-cover"
+                quality={90}
               />
             </div>
 
-            <div className="absolute inset-0 bg-black/40" />
+            {/* Text-contrast scrim only. Kept at 30% so the photography reads
+                clearly; the headline carries its own drop shadow for legibility. */}
+            <div className="absolute inset-0 bg-black/30" />
           </div>
         ))}
 
         {/* Content - Static position so text doesn't flicker during slide change */}
         <div className="relative z-20 min-h-screen flex flex-col items-center justify-center text-white px-4 text-center">
-          <h1 className="font-primary bannerHeading mb-4 max-w-3xl">
+          <h1 className="font-primary bannerHeading mb-4 max-w-3xl drop-shadow-[0_2px_10px_rgba(0,0,0,0.85)]">
             {heroSlides[currentSlide].title}
           </h1>
-          <p className="font-arial-narrow bannerSubHeading mb-8 max-w-3xl">
+          <p className="font-arial-narrow bannerSubHeading mb-8 max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
             {heroSlides[currentSlide].subtitle}
           </p>
         </div>

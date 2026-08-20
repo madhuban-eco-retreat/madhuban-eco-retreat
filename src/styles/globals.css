@@ -15,7 +15,7 @@
      than exposing them as custom properties, so these are declared here.
      Sitka Banner / Arial Narrow are the stationery faces and resolve on
      Windows; every other platform falls through to the next/font webfonts. */
-  --font-heading: 'Sitka Banner', var(--font-heading-family), 'Cormorant Garamond', Georgia, serif;
+  --font-heading: 'Sitka Banner', var(--font-heading-family), 'Playfair Display', Georgia, serif;
   --font-body: 'Arial Narrow', var(--font-body-family), 'Barlow Condensed', Arial, sans-serif;
 
   /* Custom color variables */
@@ -55,7 +55,7 @@ h6 {
   /* Legacy alias. .font-primary is applied to ~80 headings, nav links and
      footer labels; it now resolves to the same stack as font-heading instead
      of to a Sitka Banner that no non-Windows device could load. */
-  --font-primary: "Sitka Banner", var(--font-heading-family), "Cormorant Garamond", Georgia, serif;
+  --font-primary: "Sitka Banner", var(--font-heading-family), "Playfair Display", Georgia, serif;
 }
 
 /* Custom animations */
@@ -446,7 +446,7 @@ h6 {
 /* ── Booking funnel typography ──────────────────────────────────────────────
    /book/* was built against font-display / font-body. Both now resolve to the
    brand stacks, so the funnel picks up Barlow Condensed for body copy and
-   Cormorant Garamond for headings, matching the marketing pages.
+   Playfair Display for headings, matching the marketing pages.
 
    Rather than rewrite the class on every heading in the funnel, this scopes a
    remap onto the layout wrapper. The declarations set font-family outright
