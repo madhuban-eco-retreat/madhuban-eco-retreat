@@ -114,11 +114,12 @@ export default function main() {
 }
 
 export const metadata = buildMetadata({
-  title: "Eco Resort Near Ratapani Tiger Reserve, Bhopal | Madhuban",
+  title: "Nature Resort Near Ratapani Tiger Reserve | Madhuban Eco Retreat",
   description:
-    "Madhuban Eco Retreat - a jungle resort near Ratapani Tiger Reserve, Bhopal. Stay in safari tents, mud houses, glamping tents & poolside villas. Wildlife safaris, nature walks & more. Book direct for best rates.",
+    "Madhuban Eco Retreat — jungle resort near Ratapani Tiger Reserve, Bhopal. Safari tents, mud houses, glamping & poolside villas. Book direct for best rates.",
   path: "",
-  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/madhuban-eco-retreat-forest-view-hero-section-1.avif",
+  ogImage:
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-og-social-1200x630.jpg",
   keywords: [
     "eco resort near Bhopal",
     "forest resort Ratapani",

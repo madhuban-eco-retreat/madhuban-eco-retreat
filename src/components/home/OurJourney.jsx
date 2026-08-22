@@ -1,6 +1,7 @@
 "use client";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
-import { facebook, instagram } from "@/utills/constants";
+import { facebook, instagram, phone } from "@/utills/constants";
+import { FaInstagram, FaFacebookF, FaWhatsapp } from "react-icons/fa";
 import { getAltFromUrl } from "@/utills/helperFunctions";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
@@ -80,54 +81,25 @@ const OurJourney = () => {
             viewport={{ once: true }}
             variants={containerVariants}
           >
-            <motion.a
-              href={instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              variants={itemVariants}
-              whileHover={{ scale: 1.2 }}
-            >
-              <Image
-                width={32}
-                height={32}
-                src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/insta-logo.webp"
-                alt="Instagram"
-                className="w-8 h-8"
-                aria-label="instagram"
-              />
-            </motion.a>
-            <motion.a
-              href={facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              variants={itemVariants}
-              whileHover={{ scale: 1.2 }}
-            >
-              <Image
-                width={32}
-                height={32}
-                src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg"
-                alt="Facebook"
-                className="w-8 h-8"
-                aria-label="facebook"
-              />
-            </motion.a>
-            <motion.a
-              href={facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              variants={itemVariants}
-              whileHover={{ scale: 1.2 }}
-            >
-              <Image
-                width={32}
-                height={32}
-                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-                alt="WhatsApp"
-                className="w-8 h-8"
-                aria-label="whatsapp"
-              />
-            </motion.a>
+            {[
+              { name: "Instagram", href: instagram, Icon: FaInstagram },
+              { name: "Facebook", href: facebook, Icon: FaFacebookF },
+              { name: "WhatsApp", href: `https://wa.me/${phone}`, Icon: FaWhatsapp },
+            ].map(({ name, href, Icon }) => (
+              <motion.a
+                key={name}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                variants={itemVariants}
+                whileHover={{ scale: 1.2 }}
+                aria-label={name}
+                title={name}
+                className="inline-flex items-center justify-center w-11 h-11 text-[rgb(110,97,70)] hover:text-[rgb(132,116,85)] transition-colors"
+              >
+                <Icon className="w-7 h-7" aria-hidden="true" />
+              </motion.a>
+            ))}
           </motion.div>
         </motion.div>
 
