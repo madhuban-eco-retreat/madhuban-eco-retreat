@@ -1,12 +1,30 @@
 "use client";
-import Script from "next/script";
+import { useEffect } from "react";
 
 const TRIPADVISOR_URL =
   "https://www.tripadvisor.co.uk/Hotel_Review-g19862956-d19859032-Reviews-Madhuban_Eco_Retreat-Dongri_Sehore_District_Madhya_Pradesh.html";
 const GOOGLE_MAPS_URL =
   "https://www.google.com/maps/place/?q=place_id:ChIJ8aTzfCu1fTkRYfqcfX7vLLg";
+const TRIPADVISOR_WIDGET_SRC =
+  "https://www.jscache.com/wejs?wtype=cdsratingsonlynarrow&uniq=351&locationId=19859032&lang=en_UK&border=true&display_version=2";
 
 export default function RatingsBar() {
+  // Injected after mount rather than rendered as markup: the widget script
+  // looks for its container the moment it executes, so it has to run after
+  // that node exists. Guarded so a re-mount does not append it twice.
+  useEffect(() => {
+    const EXISTING = document.querySelector(
+      `script[src="${TRIPADVISOR_WIDGET_SRC}"]`,
+    );
+    if (EXISTING) return;
+
+    const script = document.createElement("script");
+    script.src = TRIPADVISOR_WIDGET_SRC;
+    script.async = true;
+    script.setAttribute("data-loadtrk", "");
+    document.body.appendChild(script);
+  }, []);
+
   return (
     <section className="bg-[#F5F0E8] border-t border-[#C8B99A] py-8 px-4">
       <div className="max-w-6xl mx-auto">
@@ -16,9 +34,15 @@ export default function RatingsBar() {
         </h2>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-16">
-          {/* TripAdvisor Widget */}
+          {/* TripAdvisor.
+              The widget script rewrites #TA_cdsratingsonlynarrow351 in place
+              once it runs, swapping this lockup for the live rating and review
+              count. It is injected from an effect after mount so the container
+              is guaranteed to exist first - loading it through next/script
+              could fire before the node was in the DOM, which left the
+              placeholder logo showing and no rating. */}
           <div className="flex flex-col items-center gap-2">
-            <p className="text-xs text-charcoal/50 uppercase tracking-wider">
+            <p className="text-xs text-charcoal/50 uppercase tracking-wider mb-1">
               TripAdvisor
             </p>
             <div
@@ -33,23 +57,17 @@ export default function RatingsBar() {
                     href={TRIPADVISOR_URL}
                     className="inline-flex items-center justify-center min-h-11"
                   >
-                    {/* Third-party widget markup: TripAdvisor's script replaces
-                        this node at runtime, so it stays a plain <img>. */}
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src="https://www.tripadvisor.co.uk/img/cdsi/img2/branding/v2/Tripadvisor_lockup_horizontal_secondary_registered-18034-2.svg"
-                      alt="TripAdvisor Rating - Madhuban Eco Retreat"
-                      width={150}
+                      alt="TripAdvisor"
+                      width={160}
                       height={40}
                     />
                   </a>
                 </li>
               </ul>
             </div>
-            <Script
-              src="https://www.jscache.com/wejs?wtype=cdsratingsonlynarrow&uniq=351&locationId=19859032&lang=en_UK&border=true&display_version=2"
-              strategy="lazyOnload"
-            />
           </div>
 
           {/* Divider */}

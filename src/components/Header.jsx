@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import {
   FaInstagram,
   FaFacebookF,
@@ -23,51 +23,29 @@ import {
 import { isLandingRoute } from "@/utills/landingRoutes";
 import Image from "next/image";
 
+// Desktop nav is deliberately short so the bar fits inside max-w-6xl without
+// wrapping. Everything trimmed from the top level is reachable under Explore,
+// and the mobile drawer still lists every destination flat.
 const navigation = [
-  {
-    name: "Home",
-    path: "/",
-    dropdown: null,
-  },
-  {
-    name: "About",
-    path: "/about-us",
-  },
-  {
-    name: "Stay",
-    path: "/stay-in-ratapani-tiger-reserve",
-  },
-  {
-    name: "Experiences",
-    path: "/experiences",
-  },
-  {
-    name: "Dining",
-    path: "/dining",
-  },
-  {
-    name: "Nearby Attractions",
-    path: "/nearby-attractions",
-  },
-  {
-    name: "Gallery",
-    path: "/gallery",
-  },
-  {
-    name: "Blogs",
-    path: "/blogs",
-    hideOnDesktop: true,
-  },
-  {
-    name: "Day Outing",
-    path: "/day-outing",
-    dropdown: null,
-  },
-  {
-    name: "Contact",
-    path: "/contact-us",
-    dropdown: null,
-  },
+  { name: "Stay", path: "/stay-in-ratapani-tiger-reserve" },
+  { name: "Dining", path: "/dining" },
+  { name: "Day Outing", path: "/day-outing" },
+];
+
+const exploreLinks = [
+  { name: "About", path: "/about-us" },
+  { name: "Experiences", path: "/experiences" },
+  { name: "Nearby Attractions", path: "/nearby-attractions" },
+  { name: "Gallery", path: "/gallery" },
+  { name: "Blogs", path: "/blogs" },
+  { name: "Contact", path: "/contact-us" },
+];
+
+// Flat list for the mobile drawer, which has room for all of it.
+const mobileNavigation = [
+  { name: "Home", path: "/" },
+  ...navigation,
+  ...exploreLinks,
 ];
 
 // Vector icons rather than the previous raster brand logos: these inherit
@@ -80,6 +58,11 @@ const socialLinks = [
   { name: "LinkedIn", href: linkedin, Icon: FaLinkedinIn },
   { name: "WhatsApp", href: `https://wa.me/${phone}`, Icon: FaWhatsapp },
 ];
+
+const isNavActive = (pathname, itemPath) => {
+  if (itemPath === "/") return pathname === "/";
+  return pathname.startsWith(itemPath);
+};
 
 const MainNavigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -142,15 +125,11 @@ const MainNavigation = () => {
             className="h-10 w-10 object-contain"
           />
           <div className="flex flex-col justify-center">
-            <div className="font-primary tracking-wide text-base  md:text-xl font-bold text-[rgb(110,97,70)] leading-tight">
+            <div className="font-primary tracking-wide text-base font-bold text-[rgb(110,97,70)] leading-tight whitespace-nowrap">
               Madhuban Eco Retreat
             </div>
-
-            <p className="font-primary tracking-wider text-xs text-[rgb(110,97,70)] leading-tight">
-              Ratapani Tiger Reserve,
-            </p>
-            <p className="font-primary tracking-wide text-xs text-[rgb(110,97,70)] leading-tight">
-              Bhopal, Madhya Pradesh, India
+            <p className="font-primary tracking-wider text-xs text-[rgb(110,97,70)] leading-tight whitespace-nowrap">
+              Ratapani Tiger Reserve, Bhopal
             </p>
           </div>
         </Link>
@@ -170,38 +149,69 @@ const MainNavigation = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden xl:flex xl:justify-center xl:flex-1 xl:mx-4 items-center font-inter">
-          {navigation
-            .filter((item) => !item.hideOnDesktop)
-            .map((item) => {
-              const isActive = (itemPath) => {
-                if (itemPath === "/") {
-                  return pathname === "/";
-                }
-                return pathname.startsWith(itemPath);
-              };
-
-              return (
-                <div key={item.name} className="relative group">
-                  <Link
-                    href={item.path}
-                    className={`
+          {navigation.map((item) => (
+            <div key={item.name} className="relative group">
+              <Link
+                href={item.path}
+                className={`
                               block px-4 py-2 text-sm font-medium
                               font-primary text-[rgb(120,100,60)]
                               relative tracking-wide cursor-pointer whitespace-nowrap
                               after:content-[''] after:absolute after:w-[calc(100%-2rem)]  ${
-                                isActive(item.path)
+                                isNavActive(pathname, item.path)
                                   ? "after:scale-x-100"
                                   : "after:scale-x-0"
                               } after:h-[2px] after:bottom-0 after:left-4
                               after:bg-[rgb(120,100,60)] after:origin-bottom-right after:transition-transform after:duration-300
                              hover:after:scale-x-100
                              hover:after:origin-bottom-left`}
-                  >
-                    {item.name}
-                  </Link>
-                </div>
-              );
-            })}
+              >
+                {item.name}
+              </Link>
+            </div>
+          ))}
+
+          {/* Explore dropdown - holds everything trimmed from the top level.
+              Opens on hover and on keyboard focus, so it stays reachable
+              without a pointer. */}
+          <div className="relative group">
+            <button
+              type="button"
+              aria-haspopup="true"
+              className={`
+                          inline-flex items-center gap-1 px-4 py-2 text-sm font-medium
+                          font-primary text-[rgb(120,100,60)]
+                          relative tracking-wide cursor-pointer whitespace-nowrap
+                          after:content-[''] after:absolute after:w-[calc(100%-2rem)] ${
+                            exploreLinks.some((l) =>
+                              isNavActive(pathname, l.path),
+                            )
+                              ? "after:scale-x-100"
+                              : "after:scale-x-0"
+                          } after:h-[2px] after:bottom-0 after:left-4
+                          after:bg-[rgb(120,100,60)] after:origin-bottom-right after:transition-transform after:duration-300
+                         hover:after:scale-x-100
+                         hover:after:origin-bottom-left`}
+            >
+              Explore
+              <ChevronDown className="w-4 h-4" aria-hidden="true" />
+            </button>
+
+            <div className="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-opacity duration-200">
+              <ul className="bg-white rounded-2xl shadow-lg py-2 w-56">
+                {exploreLinks.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.path}
+                      className="block px-4 py-2 text-sm font-medium font-primary text-[rgb(110,97,70)] hover:bg-[rgb(110,97,70)]/10 tracking-wide"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </nav>
 
         {/* Book Now Button - Desktop */}
@@ -229,7 +239,7 @@ const MainNavigation = () => {
 
           <nav className="flex flex-col space-y-4">
             <div className="border-l-3 border-l-[rgb(110,97,70)] ">
-              {navigation.map((item, index) => {
+              {mobileNavigation.map((item) => {
                 return (
                   <div key={item.name}>
                     <Link
