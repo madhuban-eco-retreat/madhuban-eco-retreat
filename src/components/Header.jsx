@@ -4,7 +4,14 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, ChevronDown } from "lucide-react";
+import {
+  FaInstagram,
+  FaFacebookF,
+  FaYoutube,
+  FaLinkedinIn,
+  FaWhatsapp,
+} from "react-icons/fa";
 import {
   facebook,
   gmail,
@@ -16,85 +23,46 @@ import {
 import { isLandingRoute } from "@/utills/landingRoutes";
 import Image from "next/image";
 
+// Desktop nav is deliberately short so the bar fits inside max-w-6xl without
+// wrapping. Everything trimmed from the top level is reachable under Explore,
+// and the mobile drawer still lists every destination flat.
 const navigation = [
-  {
-    name: "Home",
-    path: "/",
-    dropdown: null,
-  },
-  {
-    name: "About",
-    path: "/about-us",
-  },
-  {
-    name: "Stay",
-    path: "/stay-in-ratapani-tiger-reserve",
-  },
-  {
-    name: "Experiences",
-    path: "/experiences",
-  },
-  {
-    name: "Dining",
-    path: "/dining",
-  },
-  {
-    name: "Nearby Attractions",
-    path: "/nearby-attractions",
-  },
-  {
-    name: "Gallery",
-    path: "/gallery",
-  },
-  {
-    name: "Blogs",
-    path: "/blogs",
-    hideOnDesktop: true,
-  },
-  {
-    name: "Day Outing",
-    path: "/day-outing",
-    dropdown: null,
-  },
-  {
-    name: "Contact",
-    path: "/contact-us",
-    dropdown: null,
-  },
+  { name: "Stay", path: "/stay-in-ratapani-tiger-reserve" },
+  { name: "Dining", path: "/dining" },
+  { name: "Day Outing", path: "/day-outing" },
 ];
 
-const socialLinks = [
-  {
-    name: "Instagram",
-    href: instagram,
-    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/insta-logo.webp",
-    className: "w-5 h-5",
-  },
-  {
-    name: "Facebook",
-    href: facebook,
-    img: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg",
-    className: "w-5 h-5",
-  },
-  {
-    name: "YouTube",
-    href: youtube,
-    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/youtube-logo.png",
-    className: "w-6 h-5",
-  },
-  {
-    name: "LinkedIn",
-    href: linkedin,
-    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/linkedin-logo.png",
-    className: "w-5 h-5",
-  },
-  {
-    name: "WhatsApp",
-    href: `https://wa.me/${phone}`,
-    img: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg",
-    className: "w-5 h-5",
-  },
+const exploreLinks = [
+  { name: "About", path: "/about-us" },
+  { name: "Experiences", path: "/experiences" },
+  { name: "Nearby Attractions", path: "/nearby-attractions" },
+  { name: "Gallery", path: "/gallery" },
+  { name: "Blogs", path: "/blogs" },
+  { name: "Contact", path: "/contact-us" },
 ];
+
+// Flat list for the mobile drawer, which has room for all of it.
+const mobileNavigation = [
+  { name: "Home", path: "/" },
+  ...navigation,
+  ...exploreLinks,
+];
+
+// Vector icons rather than the previous raster brand logos: these inherit
+// currentColor, so the bar's contrast colour actually applies to them. A
+// colour class on an <img> does nothing.
+const socialLinks = [
+  { name: "Instagram", href: instagram, Icon: FaInstagram },
+  { name: "Facebook", href: facebook, Icon: FaFacebookF },
+  { name: "YouTube", href: youtube, Icon: FaYoutube },
+  { name: "LinkedIn", href: linkedin, Icon: FaLinkedinIn },
+  { name: "WhatsApp", href: `https://wa.me/${phone}`, Icon: FaWhatsapp },
+];
+
+const isNavActive = (pathname, itemPath) => {
+  if (itemPath === "/") return pathname === "/";
+  return pathname.startsWith(itemPath);
+};
 
 const MainNavigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -110,7 +78,7 @@ const MainNavigation = () => {
     <header className="fixed top-0 w-full z-50 bg-primary-gray shadow-lg ">
       {/* Top Info Bar */}
       <div className="hidden lg:block bg-primary-gray2 text-white py-1 px-4">
-        <div className="container mx-auto flex justify-between items-center text-sm">
+        <div className="max-w-6xl mx-auto px-4 lg:px-8 w-full flex justify-between items-center text-sm">
           <div className="flex items-center space-x-4">
             <a
               href="tel:+917895432160"
@@ -127,22 +95,18 @@ const MainNavigation = () => {
               {gmail}
             </a>
           </div>
-          <div className="flex items-center space-x-3">
-            {socialLinks.map((item, index) => (
+          <div className="flex items-center space-x-1">
+            {socialLinks.map(({ name, href, Icon }) => (
               <a
-                key={index}
-                href={item.href}
+                key={name}
+                href={href}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={name}
+                title={name}
+                className="inline-flex items-center justify-center w-9 h-9 text-[#E0D1BC] hover:text-white transition-colors"
               >
-                <Image
-                  width={20}
-                  height={20}
-                  src={item.img}
-                  alt={item.name}
-                  className={item.className}
-                  loading="lazy"
-                />
+                <Icon className="w-5 h-5" aria-hidden="true" />
               </a>
             ))}
           </div>
@@ -150,33 +114,29 @@ const MainNavigation = () => {
       </div>
 
       {/* Main Navbar */}
-      <div className="container mx-auto px-4 py-3 flex justify-between items-center relative xl:justify-between 2xl:justify-between xl:min-w-full">
+      <div className="max-w-6xl mx-auto px-4 lg:px-8 w-full py-3 flex justify-between items-center relative">
         {/* Logo */}
-        <Link href="/" className="flex items-center space-x-4 z-20">
+        <Link href="/" className="flex items-center space-x-3 z-20">
           <Image
-            src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-eco-retreat-bhopal-logo.png"
-            width={120}
-            height={120}
+            src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-tree-logo-transparent-512.png"
+            width={40}
+            height={40}
             alt="Madhuban Eco Retreat Logo"
-            className="h-12 w-12 md:h-20  md:w-20 filter brightness-75"
+            className="h-10 w-10 object-contain"
           />
           <div className="flex flex-col justify-center">
-            <div className="font-primary tracking-wide text-base  md:text-xl font-bold text-[rgb(110,97,70)] leading-tight">
+            <div className="font-primary tracking-wide text-base font-bold text-[rgb(110,97,70)] leading-tight whitespace-nowrap">
               Madhuban Eco Retreat
             </div>
-
-            <p className="font-primary tracking-wider text-xs text-[rgb(110,97,70)] leading-tight">
-              Ratapani Tiger Reserve,
-            </p>
-            <p className="font-primary tracking-wide text-xs text-[rgb(110,97,70)] leading-tight">
-              Bhopal, Madhya Pradesh, India
+            <p className="font-primary tracking-wider text-xs text-[rgb(110,97,70)] leading-tight whitespace-nowrap">
+              Ratapani Tiger Reserve, Bhopal
             </p>
           </div>
         </Link>
 
         {/* Mobile Menu Toggle Button */}
         <button
-          className="xl:hidden z-20"
+          className="xl:hidden z-20 inline-flex items-center justify-center w-11 h-11 -mr-2"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -188,44 +148,76 @@ const MainNavigation = () => {
         </button>
 
         {/* Desktop Navigation */}
-        <nav className="hidden xl:flex xl:justify-between xl:flex-1 xl:ml-8 2xl:ml-12 items-center space-x-6 font-inter xl:max-w-[62vw]">
-          {navigation
-            .filter((item) => !item.hideOnDesktop)
-            .map((item) => {
-              const isActive = (itemPath) => {
-                if (itemPath === "/") {
-                  return pathname === "/";
-                }
-                return pathname.startsWith(itemPath);
-              };
-
-              return (
-                <div key={item.name} className="relative group">
-                  <Link
-                    href={item.path}
-                    className={`
-                              text-[20px] font-primary text-[rgb(120,100,60)]
-                              relative  font-medium tracking-wide cursor-pointer
-                              after:content-[''] after:absolute after:w-full  ${
-                                isActive(item.path)
+        <nav className="hidden xl:flex xl:justify-center xl:flex-1 xl:mx-4 items-center font-inter">
+          {navigation.map((item) => (
+            <div key={item.name} className="relative group">
+              <Link
+                href={item.path}
+                className={`
+                              block px-4 py-2 text-sm font-medium
+                              font-primary text-[rgb(120,100,60)]
+                              relative tracking-wide cursor-pointer whitespace-nowrap
+                              after:content-[''] after:absolute after:w-[calc(100%-2rem)]  ${
+                                isNavActive(pathname, item.path)
                                   ? "after:scale-x-100"
                                   : "after:scale-x-0"
-                              } after:h-[2px] after:-bottom-2 after:left-0
+                              } after:h-[2px] after:bottom-0 after:left-4
                               after:bg-[rgb(120,100,60)] after:origin-bottom-right after:transition-transform after:duration-300
                              hover:after:scale-x-100
                              hover:after:origin-bottom-left`}
-                  >
-                    {item.name}
-                  </Link>
-                </div>
-              );
-            })}
+              >
+                {item.name}
+              </Link>
+            </div>
+          ))}
+
+          {/* Explore dropdown - holds everything trimmed from the top level.
+              Opens on hover and on keyboard focus, so it stays reachable
+              without a pointer. */}
+          <div className="relative group">
+            <button
+              type="button"
+              aria-haspopup="true"
+              className={`
+                          inline-flex items-center gap-1 px-4 py-2 text-sm font-medium
+                          font-primary text-[rgb(120,100,60)]
+                          relative tracking-wide cursor-pointer whitespace-nowrap
+                          after:content-[''] after:absolute after:w-[calc(100%-2rem)] ${
+                            exploreLinks.some((l) =>
+                              isNavActive(pathname, l.path),
+                            )
+                              ? "after:scale-x-100"
+                              : "after:scale-x-0"
+                          } after:h-[2px] after:bottom-0 after:left-4
+                          after:bg-[rgb(120,100,60)] after:origin-bottom-right after:transition-transform after:duration-300
+                         hover:after:scale-x-100
+                         hover:after:origin-bottom-left`}
+            >
+              Explore
+              <ChevronDown className="w-4 h-4" aria-hidden="true" />
+            </button>
+
+            <div className="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-opacity duration-200">
+              <ul className="bg-white rounded-2xl shadow-lg py-2 w-56">
+                {exploreLinks.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.path}
+                      className="block px-4 py-2 text-sm font-medium font-primary text-[rgb(110,97,70)] hover:bg-[rgb(110,97,70)]/10 tracking-wide"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </nav>
 
         {/* Book Now Button - Desktop */}
         <Link
           href="/stay-in-ratapani-tiger-reserve"
-          className="hidden xl:block px-4 py-2 rounded-md font-primary text-xl text-[#D1C8C1] bg-[rgb(110,97,70)]  transition"
+          className="hidden xl:inline-flex items-center justify-center rounded-full px-6 py-2.5 font-primary text-sm font-medium text-[#D1C8C1] bg-[rgb(110,97,70)] hover:bg-[rgb(132,116,85)] transition-colors whitespace-nowrap"
         >
           Book Now
         </Link>
@@ -239,7 +231,7 @@ const MainNavigation = () => {
           {/* Close Button */}
           <button
             onClick={() => setIsMenuOpen(false)}
-            className="absolute top-4 right-4 text-[rgb(110,97,70)] hover:text-[rgb(110,97,70)]"
+            className="absolute top-4 right-4 inline-flex items-center justify-center w-11 h-11 text-[rgb(110,97,70)] hover:text-[rgb(110,97,70)]"
             aria-label="Close menu"
           >
             <X className="w-6 h-6" />
@@ -247,7 +239,7 @@ const MainNavigation = () => {
 
           <nav className="flex flex-col space-y-4">
             <div className="border-l-3 border-l-[rgb(110,97,70)] ">
-              {navigation.map((item, index) => {
+              {mobileNavigation.map((item) => {
                 return (
                   <div key={item.name}>
                     <Link
@@ -270,7 +262,7 @@ const MainNavigation = () => {
             <Link
               href="/stay-in-ratapani-tiger-reserve"
               onClick={() => setIsMenuOpen(false)}
-              className="mt-6 w-full py-3 text-center rounded-md font-semibold  text-[#D1C8C1] bg-[rgb(110,97,70)] hover:bg-[rgb(132,116,85)] transition"
+              className="mt-6 w-full py-3 text-center rounded-full font-semibold  text-[#D1C8C1] bg-[rgb(110,97,70)] hover:bg-[rgb(132,116,85)] transition"
             >
               Book Now
             </Link>

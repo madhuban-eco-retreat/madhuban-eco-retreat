@@ -1,5 +1,6 @@
 import MainNavigation from "@/components/Header";
 import Footer from "@/components/Footer";
+import RatingsBar from "@/components/ratings/RatingsBar";
 import ContactModal from "@/components/modals/ContactModal";
 import CookiesPopup from "@/common-components/cookies/cookies";
 
@@ -11,6 +12,7 @@ export default function MarketingLayout({ children }) {
     <>
       <MainNavigation />
       {children}
+      <RatingsBar />
       <Footer />
       <ContactModal />
       <CookiesPopup />
