@@ -9,20 +9,28 @@ const TRIPADVISOR_WIDGET_SRC =
   "https://www.jscache.com/wejs?wtype=cdsratingsonlynarrow&uniq=351&locationId=19859032&lang=en_UK&border=true&display_version=2";
 
 export default function RatingsBar() {
-  // Injected after mount rather than rendered as markup: the widget script
-  // looks for its container the moment it executes, so it has to run after
-  // that node exists. Guarded so a re-mount does not append it twice.
+  // Injected from an effect rather than rendered as markup: the widget script
+  // resolves its container the moment it executes, so it has to run after
+  // #TA_cdsratingsonlynarrow351 is in the DOM. Guarded against double-injection,
+  // and removed on unmount so a later mount re-runs it against the fresh
+  // container instead of finding a stale tag and skipping.
   useEffect(() => {
-    const EXISTING = document.querySelector(
-      `script[src="${TRIPADVISOR_WIDGET_SRC}"]`,
-    );
-    if (EXISTING) return;
+    if (document.querySelector(`script[src="${TRIPADVISOR_WIDGET_SRC}"]`)) {
+      return;
+    }
 
     const script = document.createElement("script");
     script.src = TRIPADVISOR_WIDGET_SRC;
     script.async = true;
     script.setAttribute("data-loadtrk", "");
     document.body.appendChild(script);
+
+    return () => {
+      const existing = document.querySelector(
+        `script[src="${TRIPADVISOR_WIDGET_SRC}"]`,
+      );
+      if (existing) existing.remove();
+    };
   }, []);
 
   return (
@@ -37,10 +45,7 @@ export default function RatingsBar() {
           {/* TripAdvisor.
               The widget script rewrites #TA_cdsratingsonlynarrow351 in place
               once it runs, swapping this lockup for the live rating and review
-              count. It is injected from an effect after mount so the container
-              is guaranteed to exist first - loading it through next/script
-              could fire before the node was in the DOM, which left the
-              placeholder logo showing and no rating. */}
+              count. The lockup below is only what shows until then. */}
           <div className="flex flex-col items-center gap-2">
             <p className="text-xs text-charcoal/50 uppercase tracking-wider mb-1">
               TripAdvisor
