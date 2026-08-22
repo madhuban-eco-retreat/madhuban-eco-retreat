@@ -120,7 +120,7 @@ const Accommodations = () => {
 
         {/* --- Cards Section --- */}
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pb-4 -mt-10"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pb-4"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -134,7 +134,7 @@ const Accommodations = () => {
               <Link
                 href={`/stay-in-ratapani-tiger-reserve/${item.slug}`}
                 aria-label={`View details for ${item.title}`}
-                className="group relative h-full overflow-hidden rounded-xl bg-[#D1C8C1] shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col will-change-transform"
+                className="group relative h-full overflow-hidden rounded-xl bg-[#D1C8C1] shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col isolate"
               >
                 {/* Image - fixed height so the picture is the dominant element */}
                 <div className="relative h-48 md:h-56 w-full overflow-hidden">

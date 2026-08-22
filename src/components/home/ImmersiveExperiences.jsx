@@ -97,7 +97,7 @@ const ImmersiveExperiences = () => {
 
         <motion.div
           // OPTIMIZATION: Ensure cards fill grid cells correctly
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 -mt-9 items-stretch"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
