@@ -1,31 +1,74 @@
 // src/components/BookingWidget.js
 import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
 import { Calendar, Users, ChevronRight } from "lucide-react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from "next/navigation";
+import {
+  ALL_ROOMS_URL,
+  CAMPING_WHATSAPP_URL,
+  ROOM_SLUGS,
+  bookUrl,
+} from "@/lib/rooms/booking-links";
+
+/**
+ * The two accommodation values that are not room slugs. "all" names no
+ * particular room, and camping is sold per person on request so it has no
+ * /book/[slug] route at all.
+ */
+const ALL_TYPES = "all";
+const CAMPING = "camping";
+
+/**
+ * DatePicker hands back a Date at local midnight. toISOString() would convert
+ * that to UTC, which in IST (+5:30) rolls it back to the previous day and sends
+ * the guest into the booking engine a night early, so format the local parts.
+ */
+function toDateParam(date) {
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+}
 
 const BookingWidget = () => {
-  //   const navigate = useNavigate();
   const [checkIn, setCheckIn] = useState(null);
   const [checkOut, setCheckOut] = useState(null);
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
-  const [accommodationType, setAccommodationType] = useState("all");
+  const [accommodationType, setAccommodationType] = useState("");
   const router = useRouter();
 
   const handleCheckAvailability = (e) => {
     e.preventDefault();
 
-    // Format dates for URL parameters
-    const checkInStr = checkIn ? checkIn.toISOString().split("T")[0] : "";
-    const checkOutStr = checkOut ? checkOut.toISOString().split("T")[0] : "";
+    if (!checkIn) {
+      alert("Please select a check-in date.");
+      return;
+    }
 
-    // Navigate to booking page with search parameters
-    router.push(
-      `/booking?checkIn=${checkInStr}&checkOut=${checkOutStr}&adults=${adults}&children=${children}&type=${accommodationType}`,
-    );
+    if (!accommodationType) {
+      alert("Please select an accommodation type.");
+      return;
+    }
+
+    if (accommodationType === CAMPING) {
+      window.open(CAMPING_WHATSAPP_URL, "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    if (accommodationType === ALL_TYPES) {
+      router.push(ALL_ROOMS_URL);
+      return;
+    }
+
+    // Anything else is a room slug, so it goes straight to the booking engine
+    // with the search pre-filled. Check-out is optional here -- /book/[slug]
+    // derives one from the room's minimum stay when it is missing.
+    const params = new URLSearchParams({ checkIn: toDateParam(checkIn) });
+    if (checkOut) params.set("checkOut", toDateParam(checkOut));
+    params.set("adults", String(adults));
+    params.set("children", String(children));
+
+    router.push(`${bookUrl(accommodationType)}?${params}`);
   };
 
   return (
@@ -134,11 +177,21 @@ const BookingWidget = () => {
                   onChange={(e) => setAccommodationType(e.target.value)}
                   className="w-40 rounded-md bg-[#D1C8C1] font-arial-narrow  font-medium text-[rgb(110,97,70)] py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
                 >
-                  <option label="All Types" value="all"></option>
-                  <option label="Safari Tent" value="cottage"></option>
-                  <option label="Mud Houses" value="tent"></option>
-                  <option label="Pool Side Villa" value="treehouse"></option>
-                  <option label="Camping Tent" value="camping"></option>
+                  <option label="Select type" value=""></option>
+                  <option label="All Types" value={ALL_TYPES}></option>
+                  <option
+                    label="Safari Tent"
+                    value={ROOM_SLUGS.safariTent}
+                  ></option>
+                  <option
+                    label="Mud Houses"
+                    value={ROOM_SLUGS.mudHouseStandard}
+                  ></option>
+                  <option
+                    label="Pool Side Villa"
+                    value={ROOM_SLUGS.poolSideVilla}
+                  ></option>
+                  <option label="Camping Tent" value={CAMPING}></option>
                 </select>
               </div>
             </div>
