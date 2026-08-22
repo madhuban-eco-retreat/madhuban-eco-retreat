@@ -1,10 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import CommonFaqs from "@/common-components/faqs/CommonFaqs";
-import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
-import Image from "next/image";
 import HeroSlider from "./HeroSlider";
 import { getAltFromUrl } from "@/utills/helperFunctions";
 

@@ -1,4 +1,5 @@
 export const dynamic = "force-static";
+import { buildMetadata } from "@/lib/seo";
 import NearbyAttractions from "@/components/nearbyAttractions/NearbyAttractions";
 import SEO from "@/components/seo/Seo";
 
@@ -102,13 +103,11 @@ const NearbyAttractionsPage = () => {
 
 export default NearbyAttractionsPage;
 
-export const metadata = {
-  title:
-    "Nearby Attractions Ratapani | Places to Visit Near Madhuban Eco Retreat",
-
+export const metadata = buildMetadata({
+  title: "Nearby Attractions Ratapani | Places to Visit Near Bhopal",
   description:
     "Explore Ratapani Wildlife Sanctuary, Bhimbetka, Ginnorgarh Fort, Saru Maru Caves, Salkanpur Temple & Satpura attractions near Madhuban Eco Retreat.",
-
+  path: "/nearby-attractions",
   keywords: [
     "nearby attractions ratapani",
     "places to visit near bhopal",
@@ -119,13 +118,4 @@ export const metadata = {
     "saru maru caves mp",
     "narmada darshan mp",
   ],
-
-  alternates: {
-    canonical: "https://www.madhubanecoretreat.com/nearby-attractions",
-  },
-
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+});

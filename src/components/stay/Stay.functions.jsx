@@ -326,9 +326,9 @@ const safariTentSchema = {
     addressCountry: "IN",
   },
   image: [
-    "https://www.madhubanecoretreat.com/assets/images/safari-tent-1.jpg",
-    "https://www.madhubanecoretreat.com/assets/images/safari-tent-2.jpg",
-    "https://www.madhubanecoretreat.com/assets/images/safari-tent-3.jpg",
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/safari-tent/Safari_Tent_-_Madhuban_Eco_Retreat_Bhopal_pbpcgr.avif",
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/safari-tent/safari-tent-customer-stay-madhuban-eco-retreat-1.avif",
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/safari-tent/stay-at-safari-tent-madhuban-eco-retreat.avif",
   ],
   amenityFeature: [
     {
@@ -455,9 +455,9 @@ const mudHouseSchema = {
     addressCountry: "IN",
   },
   image: [
-    "https://www.madhubanecoretreat.com/assets/images/mud-house-1.jpg",
-    "https://www.madhubanecoretreat.com/assets/images/mud-house-2.jpg",
-    "https://www.madhubanecoretreat.com/assets/images/mud-house-3.jpg",
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/mud-house/mud-house-image-madhuban-eco-retreat-bhopal.avif",
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/mud-house/mud-house-gallery-image-2-madhuban-eco-retreat.avif",
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/mud-house/mud-house-image-3-madhuban-eco-retreat-bhopal.avif",
   ],
   amenityFeature: [
     {
@@ -588,9 +588,9 @@ const poolsideSchema = {
     addressCountry: "IN",
   },
   image: [
-    "https://www.madhubanecoretreat.com/assets/images/pool-villa-1.jpg",
-    "https://www.madhubanecoretreat.com/assets/images/pool-villa-2.jpg",
-    "https://www.madhubanecoretreat.com/assets/images/pool-villa-3.jpg",
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/pool/pool-side-vila-madhuban-eco-retreat-bhopal.avif",
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/pool/pool-side-image-madhuban-eco-retreat-bhopal-1.avif",
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/pool/pool-view-image-madhuban-eco-retreat-bhopal.avif",
   ],
   amenityFeature: [
     {
@@ -699,9 +699,9 @@ const glampingTentSchema = {
     addressCountry: "IN",
   },
   image: [
-    "https://www.madhubanecoretreat.com/assets/images/glamping-1.jpg",
-    "https://www.madhubanecoretreat.com/assets/images/glamping-2.jpg",
-    "https://www.madhubanecoretreat.com/assets/images/glamping-3.jpg",
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/glamping-tent/glamping-tent-madhuban-eco-retreat-bhopal.avif",
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/glamping-tent/glamping-tent-interior-image-madhuban-eco-retreat-bhopal.avif",
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/glamping-tent/glamping-tent-gallery-image-madhuban-eco-retreat.avif",
   ],
   amenityFeature: [
     {
@@ -821,9 +821,8 @@ const nightCampingSchema = {
     addressCountry: "IN",
   },
   image: [
-    "https://www.madhubanecoretreat.com/assets/images/camping-1.jpg",
-    "https://www.madhubanecoretreat.com/assets/images/camping-2.jpg",
-    "https://www.madhubanecoretreat.com/assets/images/camping-3.jpg",
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/camping-tent/camping-tent-new-madhuban-eco-retreat-bhopal.avif",
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/camping-tent/camping-tent-image-1-madhuban-eco-retreat-bhopal.webp",
   ],
   amenityFeature: [
     {

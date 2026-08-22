@@ -1,4 +1,5 @@
 export const dynamic = "force-static";
+import { buildMetadata } from "@/lib/seo";
 import ForestWalkAndNatureTrails from "@/components/experiences/Forest-Walk-And-Nature-Trails/ForestWalkAndNatureTrails";
 import SEO from "@/components/seo/Seo";
 
@@ -32,8 +33,7 @@ const pageSchema = {
     url: "https://www.madhubanecoretreat.com/experiences/forest-walks-and-nature-trails",
   },
   image: [
-    "https://www.madhubanecoretreat.com/assets/images/forest-walk-1.jpg",
-    "https://www.madhubanecoretreat.com/assets/images/forest-walk-2.jpg",
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/forest-walk/nature-visit-ratapani-madhuban-eco-retreat-bhopal-2.avif",
   ],
 };
 
@@ -95,31 +95,19 @@ const ForestWalkAndNatureTrailsPage = () => {
 
 export default ForestWalkAndNatureTrailsPage;
 
-export async function generateMetadata() {
-  return {
-    title: "Forest Walks Near Bhopal | Nature Trails in Ratapani",
-
-    description:
-      "Explore guided forest walks & nature trails near Bhopal at Madhuban Eco Retreat. Safe, scenic, eco-friendly trails in Ratapani. Ideal for families & nature lovers.",
-
-    keywords: [
-      "forest walks near bhopal",
-      "nature trails bhopal",
-      "ratapani forest walk",
-      "eco nature trails ratapani",
-      "offbeat nature trails bhopal",
-      "forest trekking near bhopal",
-      "eco tourism ratapani",
-    ],
-
-    alternates: {
-      canonical:
-        "https://www.madhubanecoretreat.com/experiences/forest-walks-and-nature-trails",
-    },
-
-    robots: {
-      index: true,
-      follow: true,
-    },
-  };
-}
+export const metadata = buildMetadata({
+  title: "Forest Walks Near Bhopal | Nature Trails in Ratapani",
+  description:
+    "Explore guided forest walks & nature trails near Bhopal at Madhuban Eco Retreat. Safe, scenic, eco-friendly trails in Ratapani. Ideal for families & nature lovers.",
+  path: "/experiences/forest-walks-and-nature-trails",
+  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/forest-walk/nature-visit-ratapani-madhuban-eco-retreat-bhopal-2.avif",
+  keywords: [
+    "forest walks near bhopal",
+    "nature trails bhopal",
+    "ratapani forest walk",
+    "eco nature trails ratapani",
+    "offbeat nature trails bhopal",
+    "forest trekking near bhopal",
+    "eco tourism ratapani",
+  ],
+});

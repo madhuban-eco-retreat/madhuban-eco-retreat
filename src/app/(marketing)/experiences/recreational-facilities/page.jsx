@@ -1,4 +1,5 @@
 export const dynamic = "force-static";
+import { buildMetadata } from "@/lib/seo";
 import RecreationalFacilities from "@/components/experiences/recreational-facilities/RecreationalFacilities";
 import SEO from "@/components/seo/Seo";
 
@@ -10,8 +11,8 @@ const pageSchema = {
   description:
     "Eco-friendly recreational activities near Bhopal at Madhuban Eco Retreat. Indoor games, cycling, hammocks, campfires and nature-inspired leisure in Ratapani.",
   image: [
-    "https://www.madhubanecoretreat.com/assets/images/recreation-1.jpg",
-    "https://www.madhubanecoretreat.com/assets/images/recreation-2.jpg",
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/activities/Adventure_Activities_3_At_madhuban-eco-retreat.jpg",
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/activities/adventure-hurdles-madhuban-eco-retreat-bhopal.jpg",
   ],
   provider: {
     "@type": "Resort",
@@ -95,30 +96,18 @@ const RecreationalFacilitiesPage = () => {
 
 export default RecreationalFacilitiesPage;
 
-export async function generateMetadata() {
-  return {
-    title: "Recreational Activities Ratapani | Nature Recreation Near Bhopal",
-
-    description:
-      "Enjoy eco-friendly recreational activities near Bhopal. Cycling, indoor games, hammocks, campfires & nature-friendly relaxation at Madhuban Eco Retreat.",
-
-    keywords: [
-      "recreational activities near bhopal",
-      "ratapani recreation",
-      "outdoor activities bhopal",
-      "eco resort recreation mp",
-      "family activities bhopal",
-      "nature recreation ratapani",
-    ],
-
-    alternates: {
-      canonical:
-        "https://www.madhubanecoretreat.com/experiences/recreational-facilities",
-    },
-
-    robots: {
-      index: true,
-      follow: true,
-    },
-  };
-}
+export const metadata = buildMetadata({
+  title: "Recreational Activities Ratapani | Near Bhopal",
+  description:
+    "Enjoy eco-friendly recreational activities near Bhopal. Cycling, indoor games, hammocks, campfires & nature-friendly relaxation at Madhuban Eco Retreat.",
+  path: "/experiences/recreational-facilities",
+  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/activities/Adventure_Activities_3_At_madhuban-eco-retreat.jpg",
+  keywords: [
+    "recreational activities near bhopal",
+    "ratapani recreation",
+    "outdoor activities bhopal",
+    "eco resort recreation mp",
+    "family activities bhopal",
+    "nature recreation ratapani",
+  ],
+});

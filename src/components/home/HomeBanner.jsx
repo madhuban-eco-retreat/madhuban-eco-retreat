@@ -65,7 +65,12 @@ export default function HomeBanner() {
               index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
             }`}
           >
-            {/* Desktop Image */}
+            {/* Desktop Image.
+                `sizes` carries the same media condition as the wrapper's
+                `hidden md:block`. Both variants stay in the DOM so the mobile
+                crop is preserved, but the browser now only fetches a real
+                candidate for the one that is actually displayed — previously
+                both were declared 100vw and every visitor downloaded both. */}
             <div className="hidden md:block relative w-full h-full">
               <Image
                 src={slide.image}
@@ -74,7 +79,7 @@ export default function HomeBanner() {
                 priority={index === 0} // Only priority for the first slide
                 loading={index === 0 ? "eager" : "lazy"}
                 fetchPriority={index === 0 ? "high" : "low"}
-                sizes="100vw"
+                sizes="(max-width: 767px) 1px, 100vw"
                 className="object-cover"
                 quality={85} // Reduced from 100 to save ~40% file size with no visible loss
               />
@@ -84,13 +89,14 @@ export default function HomeBanner() {
             <div className="block md:hidden relative w-full h-full">
               <Image
                 src={slide.mobile}
-                alt={getAltFromUrl(slide.image)}
+                alt={getAltFromUrl(slide.mobile)}
                 fill
                 priority={index === 0}
                 loading={index === 0 ? "eager" : "lazy"}
                 fetchPriority={index === 0 ? "high" : "low"}
-                sizes="100vw"
+                sizes="(max-width: 767px) 100vw, 1px"
                 className="object-cover"
+                quality={85}
               />
             </div>
 

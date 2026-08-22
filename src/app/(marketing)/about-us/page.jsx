@@ -1,5 +1,6 @@
 export const dynamic = "force-static";
 
+import { buildMetadata } from "@/lib/seo";
 import AboutUs from "@/components/about/about";
 import SEO from "@/components/seo/Seo";
 
@@ -8,7 +9,7 @@ const schema = {
   "@type": "LodgingBusiness",
   name: "Madhuban Eco Retreat",
   url: "https://www.madhubanecoretreat.com/about-us",
-  image: "https://www.madhubanecoretreat.com/assets/images/madhuban.jpg",
+  image: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/about/mud-house-madhuban-eco-retreat-bhopal.webp",
   description:
     "Madhuban Eco Retreat is a nature-based eco resort near Bhopal offering sustainable tourism experiences, slow travel, and wellness-focused stays near Ratapani.",
   address: {
@@ -56,31 +57,22 @@ const AboutUsPage = () => {
 
 export default AboutUsPage;
 
-export async function generateMetadata() {
-  return {
-    title:
-      "About Madhuban Eco Retreat – Best Eco Resort Near Bhopal & Ratapani",
-    description:
-      "Discover Madhuban Eco Retreat near Bhopal—an eco-friendly jungle resort promoting slow tourism, sustainability, and meaningful nature-based experiences in Ratapani.",
-    keywords: [
-      "best resorts near ratapani",
-      "jungle resort near bhopal",
-      "eco tourism",
-      "slow tourism",
-      "detox retreat bhopal",
-      "sustainable tourism india",
-      "eco lodge near ratapani",
-      "weekend getaway bhopal",
-      "nature resort bhopal",
-      "madhuban eco retreat",
-    ],
-    alternates: {
-      canonical: "https://www.madhubanecoretreat.com/about-us",
-    },
-
-    robots: {
-      index: true,
-      follow: true,
-    },
-  };
-}
+export const metadata = buildMetadata({
+  title: "About Madhuban Eco Retreat - Eco Resort Near Bhopal",
+  description:
+    "Discover Madhuban Eco Retreat near Bhopal-an eco-friendly jungle resort promoting slow tourism, sustainability, and meaningful nature-based experiences in Ratapani.",
+  path: "/about-us",
+  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/about/mud-house-madhuban-eco-retreat-bhopal.webp",
+  keywords: [
+    "best resorts near ratapani",
+    "jungle resort near bhopal",
+    "eco tourism",
+    "slow tourism",
+    "detox retreat bhopal",
+    "sustainable tourism india",
+    "eco lodge near ratapani",
+    "weekend getaway bhopal",
+    "nature resort bhopal",
+    "madhuban eco retreat",
+  ],
+});

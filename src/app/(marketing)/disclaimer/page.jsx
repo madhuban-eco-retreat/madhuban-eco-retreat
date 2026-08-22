@@ -1,7 +1,7 @@
 export const dynamic = "force-static";
+import { buildMetadata } from "@/lib/seo";
 import Disclaimer from "@/components/disclaimer/Disclaimer";
 import SEO from "@/components/seo/Seo";
-import { generateMataDataForSEO } from "@/utills/helperFunctions";
 
 const schema = {
   "@context": "https://schema.org",
@@ -44,16 +44,18 @@ export default function DisclaimerPage() {
   );
 }
 
-export async function generateMetadata() {
-  return generateMataDataForSEO({
-    title: "Disclaimer | Madhuban Eco Retreat Ratapani Near Bhopal",
-    description:
-      "Read the official disclaimer of Madhuban Eco Retreat covering website information, nature activities, wildlife experiences, liability and external links.",
-    keywords: ` disclaimer, madhuban eco retreat, resort disclaimer, eco retreat policy, nature resort, ratapani resort,resort near bhopal`,
-    canonicalEndpoint: `/disclaimer`,
-    robots: {
-      index: true,
-      follow: true,
-    },
-  });
-}
+export const metadata = buildMetadata({
+  title: "Disclaimer | Madhuban Eco Retreat Ratapani Near Bhopal",
+  description:
+    "Read the official disclaimer of Madhuban Eco Retreat covering website information, nature activities, wildlife experiences, liability and external links.",
+  path: "/disclaimer",
+  keywords: [
+    "disclaimer",
+    "madhuban eco retreat",
+    "resort disclaimer",
+    "eco retreat policy",
+    "nature resort",
+    "ratapani resort",
+    "resort near bhopal",
+  ],
+});

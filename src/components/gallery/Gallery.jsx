@@ -7,7 +7,6 @@ import styled from "styled-components";
 import "../../components/photoGallery.css";
 import { FaPlayCircle } from "react-icons/fa";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import { getAltFromUrl } from "@/utills/helperFunctions";
 

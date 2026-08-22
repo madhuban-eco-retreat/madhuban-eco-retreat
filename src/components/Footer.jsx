@@ -298,11 +298,13 @@ const Footer = () => {
 
           {/* Newsletter Signup */}
           <div className="">
-            <img
+            <Image
               src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/somaiya-group-logo.png"
               alt={getAltFromUrl(
                 "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/somaiya-group-logo.png",
               )}
+              width={151}
+              height={112}
               className="w-[70px] h-[70px] mt-3 mb-4 mx-auto filter brightness-75"
               style={{ filter: "brightness(0.75)" }}
             />

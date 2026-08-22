@@ -4,6 +4,7 @@
 // (page/layout/route), not in a component.
 export const dynamic = "force-dynamic";
 
+import { buildMetadata } from "@/lib/seo";
 import React from "react";
 import NewBlogPage from "@/components/blog/NewBlog";
 import SEO from "@/components/seo/Seo";
@@ -58,12 +59,11 @@ const BlogPage = async () => {
 
 export default BlogPage;
 
-export const metadata = {
+export const metadata = buildMetadata({
   title: "Madhuban Blog | Nature, Travel & Eco-Living Stories",
-
   description:
     "Read nature stories, travel guides, wildlife insights, and eco-living tips from Madhuban Eco Retreat. Explore Ratapani and sustainable travel through our blog.",
-
+  path: "/blogs",
   keywords: [
     "madhuban blog",
     "ratapani travel blog",
@@ -72,13 +72,4 @@ export const metadata = {
     "nature blog bhopal",
     "ratapani guides",
   ],
-
-  alternates: {
-    canonical: "https://www.madhubanecoretreat.com/blogs",
-  },
-
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+});

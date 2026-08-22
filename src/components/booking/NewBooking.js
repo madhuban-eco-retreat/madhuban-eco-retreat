@@ -62,7 +62,6 @@ const NewBooking = () => {
   });
 
   // const [checkIn, setCheckIn] = useState(null);
-  const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
   const [showThankYou, setShowThankYou] = useState(false);
   // Ref to store original URL
@@ -177,7 +176,7 @@ ${guests}`;
 
       // Open WhatsApp
       try {
-        const whatsappWindow = window.open(
+        window.open(
           whatsappUrl,
           "_blank",
           "noopener,noreferrer",

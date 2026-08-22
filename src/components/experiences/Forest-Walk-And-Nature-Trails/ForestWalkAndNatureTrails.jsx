@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
@@ -281,9 +282,12 @@ const ForestWalkAndNatureTrails = () => {
             >
               {forestImages.map((image, index) => (
                 <SwiperSlide key={index} className="h-full">
-                  <img
+                  <Image
                     src={image.url}
                     alt={image.alt}
+                    width={1200}
+                    height={800}
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                     className="w-full h-full object-cover rounded-xl shadow-lg cursor-pointer"
                     onClick={() => setSelectedImage(image)}
                   />
@@ -304,9 +308,12 @@ const ForestWalkAndNatureTrails = () => {
             >
               ✕
             </button>
-            <img
+            <Image
               src={selectedImage.url}
               alt={selectedImage.alt}
+              width={0}
+              height={0}
+              sizes="100vw"
               className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
             />
           </div>

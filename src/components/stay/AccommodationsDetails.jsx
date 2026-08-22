@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React from "react";
 // import { Helmet, HelmetProvider } from "react-helmet-async";
 import {
@@ -103,9 +104,12 @@ const AccommodationDetail = () => {
                     Your browser does not support the video tag.
                   </video>
                 ) : (
-                  <img
+                  <Image
                     src={accommodation.image}
                     alt={accommodation.altText}
+                    width={1200}
+                    height={800}
+                    sizes="(max-width: 768px) 100vw, 60vw"
                     className="w-full h-full object-cover md:min-h-[400px]"
                   />
                 )}
@@ -341,10 +345,13 @@ const AccommodationDetail = () => {
 
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4">
                     {accommodation.galleryImages.map((img, index) => (
-                      <img
+                      <Image
                         key={index}
                         src={img}
                         alt={`${accommodation.name} gallery ${index + 1}`}
+                        width={600}
+                        height={400}
+                        sizes="(max-width: 640px) 50vw, 33vw"
                         className="w-full h-48 object-cover rounded-lg shadow-sm"
                       />
                     ))}

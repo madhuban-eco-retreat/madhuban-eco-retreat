@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React from "react";
 import { color, motion } from "framer-motion";
 import { FaAnglesRight } from "react-icons/fa6";
@@ -103,11 +104,13 @@ const Story = () => {
               viewport={{ once: true }}
             >
               <div className=" rounded-xl">
-                <img
+                <Image
                   src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/somaiya-group-logo.png"
                   alt={getAltFromUrl(
                     "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/somaiya-group-logo.png",
                   )}
+                  width={151}
+                  height={112}
                   className="w-64 h-auto object-contain"
                 />
               </div>

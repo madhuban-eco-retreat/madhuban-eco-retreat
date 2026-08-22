@@ -1,9 +1,9 @@
 export const dynamic = "force-static";
 
+import { buildMetadata } from "@/lib/seo";
 import NewBooking from "@/components/booking/NewBooking";
 import TariffSection from "@/components/tariff/TariffSection";
 import SEO from "@/components/seo/Seo";
-import { generateMataDataForSEO } from "@/utills/helperFunctions";
 
 const schema = {
   "@context": "https://schema.org",
@@ -102,19 +102,19 @@ const BookingModal = () => {
   );
 };
 
-export async function generateMetadata() {
-  return generateMataDataForSEO({
-    title: "Book Madhuban Eco Retreat | Hotel Near Ratapani Jungle",
-    description:
-      "Book Madhuban Eco Retreat near Ratapani Wildlife Sanctuary. Check resort price, availability & secure your eco-friendly jungle stay today!",
-    keywords:
-      "Book resort near ratapani jungle, Ratapani resort price, Madhuban Eco Retreat price, Ratapani resort booking, Book hotel near ratapani jungle lodge, Hotels near Ratapani Wildlife Sanctuary, Book hotel near ratapani for family, Hotel in Ratapani online booking",
-    canonicalEndpoint: `/booking`,
-    robots: {
-      index: true,
-      follow: true,
-    },
-  });
-}
+export const metadata = buildMetadata({
+  title: "Book Madhuban Eco Retreat | Hotel Near Ratapani Jungle",
+  description:
+    "Book Madhuban Eco Retreat near Ratapani Wildlife Sanctuary. Check resort price, availability & secure your eco-friendly jungle stay today!",
+  path: "/booking",
+  keywords: [
+    "Book resort near ratapani jungle",
+    "Ratapani resort price",
+    "Madhuban Eco Retreat price",
+    "Ratapani resort booking",
+    "Hotels near Ratapani Wildlife Sanctuary",
+    "Hotel in Ratapani online booking",
+  ],
+});
 
 export default BookingModal;

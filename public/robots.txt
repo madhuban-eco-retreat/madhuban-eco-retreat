@@ -24,7 +24,6 @@ User-agent: ia_archiver
 Disallow: /
 # Allow Google - important for SEO
 User-agent: Googlebot
-Crawl-delay: 5
 Allow: /
 Disallow: /api/
 Disallow: /admin/
@@ -42,6 +41,70 @@ Disallow: /login/
 Disallow: /register/
 Disallow: /dashboard/
 Disallow: /private/
+# AI assistants and generative search crawlers
+User-agent: GPTBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /login/
+Disallow: /register/
+Disallow: /dashboard/
+Disallow: /private/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /login/
+Disallow: /register/
+Disallow: /dashboard/
+Disallow: /private/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /login/
+Disallow: /register/
+Disallow: /dashboard/
+Disallow: /private/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /login/
+Disallow: /register/
+Disallow: /dashboard/
+Disallow: /private/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /login/
+Disallow: /register/
+Disallow: /dashboard/
+Disallow: /private/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /login/
+Disallow: /register/
+Disallow: /dashboard/
+Disallow: /private/
+
+User-agent: meta-externalagent
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /login/
+Disallow: /register/
+Disallow: /dashboard/
+Disallow: /private/
+
 # All other bots
 User-agent: *
 Crawl-delay: 10
@@ -63,3 +126,6 @@ Allow: /images/
 Allow: /uploads/
 # Sitemap
 Sitemap: https://www.madhubanecoretreat.com/sitemap.xml
+
+# LLM-readable site summary
+# https://www.madhubanecoretreat.com/llms.txt
