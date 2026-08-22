@@ -205,7 +205,7 @@ const OurJourney = () => {
               >
                 <div className="relative w-full max-w-4xl max-h-[90vh]">
                   <button
-                    className="absolute -top-10 right-0 text-white text-4xl"
+                    className="absolute -top-12 right-0 inline-flex items-center justify-center w-11 h-11 text-white text-3xl"
                     onClick={() => setIsModalOpen(false)}
                   >
                     &times;

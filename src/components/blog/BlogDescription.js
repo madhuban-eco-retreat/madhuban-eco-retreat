@@ -88,7 +88,7 @@ const BlogDescription = ({ blog }) => {
         </div>
 
         {/* MAIN LAYOUT  */}
-        <div className="flex flex-col xl:flex-row gap-8">
+        <div className="flex flex-col xl:flex-row gap-4 md:gap-6">
           {/* Table of Contents  */}
           <aside className="hidden xl:block xl:w-[22%]">
             <div className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto scrollbar-thin">

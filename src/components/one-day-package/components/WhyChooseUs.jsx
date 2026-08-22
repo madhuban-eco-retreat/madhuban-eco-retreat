@@ -27,7 +27,7 @@ export const WhyChooseUs = () => {
   return (
     <section id="why-us" className="py-16 md:py-16 px-6 bg-primary-gray">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16 space-y-4">
+        <div className="text-center mb-6 md:mb-8 space-y-4">
           <DecorativeHeading text={"Why Choose Us"} as="h2" />
           <p className="text-primary-gray2  md:text-lg">
             What sets Madhuban apart from typical day-visit resorts is the

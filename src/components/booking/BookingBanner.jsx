@@ -4,7 +4,7 @@ import { phone } from "@/utills/constants";
 
 export const BookingBanner = () => {
   return (
-    <div className="border-2 border-primary-gray2 rounded-2xl p-4 md:px-12 md:mb-16 flex flex-col md:flex-row items-center justify-between gap-8">
+    <div className="border-2 border-primary-gray2 rounded-2xl p-4 md:px-12 md:mb-6 md:mb-8 flex flex-col md:flex-row items-center justify-between gap-8">
       
       <div className="flex flex-col items-center md:items-start text-center md:text-left">
         <h2 className="text-primary-gray2 text-lg md:text-xl font-semibold mb-2 md:mb-4">

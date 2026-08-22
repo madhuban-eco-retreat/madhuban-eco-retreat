@@ -7,7 +7,7 @@ export const Location = () => {
     <section id="location" className="py-16 md:py-16 px-6 bg-primary-gray2">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
-        <div className="text-center mb-16 space-y-4">
+        <div className="text-center mb-6 md:mb-8 space-y-4">
           <DecorativeHeading
             text={"Easy Access from Bhopal, Indore & Nearby Regions"}
             as="h2"

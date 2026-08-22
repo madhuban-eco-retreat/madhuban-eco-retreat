@@ -6,18 +6,21 @@ import Image from "next/image";
 import { getAltFromUrl } from "@/utills/helperFunctions";
 
 /**
- * Resting state shows the image and the title only; the full copy slides up on
- * hover. Everything stays mounted and is moved with `transform` rather than
- * conditionally rendered, so the description and the link remain in the HTML
- * for crawlers. The panel also opens on `focus-within`, otherwise the link
- * inside it would be tabbable while sitting off-card and invisible.
+ * The whole card is a single link to the experience page. Resting state shows
+ * the image and title only; the full copy fades in on hover. Everything stays
+ * mounted and is revealed with opacity/transform rather than conditionally
+ * rendered, so the description stays in the HTML for crawlers.
  */
 const ExperienceCard = ({ experience }) => {
   const { title, image, description, learnMoreBtn, path, idealFor } =
     experience;
 
   return (
-    <div className="group relative w-full h-56 md:h-72 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+    <Link
+      href={`/experiences/${path}`}
+      aria-label={`${title} - ${learnMoreBtn}`}
+      className="group relative block w-full h-56 md:h-72 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
+    >
       {/* Image - always visible */}
       <Image
         src={image}
@@ -56,19 +59,16 @@ const ExperienceCard = ({ experience }) => {
               Ideal For : {idealFor}
             </p>
           )}
-          <Link
-            href={`/experiences/${path}`}
-            className="inline-flex items-center text-white font-arial-narrow font-semibold tracking-wider text-xs md:text-sm mt-2"
-          >
+          <span className="inline-flex items-center text-white font-arial-narrow font-semibold tracking-wider text-xs md:text-sm mt-2">
             {learnMoreBtn}
             <ChevronRight
               className="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1"
-              aria-label="arrow"
+              aria-hidden="true"
             />
-          </Link>
+          </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

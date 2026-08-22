@@ -77,7 +77,7 @@ const OurExperiences = () => {
     <section className="py-8 px-4 md:px-8 bg-primary-gray">
       <div className="container mx-auto">
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-6 md:mb-8"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}

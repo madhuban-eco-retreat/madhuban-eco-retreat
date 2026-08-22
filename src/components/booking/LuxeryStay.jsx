@@ -82,7 +82,7 @@ const LuxeryStay = () => {
   // 3. Render list using map for cleaner JSX
   return (
     <main className="max-w-7xl mx-auto px-6 pb-12">
-      <section className="mt-12 mb-12">
+      <section className="mt-12 mb-6 md:mb-8">
         <DecorativeHeading
           as="p"
           text="Luxury Stays"
@@ -91,7 +91,7 @@ const LuxeryStay = () => {
         />
       </section>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-16">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6 md:mb-8">
         {STAYS_DATA.map((stay) => (
           <StayCard
             key={stay.title} // Unique key for React reconciliation

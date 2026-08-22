@@ -47,7 +47,7 @@ const AccommodationDetail = () => {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-stone-50 text-center px-4">
         <MountainSnow size={64} className="text-green-700 mb-4" />
-        <h1 className="text-4xl font-inter font-medium text-green-800 mb-2">
+        <h1 className="text-3xl md:text-4xl font-inter font-bold text-green-800 mb-2">
           Oops! Accommodation Not Found
         </h1>
         <p className="font-openSans text-lg text-gray-600 mb-6">

@@ -62,7 +62,7 @@ const GuestsSection = () => {
     <section className="py-8 px-4 md:px-8 bg-[#D1C8C1]">
       <div className="max-w-6xl mx-auto">
         <motion.div
-          className="text-center max-w-3xl mx-auto mb-16"
+          className="text-center max-w-3xl mx-auto mb-6 md:mb-8"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}

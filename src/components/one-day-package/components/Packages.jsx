@@ -57,7 +57,7 @@ export const Packages = () => {
   return (
     <section id="packages" className=" py-16 md:py-16 px-6 bg-primary-gray2">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16 space-y-4">
+        <div className="text-center mb-6 md:mb-8 space-y-4">
           <DecorativeHeading text={"Day Outing Package"} color="#fff" as="h2" />
 
           <p className="text-white font-light md:text-lg">
@@ -99,7 +99,7 @@ export const Packages = () => {
               Complete Day Outing Inclusions
             </h3>
 
-            <div className="grid sm:grid-cols-2 gap-y-4 md:gap-y-8 gap-x-12 mb-6 md:mb-16">
+            <div className="grid sm:grid-cols-2 gap-y-4 md:gap-y-8 gap-x-12 mb-6 md:mb-6 md:mb-8">
               {inclusions.map((item, idx) => (
                 <div key={idx} className="flex items-center gap-4 group">
                   <div className="w-10 h-10 rounded-lg bg-(--primary-gray2)/10 flex items-center justify-center text-(--primary-gray2) transition-colors group-hover:bg-(--primary-gray2) group-hover:text-white">

@@ -97,7 +97,7 @@ const BookingWidget = () => {
                     endDate={checkOut}
                     minDate={new Date()}
                     placeholderText="Select date"
-                    className="pl-10 w-40 text-sm font-arial-narrow tracking-wider font-medium bg-[#D1C8C1] border-black text-white placeholder-[rgb(110,97,70)] hover:border-black outline-none rounded-md py-1.5 px-3 transition-all duration-150"
+                    className="pl-10 w-40 text-sm font-arial-narrow tracking-wider font-medium bg-[#D1C8C1] border-black text-white placeholder-[rgb(110,97,70)] hover:border-black outline-none rounded-md py-2 px-3 transition-all duration-150"
                   />
                 </div>
               </div>
@@ -124,7 +124,7 @@ const BookingWidget = () => {
                     endDate={checkOut}
                     minDate={checkIn || new Date()}
                     placeholderText="Select date"
-                    className="pl-10 w-40 text-sm font-arial-narrow tracking-wider font-medium bg-[#D1C8C1] text-white placeholder-[rgb(110,97,70)] hover:border-black focus:border-black outline-none rounded-md py-1.5 px-3 transition-all duration-150"
+                    className="pl-10 w-40 text-sm font-arial-narrow tracking-wider font-medium bg-[#D1C8C1] text-white placeholder-[rgb(110,97,70)] hover:border-black focus:border-black outline-none rounded-md py-2 px-3 transition-all duration-150"
                   />
                 </div>
               </div>
@@ -141,7 +141,7 @@ const BookingWidget = () => {
                     <select
                       value={adults}
                       onChange={(e) => setAdults(parseInt(e.target.value))}
-                      className=" bg-[#D1C8C1] text-sm font-arial-narrow  font-medium rounded-md py-1.5 px-3 focus:outline-none text-[rgb(110,97,70)] hover:border-black focus:border-black"
+                      className=" bg-[#D1C8C1] text-sm font-arial-narrow  font-medium rounded-md py-2 px-3 focus:outline-none text-[rgb(110,97,70)] hover:border-black focus:border-black"
                     >
                       <option label="1 Adult" value="1"></option>
                       <option label="2 Adults" value="2"></option>
@@ -153,7 +153,7 @@ const BookingWidget = () => {
                     <select
                       value={children}
                       onChange={(e) => setChildren(parseInt(e.target.value))}
-                      className=" bg-[#D1C8C1] text-sm font-arial-narrow  font-medium rounded-md py-1.5 px-3 focus:outline-none text-[rgb(110,97,70)] hover:border-black focus:border-black"
+                      className=" bg-[#D1C8C1] text-sm font-arial-narrow  font-medium rounded-md py-2 px-3 focus:outline-none text-[rgb(110,97,70)] hover:border-black focus:border-black"
                     >
                       <option label="0 Child" value="0"></option>
                       <option label="1 Child" value="1"></option>
@@ -175,7 +175,7 @@ const BookingWidget = () => {
                 <select
                   value={accommodationType}
                   onChange={(e) => setAccommodationType(e.target.value)}
-                  className="w-40 rounded-md bg-[#D1C8C1] text-sm font-arial-narrow  font-medium text-[rgb(110,97,70)] py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                  className="w-40 rounded-md bg-[#D1C8C1] text-sm font-arial-narrow  font-medium text-[rgb(110,97,70)] py-2 px-3 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
                 >
                   <option label="Select type" value=""></option>
                   <option label="All Types" value={ALL_TYPES}></option>
@@ -201,7 +201,7 @@ const BookingWidget = () => {
               <div className="w-full">
                 <button
                   type="submit"
-                  className="w-full h-10 text-sm font-arial-narrow cursor-pointer  font-semibold flex items-center justify-center px-6 border border-transparent rounded-md shadow-sm text-[rgb(110,97,70)] bg-[#D1C8C1]"
+                  className="w-full h-10 text-sm font-arial-narrow cursor-pointer  font-semibold flex items-center justify-center px-6 border border-transparent rounded-full shadow-sm text-[rgb(110,97,70)] bg-[#D1C8C1]"
                 >
                   Check Availability{" "}
                   <ChevronRight className="ml-2 h-4 w-4" aria-label="arrow" />

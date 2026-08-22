@@ -60,7 +60,7 @@ const GuestImportance = () => {
           >
             {/* our vision */}
             <motion.div className="h-full" variants={containerVariants}>
-              <div className="grid grid-cols-1 lg:grid-cols-2  gap-12">
+              <div className="grid grid-cols-1 lg:grid-cols-2  gap-4 md:gap-6">
                 <motion.div
                   className="h-full bg-primary-gray2 rounded-2xl order-2 md:order-1"
                   initial={{ opacity: 0, x: 50 }}
