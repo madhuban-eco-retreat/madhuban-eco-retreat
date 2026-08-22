@@ -134,7 +134,7 @@ const Accommodations = () => {
               <Link
                 href={`/stay-in-ratapani-tiger-reserve/${item.slug}`}
                 aria-label={`View details for ${item.title}`}
-                className="group relative h-full overflow-hidden rounded-xl bg-[#D1C8C1] shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col will-change-transform"
+                className="group relative h-full overflow-hidden rounded-xl bg-[#D1C8C1] shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col isolate"
               >
                 {/* Image - fixed height so the picture is the dominant element */}
                 <div className="relative h-48 md:h-56 w-full overflow-hidden">
