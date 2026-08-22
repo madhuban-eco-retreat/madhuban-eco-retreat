@@ -108,7 +108,7 @@ const Accommodations = () => {
 
         {/* --- Cards Section --- */}
         <motion.div
-          className="flex flex-wrap xl:flex-nowrap xl:gap-8 justify-center xl:justify-start gap-y-8 pb-4 -mt-10 lg:gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pb-4 -mt-10"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
@@ -117,33 +117,40 @@ const Accommodations = () => {
           {accommodations.map((item, index) => (
             <motion.div
               key={index}
-              className="w-full lg:w-[46%] xl:w-[calc(20%-12.8px)] 2xl:w-[calc(20%-12.8px)]
-                bg-[#D1C8C1] rounded-lg overflow-hidden shadow-lg hover:shadow-xl h-[450px]
-                flex flex-col will-change-transform" // OPTIMIZATION: Hardware acceleration
+              // Height is driven by content now rather than pinned at 450px,
+              // which is what made these cards run so long.
+              className="group relative overflow-hidden rounded-xl bg-[#D1C8C1] shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col will-change-transform"
               variants={itemVariants}
-              whileHover={{ scale: 1.03 }} // Reduced slightly for better performance
             >
-              <div className="aspect-[4/3] overflow-hidden relative">
+              {/* Image - fixed height so the picture is the dominant element */}
+              <div className="relative h-48 w-full overflow-hidden">
                 <Image
                   src={item.image}
                   alt={item.alt}
-                  fill // Use fill for better aspect ratio management in cards
-                  className="object-cover transition-transform duration-500 hover:scale-110"
-                  // OPTIMIZATION: Tell the browser exactly how small these images are
-                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 45vw, 20vw"
-                  // OPTIMIZATION: Lazy load by default, but prioritize the first card if it's high on the page
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   loading="lazy"
-                  quality={75} // Lower quality for small thumbnails saves a lot of KB
+                  quality={75}
                 />
               </div>
 
-              <div className="p-6 flex-grow">
-                <h3 className="font-primary text-primary-gray2 mb-2 text-xl md:text-2xl">
+              {/* Content */}
+              <div className="p-4 flex flex-col flex-grow">
+                <h3 className="font-primary text-primary-gray2 text-sm md:text-base font-semibold mb-1">
                   {item.title}
                 </h3>
-                <p className="p-text p-text-black mb-4 text-justify">
+                <p className="text-xs md:text-sm text-[#3a3d45]/70 leading-relaxed line-clamp-3">
                   {item.description}
                 </p>
+                <div className="mt-3">
+                  <Link
+                    href="/stay-in-ratapani-tiger-reserve"
+                    className="text-xs text-primary-gray2 underline-offset-2 hover:underline"
+                  >
+                    View details →
+                  </Link>
+                </div>
               </div>
             </motion.div>
           ))}

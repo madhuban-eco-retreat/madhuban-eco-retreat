@@ -169,7 +169,7 @@ const BookingWidget = () => {
             {/* Accommodation */}
             <div className="lg:col-span-1 flex justify-center">
               <div>
-                <label className="block text-lg font-arial-narrow  font-semibold text-primary-gray text-center mb-1">
+                <label className="block text-xs font-arial-narrow  font-semibold text-primary-gray text-center mb-1">
                   Accommodation
                 </label>
                 <select
