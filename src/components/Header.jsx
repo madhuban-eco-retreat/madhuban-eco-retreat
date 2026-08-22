@@ -121,15 +121,20 @@ const MainNavigation = () => {
         <div className="max-w-6xl mx-auto px-4 lg:px-8 w-full py-3 flex justify-between items-center relative">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 z-20">
+            {/* `shrink-0` is what actually stops the distortion: the source is
+                512x512, so 44x44 cannot stretch it, but as a flex child next to
+                the nowrap text block it was being compressed horizontally when
+                the row ran out of room. object-contain guards the rest. */}
             <Image
               src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-tree-logo-transparent-512.png"
-              width={40}
-              height={40}
-              alt="Madhuban Eco Retreat Logo"
-              className="h-10 w-10 object-contain"
+              alt="Madhuban Eco Retreat"
+              width={44}
+              height={44}
+              className="object-contain w-10 h-10 shrink-0"
+              priority
             />
             <div className="flex flex-col justify-center">
-              <div className="font-primary tracking-wide text-base font-bold text-[rgb(110,97,70)] leading-tight whitespace-nowrap">
+              <div className="font-primary tracking-wide text-lg font-bold text-[rgb(110,97,70)] leading-tight whitespace-nowrap">
                 Madhuban Eco Retreat
               </div>
               <p className="font-primary tracking-wider text-xs text-[rgb(110,97,70)] leading-tight whitespace-nowrap">

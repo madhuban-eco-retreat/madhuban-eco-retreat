@@ -86,7 +86,7 @@ const CommitmentSection = () => {
           </p>
         </motion.div>
         <motion.div
-          className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 -mt-9 font-poppins"
+          className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 font-poppins"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
