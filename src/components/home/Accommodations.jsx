@@ -84,7 +84,7 @@ const accommodations = [
 const Accommodations = () => {
   return (
     <section className="py-8 px-4 bg-cover bg-center bg-no-repeat bg-[rgb(110,97,70)]">
-      <div className="container mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* --- Header Section --- */}
         <motion.div
           className="text-center mb-16"
@@ -123,7 +123,7 @@ const Accommodations = () => {
               variants={itemVariants}
               whileHover={{ scale: 1.03 }} // Reduced slightly for better performance
             >
-              <div className="h-64 xl:h-[200px] overflow-hidden relative">
+              <div className="aspect-[4/3] overflow-hidden relative">
                 <Image
                   src={item.image}
                   alt={item.alt}
@@ -159,7 +159,7 @@ const Accommodations = () => {
         >
           <Link
             href="/stay-in-ratapani-tiger-reserve"
-            className="font-arial-narrow text-primary-gray2 px-8 py-3 bg-[#D1C8C1] hover:font-bold rounded-md font-medium p-text inline-block transition-all"
+            className="font-arial-narrow text-primary-gray2 inline-flex items-center justify-center h-10 px-6 md:h-12 md:px-8 bg-[#D1C8C1] hover:font-bold rounded-md font-medium p-text transition-all"
           >
             Explore All Accommodations
           </Link>

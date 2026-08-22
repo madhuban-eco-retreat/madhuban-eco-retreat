@@ -62,8 +62,8 @@ const OurJourney = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
-    <section className="py-20 px-4 md:px-1 bg-[#D1C8C1]">
-      <div className="container mx-auto">
+    <section className="py-12 md:py-16 px-4 md:px-1 bg-[#D1C8C1]">
+      <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <motion.div
           className="text-center max-w-3xl mx-auto -mt-10 mb-10"

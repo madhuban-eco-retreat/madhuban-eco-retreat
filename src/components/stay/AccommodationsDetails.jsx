@@ -201,7 +201,7 @@ const AccommodationDetail = () => {
                             </span>
                           </p>
                           <div className="flex flex-col items-end gap-1">
-                            <div className="bg-[rgb(110,97,70)] text-white rounded-full  px-8 md:px-16 py-3 flex flex-col items-center">
+                            <div className="bg-[rgb(110,97,70)] text-white rounded-full  px-8 px-4 md:px-6 lg:px-8 py-3 flex flex-col items-center">
                               <span className="text-sm font-bold">
                                 Rs. {bookOpt.price}
                               </span>

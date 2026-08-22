@@ -31,7 +31,7 @@ const segments = [
 
 export const TargetAudience = () => {
   return (
-    <section className=" py-16 md:py-24 px-6 bg-primary-gray2">
+    <section className=" py-16 md:py-16 px-6 bg-primary-gray2">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16 space-y-4">

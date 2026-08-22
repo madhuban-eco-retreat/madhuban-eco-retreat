@@ -5,50 +5,60 @@ import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { getAltFromUrl } from "@/utills/helperFunctions";
 
+/**
+ * Resting state shows the image and the title only; the full copy slides up on
+ * hover. Everything stays mounted and is moved with `transform` rather than
+ * conditionally rendered, so the description and the link remain in the HTML
+ * for crawlers. The panel also opens on `focus-within`, otherwise the link
+ * inside it would be tabbable while sitting off-card and invisible.
+ */
 const ExperienceCard = ({ experience }) => {
   const { title, image, description, learnMoreBtn, path, idealFor } =
     experience;
 
   return (
-    <div className="group relative rounded-lg overflow-hidden shadow-lg h-96 hover:shadow-xl transition-all duration-300 w-full">
-      {/* Background Image Container */}
-      <div className="absolute inset-0 overflow-hidden">
-        <Image
-          src={image}
-          alt={getAltFromUrl(image)}
-          // OPTIMIZATION: Use fill instead of fixed width/height
-          fill
-          // OPTIMIZATION: Tell the browser exactly how much space this takes
-          // Mobile: 100vw, Tablet: 50vw, Desktop: 33vw
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-          // OPTIMIZATION: Since this is 4th/5th section, lazy load is best
-          loading="lazy"
-          quality={80}
-        />
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300"></div>
-      </div>
+    <div className="group relative w-full h-56 md:h-72 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+      {/* Image - always visible */}
+      <Image
+        src={image}
+        alt={getAltFromUrl(image)}
+        fill
+        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        className="object-cover transition-transform duration-500 group-hover:scale-105"
+        loading="lazy"
+        quality={80}
+      />
 
-      {/* Content */}
-      <div className="absolute bottom-0 left-0 right-0 p-6 text-white h-full transition-all duration-500 transform translate-y-0 group-hover:-translate-y-2">
-        <h3 className="text-white font-primary text-xl mb-2 md:text-2xl">
+      {/* Dimming overlay - stronger on hover so the copy stays readable */}
+      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/50 group-focus-within:bg-black/50 transition-colors duration-300" />
+
+      {/* Title - resting state, slides out as the panel comes up */}
+      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent transition-transform duration-300 group-hover:-translate-y-full group-focus-within:-translate-y-full">
+        <h3 className="text-white font-primary text-base md:text-lg">
           {title}
         </h3>
-        <p className="text-base md:text-lg text-[#f1f8e9]">{description}</p>
+      </div>
+
+      {/* Full content - kept in the DOM, moved with transform for SEO */}
+      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent translate-y-full group-hover:translate-y-0 group-focus-within:translate-y-0 transition-transform duration-300">
+        <h3 className="text-white font-primary text-sm md:text-base mb-1">
+          {title}
+        </h3>
+        <p className="text-white/80 text-xs md:text-sm leading-relaxed line-clamp-3">
+          {description}
+        </p>
         {idealFor && (
-          <p className="flex text-base md:text-lg text-[#f1f8e9] lg:mb-5 mb-0.5 mt-2">
+          <p className="text-white/70 text-xs md:text-sm leading-relaxed mt-1 line-clamp-2">
             Ideal For : {idealFor}
           </p>
         )}
-
         <Link
           href={`/experiences/${path}`}
-          className="inline-flex items-center text-white font-arial-narrow font-semibold tracking-wider absolute bottom-6"
+          className="inline-flex items-center text-white font-arial-narrow font-semibold tracking-wider text-xs md:text-sm mt-2"
         >
           {learnMoreBtn}
           <ChevronRight
-            className="ml-1 w-5 h-5 transition-transform group-hover:translate-x-1"
+            className="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1"
             aria-label="arrow"
           />
         </Link>

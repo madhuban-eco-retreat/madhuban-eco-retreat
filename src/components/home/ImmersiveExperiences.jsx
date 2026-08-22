@@ -75,7 +75,7 @@ const experiences = [
 const ImmersiveExperiences = () => {
   return (
     <section className="py-8 px-4 md:px-8 bg-[#D1C8C1]">
-      <div className="container mx-auto">
+      <div className="max-w-6xl mx-auto">
         <motion.div
           className="text-center mb-16"
           initial="hidden"
@@ -123,7 +123,7 @@ const ImmersiveExperiences = () => {
         >
           <Link
             href="/experiences"
-            className="font-arial-narrow text-white px-8 py-3 bg-primary-gray2 hover:bg-opacity-90 transition-colors rounded-md font-medium p-text inline-block"
+            className="font-arial-narrow text-white inline-flex items-center justify-center h-10 px-6 md:h-12 md:px-8 bg-primary-gray2 hover:bg-opacity-90 transition-colors rounded-md font-medium p-text"
           >
             Explore All Experiences
           </Link>

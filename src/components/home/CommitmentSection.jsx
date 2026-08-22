@@ -68,7 +68,7 @@ const sustainabilityFeatures = [
 const CommitmentSection = () => {
   return (
     <section className="py-8 px-4 md:px-8 bg-[rgb(110,97,70)] text-white">
-      <div className="container mx-auto">
+      <div className="max-w-6xl mx-auto">
         <motion.div
           className="text-center mb-16"
           initial="hidden"

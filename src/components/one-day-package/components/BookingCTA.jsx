@@ -13,7 +13,7 @@ import Link from "next/link";
 
 export const BookingCTA = () => {
   return (
-    <section className="relative py-16 md:py-32 px-4 overflow-hidden min-h-[700px] flex items-center justify-center bg-primary-gray">
+    <section className="relative py-16 md:py-16 px-4 overflow-hidden min-h-[700px] flex items-center justify-center bg-primary-gray">
       {/* Content Container */}
       <div className="relative z-10 max-w-7xl w-full">
         <div className="bg-primary-gray2  rounded-2xl md:rounded-[48px] p-10 md:p-20 text-center border-white/10 bg-white/[0.02] backdrop-blur-xl">

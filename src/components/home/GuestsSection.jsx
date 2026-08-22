@@ -60,7 +60,7 @@ const celebrities = [
 const GuestsSection = () => {
   return (
     <section className="py-8 px-4 md:px-8 bg-[#D1C8C1]">
-      <div className="container mx-auto">
+      <div className="max-w-6xl mx-auto">
         <motion.div
           className="text-center max-w-3xl mx-auto mb-16"
           initial="hidden"

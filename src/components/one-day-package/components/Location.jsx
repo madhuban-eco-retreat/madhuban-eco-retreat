@@ -4,7 +4,7 @@ import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
 
 export const Location = () => {
   return (
-    <section id="location" className="py-16 md:py-24 px-6 bg-primary-gray2">
+    <section id="location" className="py-16 md:py-16 px-6 bg-primary-gray2">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-16 space-y-4">

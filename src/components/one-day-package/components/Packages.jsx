@@ -55,7 +55,7 @@ export const Packages = () => {
   }, [heroSlides.length]);
 
   return (
-    <section id="packages" className=" py-16 md:py-24 px-6 bg-primary-gray2">
+    <section id="packages" className=" py-16 md:py-16 px-6 bg-primary-gray2">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16 space-y-4">
           <DecorativeHeading text={"Day Outing Package"} color="#fff" as="h2" />
