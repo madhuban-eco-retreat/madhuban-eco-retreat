@@ -153,10 +153,10 @@ const AccommodationDetail = () => {
                   {accommodation.amenities &&
                     accommodation.amenities.length > 0 && (
                       <div className="mb-6">
-                        <h3 className="text-xl font-primary font-semibold text-primary-gray2 mb-2">
+                        <h3 className="text-base md:text-lg font-semibold font-primary text-primary-gray2 mb-2">
                           Amenities:
                         </h3>
-                        <ul className="grid grid-cols-2 gap-x-4 gap-y-2 text-md md:text-lg">
+                        <ul className="grid grid-cols-2 gap-x-4 gap-y-2 text-base md:text-lg">
                           {accommodation.amenities.map((amenity, index) => (
                             <li
                               key={index}
@@ -178,7 +178,7 @@ const AccommodationDetail = () => {
                 <div className="mt-auto">
                   <div className="flex flex-col items-center space-y-4">
                     {/* Heading */}
-                    <h3 className="text-md font-semibold  text-primary-gray2  mb-2">
+                    <h3 className="text-base font-semibold  text-primary-gray2  mb-2">
                       BOOK YOUR STAY
                     </h3>
 
@@ -283,7 +283,7 @@ const AccommodationDetail = () => {
 
                   {accommodation.capacity && (
                     <div className="flex justify-between items-center">
-                      <p className="text-md text-[rgb(110,97,70)] mb-2">
+                      <p className="text-base text-[rgb(110,97,70)] mb-2">
                         <strong className="  font-semibold">Capacity:</strong>{" "}
                         {accommodation.capacity}
                       </p>

@@ -255,10 +255,10 @@ const Accommodations = () => {
               </motion.div>
 
               <div className="p-6 flex flex-col flex-grow bg-[#D1C8C1]">
-                <h3 className=" heading1  font-primary text-primary-gray2  mb-2">
+                <h3 className="text-base md:text-lg font-semibold font-primary text-primary-gray2 mb-2">
                   {accommodation.name}
                 </h3>
-                <p className="font-arial-narrow text-primary-gray2  p-text mb-4 flex-grow text-justify">
+                <p className="font-arial-narrow text-primary-gray2 text-sm leading-relaxed line-clamp-3 mb-4 flex-grow">
                   {accommodation.shortDescription}
                 </p>
 

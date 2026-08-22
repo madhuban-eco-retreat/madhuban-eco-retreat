@@ -217,10 +217,10 @@ const NearbyAttractions = () => {
                 transition={{ delay: index * 0.1 + 0.2 }}
               />
               <div className="px-6 py-4">
-                <div className="font-arial-narrow text-[#D1C8C1] font-primary text-xl text-center mb-2">
+                <h3 className="font-arial-narrow text-[#D1C8C1] font-primary text-base md:text-lg font-semibold text-center mb-2">
                   {card.title}
-                </div>
-                <p className="font-arial-narrow text-[#D1C8C1] text-sm  text-justify">
+                </h3>
+                <p className="font-arial-narrow text-[#D1C8C1] text-sm leading-relaxed line-clamp-3">
                   {card.description}
                 </p>
                 <p className="font-arial-narrow text-[#D1C8C1] text-sm  mt-2 text-justify">

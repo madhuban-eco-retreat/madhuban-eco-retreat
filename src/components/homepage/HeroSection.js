@@ -104,7 +104,7 @@ export default function HeroSection({
           >
             {breadcom?.length > 0 && (
               <div className="max-w-7xl mx-auto flex justify-center w-screen    ">
-                <div className="flex items-center text-white text-md max-w-[90%]   ">
+                <div className="flex items-center text-white text-base max-w-[90%]   ">
                   <Link href="/" className="hover:underline ">
                     {` Home`}
                   </Link>

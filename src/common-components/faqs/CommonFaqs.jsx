@@ -66,7 +66,7 @@ export default function CommonFaqs({
           variants={fadeInUp}
         >
           <DecorativeHeading text={"FAQs"} as="h2" textClasses={"w-[200]"} />
-          <p className="mt-1 max-w-2xl mx-auto text-md p-text p-text-color px-4 tracking-wide font-arial-narrow">
+          <p className="mt-1 max-w-2xl mx-auto text-base p-text p-text-color px-4 tracking-wide font-arial-narrow">
             Questions for a Meaningful Journey
           </p>
         </motion.div>

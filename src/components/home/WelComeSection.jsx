@@ -66,7 +66,7 @@ const WelComeSection = () => {
               <DecorativeHeading text={`Welcome to "Madhuban Eco Retreat"`} />
             </div>
 
-            <p className="font-arial-narrow text-md md:text:lg mb-6 text-1 text-justify">
+            <p className="font-arial-narrow text-base md:text-lg mb-6 text-1 text-justify">
               Located just an hour from Bhopal, Madhuban is a premium eco resort
               near Bhopal designed for travelers who love nature, wellness, and
               responsible travel. As a leading Ratapani eco lodge, we are
@@ -74,7 +74,7 @@ const WelComeSection = () => {
               Sanctuary, offering a rare blend of sustainable hospitality and
               natural luxury.
             </p>
-            <p className="text-md md:text:lg font-arial-narrow  text-1 text-justify">
+            <p className="text-base md:text-lg font-arial-narrow  text-1 text-justify">
               As one of the best forest resorts near Bhopal and a top choice for
               eco-tourism near Bhopal and Ratapani, Madhuban invites you to
               reconnect with the outdoors through forest walks, birdwatching,

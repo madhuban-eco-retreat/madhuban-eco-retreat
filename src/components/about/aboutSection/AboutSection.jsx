@@ -73,7 +73,7 @@ const AboutSection = () => {
               viewport={{ once: true }}
             >
               <div className=" rounded-2xl shadow-lg p-8 bg-[#6e6146]">
-                <h2 className="font-primary text-lg md:text-xl text-white mb-4">
+                <h2 className="font-primary text-2xl md:text-3xl font-semibold text-white mb-4">
                   Today Madhuban stands As
                 </h2>
 
@@ -86,7 +86,7 @@ const AboutSection = () => {
                         variants={itemVariants}
                         whileHover={{ scale: 1.03 }}
                       >
-                        <div className="text-md block rounded-xl border border-[#6e6146ff]  p-4  font-medium bg-[#d1c8c1] transition">
+                        <div className="text-base block rounded-xl border border-[#6e6146ff]  p-4  font-medium bg-[#d1c8c1] transition">
                           {item}
                         </div>
                       </motion.div>

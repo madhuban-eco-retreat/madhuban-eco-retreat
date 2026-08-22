@@ -123,7 +123,7 @@ const Accommodations = () => {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pb-4 -mt-10"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true }}
           variants={containerVariants}
         >
           {accommodations.map((item, index) => (
