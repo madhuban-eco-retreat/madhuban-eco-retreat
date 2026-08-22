@@ -7,14 +7,14 @@ import { Container } from "@/components/ui/booking-container";
  * it does not exist.
  */
 export function DataUnavailable({ title = "Temporarily Unavailable", message = "We couldn't load this page just now. This is a problem on our side, not yours — please try again in a few moments.", }) {
-    return (<main className="min-h-[70vh] bg-cream flex items-center py-20">
+    return (<main className="min-h-[70vh] bg-cream flex items-center py-12 md:py-16">
       <Container>
         <div className="mx-auto max-w-xl text-center">
           <div className="relative z-10">
             <p className="mb-3 font-body text-xs uppercase tracking-[0.25em] text-earth-brown/60">
               Madhuban Eco Retreat
             </p>
-            <h1 className="font-display text-4xl font-medium text-charcoal md:text-5xl">
+            <h1 className="font-display text-3xl md:text-4xl font-bold text-charcoal">
               {title}
             </h1>
             <p className="mt-5 font-body text-base leading-relaxed text-charcoal/70 max-w-md mx-auto">

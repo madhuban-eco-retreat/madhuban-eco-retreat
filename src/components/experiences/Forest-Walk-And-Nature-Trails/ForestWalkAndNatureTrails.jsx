@@ -234,7 +234,7 @@ const ForestWalkAndNatureTrails = () => {
                     setActiveAccordion(activeAccordion === index ? null : index)
                   }
                 >
-                  <span className="text-md md:text-xl">{item.title}</span>
+                  <span className="text-base md:text-xl">{item.title}</span>
                   <svg
                     className={`w-5 h-5 transform transition-transform duration-300 ${
                       activeAccordion === index ? "rotate-180" : ""

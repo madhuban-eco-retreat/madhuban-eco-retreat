@@ -255,7 +255,7 @@ ${guests}`;
             />
           </div>
           <div className="relative z-20 max-w-4xl mx-auto px-6 w-full flex flex-col items-center text-center">
-            <div className="mb-12">
+            <div className="mb-6 md:mb-8">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-white text-white text-xs font-bold uppercase tracking-widest mb-6">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-600 opacity-75"></span>

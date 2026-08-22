@@ -4,14 +4,14 @@ import { phone } from "@/utills/constants";
 
 export const BookingBanner = () => {
   return (
-    <div className="border-2 border-primary-gray2 rounded-2xl p-4 md:px-12 md:mb-16 flex flex-col md:flex-row items-center justify-between gap-8">
+    <div className="border-2 border-primary-gray2 rounded-2xl p-4 md:px-12 md:mb-6 md:mb-8 flex flex-col md:flex-row items-center justify-between gap-8">
       
       <div className="flex flex-col items-center md:items-start text-center md:text-left">
         <h2 className="text-primary-gray2 text-lg md:text-xl font-semibold mb-2 md:mb-4">
           Call for Instant Booking
         </h2>
 
-        <div className="flex items-center gap-3 text-primary-gray2 text-md font-bold">
+        <div className="flex items-center gap-3 text-primary-gray2 text-base font-bold">
          
           <svg
             className="w-6 h-6"
@@ -35,7 +35,7 @@ export const BookingBanner = () => {
       <Link
         href={`tel:+${phone}`}
         title="Call Now"
-        className="w-full md:w-auto bg-primary-gray2 text-white px-5 py-3 md:py-5 rounded-xl font-black text-sm md:text-md hover:bg-[#12b87f] transition-transform active:scale-95 flex items-center justify-center gap-2"
+        className="w-full md:w-auto bg-primary-gray2 text-white px-5 py-3 md:py-5 rounded-xl font-black text-sm md:text-base hover:bg-[#12b87f] transition-transform active:scale-95 flex items-center justify-center gap-2"
       >
         <svg
           className="w-5 h-5"

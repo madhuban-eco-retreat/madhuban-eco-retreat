@@ -3,7 +3,7 @@ import { ShieldCheck, Leaf } from "lucide-react";
 
 export const Experience = () => {
   return (
-    <section id="experience" className="py-10 md:py-24 px-6 bg-primary-gray">
+    <section id="experience" className="py-10 md:py-16 px-6 bg-primary-gray">
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-6 md:gap-16 items-center">
         <div className="space-y-10 order-2 md:order-1">
           <div className="space-y-6">

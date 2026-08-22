@@ -106,7 +106,7 @@ Message: ${data.message}
 
             {/* Location */}
             <div>
-              <h3 className="text-lg md:text-xl flex items-center gap-1  text-primary-gray2 mb-2 font-primary">
+              <h3 className="text-base md:text-lg font-semibold flex items-center gap-1  text-primary-gray2 mb-2 font-primary">
                 <IoLocation /> Location
               </h3>
               <p className="text-gray-700">
@@ -121,7 +121,7 @@ Message: ${data.message}
 
             {/* Call / WhatsApp */}
             <div>
-              <h3 className="text-lg md:text-xl flex items-center gap-1  text-primary-gray2 mb-2 font-primary">
+              <h3 className="text-base md:text-lg font-semibold flex items-center gap-1  text-primary-gray2 mb-2 font-primary">
                 <IoCall /> Call / WhatsApp
               </h3>
               <p className="text-gray-700 font-medium">+{phone}</p>
@@ -134,7 +134,7 @@ Message: ${data.message}
 
             {/* Email */}
             <div>
-              <h3 className="text-lg md:text-xl flex items-center gap-1  text-primary-gray2 mb-2 font-primary">
+              <h3 className="text-base md:text-lg font-semibold flex items-center gap-1  text-primary-gray2 mb-2 font-primary">
                 <IoMail /> Email
               </h3>
               <p className="text-gray-700 p-text">{gmail}</p>
@@ -146,7 +146,7 @@ Message: ${data.message}
 
             {/* Social Media */}
             <div>
-              <h3 className="text-lg md:text-xl   text-primary-gray2  font-primary">
+              <h3 className="text-base md:text-lg font-semibold   text-primary-gray2  font-primary">
                 Follow Us on Social Media
               </h3>
               <p className="text-gray-600 p-text">
@@ -171,7 +171,7 @@ Message: ${data.message}
 
             {/* CTA */}
             <div className="mt-8 rounded-xl bg-[#6e6146]/10 p-6">
-              <h3 className="text-base md:text-2xl  text-primary-gray2 mb-2 font-primary">
+              <h3 className="text-base md:text-lg font-semibold  text-primary-gray2 mb-2 font-primary">
                 Looking for the Best Weekend Digital Detox Stay Near Ratapani?
               </h3>
               <p className="text-primary-gray2 p-text">

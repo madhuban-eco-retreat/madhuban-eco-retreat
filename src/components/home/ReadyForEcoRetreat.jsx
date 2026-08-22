@@ -39,7 +39,7 @@ const fadeInUp = {
 };
 const ReadyForEcoRetreat = () => {
   return (
-    <section className="relative py-24 px-4 overflow-hidden min-h-[400px] flex items-center">
+    <section className="relative py-12 md:py-16 px-4 overflow-hidden min-h-[400px] flex items-center">
       {/* 1. The Image Layer */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -56,7 +56,7 @@ const ReadyForEcoRetreat = () => {
       </div>
 
       {/* 3. The Content Layer (z-10 ensures it stays on top) */}
-      <div className="container mx-auto relative z-10">
+      <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           className="max-w-4xl mx-auto text-center"
           initial="hidden"

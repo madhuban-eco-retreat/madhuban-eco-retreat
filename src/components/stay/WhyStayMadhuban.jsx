@@ -43,7 +43,7 @@ const WhyStayMadhuban = () => {
           color="#fff"
         />
         <motion.div className="h-full" variants={itemVariants}>
-          <div className="grid  gap-12">
+          <div className="grid  gap-4 md:gap-6">
             <motion.div
               className="h-full"
               initial={{ opacity: 0, y: 50 }}

@@ -73,19 +73,19 @@ const BookingWidget = () => {
 
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 max-sm:py-4 bg-[#D1C8C1]">
-      <div className="bg-[rgb(110,97,70)] rounded-lg shadow-xl p-4 max-sm:my-6 z-10 sm:p-6 relative sm:bottom-25 mx-auto max-w-[1000px]">
+      <div className="bg-[rgb(110,97,70)] rounded-lg shadow-xl p-3 sm:p-4 max-sm:my-6 z-10 relative sm:bottom-25 mx-auto max-w-4xl">
         <form onSubmit={handleCheckAvailability}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 justify-center">
             {/* Check-in Date */}
             <div className="lg:col-span-1 flex justify-center">
               <div>
-                <label className="block text-lg font-semibold text-primary-gray text-center mb-1">
+                <label className="block text-xs font-semibold text-primary-gray text-center mb-1">
                   Check-in
                 </label>
                 <div className="relative text-black">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Calendar
-                      className="h-5 w-5 text-primary-gray2 z-1"
+                      className="h-4 w-4 text-primary-gray2 z-1"
                       aria-label="calender"
                     />
                   </div>
@@ -97,7 +97,7 @@ const BookingWidget = () => {
                     endDate={checkOut}
                     minDate={new Date()}
                     placeholderText="Select date"
-                    className="pl-10 w-40 font-arial-narrow tracking-wider font-medium bg-[#D1C8C1] border-black text-white placeholder-[rgb(110,97,70)] hover:border-black outline-none rounded-md py-2 px-3 transition-all duration-150"
+                    className="pl-10 w-40 text-sm font-arial-narrow tracking-wider font-medium bg-[#D1C8C1] border-black text-white placeholder-[rgb(110,97,70)] hover:border-black outline-none rounded-md py-2 px-3 transition-all duration-150"
                   />
                 </div>
               </div>
@@ -106,13 +106,13 @@ const BookingWidget = () => {
             {/* Check-out Date */}
             <div className="lg:col-span-1 flex justify-center">
               <div>
-                <label className="block text-lg font-arial-narrow tracking-wider font-semibold text-primary-gray text-center mb-1">
+                <label className="block text-xs font-arial-narrow tracking-wider font-semibold text-primary-gray text-center mb-1">
                   Check-out
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-1">
                     <Calendar
-                      className="h-5 w-5 text-primary-gray2"
+                      className="h-4 w-4 text-primary-gray2"
                       aria-label="calender"
                     />
                   </div>
@@ -124,7 +124,7 @@ const BookingWidget = () => {
                     endDate={checkOut}
                     minDate={checkIn || new Date()}
                     placeholderText="Select date"
-                    className="pl-10 w-40 font-arial-narrow tracking-wider font-medium bg-[#D1C8C1] text-white placeholder-[rgb(110,97,70)] hover:border-black focus:border-black outline-none rounded-md py-2 px-3 transition-all duration-150"
+                    className="pl-10 w-40 text-sm font-arial-narrow tracking-wider font-medium bg-[#D1C8C1] text-white placeholder-[rgb(110,97,70)] hover:border-black focus:border-black outline-none rounded-md py-2 px-3 transition-all duration-150"
                   />
                 </div>
               </div>
@@ -133,7 +133,7 @@ const BookingWidget = () => {
             {/* Guests */}
             <div className="lg:col-span-1 flex justify-center">
               <div>
-                <label className="block text-lg font-arial-narrow  font-semibold text-primary-gray text-center mb-1">
+                <label className="block text-xs font-arial-narrow  font-semibold text-primary-gray text-center mb-1">
                   Guests
                 </label>
                 <div className="relative">
@@ -141,7 +141,7 @@ const BookingWidget = () => {
                     <select
                       value={adults}
                       onChange={(e) => setAdults(parseInt(e.target.value))}
-                      className=" bg-[#D1C8C1] font-arial-narrow  font-medium rounded-md py-2.5 px-3 focus:outline-none text-[rgb(110,97,70)] hover:border-black focus:border-black"
+                      className=" bg-[#D1C8C1] text-sm font-arial-narrow  font-medium rounded-md py-2 px-3 focus:outline-none text-[rgb(110,97,70)] hover:border-black focus:border-black"
                     >
                       <option label="1 Adult" value="1"></option>
                       <option label="2 Adults" value="2"></option>
@@ -153,7 +153,7 @@ const BookingWidget = () => {
                     <select
                       value={children}
                       onChange={(e) => setChildren(parseInt(e.target.value))}
-                      className=" bg-[#D1C8C1] font-arial-narrow  font-medium rounded-md py-2 px-3 focus:outline-none text-[rgb(110,97,70)] hover:border-black focus:border-black"
+                      className=" bg-[#D1C8C1] text-sm font-arial-narrow  font-medium rounded-md py-2 px-3 focus:outline-none text-[rgb(110,97,70)] hover:border-black focus:border-black"
                     >
                       <option label="0 Child" value="0"></option>
                       <option label="1 Child" value="1"></option>
@@ -169,13 +169,13 @@ const BookingWidget = () => {
             {/* Accommodation */}
             <div className="lg:col-span-1 flex justify-center">
               <div>
-                <label className="block text-lg font-arial-narrow  font-semibold text-primary-gray text-center mb-1">
+                <label className="block text-xs font-arial-narrow  font-semibold text-primary-gray text-center mb-1">
                   Accommodation
                 </label>
                 <select
                   value={accommodationType}
                   onChange={(e) => setAccommodationType(e.target.value)}
-                  className="w-40 rounded-md bg-[#D1C8C1] font-arial-narrow  font-medium text-[rgb(110,97,70)] py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                  className="w-40 rounded-md bg-[#D1C8C1] text-sm font-arial-narrow  font-medium text-[rgb(110,97,70)] py-2 px-3 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
                 >
                   <option label="Select type" value=""></option>
                   <option label="All Types" value={ALL_TYPES}></option>
@@ -201,10 +201,10 @@ const BookingWidget = () => {
               <div className="w-full">
                 <button
                   type="submit"
-                  className="w-full font-arial-narrow cursor-pointer  font-semibold flex items-center justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-[rgb(110,97,70)] bg-[#D1C8C1]"
+                  className="w-full h-10 text-sm font-arial-narrow cursor-pointer  font-semibold flex items-center justify-center px-6 border border-transparent rounded-full shadow-sm text-[rgb(110,97,70)] bg-[#D1C8C1]"
                 >
                   Check Availability{" "}
-                  <ChevronRight className="ml-2 h-5 w-5" aria-label="arrow" />
+                  <ChevronRight className="ml-2 h-4 w-4" aria-label="arrow" />
                 </button>
               </div>
             </div>

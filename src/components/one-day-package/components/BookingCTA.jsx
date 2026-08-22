@@ -13,7 +13,7 @@ import Link from "next/link";
 
 export const BookingCTA = () => {
   return (
-    <section className="relative py-16 md:py-32 px-4 overflow-hidden min-h-[700px] flex items-center justify-center bg-primary-gray">
+    <section className="relative py-16 md:py-16 px-4 overflow-hidden min-h-[700px] flex items-center justify-center bg-primary-gray">
       {/* Content Container */}
       <div className="relative z-10 max-w-7xl w-full">
         <div className="bg-primary-gray2  rounded-2xl md:rounded-[48px] p-10 md:p-20 text-center border-white/10 bg-white/[0.02] backdrop-blur-xl">
@@ -26,7 +26,7 @@ export const BookingCTA = () => {
             </h2>
           </div>
 
-          <p className="text-gray-200 p-text text-justify md:text-center  max-w-3xl mx-auto mb-12">
+          <p className="text-gray-200 p-text text-justify md:text-center  max-w-3xl mx-auto mb-6 md:mb-8">
             If you're exploring resorts near Bhopal for a day outing that offers
             genuine nature, good food, open spaces, and meaningful activities —
             Madhuban Eco Retreat is the right choice. Spend a day surrounded by
@@ -34,7 +34,7 @@ export const BookingCTA = () => {
             refreshed.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-6 md:mb-8">
             <button
               onClick={() => {
                 window.open(`https://wa.me/${phone}`, "_blank");

@@ -44,7 +44,7 @@ const NaturesStory = () => {
         />
 
         <motion.div className="h-full" variants={itemVariants}>
-          <div className="grid gap-6 md:gap-12 px-4">
+          <div className="grid gap-6 md:gap-4 md:gap-6 px-4">
             <motion.div
               className="h-full"
               initial={{ opacity: 0, y: 50 }}

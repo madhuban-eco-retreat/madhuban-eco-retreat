@@ -36,7 +36,7 @@ const inr = (n) => `₹${Number(n).toLocaleString("en-IN")}`;
 
 const TariffSection = () => {
   return (
-    <section className="bg-stone-50 py-16 md:py-24 px-4 md:px-6">
+    <section className="bg-stone-50 py-16 md:py-16 px-4 md:px-6">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-10">
           <DecorativeHeading text={"Tariff & Rates"} as="h2" color="#6e6146" />

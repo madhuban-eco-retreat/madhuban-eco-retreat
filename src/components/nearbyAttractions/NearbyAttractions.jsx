@@ -175,7 +175,7 @@ const NearbyAttractions = () => {
 
       <HeroSlider heroSlides={heroSlides} />
       <section className=" px-4 py-4 rounded-bl-[60px] rounded-br-[60px] flex flex-col justify-center items-center">
-        <div className="text-center max-w-7xl mb-12 mt-10">
+        <div className="text-center max-w-7xl mb-6 md:mb-8 mt-10">
           <p className="text-justify md:text-center p-text  text-primary-gray2">
             Beyond the calm of Madhuban Eco Retreat lies a region full of
             ancient caves, wildlife sanctuaries, tribal heritage, spiritual
@@ -191,7 +191,7 @@ const NearbyAttractions = () => {
           </p>
         </div>
         <motion.div
-          className="flex flex-wrap justify-center gap-8 max-w-[86rem] mx-auto"
+          className="flex flex-wrap justify-center gap-4 md:gap-6 max-w-[86rem] mx-auto"
           variants={container}
           initial="hidden"
           whileInView="show"
@@ -208,7 +208,7 @@ const NearbyAttractions = () => {
               }}
             >
               <motion.img
-                className="w-full h-40 object-cover"
+                className="w-full h-48 md:h-56 object-cover"
                 src={card.image}
                 alt={getAltFromUrl(card.image)}
                 initial={{ opacity: 0 }}
@@ -217,10 +217,10 @@ const NearbyAttractions = () => {
                 transition={{ delay: index * 0.1 + 0.2 }}
               />
               <div className="px-6 py-4">
-                <div className="font-arial-narrow text-[#D1C8C1] font-primary text-xl text-center mb-2">
+                <h3 className="font-arial-narrow text-[#D1C8C1] font-primary text-base md:text-lg font-semibold text-center mb-2">
                   {card.title}
-                </div>
-                <p className="font-arial-narrow text-[#D1C8C1] text-sm  text-justify">
+                </h3>
+                <p className="font-arial-narrow text-[#D1C8C1] text-sm leading-relaxed line-clamp-3">
                   {card.description}
                 </p>
                 <p className="font-arial-narrow text-[#D1C8C1] text-sm  mt-2 text-justify">

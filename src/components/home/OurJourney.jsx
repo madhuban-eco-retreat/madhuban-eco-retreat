@@ -62,8 +62,8 @@ const OurJourney = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
-    <section className="py-20 px-4 md:px-1 bg-[#D1C8C1]">
-      <div className="container mx-auto">
+    <section className="py-12 md:py-16 px-4 md:px-1 bg-[#D1C8C1]">
+      <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <motion.div
           className="text-center max-w-3xl mx-auto -mt-10 mb-10"
@@ -205,7 +205,7 @@ const OurJourney = () => {
               >
                 <div className="relative w-full max-w-4xl max-h-[90vh]">
                   <button
-                    className="absolute -top-10 right-0 text-white text-4xl"
+                    className="absolute -top-12 right-0 inline-flex items-center justify-center w-11 h-11 text-white text-3xl"
                     onClick={() => setIsModalOpen(false)}
                   >
                     &times;

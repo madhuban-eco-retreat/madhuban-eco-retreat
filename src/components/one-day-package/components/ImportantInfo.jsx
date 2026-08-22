@@ -4,10 +4,10 @@ import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
 
 export const ImportantInfo = () => {
   return (
-    <section className=" py-16 md:py-24 px-6 bg-primary-gray">
+    <section className=" py-16 md:py-16 px-6 bg-primary-gray">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-6 md:mb-8">
           <DecorativeHeading text={"Important Information"} as="h2" aria-label="important" />
         </div>
 

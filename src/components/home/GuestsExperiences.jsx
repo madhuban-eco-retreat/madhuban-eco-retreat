@@ -35,9 +35,9 @@ const GuestsExperiences = () => {
           "url('https://res.cloudinary.com/dx3aj7a40/image/upload/v1770624796/ex-bg_qefnmz.jpg')",
       }}
     >
-      <div className="container mx-auto">
+      <div className="max-w-6xl mx-auto">
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-6 md:mb-8"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}

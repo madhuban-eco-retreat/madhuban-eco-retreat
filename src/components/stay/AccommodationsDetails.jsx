@@ -47,7 +47,7 @@ const AccommodationDetail = () => {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-stone-50 text-center px-4">
         <MountainSnow size={64} className="text-green-700 mb-4" />
-        <h1 className="text-4xl font-inter font-medium text-green-800 mb-2">
+        <h1 className="text-3xl md:text-4xl font-inter font-bold text-green-800 mb-2">
           Oops! Accommodation Not Found
         </h1>
         <p className="font-openSans text-lg text-gray-600 mb-6">
@@ -153,10 +153,10 @@ const AccommodationDetail = () => {
                   {accommodation.amenities &&
                     accommodation.amenities.length > 0 && (
                       <div className="mb-6">
-                        <h3 className="text-xl font-primary font-semibold text-primary-gray2 mb-2">
+                        <h3 className="text-base md:text-lg font-semibold font-primary text-primary-gray2 mb-2">
                           Amenities:
                         </h3>
-                        <ul className="grid grid-cols-2 gap-x-4 gap-y-2 text-md md:text-lg">
+                        <ul className="grid grid-cols-2 gap-x-4 gap-y-2 text-base md:text-lg">
                           {accommodation.amenities.map((amenity, index) => (
                             <li
                               key={index}
@@ -178,7 +178,7 @@ const AccommodationDetail = () => {
                 <div className="mt-auto">
                   <div className="flex flex-col items-center space-y-4">
                     {/* Heading */}
-                    <h3 className="text-md font-semibold  text-primary-gray2  mb-2">
+                    <h3 className="text-base font-semibold  text-primary-gray2  mb-2">
                       BOOK YOUR STAY
                     </h3>
 
@@ -201,7 +201,7 @@ const AccommodationDetail = () => {
                             </span>
                           </p>
                           <div className="flex flex-col items-end gap-1">
-                            <div className="bg-[rgb(110,97,70)] text-white rounded-full  px-8 md:px-16 py-3 flex flex-col items-center">
+                            <div className="bg-[rgb(110,97,70)] text-white rounded-full  px-8 px-4 md:px-6 lg:px-8 py-3 flex flex-col items-center">
                               <span className="text-sm font-bold">
                                 Rs. {bookOpt.price}
                               </span>
@@ -283,7 +283,7 @@ const AccommodationDetail = () => {
 
                   {accommodation.capacity && (
                     <div className="flex justify-between items-center">
-                      <p className="text-md text-[rgb(110,97,70)] mb-2">
+                      <p className="text-base text-[rgb(110,97,70)] mb-2">
                         <strong className="  font-semibold">Capacity:</strong>{" "}
                         {accommodation.capacity}
                       </p>

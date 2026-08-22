@@ -11,7 +11,7 @@ const ExperienceComponent = () => {
     <div className="px-2 bg-primary-gray2">
       <HeadingAndParagraph
         headingText={" Nature Moments at Madhuban"}
-        headingType="h1"
+        headingType="h2"
         subHeadingText={"A journey into forests, wildlife, and mindful living"}
         paragraphs={[p1, p2]}
         textColor={"#fff"}

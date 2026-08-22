@@ -59,14 +59,14 @@ export default function CommonFaqs({
     <section className={`py-8 px-4 md:px-8 ${bgColor}`}>
       <div className="max-w-6xl mx-auto">
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-6 md:mb-8"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
         >
           <DecorativeHeading text={"FAQs"} as="h2" textClasses={"w-[200]"} />
-          <p className="mt-1 max-w-2xl mx-auto text-md p-text p-text-color px-4 tracking-wide font-arial-narrow">
+          <p className="mt-1 max-w-2xl mx-auto text-base p-text p-text-color px-4 tracking-wide font-arial-narrow">
             Questions for a Meaningful Journey
           </p>
         </motion.div>
