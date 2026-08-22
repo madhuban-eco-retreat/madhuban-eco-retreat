@@ -295,9 +295,13 @@ const Dining = () => {
                   <source src={selectedMedia.url} type="video/mp4" />
                 </video>
               ) : (
-                <img
+                <Image
                   src={selectedMedia.url}
                   alt={getAltFromUrl(selectedMedia.url)}
+                  width={1600}
+                  height={1200}
+                  sizes="100vw"
+                  className="w-auto h-auto"
                 />
               )}
               <h3>{selectedMedia.title}</h3>

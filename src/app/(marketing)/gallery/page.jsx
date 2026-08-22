@@ -1,4 +1,5 @@
 export const dynamic = "force-static";
+import { buildMetadata } from "@/lib/seo";
 import Gallery from "@/components/gallery/Gallery";
 import SEO from "@/components/seo/Seo";
 
@@ -13,10 +14,10 @@ const GallerySchema = {
     "@type": "ImageGallery",
     name: "Eco Gallery",
     image: [
-      "https://www.madhubanecoretreat.com/assets/images/gallery-1.jpg",
-      "https://www.madhubanecoretreat.com/assets/images/gallery-2.jpg",
-      "https://www.madhubanecoretreat.com/assets/images/gallery-3.jpg",
-      "https://www.madhubanecoretreat.com/assets/images/gallery-4.jpg",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/Tribal/traditional-tribal-dance-madhuban-eco-retreat-bhopal.jpg",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/Tribal/traditional-tribal-dance-madhuban-eco-retreat-bhopal2.jpg",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/Tribal/traditional-tribal-dance-madhuban-eco-retreat-bhopal3.jpg",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/Tribal/traditional-tribal-dance-madhuban-eco-retreat-bhopal4.jpg",
     ],
   },
 };
@@ -32,12 +33,12 @@ const GalleryPage = () => {
 
 export default GalleryPage;
 
-export const metadata = {
-  title: "Madhuban Eco Gallery | Nature, Culture & Retreat Photo Collection",
-
+export const metadata = buildMetadata({
+  title: "Madhuban Eco Gallery | Nature & Retreat Photos",
   description:
-    "Explore the eco gallery of Madhuban Eco Retreat—forest views, tribal culture, Bhimbetka, Saru Maru, Ginnorgarh Fort, and nature moments in Ratapani.",
-
+    "Explore the eco gallery of Madhuban Eco Retreat-forest views, tribal culture, Bhimbetka, Saru Maru, Ginnorgarh Fort, and nature moments in Ratapani.",
+  path: "/gallery",
+  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/Tribal/traditional-tribal-dance-madhuban-eco-retreat-bhopal.jpg",
   keywords: [
     "madhuban eco retreat gallery",
     "ratapani nature gallery",
@@ -46,13 +47,4 @@ export const metadata = {
     "eco retreat images",
     "ratapani forest images",
   ],
-
-  alternates: {
-    canonical: "https://www.madhubanecoretreat.com/gallery",
-  },
-
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+});

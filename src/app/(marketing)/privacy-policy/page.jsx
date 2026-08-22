@@ -1,7 +1,7 @@
 export const dynamic = "force-static";
+import { buildMetadata } from "@/lib/seo";
 import PrivacyPolicy from "@/components/privacyAndPolicy/page";
 import SEO from "@/components/seo/Seo";
-import { generateMataDataForSEO } from "@/utills/helperFunctions";
 
 const schema = {
   "@context": "https://schema.org",
@@ -39,16 +39,16 @@ export default function PrivacyPolicyPage() {
   );
 }
 
-export async function generateMetadata() {
-  return generateMataDataForSEO({
-    title: "Privacy Policy - Madhuban Eco Retreat, Near Bhopal",
-    description:
-      "Read Madhuban Eco Retreat’s privacy policy to learn how we collect, use and protect your personal information when you visit or contact us.",
-    keywords: `Madhuban Eco Retreat privacy policy, resort privacy policy", lodge data protection", eco tourism website policy", guest data protection`,
-    canonicalEndpoint: `/privacy-policy`,
-    robots: {
-      index: true,
-      follow: true,
-    },
-  });
-}
+export const metadata = buildMetadata({
+  title: "Privacy Policy - Madhuban Eco Retreat, Near Bhopal",
+  description:
+    "Read the Madhuban Eco Retreat privacy policy to learn how we collect, use and protect your personal information when you visit or contact us.",
+  path: "/privacy-policy",
+  keywords: [
+    "Madhuban Eco Retreat privacy policy",
+    "resort privacy policy",
+    "lodge data protection",
+    "eco tourism website policy",
+    "guest data protection",
+  ],
+});

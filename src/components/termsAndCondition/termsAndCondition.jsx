@@ -9,8 +9,6 @@ import {
   List,
   ListItem,
   ListItemText,
-  useTheme,
-  useMediaQuery,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import CustomBanner from "@/common-components/banner/CustomBanner";

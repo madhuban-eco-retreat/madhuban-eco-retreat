@@ -1,4 +1,5 @@
 export const dynamic = "force-static";
+import { buildMetadata } from "@/lib/seo";
 import Dining from "@/components/dining/Dining";
 import SEO from "@/components/seo/Seo";
 
@@ -17,8 +18,8 @@ const diningSchema = {
     "Farm-to-table dining at Madhuban Eco Retreat with pure vegetarian meals, organic produce, sustainable cuisine and clean eating near Ratapani.",
   priceRange: "₹₹",
   image: [
-    "https://www.madhubanecoretreat.com/assets/images/dining-1.jpg",
-    "https://www.madhubanecoretreat.com/assets/images/dining-2.jpg",
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/dinning-area-image-4-madhuban-eco-retreat.webp",
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/dinning-area-image-5-madhuban-eco-retreat.avif",
   ],
   address: {
     "@type": "PostalAddress",
@@ -96,12 +97,12 @@ const DiningPage = () => {
 
 export default DiningPage;
 
-export const metadata = {
-  title: "Farm-to-Table Dining Ratapani | Pure Veg Buffet Near Bhopal",
-
+export const metadata = buildMetadata({
+  title: "Farm-to-Table Dining Ratapani | Veg Buffet Near Bhopal",
   description:
     "Experience fresh farm-to-table dining at Madhuban Eco Retreat. Pure veg meals, organic produce, sustainable cuisine & clean eating near Ratapani.",
-
+  path: "/dining",
+  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/dinning-area-image-4-madhuban-eco-retreat.webp",
   keywords: [
     "veg food near ratapani",
     "buffet near ratapani",
@@ -111,13 +112,4 @@ export const metadata = {
     "sustainable cuisine ratapani",
     "best dinner in ratapani",
   ],
-
-  alternates: {
-    canonical: "https://www.madhubanecoretreat.com/dining",
-  },
-
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+});

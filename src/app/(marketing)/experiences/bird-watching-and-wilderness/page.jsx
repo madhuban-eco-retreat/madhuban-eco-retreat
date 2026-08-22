@@ -1,4 +1,5 @@
 export const dynamic = "force-static";
+import { buildMetadata } from "@/lib/seo";
 import BirdWatchingAndWilderness from "@/components/experiences/Bird-Watching-And-Wilderness/BirdWatchingAndWilderness";
 import SEO from "@/components/seo/Seo";
 
@@ -10,8 +11,8 @@ const PageSchema = {
   description:
     "Peaceful bird watching and wilderness sessions near Bhopal at Madhuban Eco Retreat. Spot 70+ bird species in the untouched forests of Ratapani.",
   image: [
-    "https://www.madhubanecoretreat.com/assets/images/bird-watching-1.jpg",
-    "https://www.madhubanecoretreat.com/assets/images/bird-watching-2.jpg",
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/birds-watch/best-wildlife-view.jpg",
+    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/birds-watch/bird-watching-with-guides.jpg",
   ],
   provider: {
     "@type": "Resort",
@@ -95,31 +96,19 @@ const BirdWildernessPage = () => {
 
 export default BirdWildernessPage;
 
-export async function generateMetadata() {
-  return {
-    title: "Bird Watching in Ratapani | Wilderness Experience Near Bhopal",
-
-    description:
-      "Experience bird watching in Ratapani near Bhopal. Spot 70+ native & migratory species during peaceful guided wilderness sessions at Madhuban Eco Retreat.",
-
-    keywords: [
-      "bird watching near bhopal",
-      "ratapani bird watching",
-      "wilderness near bhopal",
-      "forest birding mp",
-      "migratory birds ratapani",
-      "wildlife trails bhopal",
-      "eco tourism ratapani",
-    ],
-
-    alternates: {
-      canonical:
-        "https://www.madhubanecoretreat.com/experiences/bird-watching-and-wilderness",
-    },
-
-    robots: {
-      index: true,
-      follow: true,
-    },
-  };
-}
+export const metadata = buildMetadata({
+  title: "Bird Watching in Ratapani | Wilderness Near Bhopal",
+  description:
+    "Experience bird watching in Ratapani near Bhopal. Spot 70+ native & migratory species during peaceful guided wilderness sessions at Madhuban Eco Retreat.",
+  path: "/experiences/bird-watching-and-wilderness",
+  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/birds-watch/best-wildlife-view.jpg",
+  keywords: [
+    "bird watching near bhopal",
+    "ratapani bird watching",
+    "wilderness near bhopal",
+    "forest birding mp",
+    "migratory birds ratapani",
+    "wildlife trails bhopal",
+    "eco tourism ratapani",
+  ],
+});

@@ -1,7 +1,7 @@
 export const dynamic = "force-static";
+import { buildMetadata } from "@/lib/seo";
 import SEO from "@/components/seo/Seo";
 import TermsAndCondition from "@/components/termsAndCondition/termsAndCondition";
-import { generateMataDataForSEO } from "@/utills/helperFunctions";
 
 const schema = {
   "@context": "https://schema.org",
@@ -44,16 +44,18 @@ export default function TermsAndConditionPage() {
   );
 }
 
-export async function generateMetadata() {
-  return generateMataDataForSEO({
-    title: "Terms & Conditions | Madhuban Eco Retreat Ratapani Bhopal",
-    description:
-      "Read the Terms & Conditions for Madhuban Eco Retreat covering reservations, safety, activities, cancellations, liability, and guest responsibilities.",
-    keywords: ` terms and conditions, resort terms, booking terms, Madhuban Eco Retreat, Ratapani resort, Bhopal resort terms, guest policy,`,
-    canonicalEndpoint: `/terms-and-condition`,
-    robots: {
-      index: true,
-      follow: true,
-    },
-  });
-}
+export const metadata = buildMetadata({
+  title: "Terms & Conditions | Madhuban Eco Retreat Ratapani Bhopal",
+  description:
+    "Read the Terms & Conditions for Madhuban Eco Retreat covering reservations, safety, activities, cancellations, liability, and guest responsibilities.",
+  path: "/terms-and-condition",
+  keywords: [
+    "terms and conditions",
+    "resort terms",
+    "booking terms",
+    "Madhuban Eco Retreat",
+    "Ratapani resort",
+    "Bhopal resort terms",
+    "guest policy",
+  ],
+});

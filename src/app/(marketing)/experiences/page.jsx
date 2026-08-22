@@ -1,4 +1,5 @@
 export const dynamic = "force-static";
+import { buildMetadata } from "@/lib/seo";
 import ExperienceComponent from "@/components/experiences/ExperienceComponent";
 import OurExperiences from "@/components/experiences/OurExperiences";
 import WhyChooseUs from "@/components/experiences/WhyChooseUs";
@@ -97,32 +98,20 @@ const ExperiencesPage = () => {
 
 export default ExperiencesPage;
 
-export async function generateMetadata() {
-  return {
-    title:
-      "Nature Experiences Ratapani | Forest Walks, Bird Watching & Activities",
-
-    description:
-      "Explore nature trails, bird watching, and recreational activities at Madhuban Eco Retreat near Bhopal. Eco-friendly experiences in Ratapani Wildlife Sanctuary.",
-
-    keywords: [
-      "experiences near bhopal",
-      "forest walks ratapani",
-      "nature trails bhopal",
-      "bird watching ratapani",
-      "wilderness bhopal",
-      "recreational activities bhopal",
-      "eco tourism ratapani",
-      "satpura nature experiences",
-    ],
-
-    alternates: {
-      canonical: "https://www.madhubanecoretreat.com/experiences",
-    },
-
-    robots: {
-      index: true,
-      follow: true,
-    },
-  };
-}
+export const metadata = buildMetadata({
+  title: "Nature Experiences Ratapani | Forest Walks & Birding",
+  description:
+    "Explore nature trails, bird watching, and recreational activities at Madhuban Eco Retreat near Bhopal. Eco-friendly experiences in Ratapani Wildlife Sanctuary.",
+  path: "/experiences",
+  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/forest-walk/nature-visit-ratapani-madhuban-eco-retreat-bhopal-2.avif",
+  keywords: [
+    "experiences near bhopal",
+    "forest walks ratapani",
+    "nature trails bhopal",
+    "bird watching ratapani",
+    "wilderness bhopal",
+    "recreational activities bhopal",
+    "eco tourism ratapani",
+    "satpura nature experiences",
+  ],
+});

@@ -1,5 +1,4 @@
 import { getAllBlogs } from "@/services/blog/blogServices";
-import { headers } from "next/headers";
 
 const sitemapUrls = [
   { url: "/", priority: 1.0 },
@@ -12,6 +11,7 @@ const sitemapUrls = [
   { url: "/gallery", priority: 0.8 },
   { url: "/contact-us", priority: 0.8 },
   { url: "/booking", priority: 0.8 },
+  { url: "/day-outing", priority: 0.8 },
 
   {
     url: "/experiences/forest-walks-and-nature-trails",
@@ -41,7 +41,9 @@ const sitemapUrls = [
 export default async function sitemap() {
   const baseUrl = "https://www.madhubanecoretreat.com";
 
-  const lastmod = new Date().toISOString().replace("Z", "+00:00");
+  // A fixed date rather than Date.now(): stamping every URL with "changed
+  // today" on each build tells crawlers nothing and devalues the signal.
+  const lastmod = new Date("2026-08-01").toISOString().replace("Z", "+00:00");
 
   let blogs = [];
   try {
@@ -57,7 +59,7 @@ export default async function sitemap() {
       });
     }
   } catch (error) {
-    console.log("Error fetching blogs:", error);
+    console.error("Error fetching blogs:", error);
   }
 
   const allUrls = sitemapUrls.concat(blogs);

@@ -1,4 +1,5 @@
 export const dynamic = "force-static";
+import { buildMetadata } from "@/lib/seo";
 import SEO from "@/components/seo/Seo";
 import Stay from "@/components/stay/Stay";
 
@@ -9,7 +10,7 @@ const staySchema = {
   url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve",
   description:
     "Eco-friendly resort stay near Bhopal offering safari tents, mud houses, poolside villas, glamping tents, and jungle camping near Ratapani.",
-  image: "https://www.madhubanecoretreat.com/assets/images/madhuban-stay.jpg",
+  image: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/safari-tent/stay-at-safari-tent-madhuban-eco-retreat.avif",
   telephone: "+91 9770 558 419",
   email: "madhubanresort@somaiya.com",
   address: {
@@ -178,28 +179,17 @@ const StayPage = () => {
 
 export default StayPage;
 
-export const metadata = {
-  title:
-    "Jungle Stays Near Ratapani Tiger Reserve | Safari Tents, Villas & Mud Houses",
-
+export const metadata = buildMetadata({
+  title: "Jungle Stays Near Ratapani | Safari Tents & Villas",
   description:
     "Choose from safari tents, glamping tents, mud houses & poolside villas at Madhuban Eco Retreat near Ratapani Tiger Reserve, Bhopal. Prices from ₹7,500/night. Book your nature stay today!",
-
+  path: "/stay-in-ratapani-tiger-reserve",
+  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/safari-tent/stay-at-safari-tent-madhuban-eco-retreat.avif",
   keywords: [
-    " safari tent Ratapani",
+    "safari tent Ratapani",
     "glamping tent Ratapani",
     "mud villa Ratapani",
     "poolside villa near Bhopal",
-    " Ratapani jungle lodge"
-
+    "Ratapani jungle lodge",
   ],
-
-  alternates: {
-    canonical: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve",
-  },
-
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+});

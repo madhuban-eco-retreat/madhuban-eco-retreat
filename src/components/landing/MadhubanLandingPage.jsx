@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { phone } from "@/utills/constants";
 import { captureAttribution, readAttribution } from "@/utills/tracking";
@@ -377,12 +378,14 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
       {/* ───── HERO ───── */}
       <section className="relative min-h-[560px] md:min-h-[680px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <img
+          <Image
             src={HERO_IMAGE}
             alt="Madhuban Eco Retreat at the edge of Ratapani forest"
+            width={1920}
+            height={1080}
+            priority
+            sizes="100vw"
             className="w-full h-full object-cover object-bottom scale-105"
-            fetchPriority="high"
-            loading="eager"
           />
         </div>
         <div
@@ -498,10 +501,12 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
                 className="bg-white rounded-xl overflow-hidden ring-1 ring-stone-200 hover:ring-stone-300 hover:shadow-lg transition group"
               >
                 <div className="relative aspect-[4/3] overflow-hidden">
-                  <img
+                  <Image
                     src={s.img}
                     alt={s.name}
-                    loading="lazy"
+                    width={800}
+                    height={600}
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   {s.tag ? (

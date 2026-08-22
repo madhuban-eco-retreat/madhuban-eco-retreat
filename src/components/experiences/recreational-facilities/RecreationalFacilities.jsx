@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
@@ -300,9 +301,12 @@ const RecreationalFacilities = () => {
             >
               {forestImages.map((image, index) => (
                 <SwiperSlide key={index} className="h-full">
-                  <img
+                  <Image
                     src={image.url}
                     alt={image.alt}
+                    width={1200}
+                    height={800}
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                     className="w-full h-full object-cover rounded-xl shadow-lg"
                   />
                 </SwiperSlide>

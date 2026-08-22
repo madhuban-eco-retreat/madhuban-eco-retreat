@@ -1,11 +1,11 @@
 export const revalidate = 3600;
+import { buildMetadata } from "@/lib/seo";
 import CustomLinkBtn from "@/common-components/CustomLinkBtn/CustomLinBtn";
 import CommonFaqs from "@/common-components/faqs/CommonFaqs";
 import BlogDescription from "@/components/blog/BlogDescription";
 import HeroSection from "@/components/homepage/HeroSection";
 import SEO from "@/components/seo/Seo";
 import { getAllBlogs, getBlogById } from "@/services/blog/blogServices";
-import { generateMataDataForSEO } from "@/utills/helperFunctions";
 import React from "react";
 
 const getDateOnly = (date) => {
@@ -68,7 +68,7 @@ const BlogDesc = async ({ params }) => {
     blogSchema = buildBlogSchema(data?.blog);
     blogDetails = data?.blog;
   } catch (err) {
-    console.log("Error in fetching blog by id", err);
+    console.error("Error in fetching blog by id", err);
   }
 
   return (
@@ -140,16 +140,13 @@ export async function generateMetadata({ params }) {
   const data = await getBlogById(id);
   const blogDetails = data?.blog;
 
-  return generateMataDataForSEO({
+  return buildMetadata({
     title: blogDetails?.meta?.title,
     description: blogDetails?.meta?.description,
-    featuredImage: blogDetails?.featuredImage,
+    path: `/blogs/${id}`,
     keywords: blogDetails?.meta?.keywords,
-    canonicalEndpoint: `/blogs/${id}`,
-    robots: {
-      index: true,
-      follow: true,
-    },
-    ogImages: [blogDetails?.featuredImage?.url],
+    ogImage: blogDetails?.featuredImage?.url,
+    ogImageAlt: blogDetails?.featuredImage?.alt,
+    ogType: "article",
   });
 }

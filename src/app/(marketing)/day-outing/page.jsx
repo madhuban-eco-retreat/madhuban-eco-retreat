@@ -1,3 +1,4 @@
+import { buildMetadata } from "@/lib/seo";
 import OneDayPackage from "@/components/one-day-package/OneDayPackage";
 import SEO from "@/components/seo/Seo";
 import React from "react";
@@ -60,11 +61,11 @@ const OneDayPackagePage = () => {
 
 export default OneDayPackagePage;
 
-export const metadata = {
+export const metadata = buildMetadata({
   title: "Resorts Near Bhopal for Day Outing | Madhuban Eco Retreat",
-
   description:
     "Looking for resorts near Bhopal for day outing? Enjoy breakfast, lunch, pool access, nature walk & activities at Madhuban Eco Retreat.",
+  path: "/day-outing",
   keywords: [
     "resorts near bhopal for day outing",
     "one day picnic near bhopal",
@@ -72,13 +73,4 @@ export const metadata = {
     "pool day package near bhopal",
     "nature resort day outing",
   ],
-
-  alternates: {
-    canonical: "https://www.madhubanecoretreat.com/day-outing",
-  },
-
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+});
