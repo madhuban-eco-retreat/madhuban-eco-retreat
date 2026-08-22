@@ -1,7 +1,7 @@
-import { R2_BASE } from '@/lib/r2';
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.madhubanecoretreat.com';
 const SITE_NAME = 'Madhuban Eco Retreat';
-const DEFAULT_OG_IMAGE = `${R2_BASE}/branding/logo/madhuban-logo-full-md.webp`;
+const DEFAULT_OG_IMAGE =
+    'https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-og-social-1200x630.jpg';
 /**
  * Builds Next.js Metadata for a page. Use in every page's generateMetadata() or as a static export.
  *

@@ -2,6 +2,12 @@
 "use client";
 import React, { useState } from "react";
 import { MapPin, Phone, Mail, ChevronRight, ChevronDown } from "lucide-react";
+import {
+  FaInstagram,
+  FaFacebookF,
+  FaYoutube,
+  FaLinkedinIn,
+} from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -45,23 +51,20 @@ const Footer = () => {
           {/* About Section */}
           <div>
             <div className="flex items-center space-x-2 mb-4">
-              <Link href="/" className="flex items-center space-x-4 z-20">
+              <Link href="/" className="flex flex-col items-start gap-2 z-20">
                 <Image
-                  width={120}
-                  height={120}
-                  src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/black-madhuban-eco-retreat-bhopal-logo.png"
+                  width={160}
+                  height={80}
+                  src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-footer-logo-200.png"
                   alt="Madhuban Eco Retreat Logo"
-                  className="h-20 w-20 filter brightness-75"
+                  className="w-40 h-20 object-contain object-left"
                 />
                 <div className="flex flex-col justify-center">
-                  <div className="font-inter text-base font-bold text-black leading-tight">
-                    Madhuban Eco Retreat
-                  </div>
                   <p className="font-inter text-xs text-black leading-tight">
-                    Ratapani Tiger Reserve,
+                    Ratapani Tiger Reserve, Salkanpur Road,
                   </p>
                   <p className="font-inter text-xs text-black leading-tight">
-                    Bhopal, Madhya Pradesh, India
+                    Bori, Rehti, Madhya Pradesh — 466446
                   </p>
                 </div>
               </Link>
@@ -70,63 +73,28 @@ const Footer = () => {
               An eco-luxury retreat nestled near Ratapani Wildlife Sanctuary,
               offering sustainable luxury and immersive nature experiences.
             </p>
-            <div className="flex space-x-3">
-              <a
-                href={instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition"
-              >
-                <Image
-                  width={32}
-                  height={32}
-                  src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/insta-logo.webp"
-                  alt="Instagram"
-                  className="w-8 h-8 "
-                />
-              </a>
-              <a
-                href={facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition"
-              >
-                <Image
-                  width={32}
-                  height={32}
-                  src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg"
-                  alt="Facebook"
-                  className="w-8 h-8"
-                />
-              </a>
-              <a
-                href={youtube}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition"
-              >
-                <Image
-                  width={32}
-                  height={32}
-                  src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/youtube-logo.png"
-                  alt="Youtube"
-                  className="w-9 h-8"
-                />
-              </a>
-              <a
-                href={linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition"
-              >
-                <Image
-                  width={32}
-                  height={32}
-                  src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/linkedin-logo.png"
-                  alt="Linkedin"
-                  className="w-8 h-8"
-                />
-              </a>
+            {/* Vector icons inheriting currentColor, so the contrast colour
+                below actually applies. The previous raster brand logos could
+                not be recoloured by a CSS class. Tap targets are 44x44. */}
+            <div className="flex items-center -ml-2">
+              {[
+                { name: "Instagram", href: instagram, Icon: FaInstagram },
+                { name: "Facebook", href: facebook, Icon: FaFacebookF },
+                { name: "YouTube", href: youtube, Icon: FaYoutube },
+                { name: "LinkedIn", href: linkedin, Icon: FaLinkedinIn },
+              ].map(({ name, href, Icon }) => (
+                <a
+                  key={name}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={name}
+                  title={name}
+                  className="inline-flex items-center justify-center w-11 h-11 text-charcoal/70 hover:text-earth-brown transition-colors duration-200"
+                >
+                  <Icon className="w-6 h-6" aria-hidden="true" />
+                </a>
+              ))}
             </div>
             <button
               style={buttonStyle}
@@ -303,10 +271,9 @@ const Footer = () => {
               alt={getAltFromUrl(
                 "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/somaiya-group-logo.png",
               )}
-              width={151}
-              height={112}
-              className="w-[70px] h-[70px] mt-3 mb-4 mx-auto filter brightness-75"
-              style={{ filter: "brightness(0.75)" }}
+              width={80}
+              height={40}
+              className="w-20 h-10 mt-3 mb-4 mx-auto object-contain"
             />
             <p className="text-primary-gray footer-heading mb-6 font-primary  text-center mx-auto">
               A Somaiya Group Initiative <br /> Where Sustainability Meets
