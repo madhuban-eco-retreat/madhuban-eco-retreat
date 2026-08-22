@@ -4,10 +4,15 @@ import { motion } from "framer-motion";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading.jsx";
 import Image from "next/image";
 
+// The reveal animates position only, never opacity. Gating opacity on
+// whileInView means the server ships the cards at opacity:0 and nothing but
+// client JS can bring them back, so a hydration failure or slow/blocked
+// bundle leaves the section blank. BlogListWithPagination carries a note
+// about hitting exactly that. Animating `y` alone keeps the motion while the
+// markup stays legible with no JS at all.
 const containerVariants = {
-  hidden: { opacity: 0 },
+  hidden: {},
   visible: {
-    opacity: 1,
     transition: {
       staggerChildren: 0.2,
       when: "beforeChildren",
@@ -16,10 +21,9 @@ const containerVariants = {
 };
 
 const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
+  hidden: { y: 20 },
   visible: {
     y: 0,
-    opacity: 1,
     transition: {
       duration: 0.6,
     },
