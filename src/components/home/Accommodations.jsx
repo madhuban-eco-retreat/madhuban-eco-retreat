@@ -50,7 +50,7 @@ const accommodations = [
     title: "Safari Tent",
     slug: "safari-tent",
     image:
-      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/Safari_Tent_-_Madhuban_Eco_Retreat_Bhopal_pbpcgr.webp",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/madhuban-eco-retreat-safari-tent-exterior-image-home-page-card.jpg",
     alt: "Nature Tent",
     description:
       "Experience one of the most unique jungle stays near Bhopal with our eco-luxury safari tents featuring open-to-sky showers, forest views, and crafted cane interiors.",
@@ -59,7 +59,7 @@ const accommodations = [
     title: "Mud Houses",
     slug: "mud-house-standard",
     image:
-      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/Mud_House_Image_2_-_Madhuban_Eco_Retreat_Bhopal_lbzlrg.webp",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/madhuban-eco-retreat-mud-house-exterior-image-home-page-card.jpg",
     alt: "Mud Houses",
     description:
       "Inspired by the Gond tribes, these mud cottages offer rustic charm and sustainable comfort — making them one of the most loved eco stays in Madhya Pradesh.",
@@ -68,7 +68,7 @@ const accommodations = [
     title: "Pool Side Villa",
     slug: "pool-side-villa",
     image:
-      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/Pool_Image_3_Madhuban_Eco_Retreat.webp",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/poolside-villa-madhuban-eco-retreat-home-page-card.jpg",
     alt: "Pool Side Villa - Madhuban Eco Retreat Bhopal",
     description:
       "For travelers seeking leisure and calm, our poolside villas combine scenic views, wellness-friendly spaces, and forest-side luxury.",
@@ -77,7 +77,7 @@ const accommodations = [
     title: "Glamping Tents",
     slug: "glamping-tents",
     image:
-      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/madhuban-glamping-tent-image-2.jpg",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/madhuban-eco-retreat-glamping-tent-exterior-image-home-page-card.jpg",
     alt: "Glamping Tents - Madhuban Eco Retreat Bhopal",
     description:
       "Enjoy boutique-style glamping with chic décor, ensuite bathrooms, and private sit-outs — perfect for a stylish forest experience.",
@@ -86,7 +86,7 @@ const accommodations = [
     title: "Camping Tents",
     slug: "camping-tent",
     image:
-      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/camping-tent-image-1-madhuban-eco-retreat-bhopal.webp",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/madhuban-camping-hammock-under-100kb.jpg",
     alt: "Camping Tent",
     description:
       "Ideal for adventure seekers looking for a pure nature experience, our camping tents offer a peaceful, off-grid stay under starry skies.",
