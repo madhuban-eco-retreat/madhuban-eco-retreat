@@ -73,7 +73,7 @@ const BookingWidget = () => {
 
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 max-sm:py-4 bg-[#D1C8C1]">
-      <div className="bg-[rgb(110,97,70)] rounded-lg shadow-xl p-3 sm:p-4 max-sm:my-6 z-10 relative sm:bottom-25 mx-auto max-w-4xl">
+      <div className="bg-[rgb(110,97,70)] rounded-lg shadow-xl p-3 sm:p-4 max-sm:my-6 z-10 relative sm:bottom-0 mx-auto max-w-4xl">
         <form onSubmit={handleCheckAvailability}>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 justify-center">
             {/* Check-in Date */}

@@ -29,7 +29,7 @@ const ExperienceCard = ({ experience }) => {
         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
         className="object-cover transition-transform duration-500 group-hover:scale-105"
         loading="lazy"
-        quality={80}
+        quality={90}
       />
 
       {/* Resting state - title only. Fades out as the hover panel fades in,

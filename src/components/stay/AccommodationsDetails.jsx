@@ -110,8 +110,8 @@ const AccommodationDetail = () => {
                     width={1200}
                     height={800}
                     sizes="(max-width: 768px) 100vw, 60vw"
-                    className="w-full h-full object-cover md:min-h-[400px]"
-                  />
+                    quality={90} className="w-full h-full object-cover md:min-h-[400px]"
+                    quality={90}/>
                 )}
               </div>
 
@@ -352,8 +352,8 @@ const AccommodationDetail = () => {
                         width={600}
                         height={400}
                         sizes="(max-width: 640px) 50vw, 33vw"
-                        className="w-full h-48 object-cover rounded-lg shadow-sm"
-                      />
+                        quality={90} className="w-full h-48 object-cover rounded-lg shadow-sm"
+                        quality={90}/>
                     ))}
                   </div>
                 </div>

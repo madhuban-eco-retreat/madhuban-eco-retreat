@@ -288,9 +288,9 @@ const ForestWalkAndNatureTrails = () => {
                     width={1200}
                     height={800}
                     sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="w-full h-full object-cover rounded-xl shadow-lg cursor-pointer"
+                    quality={90} className="w-full h-full object-cover rounded-xl shadow-lg cursor-pointer"
                     onClick={() => setSelectedImage(image)}
-                  />
+                    quality={90}/>
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -314,8 +314,8 @@ const ForestWalkAndNatureTrails = () => {
               width={0}
               height={0}
               sizes="100vw"
-              className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
-            />
+              quality={90} className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
+              quality={90}/>
           </div>
         </div>
       )}

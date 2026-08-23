@@ -61,12 +61,10 @@
   font-size: var(--text-2xl)
 }
 
-.bannerHeading{
-  font-size: var(--text-5xl) ; 
+.bannerHeading{ font-size: var(--text-3xl) ; 
 }
 
-.bannerSubHeading{
-   font-size: var(--text-xl) ; 
+.bannerSubHeading{ font-size: var(--text-base) ; 
 }
 .p-text{
   font-size: var(--text-base);

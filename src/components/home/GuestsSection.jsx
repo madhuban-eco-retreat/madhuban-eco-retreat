@@ -98,7 +98,7 @@ const GuestsSection = () => {
                 sizes="(max-width: 768px) 100vw, 33vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-110"
                 // OPTIMIZATION: Lower quality for guest photos to prioritize speed
-                quality={75}
+                quality={90}
                 loading="lazy"
               />
 
