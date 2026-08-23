@@ -1,4 +1,4 @@
-export const dynamic = "force-static";
+﻿export const dynamic = "force-static";
 
 import { buildMetadata } from "@/lib/seo";
 import NewBooking from "@/components/booking/NewBooking";

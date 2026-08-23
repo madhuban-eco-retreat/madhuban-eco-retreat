@@ -1,4 +1,4 @@
-export const dynamic = "force-static";
+﻿export const dynamic = "force-static";
 import { buildMetadata } from "@/lib/seo";
 import ExperienceComponent from "@/components/experiences/ExperienceComponent";
 import OurExperiences from "@/components/experiences/OurExperiences";
@@ -103,7 +103,7 @@ export const metadata = buildMetadata({
   description:
     "Explore nature trails, bird watching, and recreational activities at Madhuban Eco Retreat near Bhopal. Eco-friendly experiences in Ratapani Wildlife Sanctuary.",
   path: "/experiences",
-  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/forest-walk/nature-visit-ratapani-madhuban-eco-retreat-bhopal-2.avif",
+  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-og-social-1200x630.jpg",
   keywords: [
     "experiences near bhopal",
     "forest walks ratapani",

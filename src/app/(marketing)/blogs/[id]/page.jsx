@@ -1,4 +1,4 @@
-export const revalidate = 3600;
+﻿export const revalidate = 3600;
 import { buildMetadata } from "@/lib/seo";
 import CustomLinkBtn from "@/common-components/CustomLinkBtn/CustomLinBtn";
 import CommonFaqs from "@/common-components/faqs/CommonFaqs";

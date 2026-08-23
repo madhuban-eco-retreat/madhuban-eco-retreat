@@ -1,4 +1,4 @@
-export const dynamic = "force-static";
+﻿export const dynamic = "force-static";
 
 import { buildMetadata } from "@/lib/seo";
 import AboutUs from "@/components/about/about";
@@ -62,7 +62,7 @@ export const metadata = buildMetadata({
   description:
     "Discover Madhuban Eco Retreat near Bhopal-an eco-friendly jungle resort promoting slow tourism, sustainability, and meaningful nature-based experiences in Ratapani.",
   path: "/about-us",
-  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/about/mud-house-madhuban-eco-retreat-bhopal.webp",
+  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-og-social-1200x630.jpg",
   keywords: [
     "best resorts near ratapani",
     "jungle resort near bhopal",

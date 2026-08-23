@@ -1,4 +1,4 @@
-import { buildMetadata } from "@/lib/seo";
+﻿import { buildMetadata } from "@/lib/seo";
 import OneDayPackage from "@/components/one-day-package/OneDayPackage";
 import SEO from "@/components/seo/Seo";
 import React from "react";
