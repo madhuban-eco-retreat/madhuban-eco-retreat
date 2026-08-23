@@ -248,7 +248,7 @@ const Dining = () => {
                       src={photo.url}
                       alt={getAltFromUrl(photo.url)}
                       objectFit="cover"
-                    />
+                      quality={90}/>
                     <div className="media-title">{photo.title}</div>
                   </div>
                 ))}
@@ -301,8 +301,8 @@ const Dining = () => {
                   width={1600}
                   height={1200}
                   sizes="100vw"
-                  className="w-auto h-auto"
-                />
+                  quality={90} className="w-auto h-auto"
+                  quality={90}/>
               )}
               <h3>{selectedMedia.title}</h3>
             </div>

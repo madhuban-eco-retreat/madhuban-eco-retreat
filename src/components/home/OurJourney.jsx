@@ -119,7 +119,7 @@ const OurJourney = () => {
                 className="object-cover"
                 // Large image, but below the fold, so lazy load with specific sizes
                 sizes="(max-width: 1280px) 100vw, 50vw"
-                quality={85}
+                quality={90}
               />
             </div>
           </motion.div>
@@ -139,7 +139,7 @@ const OurJourney = () => {
                   fill
                   className="object-cover transition-transform duration-300 hover:scale-110"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  quality={75}
+                  quality={90}
                 />
               </motion.div>
             ))}

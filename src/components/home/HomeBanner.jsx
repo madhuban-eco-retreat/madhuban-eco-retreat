@@ -2,46 +2,22 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import BookingWidget from "../BookingWidget";
-import { getAltFromUrl } from "@/utills/helperFunctions";
 
 const heroSlides = [
   {
-    image:
-      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/madhuban-eco-retreat-forest-view-hero-section-1.avif",
-
-    mobile:
-      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/mobile/madhuban-eco-retreat-forest-view-hero-section.avif",
-
-    title: "Madhuban Eco Retreat: Eco-Luxury Forest Resort",
-
-    subtitle:
-      "Experience eco-luxury living amid the serene wilderness of Ratapani Tiger Reserve at Madhuban Eco Retreat — a peaceful forest stay offering sustainable comfort and mindful escapes.",
+    image: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/madhuban-eco-retreat-ratapani-forest-resort-bhopal-hero.jpg",
+    mobile: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/madhuban-eco-retreat-ratapani-forest-resort-bhopal-hero.jpg",
+    alt: "Madhuban Eco Retreat — Eco Luxury Forest Stay near Ratapani Tiger Reserve, Bhopal",
   },
-
   {
-    image:
-      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/tourists-jungle-safari-jeep-madhuban-eco-retreat-ratapani.avif",
-
-    mobile:
-      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/mobile/tourists-jungle-safari-jeep-madhuban-eco-retreat-ratapani.avif",
-
-    title: "Sustainable Travel in India: An Eco-Luxury Retreat",
-
-    subtitle:
-      "Reconnect with nature through immersive experiences like birdwatching in Madhya Pradesh, all without compromising on comfort.",
+    image: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/madhuban-ratapani-tiger-pair-hero-2400x1350.jpg",
+    mobile: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/madhuban-ratapani-tiger-pair-hero-2400x1350.jpg",
+    alt: "Tiger pair at Ratapani Tiger Reserve near Madhuban Eco Retreat, Bhopal",
   },
-
   {
-    image:
-      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/hero-tiger-madhuban-eco-retreat.webp",
-
-    mobile:
-      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/mobile/mobile-hero-tiger-madhuban-eco-retreat-ratapani-bhopal.avif",
-
-    title: "Connect With Wildlife & Nature",
-
-    subtitle:
-      "Located next to the Ratapani Wildlife Sanctuary, Madhuban is ideal for serene forest walks and birdwatching adventures.",
+    image: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/hero-tiger-madhuban-eco-retreat.webp",
+    mobile: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/mobile/mobile-hero-tiger-madhuban-eco-retreat-ratapani-bhopal.avif",
+    alt: "Wildlife at Ratapani Tiger Reserve — Madhuban Eco Retreat jungle stay near Bhopal",
   },
 ];
 
@@ -57,7 +33,9 @@ export default function HomeBanner() {
 
   return (
     <>
-      <section className="relative min-h-screen overflow-hidden bg-gray-900">
+      {/* ── HERO IMAGE — clean, no text overlay ── */}
+      <section className="relative h-[60vh] md:h-screen w-full overflow-hidden">
+
         {heroSlides.map((slide, index) => (
           <div
             key={index}
@@ -65,56 +43,76 @@ export default function HomeBanner() {
               index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
             }`}
           >
-            {/* Desktop Image.
-                `sizes` carries the same media condition as the wrapper's
-                `hidden md:block`. Both variants stay in the DOM so the mobile
-                crop is preserved, but the browser now only fetches a real
-                candidate for the one that is actually displayed — previously
-                both were declared 100vw and every visitor downloaded both. */}
-            <div className="hidden md:block relative w-full h-full">
+            {/* Desktop */}
+            <div className="hidden md:block absolute inset-0">
               <Image
                 src={slide.image}
-                alt={getAltFromUrl(slide.image)}
-                fill
-                priority={index === 0} // Only priority for the first slide
-                loading={index === 0 ? "eager" : "lazy"}
-                fetchPriority={index === 0 ? "high" : "low"}
-                sizes="(max-width: 767px) 1px, 100vw"
-                className="object-cover"
-                quality={85} // Reduced from 100 to save ~40% file size with no visible loss
-              />
-            </div>
-
-            {/* Mobile Image */}
-            <div className="block md:hidden relative w-full h-full">
-              <Image
-                src={slide.mobile}
-                alt={getAltFromUrl(slide.mobile)}
+                alt={slide.alt}
                 fill
                 priority={index === 0}
                 loading={index === 0 ? "eager" : "lazy"}
-                fetchPriority={index === 0 ? "high" : "low"}
-                sizes="(max-width: 767px) 100vw, 1px"
-                className="object-cover"
-                quality={85}
+                fetchPriority={index === 0 ? "high" : "auto"}
+                sizes="(max-width: 1280px) 100vw, 2400px"
+                quality={95}
+                className="object-cover object-center"
               />
             </div>
 
-            <div className="absolute inset-0 bg-black/40" />
+            {/* Mobile */}
+            <div className="block md:hidden absolute inset-0">
+              <Image
+                src={slide.mobile}
+                alt={slide.alt}
+                fill
+                priority={index === 0}
+                loading={index === 0 ? "eager" : "lazy"}
+                fetchPriority={index === 0 ? "high" : "auto"}
+                sizes="100vw"
+                quality={90}
+                className="object-cover object-center"
+              />
+            </div>
+
+            {/* Very subtle overlay — keeps image vibrant */}
+            <div className="absolute inset-0 bg-black/10" />
           </div>
         ))}
 
-        {/* Content - Static position so text doesn't flicker during slide change */}
-        <div className="relative z-20 min-h-screen flex flex-col items-center justify-center text-white px-4 text-center">
-          <h1 className="font-primary bannerHeading mb-4 max-w-3xl">
-            {heroSlides[currentSlide].title}
+        {/* Slide indicators */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex gap-2">
+          {heroSlides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                index === currentSlide
+                  ? "bg-white w-6"
+                  : "bg-white/50 w-2"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+
+      </section>
+
+      {/* ── H1 + DESCRIPTION ── */}
+      <section className="bg-[#F5F0E8] py-8 md:py-10 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="font-primary text-2xl md:text-3xl lg:text-4xl font-bold text-[rgb(110,97,70)] mb-3 leading-tight">
+            Eco Luxury Forest Stay — Ratapani Tiger Reserve
           </h1>
-          <p className="font-arial-narrow bannerSubHeading mb-8 max-w-3xl">
-            {heroSlides[currentSlide].subtitle}
+          <p className="text-sm md:text-base text-charcoal/70 leading-relaxed max-w-3xl mx-auto">
+            Madhuban Eco Retreat is a nature resort nestled in the heart of 
+            Ratapani Tiger Reserve, near Bhopal. Surrounded by ancient forests 
+            and wildlife, we offer an eco-luxury escape through safari tents, 
+            mud houses, glamping and poolside villas — where sustainable 
+            comfort meets the raw beauty of the wild.
           </p>
         </div>
       </section>
 
+      {/* ── BOOKING WIDGET ── */}
       <div className="w-full relative z-30">
         <BookingWidget />
       </div>

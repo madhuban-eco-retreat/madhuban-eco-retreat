@@ -49,10 +49,10 @@ const ReadyForEcoRetreat = () => {
           priority // Added priority since it's a large background
           className="object-cover"
           sizes="100vw"
-          quality={85}
+          quality={90}
         />
         {/* 2. The Overlay Layer (Ensures text is readable) */}
-        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-black/20" />
       </div>
 
       {/* 3. The Content Layer (z-10 ensures it stays on top) */}

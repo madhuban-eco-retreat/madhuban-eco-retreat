@@ -400,7 +400,7 @@ const Gallery = () => {
         </video>
 
         {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="absolute inset-0 bg-black/20"></div>
 
         {/* Content Layer */}
         <div className="relative z-10 flex items-center justify-center h-full text-white text-center px-4">

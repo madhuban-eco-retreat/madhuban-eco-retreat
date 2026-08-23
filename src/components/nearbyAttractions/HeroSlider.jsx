@@ -39,7 +39,7 @@ export default function HeroSlider({ heroSlides }) {
       ))}
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/40 z-10 flex flex-col items-center justify-center text-white text-center px-4">
+      <div className="absolute inset-0 bg-black/20 z-10 flex flex-col items-center justify-center text-white text-center px-4">
         <div className="max-w-7xl animate-fadeInUp">
           <h1 className="bannerHeading font-primary">Nearby Attractions</h1>
 
