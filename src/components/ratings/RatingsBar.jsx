@@ -104,7 +104,7 @@ export default function RatingsBar() {
                 ))}
               </div>
               <span className="text-sm font-semibold text-charcoal">
-                4.8 / 5
+                4.5 / 5
               </span>
               <span className="text-xs text-charcoal/50">
                 View on Google Maps
