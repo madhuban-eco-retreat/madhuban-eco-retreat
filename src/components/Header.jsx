@@ -28,14 +28,14 @@ import Image from "next/image";
 // and the mobile drawer still lists every destination flat.
 const navigation = [
   { name: "Stay", path: "/stay-in-ratapani-tiger-reserve" },
-  { name: "Dining", path: "/dining" },
-  { name: "Day Outing", path: "/day-outing" },
+  { name: "Experiences", path: "/experiences" },
+  { name: "Nearby Attractions", path: "/nearby-attractions" },
 ];
 
 const exploreLinks = [
+  { name: "Day Outing", path: "/day-outing" },
+  { name: "Dining", path: "/dining" },
   { name: "About", path: "/about-us" },
-  { name: "Experiences", path: "/experiences" },
-  { name: "Nearby Attractions", path: "/nearby-attractions" },
   { name: "Gallery", path: "/gallery" },
   { name: "Blogs", path: "/blogs" },
   { name: "Contact", path: "/contact-us" },

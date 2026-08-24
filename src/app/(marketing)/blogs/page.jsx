@@ -1,4 +1,4 @@
-// Route-segment config: render /blogs on every request so newly published
+﻿// Route-segment config: render /blogs on every request so newly published
 // blogs (and the correct totalpages, which drives the Load More button) are
 // always reflected. NOTE: this only takes effect in a route-segment file
 // (page/layout/route), not in a component.

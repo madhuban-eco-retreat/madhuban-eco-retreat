@@ -1,4 +1,4 @@
-import ThankYouClient from "./thank-you-client";
+﻿import ThankYouClient from "./thank-you-client";
 
 // Server component so the route can own its metadata: the interactive markup
 // moved to thank-you-client.jsx because a "use client" module cannot export

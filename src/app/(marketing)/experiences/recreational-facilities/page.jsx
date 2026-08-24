@@ -1,4 +1,4 @@
-export const dynamic = "force-static";
+﻿export const dynamic = "force-static";
 import { buildMetadata } from "@/lib/seo";
 import RecreationalFacilities from "@/components/experiences/recreational-facilities/RecreationalFacilities";
 import SEO from "@/components/seo/Seo";
@@ -101,7 +101,7 @@ export const metadata = buildMetadata({
   description:
     "Enjoy eco-friendly recreational activities near Bhopal. Cycling, indoor games, hammocks, campfires & nature-friendly relaxation at Madhuban Eco Retreat.",
   path: "/experiences/recreational-facilities",
-  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/activities/Adventure_Activities_3_At_madhuban-eco-retreat.jpg",
+  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-og-social-1200x630.jpg",
   keywords: [
     "recreational activities near bhopal",
     "ratapani recreation",

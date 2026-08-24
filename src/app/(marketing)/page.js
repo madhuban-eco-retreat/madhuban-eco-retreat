@@ -1,4 +1,4 @@
-export const dynamic = "force-static";
+﻿export const dynamic = "force-static";
 import { buildMetadata } from "@/lib/seo";
 import SEO from "@/components/seo/Seo";
 import Home from "./home/home";
@@ -118,8 +118,7 @@ export const metadata = buildMetadata({
   description:
     "Madhuban Eco Retreat — jungle resort near Ratapani Tiger Reserve, Bhopal. Safari tents, mud houses, glamping & poolside villas. Book direct for best rates.",
   path: "",
-  ogImage:
-    "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-og-social-1200x630.jpg",
+  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-og-social-1200x630.jpg",
   keywords: [
     "eco resort near Bhopal",
     "forest resort Ratapani",

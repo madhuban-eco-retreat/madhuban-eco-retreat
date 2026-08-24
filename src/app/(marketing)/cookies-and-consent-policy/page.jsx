@@ -1,4 +1,4 @@
-export const dynamic = "force-static";
+﻿export const dynamic = "force-static";
 import { buildMetadata } from "@/lib/seo";
 import Cookie from "@/components/cookie/Cookie";
 import SEO from "@/components/seo/Seo";

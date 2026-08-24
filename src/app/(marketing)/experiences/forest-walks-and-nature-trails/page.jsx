@@ -1,4 +1,4 @@
-export const dynamic = "force-static";
+﻿export const dynamic = "force-static";
 import { buildMetadata } from "@/lib/seo";
 import ForestWalkAndNatureTrails from "@/components/experiences/Forest-Walk-And-Nature-Trails/ForestWalkAndNatureTrails";
 import SEO from "@/components/seo/Seo";
@@ -100,7 +100,7 @@ export const metadata = buildMetadata({
   description:
     "Explore guided forest walks & nature trails near Bhopal at Madhuban Eco Retreat. Safe, scenic, eco-friendly trails in Ratapani. Ideal for families & nature lovers.",
   path: "/experiences/forest-walks-and-nature-trails",
-  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/forest-walk/nature-visit-ratapani-madhuban-eco-retreat-bhopal-2.avif",
+  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-og-social-1200x630.jpg",
   keywords: [
     "forest walks near bhopal",
     "nature trails bhopal",

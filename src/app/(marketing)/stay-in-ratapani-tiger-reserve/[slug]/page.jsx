@@ -1,4 +1,4 @@
-export const dynamic = "force-static";
+﻿export const dynamic = "force-static";
 import { notFound } from "next/navigation";
 import SEO from "@/components/seo/Seo";
 import AccommodationDetail from "@/components/stay/AccommodationsDetails";

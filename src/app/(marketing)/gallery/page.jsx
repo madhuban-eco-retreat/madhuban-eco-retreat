@@ -1,4 +1,4 @@
-export const dynamic = "force-static";
+﻿export const dynamic = "force-static";
 import { buildMetadata } from "@/lib/seo";
 import Gallery from "@/components/gallery/Gallery";
 import SEO from "@/components/seo/Seo";
@@ -38,7 +38,7 @@ export const metadata = buildMetadata({
   description:
     "Explore the eco gallery of Madhuban Eco Retreat-forest views, tribal culture, Bhimbetka, Saru Maru, Ginnorgarh Fort, and nature moments in Ratapani.",
   path: "/gallery",
-  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/gallery/Tribal/traditional-tribal-dance-madhuban-eco-retreat-bhopal.jpg",
+  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-og-social-1200x630.jpg",
   keywords: [
     "madhuban eco retreat gallery",
     "ratapani nature gallery",

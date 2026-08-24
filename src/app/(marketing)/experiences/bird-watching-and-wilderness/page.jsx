@@ -1,4 +1,4 @@
-export const dynamic = "force-static";
+﻿export const dynamic = "force-static";
 import { buildMetadata } from "@/lib/seo";
 import BirdWatchingAndWilderness from "@/components/experiences/Bird-Watching-And-Wilderness/BirdWatchingAndWilderness";
 import SEO from "@/components/seo/Seo";
@@ -101,7 +101,7 @@ export const metadata = buildMetadata({
   description:
     "Experience bird watching in Ratapani near Bhopal. Spot 70+ native & migratory species during peaceful guided wilderness sessions at Madhuban Eco Retreat.",
   path: "/experiences/bird-watching-and-wilderness",
-  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/birds-watch/best-wildlife-view.jpg",
+  ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-og-social-1200x630.jpg",
   keywords: [
     "bird watching near bhopal",
     "ratapani bird watching",
