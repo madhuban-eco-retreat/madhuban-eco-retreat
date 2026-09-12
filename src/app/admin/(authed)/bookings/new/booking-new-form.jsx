@@ -10,6 +10,7 @@ import { Calendar, User, Sparkles, FileText, ChevronLeft, Info, Minus, Plus, Cir
 import { Card, Button, Input, Select, Toggle, DatePicker, TextArea, } from "@/components/admin/ui";
 import { BOOKING_ADDONS } from "@/lib/admin/booking-addons";
 import { computeAdminQuote } from "@/lib/pricing/admin-quote.mjs";
+import { rateCardFromRows } from "@/lib/pricing/rate-card.mjs";
 import { cn } from "@/lib/utils";
 // ─── Draft ────────────────────────────────────────────────────────────────────
 const DRAFT_KEY = "madhuban-admin-booking-draft";
@@ -89,12 +90,18 @@ const defaultValues = {
  * "inclusive" total — which disagreed with the server on almost every booking
  * that was not a bare regular-season night.
  */
-function computeClientPricing(room, checkIn, checkOut, enabledAddons, adults, children, extraBeds) {
+function computeClientPricing(room, checkIn, checkOut, enabledAddons, adults, children, extraBeds, rateCard) {
     if (!room || !checkIn || !checkOut || checkIn >= checkOut)
         return null;
     try {
         return computeAdminQuote({
-            baseNightlyRate: Number(room.base_price_per_night),
+            // Until the rate card arrives this falls back to the values built
+            // into the code, which is also what the server falls back to — so
+            // the preview is never wrong, only briefly less current.
+            rateCard: rateCard ?? undefined,
+            offers: rateCard?.offers ?? null,
+            bookedOn: new Date().toISOString().slice(0, 10),
+            baseNightlyRate: rateCard?.baseRates?.[room.slug] ?? Number(room.base_price_per_night),
             roomSlug: room.slug,
             checkIn,
             checkOut,
@@ -143,6 +150,27 @@ export function BookingNewForm() {
     const router = useRouter();
     // Availability state
     const [availRooms, setAvailRooms] = useState([]);
+    // The admin-edited rate card, so this preview and the create route price
+    // identically. Built with the same pure function the server uses.
+    const [rateCard, setRateCard] = useState(null);
+    useEffect(() => {
+        let cancelled = false;
+        fetch("/api/admin/rates")
+            .then((r) => (r.ok ? r.json() : null))
+            .then((d) => {
+                if (cancelled || !d)
+                    return;
+                setRateCard(rateCardFromRows({
+                    roomRates: d.roomRates,
+                    gstRules: d.gstRules,
+                    occupancyRules: d.occupancyRules,
+                    seasons: d.seasons,
+                    longStayRules: d.longStayRules,
+                }));
+            })
+            .catch(() => { /* falls back to the built-in card */ });
+        return () => { cancelled = true; };
+    }, []);
     const [isCheckingAvail, setIsCheckingAvail] = useState(false);
     const [availError, setAvailError] = useState(null);
     const [availChecked, setAvailChecked] = useState(false);
@@ -269,8 +297,8 @@ export function BookingNewForm() {
     const pricing = useMemo(() => {
         if (!selectedRoom || !watched.checkIn || !watched.checkOut)
             return null;
-        return computeClientPricing(selectedRoom, watched.checkIn, watched.checkOut, enabledAddons, watched.numAdults ?? 2, watched.numChildren ?? 0, watched.extraMattress ?? 0);
-    }, [selectedRoom, watched.checkIn, watched.checkOut, enabledAddons, watched.numAdults, watched.numChildren, watched.extraMattress]);
+        return computeClientPricing(selectedRoom, watched.checkIn, watched.checkOut, enabledAddons, watched.numAdults ?? 2, watched.numChildren ?? 0, watched.extraMattress ?? 0, rateCard);
+    }, [selectedRoom, watched.checkIn, watched.checkOut, enabledAddons, watched.numAdults, watched.numChildren, watched.extraMattress, rateCard]);
     // ── Date helpers ──────────────────────────────────────────────────────────
     const today = new Date().toISOString().split("T")[0];
     const minCheckout = watched.checkIn

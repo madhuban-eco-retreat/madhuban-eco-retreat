@@ -1,6 +1,8 @@
 import "server-only";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { computeAdminQuote } from "@/lib/pricing/admin-quote.mjs";
+import { loadRateCard } from "@/lib/pricing/rate-card-db";
+import { buildRateSnapshot } from "@/lib/pricing/snapshot.mjs";
 
 /**
  * Authoritative pricing for an admin-created booking.
@@ -23,8 +25,16 @@ export async function calculateAdminPricing(params) {
     if (error || !room)
         throw new Error("Room not found");
 
+    // The admin-edited rate card, same as the public engine uses. room_rates is
+    // the authority on price once staff have set one; the rooms table stays the
+    // fallback so a category with no rate row still sells.
+    const card = await loadRateCard();
+
     const quote = computeAdminQuote({
-        baseNightlyRate: Number(room.base_price_per_night),
+        rateCard: card,
+        offers: card.offers,
+        bookedOn: new Date().toISOString().slice(0, 10),
+        baseNightlyRate: card.baseRates[room.slug] ?? Number(room.base_price_per_night),
         roomSlug: room.slug,
         checkIn,
         checkOut,
@@ -38,6 +48,13 @@ export async function calculateAdminPricing(params) {
         ...quote,
         roomId: room.id,
         roomName: room.name,
-        basePricePerNight: Number(room.base_price_per_night),
+        basePricePerNight: card.baseRates[room.slug] ?? Number(room.base_price_per_night),
+        // Frozen so a walk-in priced today keeps today's card even if staff
+        // edit rates tomorrow — the same guarantee the public flow gets.
+        rateSnapshot: buildRateSnapshot({
+            quote,
+            roomSlug: room.slug,
+            roomName: room.name,
+        }),
     };
 }
