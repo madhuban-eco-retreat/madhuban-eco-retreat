@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { assertAdmin } from "@/lib/admin/auth";
-import { OCCUPYING_STATUSES, availableUnits, fetchOverlappingBlocks, totalBlockedUnits, } from "@/lib/booking/inventory";
+import { OCCUPYING_STATUSES, occupiesInventory, availableUnits, fetchOverlappingBlocks, totalBlockedUnits, } from "@/lib/booking/inventory";
 export async function GET(req) {
     const user = await assertAdmin();
     if (!user)
@@ -29,7 +29,7 @@ export async function GET(req) {
     // Date ranges overlap when: checkin < to AND checkout > from
     const { data: conflicts, error: conflictsError } = await supabase
         .from("bookings")
-        .select("room_id")
+        .select("room_id, status, payment_status")
         .in("status", OCCUPYING_STATUSES)
         .lt("checkin", to)
         .gt("checkout", from);
@@ -39,6 +39,9 @@ export async function GET(req) {
     // Count how many booked units per room_id
     const bookedCountByRoom = {};
     for (const c of conflicts ?? []) {
+        // Unpaid bookings are retained but do not hold a unit.
+        if (!occupiesInventory(c))
+            continue;
         bookedCountByRoom[c.room_id] = (bookedCountByRoom[c.room_id] ?? 0) + 1;
     }
     // Manual blocks hold however many units they were written for. Counting each

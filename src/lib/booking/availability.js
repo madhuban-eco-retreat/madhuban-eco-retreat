@@ -2,6 +2,7 @@ import "server-only";
 import { createAdminClient } from "@/lib/supabase/admin";
 import {
     OCCUPYING_STATUSES,
+    occupiesInventory,
     fetchOverlappingBlocks,
     minAvailableUnits,
 } from "@/lib/booking/inventory";
@@ -40,9 +41,11 @@ export async function checkAvailability({ roomId, checkIn, checkOut, unitsReques
     const totalUnits = Math.max(room.inventory_count ?? 1, 1);
     // Each overlapping booking holds one unit, but only on the nights it actually
     // covers, so the dates come back with it rather than just a row count.
+    // status and payment_status come too: an unpaid booking is retained in full
+    // but no longer closes the calendar (see occupiesInventory).
     const { data: bookings, error: bookingError } = await supabase
         .from("bookings")
-        .select("checkin, checkout")
+        .select("checkin, checkout, status, payment_status")
         .eq("room_id", roomId)
         .in("status", OCCUPYING_STATUSES)
         .lt("checkin", checkOut)
@@ -68,7 +71,8 @@ export async function checkAvailability({ roomId, checkIn, checkOut, unitsReques
     // A guest cannot act on "blocked" versus "booked" any differently, but the
     // wording still steers them: sold out invites different dates, held-back
     // inventory invites a phone call.
-    const soldOut = (bookings?.length ?? 0) > 0 && blocks.length === 0;
+    const occupying = (bookings ?? []).filter(occupiesInventory);
+    const soldOut = occupying.length > 0 && blocks.length === 0;
     return {
         available: false,
         availableUnits: remaining,

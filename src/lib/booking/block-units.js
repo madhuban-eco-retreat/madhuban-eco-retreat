@@ -1,8 +1,40 @@
 // Pure inventory arithmetic — no server-only, so the admin calendar and the
 // booking API can share one definition of "how many units are left".
 
-/** Booking statuses that hold a unit. PENDING_PAYMENT may never be paid. */
+/** Booking statuses that can hold a unit, before payment is considered. */
 export const OCCUPYING_STATUSES = ["CONFIRMED", "CHECKED_IN"];
+
+/**
+ * Payment states that count as money received.
+ *
+ * "partial" is included deliberately: the online flow takes a 50% advance and
+ * marks the booking partial, and a guest who has paid half has certainly bought
+ * the room. Only "pending" — nothing received — fails to hold inventory.
+ */
+export const PAID_PAYMENT_STATUSES = ["paid", "partial"];
+
+/**
+ * Whether one booking row holds a unit against availability.
+ *
+ * The rule is now money, not just status. A booking that is CONFIRMED but
+ * unpaid — an abandoned online attempt, or a walk-in entered ahead of payment —
+ * used to take the room off sale indefinitely and quietly cost the property
+ * inventory it could have sold. Only a paid or part-paid booking blocks; a
+ * manual block is the tool for holding a room without payment.
+ *
+ * The row itself is untouched either way. Nothing here deletes or hides a
+ * booking; it stays in the admin list, it simply stops closing the calendar.
+ *
+ * A row with no payment_status at all — an older booking, or a projection that
+ * did not select the column — is treated as paid. That is the safe direction:
+ * it can only withhold a room, never double-sell one.
+ */
+export function occupiesInventory(booking) {
+  if (!booking) return false;
+  if (!OCCUPYING_STATUSES.includes(booking.status)) return false;
+  if (booking.payment_status === undefined || booking.payment_status === null) return true;
+  return PAID_PAYMENT_STATUSES.includes(String(booking.payment_status).toLowerCase());
+}
 
 /**
  * How many units one manual block holds.
@@ -71,7 +103,9 @@ export function minAvailableUnits({ inventoryCount, checkIn, checkOut, bookings,
         return inventory;
     let min = inventory;
     for (const night of nights) {
-        const occupied = bookings.filter((b) => b.checkin <= night && night < b.checkout).length;
+        const occupied = bookings.filter(
+      (b) => b.checkin <= night && night < b.checkout && occupiesInventory(b),
+    ).length;
         const nightBlocks = blocks.filter((b) => b.date_from <= night && night < b.date_to);
         const blocked = totalBlockedUnits(nightBlocks, roomId, inventory);
         min = Math.min(min, availableUnits({ inventoryCount: inventory, bookedUnits: occupied, blockedUnits: blocked }));

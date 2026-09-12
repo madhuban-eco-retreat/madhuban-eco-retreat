@@ -1,6 +1,6 @@
 import "server-only";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { OCCUPYING_STATUSES, availableUnits, fetchOverlappingBlocks, totalBlockedUnits, } from "@/lib/booking/inventory";
+import { OCCUPYING_STATUSES, occupiesInventory, availableUnits, fetchOverlappingBlocks, totalBlockedUnits, } from "@/lib/booking/inventory";
 export { computeCellState } from "./availability-utils";
 
 /**
@@ -18,7 +18,9 @@ export async function getRoomAvailability(roomIds, from, to) {
         supabase.from("rooms").select("id, inventory_count").in("id", roomIds),
         supabase
             .from("bookings")
-            .select("room_id")
+            // payment_status decides whether the row actually holds the unit;
+            // an unpaid booking is kept but no longer paints the calendar pink.
+            .select("room_id, status, payment_status")
             .in("room_id", roomIds)
             .in("status", OCCUPYING_STATUSES)
             .lt("checkin", to)
@@ -31,6 +33,8 @@ export async function getRoomAvailability(roomIds, from, to) {
         throw new Error(bookingsResult.error.message);
     const bookedByRoom = {};
     for (const b of bookingsResult.data ?? []) {
+        if (!occupiesInventory(b))
+            continue;
         bookedByRoom[b.room_id] = (bookedByRoom[b.room_id] ?? 0) + 1;
     }
     const result = {};
