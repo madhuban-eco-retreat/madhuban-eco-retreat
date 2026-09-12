@@ -21,25 +21,19 @@
  * tent stayed on the 5% slab whether it was sold at Rs 7,500, Rs 9,000 on a
  * peak night, or Rs 9,500 with a third adult in it — under-collecting GST on
  * every booking that was not a bare double-occupancy regular night.
+ *
+ * Every function that needs a number takes an optional rate card and defaults
+ * to DEFAULT_RATE_CARD, which is config.mjs verbatim. That default is what lets
+ * the admin screens move the rate card into the database without changing a
+ * single call site or a single sum: an un-edited card prices identically, and a
+ * missing row falls back rather than failing.
  */
 
-import {
-  GST_THRESHOLD,
-  GST_RATE_LOW,
-  GST_RATE_HIGH,
-  PEAK_SURCHARGE_RATE,
-  PEAK_PERIODS,
-  RECURRING_PEAK_MONTH_DAYS,
-  DISCOUNT_BLACKOUT_PERIODS,
-  LONG_STAY_DISCOUNT_RATE,
-  LONG_STAY_MIN_NIGHTS,
-  LONG_STAY_DISCOUNT_ON_PEAK_NIGHTS,
-  CHILD_RATE,
-  EXTRA_ADULT_RATE,
-  DEFAULT_ADULTS_INCLUDED,
-  DEFAULT_MAX_ADULTS,
-  ROOM_OCCUPANCY_OVERRIDES,
-} from "./config.mjs";
+import { DEFAULT_RATE_CARD, nightlyRateFor } from "./rate-card.mjs";
+import { bestReduction } from "./offers.mjs";
+
+/** Every entry point takes `card` last, so existing callers keep working. */
+const D = DEFAULT_RATE_CARD;
 
 /* -- small helpers -------------------------------------------------------- */
 
@@ -84,10 +78,15 @@ function withinInclusive(date, start, end) {
  * The window wraps the year boundary, so it is two tests, not one: December
  * from the 21st, or January through the 4th.
  */
-function inRecurringPeakWindow(date) {
+function inRecurringPeakWindow(date, card = D) {
+  const recurring = card.recurringPeak;
+  // Null when an admin has deleted the recurring peak row outright. Honoured
+  // rather than quietly reinstated from config, or Christmas could not be
+  // switched off even deliberately.
+  if (!recurring) return false;
   const month = Number(date.slice(5, 7));
   const day = Number(date.slice(8, 10));
-  const { from, to } = RECURRING_PEAK_MONTH_DAYS;
+  const { from, to } = recurring;
   if (month === from.month) return day >= from.day;
   if (month === to.month) return day <= to.day;
   return false;
@@ -102,18 +101,20 @@ function inRecurringPeakWindow(date) {
  * name as peak — so a date the festival list has never heard of is sold at the
  * regular rate rather than falling through to nothing.
  */
-export function seasonForNight(date) {
-  const listed = PEAK_PERIODS.find((p) => withinInclusive(date, p.start, p.end));
+export function seasonForNight(date, card = D) {
+  const listed = (card.peakPeriods ?? []).find(
+    (p) => !p.recurring && withinInclusive(date, p.start, p.end),
+  );
   if (listed) return { season: "peak", label: listed.label };
-  if (inRecurringPeakWindow(date)) {
-    return { season: "peak", label: RECURRING_PEAK_MONTH_DAYS.label };
+  if (inRecurringPeakWindow(date, card)) {
+    return { season: "peak", label: card.recurringPeak?.label ?? "Peak season" };
   }
   return { season: "regular", label: null };
 }
 
 /** Convenience predicate: does this night carry the +20% surcharge? */
-export function isPeakNight(date) {
-  return seasonForNight(date).season === "peak";
+export function isPeakNight(date, card = D) {
+  return seasonForNight(date, card).season === "peak";
 }
 
 /**
@@ -125,13 +126,13 @@ export function isPeakNight(date) {
  * Folding it into seasonForNight would have marked Diwali up 20%, which is not
  * what the rate card says.
  */
-export function discountBlackoutForNight(date) {
-  return DISCOUNT_BLACKOUT_PERIODS.find((p) => withinInclusive(date, p.start, p.end)) ?? null;
+export function discountBlackoutForNight(date, card = D) {
+  return (card.blackoutPeriods ?? []).find((p) => withinInclusive(date, p.start, p.end)) ?? null;
 }
 
 /** True when this night sits in a festival / long-weekend blackout. */
-export function isDiscountBlackoutNight(date) {
-  return discountBlackoutForNight(date) !== null;
+export function isDiscountBlackoutNight(date, card = D) {
+  return discountBlackoutForNight(date, card) !== null;
 }
 
 /**
@@ -142,12 +143,12 @@ export function isDiscountBlackoutNight(date) {
  * rate. Answering both in one place keeps the engine and the invoice-side
  * reconstruction from drifting on which nights count.
  */
-export function discountEligibilityForNight(date) {
-  const { season, label: peakLabel } = seasonForNight(date);
-  if (season === "peak" && !LONG_STAY_DISCOUNT_ON_PEAK_NIGHTS) {
+export function discountEligibilityForNight(date, card = D) {
+  const { season, label: peakLabel } = seasonForNight(date, card);
+  if (season === "peak" && !card.longStay.appliesOnPeak) {
     return { eligible: false, reason: "peak", label: peakLabel };
   }
-  const blackout = discountBlackoutForNight(date);
+  const blackout = discountBlackoutForNight(date, card);
   if (blackout) {
     return { eligible: false, reason: "blackout", label: blackout.label };
   }
@@ -155,20 +156,20 @@ export function discountEligibilityForNight(date) {
 }
 
 /** Every peak period a stay touches, by label. Used for guest-facing copy. */
-export function peakLabelsForStay(checkIn, checkOut) {
+export function peakLabelsForStay(checkIn, checkOut, card = D) {
   const labels = new Set();
   for (const night of stayNights(checkIn, checkOut)) {
-    const { season, label } = seasonForNight(night);
+    const { season, label } = seasonForNight(night, card);
     if (season === "peak" && label) labels.add(label);
   }
   return [...labels];
 }
 
 /** Every period that costs a stay its discount, peak and blackout alike. */
-export function discountBlockingLabelsForStay(checkIn, checkOut) {
+export function discountBlockingLabelsForStay(checkIn, checkOut, card = D) {
   const labels = new Set();
   for (const night of stayNights(checkIn, checkOut)) {
-    const { eligible, label } = discountEligibilityForNight(night);
+    const { eligible, label } = discountEligibilityForNight(night, card);
     if (!eligible && label) labels.add(label);
   }
   return [...labels];
@@ -186,20 +187,20 @@ export function discountBlockingLabelsForStay(checkIn, checkOut) {
  * The threshold is inclusive at the bottom slab: Rs 7,500 exactly is 5%, and
  * only strictly more moves to 18%.
  */
-export function gstRateForEffectiveValue(effectivePerNightValue) {
-  return effectivePerNightValue > GST_THRESHOLD ? GST_RATE_HIGH : GST_RATE_LOW;
+export function gstRateForEffectiveValue(effectivePerNightValue, card = D) {
+  return effectivePerNightValue > card.gst.threshold ? card.gst.rateHigh : card.gst.rateLow;
 }
 
 /* -- occupancy ------------------------------------------------------------ */
 
 /** Adults already covered by the nightly tariff for this room. */
-export function adultsIncludedFor(roomSlug) {
-  return ROOM_OCCUPANCY_OVERRIDES[roomSlug]?.adultsIncluded ?? DEFAULT_ADULTS_INCLUDED;
+export function adultsIncludedFor(roomSlug, card = D) {
+  return card.occupancy.overrides[roomSlug]?.adultsIncluded ?? card.occupancy.defaultAdultsIncluded;
 }
 
 /** Largest party this room accepts. */
-export function maxAdultsFor(roomSlug) {
-  return ROOM_OCCUPANCY_OVERRIDES[roomSlug]?.maxAdults ?? DEFAULT_MAX_ADULTS;
+export function maxAdultsFor(roomSlug, card = D) {
+  return card.occupancy.overrides[roomSlug]?.maxAdults ?? card.occupancy.defaultMaxAdults;
 }
 
 /**
@@ -210,9 +211,16 @@ export function maxAdultsFor(roomSlug) {
  * are absent by construction — they are free, and a zero line on an invoice
  * invites the question of why it is there.
  */
-export function extraPersonChargesPerNight({ adults = 0, children = 0, extraBeds = 0, roomSlug }) {
-  const included = adultsIncludedFor(roomSlug);
+export function extraPersonChargesPerNight({
+  adults = 0,
+  children = 0,
+  extraBeds = 0,
+  roomSlug,
+  card = D,
+}) {
+  const included = adultsIncludedFor(roomSlug, card);
   const extraAdults = Math.max(0, adults - included);
+  const { extraAdultRate, childRate, extraBeddingRate, infantMaxAge, childMaxAge } = card.occupancy;
   const lines = [];
 
   if (extraAdults > 0) {
@@ -220,17 +228,19 @@ export function extraPersonChargesPerNight({ adults = 0, children = 0, extraBeds
       key: "extra_adult",
       label: "Extra adult",
       qty: extraAdults,
-      ratePerNight: EXTRA_ADULT_RATE,
-      amountPerNight: roundTo2(extraAdults * EXTRA_ADULT_RATE),
+      ratePerNight: extraAdultRate,
+      amountPerNight: roundTo2(extraAdults * extraAdultRate),
     });
   }
   if (children > 0) {
     lines.push({
       key: "child",
-      label: "Child (5-12 yrs)",
+      // The bracket is read off the card so the label cannot contradict the
+      // ages the admin screen is charging by.
+      label: `Child (${infantMaxAge}-${childMaxAge} yrs)`,
       qty: children,
-      ratePerNight: CHILD_RATE,
-      amountPerNight: roundTo2(children * CHILD_RATE),
+      ratePerNight: childRate,
+      amountPerNight: roundTo2(children * childRate),
     });
   }
   if (extraBeds > 0) {
@@ -238,8 +248,8 @@ export function extraPersonChargesPerNight({ adults = 0, children = 0, extraBeds
       key: "extra_bed",
       label: "Extra bedding",
       qty: extraBeds,
-      ratePerNight: EXTRA_ADULT_RATE,
-      amountPerNight: roundTo2(extraBeds * EXTRA_ADULT_RATE),
+      ratePerNight: extraBeddingRate,
+      amountPerNight: roundTo2(extraBeds * extraBeddingRate),
     });
   }
 
@@ -283,36 +293,64 @@ export function computeStayQuote({
   roomSlug,
   couponDiscount = 0,
   peakMultiplierOverride = 1,
+  rateCard = D,
+  offers = null,
+  rooms = 1,
+  bookedOn = null,
 }) {
+  const card = rateCard ?? D;
   const nightDates = stayNights(checkIn, checkOut);
   const nights = nightDates.length;
   if (nights < 1) throw new Error("Check-out must be after check-in");
 
-  const extras = extraPersonChargesPerNight({ adults, children, extraBeds, roomSlug });
-  const stayQualifiesForLongStay = nights >= LONG_STAY_MIN_NIGHTS;
+  // The caller may hand the rate in directly — every existing one does — or
+  // leave it out and let the card supply it for the slug.
+  const baseRate =
+    baseNightlyRate ?? nightlyRateFor(card, roomSlug, { peak: false });
+  if (baseRate === undefined || baseRate === null) {
+    throw new Error(`No nightly rate configured for ${roomSlug ?? "this room"}`);
+  }
+
+  const extras = extraPersonChargesPerNight({ adults, children, extraBeds, roomSlug, card });
+  const longStayActive = card.longStay.active !== false;
+  const stayQualifiesForLongStay = longStayActive && nights >= card.longStay.minNights;
 
   // Pass 1 — season, surcharge and the long-stay cut, night by night. The
   // coupon cannot be spread until every night's room rent is known, so the
   // slab is deliberately NOT read here.
   const draft = nightDates.map((date) => {
-    const { season, label } = seasonForNight(date);
+    const { season, label } = seasonForNight(date, card);
     const peak = season === "peak";
     const override =
       typeof peakMultiplierOverride === "function"
         ? Number(peakMultiplierOverride(date)) || 1
         : peakMultiplierOverride;
-    const multiplier = peak ? Math.max(PEAK_SURCHARGE_RATE, override) : override;
-    const seasonalBase = roundTo2(baseNightlyRate * multiplier);
+
+    // A per-room peak rate, where the admin has set one, replaces the derived
+    // surcharge; the rate card is the only place that decision lives. The
+    // multiplier is then back-derived so the night still reports how far above
+    // its base rate it was sold.
+    const peakRate = peak ? nightlyRateFor(card, roomSlug, { peak: true }) : undefined;
+    const cardPeakBase =
+      peak && peakRate !== undefined && card.peakRates?.[roomSlug] !== undefined
+        ? peakRate
+        : undefined;
+
+    const multiplier = peak ? Math.max(card.peakSurchargeRate, override) : override;
+    const seasonalBase = roundTo2(
+      cardPeakBase !== undefined ? Math.max(cardPeakBase, baseRate * override) : baseRate * multiplier,
+    );
+    const effectiveMultiplier = baseRate > 0 ? roundTo2(seasonalBase / baseRate) : multiplier;
 
     // Eligibility is asked of the date, not of `peak`, so a festival night —
     // regular rate, no surcharge — still loses the discount.
-    const eligibility = discountEligibilityForNight(date);
+    const eligibility = discountEligibilityForNight(date, card);
     const discountEligible = stayQualifiesForLongStay && eligibility.eligible;
     const longStayDiscount = discountEligible
-      ? roundTo2(seasonalBase * LONG_STAY_DISCOUNT_RATE)
+      ? roundTo2(seasonalBase * card.longStay.rate)
       : 0;
 
-    const blackout = discountBlackoutForNight(date);
+    const blackout = discountBlackoutForNight(date, card);
 
     return {
       date,
@@ -321,14 +359,59 @@ export function computeStayQuote({
       discountBlackout: blackout !== null,
       discountBlackoutLabel: blackout?.label ?? null,
       discountBlockedBy: stayQualifiesForLongStay ? eligibility.reason : null,
-      baseRate: roundTo2(baseNightlyRate),
-      multiplier,
+      // Nights an offer may reduce. Peak and blackout nights are excluded for
+      // the same reason the long-stay discount skips them.
+      offerEligible: eligibility.eligible,
+      baseRate: roundTo2(baseRate),
+      multiplier: effectiveMultiplier,
       seasonalBase,
       longStayDiscount,
       longStayDiscountApplied: longStayDiscount > 0,
       roomRentAfterLongStay: roundTo2(seasonalBase - longStayDiscount),
     };
   });
+
+  // ── one reduction, not two ────────────────────────────────────────────────
+  // The long-stay discount worked out above is a candidate, not a decision.
+  // Campaign offers compete with it and the biggest single saving wins; nothing
+  // stacks. When an offer wins, the long-stay cut is removed from every night
+  // rather than reduced, so the guest gets exactly one of the two.
+  const offerList = offers ?? card.offers ?? [];
+  const { winner, candidates: reductionCandidates } = bestReduction({
+    nightLines: draft,
+    offers: offerList,
+    longStayPerNight: draft.map((n) => n.longStayDiscount),
+    nights,
+    roomSlug,
+    rooms,
+    bookedOn,
+  });
+  const offerWon = winner.kind === "offer" && winner.offer;
+
+  if (offerWon) {
+    draft.forEach((n, i) => {
+      n.longStayDiscount = 0;
+      n.longStayDiscountApplied = false;
+      n.offerDiscount = winner.perNight[i];
+      n.offerDiscountApplied = winner.perNight[i] > 0;
+      n.roomRentAfterLongStay = roundTo2(n.seasonalBase - n.offerDiscount);
+    });
+  } else {
+    draft.forEach((n) => {
+      n.offerDiscount = 0;
+      n.offerDiscountApplied = false;
+    });
+  }
+
+  const appliedOffer = offerWon
+    ? {
+        id: winner.offer.id ?? null,
+        name: winner.offer.name ?? "Offer",
+        rewardType: winner.offer.reward_type,
+        rewardValue: winner.offer.reward_value ?? null,
+        amount: winner.total,
+      }
+    : null;
 
   // Spread the coupon across nights by share of room rent, then hand the last
   // night the remainder so the parts add back to the coupon exactly rather
@@ -351,7 +434,7 @@ export function computeStayQuote({
     const couponShare = couponPerNight[i];
     const roomValue = roundTo2(n.roomRentAfterLongStay - couponShare);
     const effectiveValue = roundTo2(roomValue + extras.total);
-    const gstRate = gstRateForEffectiveValue(effectiveValue);
+    const gstRate = gstRateForEffectiveValue(effectiveValue, card);
     const gstAmount = roundTo2((effectiveValue * gstRate) / 100);
 
     return {
@@ -372,6 +455,7 @@ export function computeStayQuote({
 
   const seasonalBaseTotal = sum((n) => n.seasonalBase);
   const longStayDiscountTotal = sum((n) => n.longStayDiscount);
+  const offerDiscountTotal = sum((n) => n.offerDiscount ?? 0);
   const couponDiscountTotal = sum((n) => n.couponDiscount);
   const extraPersonTotal = sum((n) => n.extraPersonCharges);
   const taxableAmount = sum((n) => n.effectiveValue);
@@ -415,14 +499,34 @@ export function computeStayQuote({
     blackoutLabels: [...new Set(nightLines.map((n) => n.discountBlackoutLabel).filter(Boolean))],
     discountEligibleNights: nightLines.filter((n) => n.longStayDiscountApplied).length,
 
-    baseNightlyRate: roundTo2(baseNightlyRate),
+    baseNightlyRate: roundTo2(baseRate),
     seasonalBaseTotal,
     longStayDiscountTotal,
     longStayDiscountApplied: longStayDiscountTotal > 0,
-    longStayDiscountRate: LONG_STAY_DISCOUNT_RATE,
+    longStayDiscountRate: card.longStay.rate,
     couponDiscountTotal,
-    totalDiscount: roundTo2(longStayDiscountTotal + couponDiscountTotal),
+
+    // The winning campaign offer, if one beat the long-stay discount. Null when
+    // the house discount won or when nothing applied.
+    appliedOffer,
+    offerDiscountTotal,
+    // Every offer considered, with the reason each was passed over. The admin
+    // preview renders this; a guest never sees it.
+    offerCandidates: reductionCandidates
+      .filter((c) => c.kind === "offer")
+      .map((c) => ({
+        id: c.offer?.id ?? null,
+        name: c.offer?.name ?? null,
+        total: c.total,
+        skipped: c.skipped ?? null,
+        won: offerWon && c.offer === winner.offer,
+      })),
+
+    totalDiscount: roundTo2(longStayDiscountTotal + offerDiscountTotal + couponDiscountTotal),
     extraPersonTotal,
+
+    /** The card this quote was priced from, for offers and the rate snapshot. */
+    rateCard: card,
 
     /** Pre-GST amount actually being charged. */
     taxableAmount,
@@ -451,17 +555,25 @@ export function computeStayQuote({
  * the discount outright: marking a date up and then discounting it is not a
  * rate the property sells.
  */
-export function longStayDiscountForStay({ baseNightlyTotal, nights, checkIn, checkOut, multiplier = 1 }) {
-  if (nights < LONG_STAY_MIN_NIGHTS) {
+export function longStayDiscountForStay({
+  baseNightlyTotal,
+  nights,
+  checkIn,
+  checkOut,
+  multiplier = 1,
+  rateCard = D,
+}) {
+  const card = rateCard ?? D;
+  if (card.longStay.active === false || nights < card.longStay.minNights) {
     return { amount: 0, applied: false, reason: null };
   }
 
   const dates = stayNights(checkIn, checkOut);
-  const eligible = dates.filter((d) => discountEligibilityForNight(d).eligible);
+  const eligible = dates.filter((d) => discountEligibilityForNight(d, card).eligible);
 
   if (eligible.length === 0 || multiplier > 1) {
     const labels = [
-      ...new Set(dates.map((d) => discountEligibilityForNight(d).label).filter(Boolean)),
+      ...new Set(dates.map((d) => discountEligibilityForNight(d, card).label).filter(Boolean)),
     ].join(", ");
     return {
       amount: 0,
@@ -474,21 +586,21 @@ export function longStayDiscountForStay({ baseNightlyTotal, nights, checkIn, che
   // a mixed stay is right. Only peak nights carry the surcharge — a blackout
   // night costs the plain tariff, so it weighs the same as a regular one even
   // though it earns nothing.
-  const weights = dates.map((d) => (isPeakNight(d) ? PEAK_SURCHARGE_RATE : 1));
+  const weights = dates.map((d) => (isPeakNight(d, card) ? card.peakSurchargeRate : 1));
   const totalWeight = weights.reduce((s, w) => s + w, 0);
   const eligibleWeight = dates.reduce(
-    (s, d, i) => (discountEligibilityForNight(d).eligible ? s + weights[i] : s),
+    (s, d, i) => (discountEligibilityForNight(d, card).eligible ? s + weights[i] : s),
     0,
   );
   const eligibleRent = (baseNightlyTotal * eligibleWeight) / totalWeight;
 
-  const pct = Math.round(LONG_STAY_DISCOUNT_RATE * 100);
+  const pct = Math.round(card.longStay.rate * 100);
   return {
-    amount: roundTo2(eligibleRent * LONG_STAY_DISCOUNT_RATE),
+    amount: roundTo2(eligibleRent * card.longStay.rate),
     applied: true,
     reason:
       eligible.length === dates.length
-        ? `${pct}% off for ${LONG_STAY_MIN_NIGHTS}+ nights stay`
+        ? `${pct}% off for ${card.longStay.minNights}+ nights stay`
         : `${pct}% off room rent on your ${eligible.length} regular-season night${
             eligible.length > 1 ? "s" : ""
           }`,
@@ -503,14 +615,14 @@ export function longStayDiscountForStay({ baseNightlyTotal, nights, checkIn, che
  * discount for two different reasons, and a guest who was never charged a
  * surcharge should not be told their dates were "peak season".
  */
-export function longStayDiscountReason(quote) {
-  if (quote.nights < LONG_STAY_MIN_NIGHTS) return null;
+export function longStayDiscountReason(quote, card = quote?.rateCard ?? D) {
+  if (quote.nights < card.longStay.minNights) return null;
 
-  const pct = Math.round(LONG_STAY_DISCOUNT_RATE * 100);
+  const pct = Math.round(card.longStay.rate * 100);
   if (quote.longStayDiscountApplied) {
     const n = quote.discountEligibleNights;
     return n === quote.nights
-      ? `${pct}% off for ${LONG_STAY_MIN_NIGHTS}+ nights stay`
+      ? `${pct}% off for ${card.longStay.minNights}+ nights stay`
       : `${pct}% off room rent on ${n} of your ${quote.nights} nights`;
   }
 
