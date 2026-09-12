@@ -77,7 +77,6 @@ const fmtRange = (start, end) => {
     : `${fromLabel} ${from.getUTCFullYear()} – ${toLabel}`;
 };
 
-// Header styling is shared so a second table cannot drift to its own colour.
 // Festival and long-weekend dates are the only place the long-stay discount is
 // withheld without a surcharge to explain it, so the footnote names them rather
 // than leaving "notified" pointing at nothing a guest can read.
@@ -85,8 +84,14 @@ const blackoutDatesLabel = DISCOUNT_BLACKOUT_PERIODS.map(
   (p) => `${p.label} ${fmtRange(p.start, p.end)}`,
 ).join(", ");
 
+// Header styling is shared so a second table cannot drift to its own colour.
 const TABLE_HEAD = "bg-earth-brown text-cream";
 const TH = "px-4 py-3 text-sm md:text-base font-semibold";
+
+// The coloured strips read as part of the same family as the table headers, so
+// they take the same pair rather than each picking its own green. Sharing the
+// constant is what stops a third banner appearing in a fourth colour.
+const BANNER = "bg-earth-brown text-cream";
 
 const TariffSection = () => {
   const gstLine = `GST extra as applicable — ${GST_RATE_LOW}% GST on ${inr(
@@ -105,7 +110,7 @@ const TariffSection = () => {
         </div>
 
         {/* GST callout — prominent, appears next to every rate */}
-        <div className="bg-forest-green text-cream rounded-xl px-5 py-4 mb-8 text-center shadow-subtle">
+        <div className={`${BANNER} rounded-xl px-5 py-4 mb-8 text-center shadow-subtle`}>
           <p className="font-semibold text-sm md:text-base">{gstLine}</p>
         </div>
 
@@ -138,7 +143,7 @@ const TariffSection = () => {
 
         {/* 2+ nights discount — prominent */}
         <div className="bg-cream border border-warm-beige rounded-xl overflow-hidden mb-8">
-          <div className="bg-moss-green text-cream px-5 py-3 text-center">
+          <div className={`${BANNER} px-5 py-3 text-center`}>
             <p className="font-bold text-sm md:text-lg">
               Stay {LONG_STAY_MIN_NIGHTS} Nights or More — Flat {longStayPct}% Off on Room Rent
             </p>
