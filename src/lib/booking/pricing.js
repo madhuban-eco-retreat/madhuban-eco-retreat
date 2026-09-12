@@ -13,6 +13,7 @@ import {
   LONG_STAY_DISCOUNT_RATE,
   LONG_STAY_MIN_NIGHTS,
   PEAK_PERIODS,
+  DISCOUNT_BLACKOUT_PERIODS,
 } from "@/lib/pricing/config.mjs";
 
 /**
@@ -31,13 +32,17 @@ export const MULTI_NIGHT_DISCOUNT_RATE = LONG_STAY_DISCOUNT_RATE;
 export const MULTI_NIGHT_MIN_NIGHTS = LONG_STAY_MIN_NIGHTS;
 
 /**
- * The peak periods, under the name the invoice route already reads them by.
+ * The festival and long-weekend dates, under the name callers already use.
  *
- * They were a blackout list for the discount before they were a surcharge
- * list; they are the same dates either way, and keeping two lists is how they
- * drift apart.
+ * These are now their own tier and no longer the same list as the peak period:
+ * a long weekend is sold at the regular rate and only loses the long-stay
+ * discount, while Christmas is marked up 20% and loses it as well. The name
+ * means what it says again — it points at the long weekends, not at Christmas.
  */
-export const LONG_WEEKEND_BLOCKS = PEAK_PERIODS;
+export const LONG_WEEKEND_BLOCKS = DISCOUNT_BLACKOUT_PERIODS;
+
+/** The one marked-up period, for anything that needs the surcharge dates. */
+export const PEAK_SURCHARGE_PERIODS = PEAK_PERIODS;
 
 /**
  * The long-stay discount for a past stay, under the name the invoice route

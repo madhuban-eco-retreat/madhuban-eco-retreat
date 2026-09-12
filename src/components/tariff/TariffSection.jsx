@@ -5,6 +5,7 @@ import {
   BASE_NIGHTLY_RATES,
   PEAK_SURCHARGE_RATE,
   PEAK_PERIODS,
+  DISCOUNT_BLACKOUT_PERIODS,
   LONG_STAY_DISCOUNT_RATE,
   LONG_STAY_MIN_NIGHTS,
   GST_THRESHOLD,
@@ -77,6 +78,13 @@ const fmtRange = (start, end) => {
 };
 
 // Header styling is shared so a second table cannot drift to its own colour.
+// Festival and long-weekend dates are the only place the long-stay discount is
+// withheld without a surcharge to explain it, so the footnote names them rather
+// than leaving "notified" pointing at nothing a guest can read.
+const blackoutDatesLabel = DISCOUNT_BLACKOUT_PERIODS.map(
+  (p) => `${p.label} ${fmtRange(p.start, p.end)}`,
+).join(", ");
+
 const TABLE_HEAD = "bg-earth-brown text-cream";
 const TH = "px-4 py-3 text-sm md:text-base font-semibold";
 
@@ -158,8 +166,9 @@ const TariffSection = () => {
             </table>
           </div>
           <p className="text-xs text-charcoal px-4 py-3">
-            The {longStayPct}% discount is <strong>not applicable</strong> during Peak
-            Season, Christmas/New Year, and long weekends. GST extra as applicable.
+            The {longStayPct}% discount is <strong>not applicable</strong> during
+            Christmas/New Year (21 December – 04 January) or on notified festival
+            and long-weekend dates: {blackoutDatesLabel}. GST extra as applicable.
           </p>
         </div>
 
@@ -172,8 +181,8 @@ const TariffSection = () => {
               – 30 June (except long weekends)
             </li>
             <li>
-              <strong>Peak Season:</strong> 21 December – 04 January (Christmas/New
-              Year) and all notified long weekends, charged at +{peakPct}%
+              <strong>Peak Season (+{peakPct}%):</strong> 21 December – 04 January
+              (Christmas/New Year) only
             </li>
             <li>
               <strong>Notified Peak Dates:</strong>{" "}

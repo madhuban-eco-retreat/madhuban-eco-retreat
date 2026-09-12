@@ -18,11 +18,14 @@ import {
   seasonForNight,
   gstRateForEffectiveValue,
   longStayDiscountForStay,
+  isDiscountBlackoutNight,
+  discountEligibilityForNight,
 } from "./quote.mjs";
 import { computeAdminQuote } from "./admin-quote.mjs";
 import {
   BASE_NIGHTLY_RATES,
   PEAK_PERIODS,
+  DISCOUNT_BLACKOUT_PERIODS,
   GST_THRESHOLD,
   GST_RATE_LOW,
   GST_RATE_HIGH,
@@ -39,6 +42,10 @@ import {
 const GLAMPING = BASE_NIGHTLY_RATES["glamping-tents"];
 const SAFARI_TENT = BASE_NIGHTLY_RATES["safari-tent"];
 const MUD_STANDARD = BASE_NIGHTLY_RATES["mud-house-standard"];
+
+/** The morning after a given night: the check-out date of a one-night stay. */
+const nextDay = (date) =>
+  new Date(Date.parse(`${date}T00:00:00Z`) + 86400000).toISOString().slice(0, 10);
 
 /* -- Case A --------------------------------------------------------------- */
 
@@ -172,13 +179,13 @@ test("the Christmas window recurs every year, with no dated list to refresh", ()
   assert.equal(seasonForNight("2029-07-04").season, "regular");
 });
 
-test("long weekends are no longer peak — Christmas is the only peak period", () => {
+test("long weekends are never peak — Christmas is the only marked-up period", () => {
   // Dussehra, Diwali and Holi carried the surcharge on an earlier rate card.
   // They are regular season now; this guards against them creeping back in.
   for (const date of [
     "2026-10-16", "2026-10-17", "2026-10-20", "2026-10-21", // Dussehra
     "2026-11-06", "2026-11-10", "2026-11-14", "2026-11-15", // Diwali
-    "2027-03-15", "2027-03-19", "2027-03-22", "2027-03-23", // Holi
+    "2027-03-19", "2027-03-22", "2027-03-23",               // Holi
   ]) {
     assert.equal(seasonForNight(date).season, "regular", date);
   }
@@ -189,9 +196,163 @@ test("long weekends are no longer peak — Christmas is the only peak period", (
   assert.equal(PEAK_PERIODS[0].end, "2027-01-04");
 });
 
-test("a former long weekend is sold at the regular rate, discount included", () => {
-  // Diwali 2026: 2 nights at the plain tariff, and the long-stay discount now
-  // applies to both because neither night is peak any more.
+/* -- the discount blackout tier ------------------------------------------- */
+
+test("blackout periods are the configured festivals, on their exact dates", () => {
+  assert.deepEqual(
+    DISCOUNT_BLACKOUT_PERIODS.map((p) => [p.label, p.start, p.end]),
+    [
+      ["Dussehra", "2026-10-17", "2026-10-20"],
+      ["Diwali", "2026-11-06", "2026-11-14"],
+      ["Holi", "2027-03-19", "2027-03-22"],
+    ],
+  );
+
+  // Inclusive of both endpoints, and nothing either side of them.
+  assert.equal(isDiscountBlackoutNight("2026-10-16"), false);
+  assert.equal(isDiscountBlackoutNight("2026-10-17"), true);
+  assert.equal(isDiscountBlackoutNight("2026-10-20"), true);
+  assert.equal(isDiscountBlackoutNight("2026-10-21"), false);
+  assert.equal(isDiscountBlackoutNight("2027-03-18"), false);
+  assert.equal(isDiscountBlackoutNight("2027-03-19"), true);
+  assert.equal(isDiscountBlackoutNight("2027-03-22"), true);
+  assert.equal(isDiscountBlackoutNight("2027-03-23"), false);
+});
+
+test("lunar festivals do NOT recur by month/day the way Christmas does", () => {
+  // Diwali 2026 is 06-14 Nov. The same dates a year later are nothing special,
+  // which is exactly why this list has to be refreshed every year.
+  assert.equal(isDiscountBlackoutNight("2026-11-10"), true);
+  assert.equal(isDiscountBlackoutNight("2027-11-10"), false);
+  assert.equal(isDiscountBlackoutNight("2025-11-10"), false);
+});
+
+test("a blackout night is charged the plain tariff — no surcharge, ever", () => {
+  for (const [slug, base] of Object.entries(BASE_NIGHTLY_RATES)) {
+    for (const period of DISCOUNT_BLACKOUT_PERIODS) {
+      const q = computeStayQuote({
+        baseNightlyRate: base,
+        roomSlug: slug,
+        checkIn: period.start,
+        checkOut: nextDay(period.start),
+        adults: 2,
+      });
+      assert.equal(q.peakNights, 0, `${slug} ${period.label}`);
+      assert.equal(q.blackoutNights, 1, `${slug} ${period.label}`);
+      assert.equal(q.nightLines[0].multiplier, 1, `${slug} ${period.label}`);
+      assert.equal(q.nightLines[0].seasonalBase, base, `${slug} ${period.label}`);
+    }
+  }
+});
+
+test("a single festival night is unaffected — there was no discount to lose", () => {
+  const festival = computeStayQuote({
+    baseNightlyRate: GLAMPING,
+    roomSlug: "glamping-tents",
+    checkIn: "2026-10-18",
+    checkOut: "2026-10-19",
+    adults: 2,
+  });
+  const ordinary = computeStayQuote({
+    baseNightlyRate: GLAMPING,
+    roomSlug: "glamping-tents",
+    checkIn: "2026-09-10",
+    checkOut: "2026-09-11",
+    adults: 2,
+  });
+
+  assert.equal(festival.blackoutNights, 1);
+  assert.equal(festival.nightLines[0].effectiveValue, 7500);
+  assert.equal(festival.gstRate, 5);
+  assert.equal(festival.totalAmount, ordinary.totalAmount);
+  assert.equal(festival.totalAmount, 7875);
+});
+
+test("a stay straddling a blackout discounts only its regular nights", () => {
+  // 20 Oct is the last Dussehra night; 21 and 22 Oct are ordinary.
+  const q = computeStayQuote({
+    baseNightlyRate: MUD_STANDARD,
+    roomSlug: "mud-house-standard",
+    checkIn: "2026-10-20",
+    checkOut: "2026-10-23",
+    adults: 2,
+  });
+
+  assert.equal(q.nights, 3);
+  assert.equal(q.peakNights, 0);
+  assert.equal(q.blackoutNights, 1);
+  assert.equal(q.discountEligibleNights, 2);
+
+  const [oct20, oct21, oct22] = q.nightLines;
+
+  // Blackout night: full tariff, no surcharge, no discount -> 18%.
+  assert.equal(oct20.discountBlackout, true);
+  assert.equal(oct20.seasonalBase, 9000);
+  assert.equal(oct20.longStayDiscount, 0);
+  assert.equal(oct20.effectiveValue, 9000);
+  assert.equal(oct20.gstRate, 18);
+
+  // Regular nights of the same stay: the stay qualifies, so 20% comes off and
+  // the slab follows the discounted value down to 5%.
+  for (const n of [oct21, oct22]) {
+    assert.equal(n.discountBlackout, false);
+    assert.equal(n.longStayDiscount, 1800);
+    assert.equal(n.effectiveValue, 7200);
+    assert.equal(n.gstRate, 5);
+  }
+
+  assert.equal(q.longStayDiscountApplied, true);
+  assert.equal(q.longStayDiscountTotal, 3600);
+  assert.equal(q.taxableAmount, 9000 + 7200 + 7200);
+  assert.equal(q.totalGst, 1620 + 360 + 360);
+  assert.equal(q.totalAmount, 23400 + 2340);
+});
+
+test("peak and blackout are different reasons for the same outcome", () => {
+  assert.deepEqual(discountEligibilityForNight("2026-12-25"), {
+    eligible: false,
+    reason: "peak",
+    label: "Christmas & New Year",
+  });
+  assert.deepEqual(discountEligibilityForNight("2026-11-10"), {
+    eligible: false,
+    reason: "blackout",
+    label: "Diwali",
+  });
+  assert.deepEqual(discountEligibilityForNight("2026-09-10"), {
+    eligible: true,
+    reason: null,
+    label: null,
+  });
+});
+
+test("the invoice-side reconstruction withholds on blackout nights too", () => {
+  // 2 Diwali nights at the plain 7,500 tariff: nothing comes off.
+  const blacked = longStayDiscountForStay({
+    baseNightlyTotal: 15000,
+    nights: 2,
+    checkIn: "2026-11-07",
+    checkOut: "2026-11-09",
+  });
+  assert.equal(blacked.applied, false);
+  assert.equal(blacked.amount, 0);
+  assert.match(blacked.reason, /Diwali/);
+
+  // 20-23 Oct: 27,000 of room rent, one Dussehra night and two ordinary ones.
+  // Only the two eligible nights (18,000 of it) earn the 20%.
+  const mixed = longStayDiscountForStay({
+    baseNightlyTotal: 27000,
+    nights: 3,
+    checkIn: "2026-10-20",
+    checkOut: "2026-10-23",
+  });
+  assert.equal(mixed.applied, true);
+  assert.equal(mixed.amount, 3600);
+});
+
+test("worked Diwali stay: regular rate, but the long-stay discount is withheld", () => {
+  // 2 nights, 07-09 Nov 2026. No surcharge — these are not peak nights — but
+  // both fall in the Diwali blackout, so neither earns the 2+ night discount.
   const q = computeStayQuote({
     baseNightlyRate: GLAMPING,
     roomSlug: "glamping-tents",
@@ -201,13 +362,18 @@ test("a former long weekend is sold at the regular rate, discount included", () 
   });
 
   assert.equal(q.peakNights, 0);
-  assert.equal(q.longStayDiscountApplied, true);
+  assert.equal(q.blackoutNights, 2);
+  assert.equal(q.longStayDiscountApplied, false);
+  assert.equal(q.longStayDiscountTotal, 0);
   for (const n of q.nightLines) {
     assert.equal(n.seasonalBase, 7500);
-    assert.equal(n.effectiveValue, 6000);
+    assert.equal(n.effectiveValue, 7500);
     assert.equal(n.gstRate, 5);
+    assert.equal(n.gstAmount, 375);
   }
-  assert.equal(q.totalAmount, 12600);
+  assert.equal(q.taxableAmount, 15000);
+  assert.equal(q.totalGst, 750);
+  assert.equal(q.totalAmount, 15750);
 });
 
 test("a stay straddling 04/05 Jan prices each night on its own season", () => {

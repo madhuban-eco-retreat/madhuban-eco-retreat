@@ -30,6 +30,7 @@ import {
   PEAK_SURCHARGE_RATE,
   PEAK_PERIODS,
   RECURRING_PEAK_MONTH_DAYS,
+  DISCOUNT_BLACKOUT_PERIODS,
   LONG_STAY_DISCOUNT_RATE,
   LONG_STAY_MIN_NIGHTS,
   LONG_STAY_DISCOUNT_ON_PEAK_NIGHTS,
@@ -110,9 +111,47 @@ export function seasonForNight(date) {
   return { season: "regular", label: null };
 }
 
-/** Convenience predicate — the surcharge and the discount blackout share it. */
+/** Convenience predicate: does this night carry the +20% surcharge? */
 export function isPeakNight(date) {
   return seasonForNight(date).season === "peak";
+}
+
+/**
+ * The festival or long weekend this night falls in, or null.
+ *
+ * Separate from the season because it answers a different question. A blackout
+ * night is REGULAR season — it is sold at the plain tariff, with no surcharge —
+ * and the only thing it changes is that the long-stay discount is withheld.
+ * Folding it into seasonForNight would have marked Diwali up 20%, which is not
+ * what the rate card says.
+ */
+export function discountBlackoutForNight(date) {
+  return DISCOUNT_BLACKOUT_PERIODS.find((p) => withinInclusive(date, p.start, p.end)) ?? null;
+}
+
+/** True when this night sits in a festival / long-weekend blackout. */
+export function isDiscountBlackoutNight(date) {
+  return discountBlackoutForNight(date) !== null;
+}
+
+/**
+ * Whether one night can carry the long-stay discount, and why not if it cannot.
+ *
+ * The two reasons are independent and both disqualifying: a peak night is
+ * already marked up, and a blackout night is a date the property fills at full
+ * rate. Answering both in one place keeps the engine and the invoice-side
+ * reconstruction from drifting on which nights count.
+ */
+export function discountEligibilityForNight(date) {
+  const { season, label: peakLabel } = seasonForNight(date);
+  if (season === "peak" && !LONG_STAY_DISCOUNT_ON_PEAK_NIGHTS) {
+    return { eligible: false, reason: "peak", label: peakLabel };
+  }
+  const blackout = discountBlackoutForNight(date);
+  if (blackout) {
+    return { eligible: false, reason: "blackout", label: blackout.label };
+  }
+  return { eligible: true, reason: null, label: null };
 }
 
 /** Every peak period a stay touches, by label. Used for guest-facing copy. */
@@ -121,6 +160,16 @@ export function peakLabelsForStay(checkIn, checkOut) {
   for (const night of stayNights(checkIn, checkOut)) {
     const { season, label } = seasonForNight(night);
     if (season === "peak" && label) labels.add(label);
+  }
+  return [...labels];
+}
+
+/** Every period that costs a stay its discount, peak and blackout alike. */
+export function discountBlockingLabelsForStay(checkIn, checkOut) {
+  const labels = new Set();
+  for (const night of stayNights(checkIn, checkOut)) {
+    const { eligible, label } = discountEligibilityForNight(night);
+    if (!eligible && label) labels.add(label);
   }
   return [...labels];
 }
@@ -255,16 +304,23 @@ export function computeStayQuote({
     const multiplier = peak ? Math.max(PEAK_SURCHARGE_RATE, override) : override;
     const seasonalBase = roundTo2(baseNightlyRate * multiplier);
 
-    const discountEligible =
-      stayQualifiesForLongStay && (!peak || LONG_STAY_DISCOUNT_ON_PEAK_NIGHTS);
+    // Eligibility is asked of the date, not of `peak`, so a festival night —
+    // regular rate, no surcharge — still loses the discount.
+    const eligibility = discountEligibilityForNight(date);
+    const discountEligible = stayQualifiesForLongStay && eligibility.eligible;
     const longStayDiscount = discountEligible
       ? roundTo2(seasonalBase * LONG_STAY_DISCOUNT_RATE)
       : 0;
+
+    const blackout = discountBlackoutForNight(date);
 
     return {
       date,
       season,
       seasonLabel: label,
+      discountBlackout: blackout !== null,
+      discountBlackoutLabel: blackout?.label ?? null,
+      discountBlockedBy: stayQualifiesForLongStay ? eligibility.reason : null,
       baseRate: roundTo2(baseNightlyRate),
       multiplier,
       seasonalBase,
@@ -352,6 +408,13 @@ export function computeStayQuote({
     regularNights: nights - peakNights,
     peakLabels: [...new Set(nightLines.map((n) => n.seasonLabel).filter(Boolean))],
 
+    // Festival / long-weekend nights: regular rate, discount withheld. Counted
+    // separately from peak so a summary can explain the missing discount on a
+    // stay that was never marked up.
+    blackoutNights: nightLines.filter((n) => n.discountBlackout).length,
+    blackoutLabels: [...new Set(nightLines.map((n) => n.discountBlackoutLabel).filter(Boolean))],
+    discountEligibleNights: nightLines.filter((n) => n.longStayDiscountApplied).length,
+
     baseNightlyRate: roundTo2(baseNightlyRate),
     seasonalBaseTotal,
     longStayDiscountTotal,
@@ -394,10 +457,12 @@ export function longStayDiscountForStay({ baseNightlyTotal, nights, checkIn, che
   }
 
   const dates = stayNights(checkIn, checkOut);
-  const eligible = dates.filter((d) => !isPeakNight(d));
+  const eligible = dates.filter((d) => discountEligibilityForNight(d).eligible);
 
   if (eligible.length === 0 || multiplier > 1) {
-    const labels = [...new Set(dates.map((d) => seasonForNight(d).label).filter(Boolean))].join(", ");
+    const labels = [
+      ...new Set(dates.map((d) => discountEligibilityForNight(d).label).filter(Boolean)),
+    ].join(", ");
     return {
       amount: 0,
       applied: false,
@@ -405,9 +470,16 @@ export function longStayDiscountForStay({ baseNightlyTotal, nights, checkIn, che
     };
   }
 
+  // Weighted by what each night was actually sold at, so the eligible share of
+  // a mixed stay is right. Only peak nights carry the surcharge — a blackout
+  // night costs the plain tariff, so it weighs the same as a regular one even
+  // though it earns nothing.
   const weights = dates.map((d) => (isPeakNight(d) ? PEAK_SURCHARGE_RATE : 1));
   const totalWeight = weights.reduce((s, w) => s + w, 0);
-  const eligibleWeight = dates.reduce((s, d, i) => (isPeakNight(d) ? s : s + weights[i]), 0);
+  const eligibleWeight = dates.reduce(
+    (s, d, i) => (discountEligibilityForNight(d).eligible ? s + weights[i] : s),
+    0,
+  );
   const eligibleRent = (baseNightlyTotal * eligibleWeight) / totalWeight;
 
   const pct = Math.round(LONG_STAY_DISCOUNT_RATE * 100);
@@ -427,18 +499,23 @@ export function longStayDiscountForStay({ baseNightlyTotal, nights, checkIn, che
  * Why the long-stay discount was or was not given, in one guest-facing line.
  *
  * Kept beside the engine so checkout, the review step and the invoice cannot
- * each invent their own wording for the same outcome.
+ * each invent their own wording for the same outcome. A stay can now lose the
+ * discount for two different reasons, and a guest who was never charged a
+ * surcharge should not be told their dates were "peak season".
  */
 export function longStayDiscountReason(quote) {
   if (quote.nights < LONG_STAY_MIN_NIGHTS) return null;
+
+  const pct = Math.round(LONG_STAY_DISCOUNT_RATE * 100);
   if (quote.longStayDiscountApplied) {
-    const pct = Math.round(LONG_STAY_DISCOUNT_RATE * 100);
-    return quote.peakNights > 0
-      ? `${pct}% off room rent on your ${quote.regularNights} regular-season night${
-          quote.regularNights > 1 ? "s" : ""
-        }`
-      : `${pct}% off for ${LONG_STAY_MIN_NIGHTS}+ nights stay`;
+    const n = quote.discountEligibleNights;
+    return n === quote.nights
+      ? `${pct}% off for ${LONG_STAY_MIN_NIGHTS}+ nights stay`
+      : `${pct}% off room rent on ${n} of your ${quote.nights} nights`;
   }
-  const labels = quote.peakLabels.join(", ");
-  return labels ? `Not available for ${labels} dates` : "Not available on peak season dates";
+
+  const labels = [...new Set([...quote.peakLabels, ...quote.blackoutLabels])].join(", ");
+  return labels
+    ? `Not available for ${labels} dates`
+    : "Not available on peak season dates";
 }

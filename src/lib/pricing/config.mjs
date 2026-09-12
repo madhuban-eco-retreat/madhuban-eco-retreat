@@ -118,6 +118,35 @@ export const PEAK_PERIODS = [
   },
 ];
 
+/**
+ * Festival and long-weekend dates: regular rate, but no long-stay discount.
+ *
+ * The middle tier of three. A night here is sold at the plain tariff — the
+ * +20% surcharge is exclusive to PEAK_PERIODS and never applies to these — but
+ * the 2+ night discount is withheld, because these are the dates the property
+ * fills at full rate without having to discount for length of stay.
+ *
+ * !! THESE MUST BE UPDATED EVERY YEAR. !!
+ *
+ * Unlike Christmas, these are lunar-calendar festivals: Dussehra, Diwali and
+ * Holi land on different Gregorian dates each year, so they CANNOT be matched
+ * by month/day the way the 21 Dec - 04 Jan window is. They are written out as
+ * explicit dated ranges and simply stop applying once their year passes —
+ * which fails safe (a guest gets the discount) rather than withholding a
+ * discount on the wrong dates, but it does mean a stale list quietly costs the
+ * property money. Refresh this when the next year's festival calendar is out.
+ *
+ * `start` and `end` are both INCLUSIVE stayed nights, the same convention
+ * PEAK_PERIODS uses.
+ */
+export const DISCOUNT_BLACKOUT_PERIODS = [
+  // 2026-27. Holi 2027 (Rangwali) falls on Monday 22 March, so 19-22 is the
+  // Friday-to-Monday weekend around it.
+  { label: "Dussehra", start: "2026-10-17", end: "2026-10-20" },
+  { label: "Diwali", start: "2026-11-06", end: "2026-11-14" },
+  { label: "Holi", start: "2027-03-19", end: "2027-03-22" },
+];
+
 /* ── Long-stay discount ───────────────────────────────────────────────────── */
 
 /** Fraction taken off room rent on a qualifying night. */
@@ -133,6 +162,10 @@ export const LONG_STAY_MIN_NIGHTS = 2;
  * night up 20% and handing 20% straight back is not a rate the property sells.
  * The stay still QUALIFIES on total nights — a 3-night stay spanning Christmas
  * gets the discount on its regular nights and full peak rate on the rest.
+ *
+ * This governs peak nights only. DISCOUNT_BLACKOUT_PERIODS withholds the
+ * discount for its own, separate reason — those nights are not marked up, so
+ * turning this flag on would still leave them un-discounted.
  */
 export const LONG_STAY_DISCOUNT_ON_PEAK_NIGHTS = false;
 
