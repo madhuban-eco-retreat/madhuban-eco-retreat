@@ -140,6 +140,17 @@ export const GUIDED_HIKE_RATE_PER_PERSON = 2000;
 export const GUIDED_HIKE_MIN_GUESTS = 4;
 export const BUSH_DINING_RATE_PER_COUPLE = 3000;
 
+/**
+ * Whether an add-on or experience is taxed at the room's slab.
+ *
+ * True, which is the behaviour the booking engine already had — one rate
+ * across the folio. The rate card says only "GST as applicable" for these, so
+ * this is the existing assumption made explicit rather than a new rule: if the
+ * property's accountant wants experiences at a flat 18% regardless of the
+ * room, this is the single line that changes.
+ */
+export const ADDON_GST_FOLLOWS_ROOM_SLAB = true;
+
 /** The same figures as display rows, for the public tariff table. */
 export const OTHER_CHARGES = [
   {

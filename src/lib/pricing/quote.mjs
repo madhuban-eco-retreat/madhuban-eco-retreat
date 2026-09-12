@@ -210,7 +210,11 @@ export function extraPersonChargesPerNight({ adults = 0, children = 0, extraBeds
  * peakMultiplierOverride exists for the admin pricing_rules table, which can
  * mark a date range up beyond the standard +20%. It only ever raises the
  * surcharge: a staff rule below the rate card cannot undercut the published
- * peak rate, and a rule of 1 on a Christmas night cannot cancel it.
+ * peak rate, and a rule of 1 on a Christmas night cannot cancel it. Pass a
+ * number for a flat override, or a (date) => number callback when the rules
+ * cover only part of the stay — a rule is a date range like any other, and
+ * applying its multiplier to nights outside it was the stay-level mistake this
+ * engine exists to stop repeating.
  *
  * couponDiscount is a rupee figure off room rent for the whole stay. It is
  * spread across nights in proportion to what each night's room rent is worth,
@@ -244,9 +248,11 @@ export function computeStayQuote({
   const draft = nightDates.map((date) => {
     const { season, label } = seasonForNight(date);
     const peak = season === "peak";
-    const multiplier = peak
-      ? Math.max(PEAK_SURCHARGE_RATE, peakMultiplierOverride)
-      : peakMultiplierOverride;
+    const override =
+      typeof peakMultiplierOverride === "function"
+        ? Number(peakMultiplierOverride(date)) || 1
+        : peakMultiplierOverride;
+    const multiplier = peak ? Math.max(PEAK_SURCHARGE_RATE, override) : override;
     const seasonalBase = roundTo2(baseNightlyRate * multiplier);
 
     const discountEligible =

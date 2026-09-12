@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { computeRoomGstRate, isInterStateGuest, computeTaxBreakdown, getFinancialYear, HSN_ACCOMMODATION } from "@/lib/gst";
+import { isInterStateGuest, computeTaxBreakdown, getFinancialYear, HSN_ACCOMMODATION } from "@/lib/gst";
+import { gstRateForEffectiveValue } from "@/lib/pricing/quote.mjs";
 import { extraGuestCharges } from "@/lib/booking/occupancy";
 import { calculateMultiNightDiscount, MULTI_NIGHT_DISCOUNT_RATE } from "@/lib/booking/pricing";
 import { assertAdmin } from "@/lib/admin/auth";
@@ -76,6 +77,11 @@ export async function POST(req) {
     const checkoutLabel = checkoutDate.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
     // Build line items — amounts are pre-GST, matching how rooms are tariffed.
     const addons = (Array.isArray(booking.addons) ? booking.addons : []);
+    // Add-ons are a separate supply and are not part of the room's per-night
+    // value, so they are held aside when the slab is read off the folio.
+    const addonsTaxable = roundTo2(
+        addons.reduce((s, a) => s + Number(a.price ?? 0) * Number(a.qty ?? 0), 0),
+    );
     // Extra occupants are charged on the booking but are not addon rows, so they
     // are reconstructed from the stored headcount. Without these the invoice
     // total would fall short of what the guest actually paid.
@@ -176,13 +182,21 @@ export async function POST(req) {
         // of the lines either way, and every existing invoice still renders.
         ...discountLines,
     ];
-    // GST rate always computed from base price — never read stored column
-    const gstRatePct = computeRoomGstRate(room.base_price_per_night);
     // Line amounts exclude GST, so their sum IS the taxable value; the tax is
     // added on top by computeTaxBreakdown below. With the discount carried as a
     // negative line, that sum is the DISCOUNTED base — which is what GST is
     // charged on, and what the admin folio already shows as the subtotal.
     const taxableAmount = Math.round(lineItems.reduce((s, i) => s + i.amount, 0) * 100) / 100;
+    // The slab follows the transaction value, not the catalogue tariff: the
+    // effective per-night room value is what the guest was actually billed for
+    // the room, extra occupants included, divided back over the nights. Reading
+    // room.base_price_per_night here — as this route used to — put a Rs 7,500
+    // tent sold at Rs 9,500 with a third adult on the 5% slab, and issued a tax
+    // invoice understating the GST due on it.
+    const effectivePerNightValue = roundTo2(
+        Math.max(0, taxableAmount - addonsTaxable) / nights,
+    );
+    const gstRatePct = gstRateForEffectiveValue(effectivePerNightValue);
     // Determine guest state for intra/inter-state split
     const isCorporate = !!booking.corporate_gstin;
     const rawAddress = isCorporate ? booking.corporate_address : guest?.address ?? null;
