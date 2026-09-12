@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { isInterStateGuest, computeTaxBreakdown, getFinancialYear, HSN_ACCOMMODATION } from "@/lib/gst";
 import { gstRateForEffectiveValue } from "@/lib/pricing/quote.mjs";
+import { readRateSnapshot, effectivePerNightFromSnapshot } from "@/lib/pricing/snapshot.mjs";
 import { extraGuestCharges } from "@/lib/booking/occupancy";
 import { calculateMultiNightDiscount, MULTI_NIGHT_DISCOUNT_RATE } from "@/lib/booking/pricing";
 import { assertAdmin } from "@/lib/admin/auth";
@@ -193,10 +194,18 @@ export async function POST(req) {
     // room.base_price_per_night here — as this route used to — put a Rs 7,500
     // tent sold at Rs 9,500 with a third adult on the 5% slab, and issued a tax
     // invoice understating the GST due on it.
-    const effectivePerNightValue = roundTo2(
-        Math.max(0, taxableAmount - addonsTaxable) / nights,
-    );
-    const gstRatePct = gstRateForEffectiveValue(effectivePerNightValue);
+    //
+    // A booking made since the admin rate screen shipped carries a frozen
+    // snapshot of the card it was sold at. That is authoritative: it is the
+    // only way an invoice reprinted after a price change still states the tax
+    // the guest actually paid. Older bookings have no snapshot and fall back to
+    // deriving the per-night value from the folio, which is what this route did
+    // for all bookings before.
+    const snapshot = readRateSnapshot(booking.rate_snapshot);
+    const snapshotPerNight = snapshot ? effectivePerNightFromSnapshot(snapshot) : null;
+    const effectivePerNightValue =
+        snapshotPerNight ?? roundTo2(Math.max(0, taxableAmount - addonsTaxable) / nights);
+    const gstRatePct = snapshot?.totals?.gstRate ?? gstRateForEffectiveValue(effectivePerNightValue);
     // Determine guest state for intra/inter-state split
     const isCorporate = !!booking.corporate_gstin;
     const rawAddress = isCorporate ? booking.corporate_address : guest?.address ?? null;

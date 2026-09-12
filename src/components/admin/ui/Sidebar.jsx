@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Receipt, Bed, Calendar, CalendarRange, Tag, Settings, ClipboardList, HelpCircle, LogOut, Menu, X, FileText, ChevronDown, } from 'lucide-react';
+import { LayoutDashboard, Receipt, Bed, Calendar, CalendarRange, Tag, Settings, ClipboardList, HelpCircle, LogOut, Menu, X, FileText, ChevronDown, IndianRupee, Percent, } from 'lucide-react';
 import { cn } from '@/lib/utils';
 const R2 = process.env.NEXT_PUBLIC_R2_BASE ?? '';
 // The source also listed Souvenir Shop, Gallery, Featured Experiences, Leads
@@ -13,6 +13,8 @@ const NAV_ITEMS = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/admin' },
     { icon: Calendar, label: 'Bookings', href: '/admin/bookings' },
     { icon: Bed, label: 'Rooms', href: '/admin/rooms' },
+    { icon: IndianRupee, label: 'Rates & Rules', href: '/admin/rates' },
+    { icon: Percent, label: 'Offers', href: '/admin/offers' },
     { icon: CalendarRange, label: 'Availability', href: '/admin/availability' },
     { icon: Receipt, label: 'Invoices', href: '/admin/invoices' },
     { icon: Tag, label: 'Coupons', href: '/admin/coupons' },

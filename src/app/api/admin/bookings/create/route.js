@@ -163,6 +163,9 @@ export async function POST(req) {
             corporate_address: corporate?.address ?? null,
             addons: addonsForStorage,
             assigned_unit: assignedUnit?.trim() || null,
+            // Same freeze as the public flow — a walk-in priced today keeps
+            // today's rate card even if staff edit rates tomorrow.
+            rate_snapshot: pricing.rateSnapshot ?? null,
         })
             .select("id, booking_ref")
             .single();

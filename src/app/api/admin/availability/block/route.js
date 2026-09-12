@@ -4,6 +4,7 @@ import { z } from "zod";
 import { assertAdmin } from "@/lib/admin/auth";
 import {
     OCCUPYING_STATUSES,
+    occupiesInventory,
     fetchOverlappingBlocks,
     totalBlockedUnits,
 } from "@/lib/booking/inventory";
@@ -82,9 +83,12 @@ export async function POST(req) {
     // meant the whole room type. With per-unit blocking the question is narrower:
     // is there a free unit left to block? Blocking one Safari Tent while the other
     // is booked is legitimate and now allowed.
-    const { count: bookedUnits, error: bookingCheckError } = await supabase
+    // Only paid bookings hold a unit, so only those can stand in the way of a
+    // block. An unpaid one no longer occupies inventory and must not stop staff
+    // holding the room back.
+    const { data: overlappingBookings, error: bookingCheckError } = await supabase
         .from("bookings")
-        .select("id", { count: "exact", head: true })
+        .select("id, status, payment_status")
         .eq("room_id", room.id)
         .in("status", OCCUPYING_STATUSES)
         .lt("checkin", end_date)
@@ -92,6 +96,7 @@ export async function POST(req) {
     if (bookingCheckError) {
         return NextResponse.json({ error: "Failed to check for conflicts" }, { status: 500 });
     }
+    const bookedUnits = (overlappingBookings ?? []).filter(occupiesInventory).length;
     let existingBlocks;
     try {
         existingBlocks = await fetchOverlappingBlocks(supabase, {

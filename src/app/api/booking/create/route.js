@@ -90,6 +90,10 @@ export async function POST(req) {
             discount_amount: pricing.totalDiscount,
             coupon_code: pricing.couponCode ?? null,
             total_amount: pricing.totalAmount,
+            // Freeze what this was sold at. Rate edits after today must not
+            // reprice a booking the guest has already paid for; invoicing reads
+            // this back rather than the live rate card.
+            rate_snapshot: pricing.rateSnapshot ?? null,
             special_requests: specialRequests ?? null,
             // bookings has no infants column and they carry no charge, so the
             // headcount is recorded as a staff note — housekeeping still needs

@@ -2,7 +2,9 @@
 import "server-only";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { computeGst } from "@/lib/gst";
-import { maxAdultsFor } from "@/lib/booking/occupancy";
+import { maxAdultsFor } from "@/lib/pricing/quote.mjs";
+import { loadRateCard } from "@/lib/pricing/rate-card-db";
+import { buildRateSnapshot } from "@/lib/pricing/snapshot.mjs";
 import {
   computeStayQuote,
   longStayDiscountForStay,
@@ -92,14 +94,6 @@ export async function calculatePricing(params) {
   if (nights < minNights)
     throw new Error(`Minimum stay is ${minNights} night${minNights > 1 ? "s" : ""}`);
 
-  // The request schema can only bound adults by the largest figure any room
-  // allows, because it has no room in hand. The authoritative per-room cap is
-  // here, where the slug is known — without it a hand-crafted request could
-  // put six adults in a Safari Tent at the double-occupancy rate.
-  const maxAdults = maxAdultsFor(room.slug);
-  if (adults > maxAdults)
-    throw new Error(`This room takes up to ${maxAdults} adult${maxAdults > 1 ? "s" : ""}`);
-
   // pricing_rules has: rule_type, date_from, date_to, multiplier. These are
   // staff overrides layered on top of the published peak surcharge, never a
   // replacement for it — the engine takes whichever is higher for each night,
@@ -109,7 +103,21 @@ export async function calculatePricing(params) {
     .select("rule_type, date_from, date_to, multiplier")
     .or(`room_id.eq.${room.id},room_id.is.null`);
 
-  const baseNightlyRate = Number(room.base_price_per_night);
+  // The admin-editable rate card. Anything the admin has not set falls back to
+  // config.mjs, so this cannot fail the quote.
+  const card = await loadRateCard();
+
+  // room_rates is the authority on price once an admin has set one; the rooms
+  // table stays the fallback so a category with no rate row still sells.
+  // The request schema can only bound adults by the largest figure any room
+  // allows, because it has no room in hand. The authoritative per-room cap is
+  // here, where the slug is known — without it a hand-crafted request could
+  // put six adults in a Safari Tent at the double-occupancy rate.
+  const maxAdults = maxAdultsFor(room.slug, card);
+  if (adults > maxAdults)
+    throw new Error(`This room takes up to ${maxAdults} adult${maxAdults > 1 ? "s" : ""}`);
+
+  const baseNightlyRate = card.baseRates[room.slug] ?? Number(room.base_price_per_night);
   const stay = {
     baseNightlyRate,
     checkIn,
@@ -119,6 +127,10 @@ export async function calculatePricing(params) {
     infants,
     roomSlug: room.slug,
     peakMultiplierOverride: multiplierLookup(rules),
+    rateCard: card,
+    offers: card.offers,
+    rooms: params.rooms ?? 1,
+    bookedOn: new Date().toISOString().slice(0, 10),
   };
 
   // Quote once without a coupon to learn how much room rent is left for one to
@@ -211,6 +223,11 @@ export async function calculatePricing(params) {
     discountAmount: quote.couponDiscountTotal,
     couponCode: appliedCouponCode,
 
+    // The winning campaign offer, if one beat the long-stay discount. Only ever
+    // one of the two is non-zero — they compete rather than stack.
+    appliedOffer: quote.appliedOffer,
+    offerDiscount: quote.offerDiscountTotal,
+
     // Length-of-stay discount, kept as its own line so the summary can name it
     // rather than folding it into a coupon the guest never entered.
     multiNightDiscount: quote.longStayDiscountTotal,
@@ -239,5 +256,17 @@ export async function calculatePricing(params) {
     // Retained under its original name for callers written before the split.
     gstAmount: quote.totalGst,
     totalAmount: quote.totalAmount,
+
+    // Frozen copy of everything this price was derived from. The create route
+    // writes it to bookings.rate_snapshot, and invoicing reads it back instead
+    // of the live rate card — which is what lets staff edit rates without
+    // repricing a booking someone already paid for.
+    rateSnapshot: buildRateSnapshot({
+      quote,
+      roomSlug: room.slug,
+      roomName: room.name,
+      couponCode: appliedCouponCode,
+      couponAmount,
+    }),
   };
 }

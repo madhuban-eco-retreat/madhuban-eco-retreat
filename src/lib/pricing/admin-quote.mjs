@@ -48,6 +48,9 @@ export function computeAdminQuote({
   children = 0,
   extraBeds = 0,
   addons = [],
+  rateCard = undefined,
+  offers = null,
+  bookedOn = null,
 }) {
   const quote = computeStayQuote({
     baseNightlyRate,
@@ -57,6 +60,12 @@ export function computeAdminQuote({
     adults,
     children,
     extraBeds,
+    // Passed through rather than defaulted here, so a staff booking is priced
+    // from the same admin-edited card the public site quotes from. Omitting it
+    // falls back to config, which is what the tests rely on.
+    ...(rateCard ? { rateCard } : {}),
+    ...(offers ? { offers } : {}),
+    ...(bookedOn ? { bookedOn } : {}),
   });
 
   const addonsBreakdown = addonLines(addons, quote.nights);

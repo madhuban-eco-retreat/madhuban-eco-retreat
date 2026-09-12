@@ -12,7 +12,7 @@ import "server-only";
  * arithmetic itself lives in ./block-units so the admin calendar, which runs in
  * the browser, can apply the identical rule.
  */
-export { OCCUPYING_STATUSES, availableUnits, blockedUnitsFor, minAvailableUnits, totalBlockedUnits, } from "@/lib/booking/block-units";
+export { OCCUPYING_STATUSES, PAID_PAYMENT_STATUSES, occupiesInventory, availableUnits, blockedUnitsFor, minAvailableUnits, totalBlockedUnits, } from "@/lib/booking/block-units";
 
 const BLOCK_COLUMNS = "id, room_id, date_from, date_to, reason, notes, created_at, created_by, units_blocked";
 // Column list as it stood before the units_blocked migration.
