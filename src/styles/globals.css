@@ -8,17 +8,17 @@
 
 :root {
   /* Custom color variables */
-  --color-green-primary: #2D5F2D;
-  --color-green-secondary: #3A6B35;
-  --color-brown-primary: #8B5A2B;
-  --color-brown-secondary: #A67C52;
-  --color-gray-primary: #707070;
-  --color-gray-secondary: #A9A9A9;
+  --color-green-primary: #2D3B2D;
+  --color-green-secondary: #4A6741;
+  --color-brown-primary: #6E6146;
+  --color-brown-secondary: #D4A76A;
+  --color-gray-primary: #8B8578;
+  --color-gray-secondary: #D1C8C1;
 }
 
 body {
   font-family: 'Lato', sans-serif;
-  color: #333;
+  color: var(--color-charcoal);
 }
 
 .font-serif {
@@ -47,25 +47,25 @@ body {
 
 /* Override default datepicker styling */
 .react-datepicker-wrapper input[type='text'] {
-  background-color: #D1C8C1 !important;
+  background-color: var(--color-warm-beige) !important;
   color: white !important;
 }
 
 .react-datepicker-wrapper input[type='text']:focus {
-  background-color: #D1C8C1 !important;
+  background-color: var(--color-warm-beige) !important;
   color: white !important;
   border: 2px solid var(--primary-gray2) !important;
   outline: none !important;
 }
 
 .react-datepicker-wrapper input[type='text']:hover {
-  background-color: #D1C8C1 !important;
+  background-color: var(--color-warm-beige) !important;
   color: white !important;
   border: 1px solid black !important;
 }
 
 .react-datepicker-wrapper input[type='text']::placeholder {
-  color: rgb(110, 97, 70) !important;
+  color: var(--color-earth-brown) !important;
   opacity: 1 !important;
 }
 
@@ -75,16 +75,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--color-cream);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+  background: var(--color-warm-beige);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a1a1a1;
+  background: var(--color-earth-brown);
 }
 
 .custom-container {
@@ -204,7 +204,7 @@ body {
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
     .text-glow {
-      text-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+      text-shadow: 0 0 20px rgba(74, 103, 65, 0.4);
     }
     .bg-forest-gradient {
       background: linear-gradient(to bottom, rgba(5, 7, 5, 0.6), rgba(5, 7, 5, 0.95));
@@ -242,7 +242,7 @@ body {
       font-weight: 700 !important;    
     }
     .MuiTypography-root {
-      color: #333 !important;
+      color: var(--color-charcoal) !important;
     }
     .MuiSvgIcon-root {
       color: #fff!important;
@@ -275,7 +275,7 @@ body {
 }
 
 .text-mask-nature {
-      background: linear-gradient(to right, #22c55e, #84cc16, #fbbf24);
+      background: linear-gradient(to right, #4A6741, #6E6146, #C9A84C);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-size: 200% auto;
@@ -283,7 +283,7 @@ body {
     }
 
     .heading-glow {
-      text-shadow: 0 0 30px rgba(34, 197, 94, 0.3);
+      text-shadow: 0 0 30px rgba(74, 103, 65, 0.3);
     }
 
     @keyframes shimmer {
@@ -294,7 +294,7 @@ body {
       display: inline-block;
       overflow: hidden;
       white-space: nowrap;
-      border-right: 2px solid #22c55e;
+      border-right: 2px solid #6E6146;
       animation: typing 2.5s steps(30, end), blink-caret 0.75s step-end infinite;
     }
 
@@ -305,7 +305,7 @@ body {
 
     @keyframes blink-caret {
       from, to { border-color: transparent }
-      50% { border-color: #22c55e }
+      50% { border-color: #6E6146 }
     }
 
 

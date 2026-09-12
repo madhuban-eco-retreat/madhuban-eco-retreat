@@ -40,7 +40,7 @@ const storyPoints = [
 const Story = () => {
   return (
     <motion.div
-      className="text-center pb-16 pt-12 bg-[rgb(110,97,70)] overflow-hidden"
+      className="text-center pb-16 pt-12 bg-earth-brown overflow-hidden"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
@@ -58,7 +58,7 @@ const Story = () => {
               transition={{ duration: 0.7 }}
               viewport={{ once: true }}
             >
-              <div className="max-w-4xl mx-auto px-4 py-10 text-lg text-gray-800">
+              <div className="max-w-4xl mx-auto px-4 py-10 text-lg text-charcoal">
                 <div className="text-white font-arial-narrow">
                   <p className="mb-6 p-text text-justify">
                     The story of Madhuban began not with ambition, but with
@@ -76,7 +76,7 @@ const Story = () => {
                     Madhuban Eco Retreat is their first venture into hospitality
                     — a project built on:
                   </p>
-                  <div className="bg-[#d1c8c1] rounded-lg overflow-hidden shadow-lg">
+                  <div className="bg-warm-beige rounded-lg overflow-hidden shadow-lg">
                     {storyPoints.map((item, i) => {
                       return (
                         <motion.div

@@ -84,7 +84,7 @@ const EcoPhilosophy = () => {
             transition={{ duration: 0.7 }}
             viewport={{ once: true }}
           >
-            <div className=" mx-auto px-4 py-10 text-lg text-gray-800">
+            <div className=" mx-auto px-4 py-10 text-lg text-charcoal">
               <div className="text-primary-gray2 font-arial-narrow">
                 <p className="mb-6 p-text p-text-black  text-justify">
                   At Madhuban Eco Retreat, nature is not a backdrop — it is the

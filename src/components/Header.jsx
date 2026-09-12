@@ -85,7 +85,7 @@ const MainNavigation = () => {
           <div className="flex items-center space-x-4">
             <a
               href="tel:+917895432160"
-              className="flex items-center hover:text-[#D1C8C1]"
+              className="flex items-center hover:text-warm-beige"
             >
               <Phone className="w-4 h-4 mr-1" />
               <span>+{phone}</span>
@@ -93,7 +93,7 @@ const MainNavigation = () => {
             <a
               href={`mailto:${gmail}`}
               aria-label="send us a message on this email"
-              className="hover:text-[#D1C8C1]"
+              className="hover:text-warm-beige"
             >
               {gmail}
             </a>
@@ -134,10 +134,10 @@ const MainNavigation = () => {
               priority
             />
             <div className="flex flex-col justify-center">
-              <div className="font-primary tracking-wide text-lg font-bold text-[rgb(110,97,70)] leading-tight whitespace-nowrap">
+              <div className="font-primary tracking-wide text-lg font-bold text-earth-brown leading-tight whitespace-nowrap">
                 Madhuban Eco Retreat
               </div>
-              <p className="font-primary tracking-wider text-xs text-[rgb(110,97,70)] leading-tight whitespace-nowrap">
+              <p className="font-primary tracking-wider text-xs text-earth-brown leading-tight whitespace-nowrap">
                 Ratapani Tiger Reserve, Bhopal
               </p>
             </div>
@@ -150,9 +150,9 @@ const MainNavigation = () => {
             aria-label="Toggle menu"
           >
             {isMenuOpen ? (
-              <X className="w-6 h-6 text-[rgb(110,97,70)]" />
+              <X className="w-6 h-6 text-earth-brown" />
             ) : (
-              <Menu className="w-6 h-6 text-[rgb(110,97,70)]" />
+              <Menu className="w-6 h-6 text-earth-brown" />
             )}
           </button>
 
@@ -212,7 +212,7 @@ const MainNavigation = () => {
                     <li key={link.name}>
                       <Link
                         href={link.path}
-                        className="block px-4 py-2 text-sm font-medium font-primary text-[rgb(110,97,70)] hover:bg-[rgb(110,97,70)]/10 tracking-wide"
+                        className="block px-4 py-2 text-sm font-medium font-primary text-earth-brown hover:bg-earth-brown/10 tracking-wide"
                       >
                         {link.name}
                       </Link>
@@ -226,7 +226,7 @@ const MainNavigation = () => {
           {/* Book Now Button - Desktop */}
           <Link
             href="/stay-in-ratapani-tiger-reserve"
-            className="hidden xl:inline-flex items-center justify-center rounded-full px-6 py-2.5 font-primary text-sm font-medium text-[#D1C8C1] bg-[rgb(110,97,70)] hover:bg-[rgb(132,116,85)] transition-colors whitespace-nowrap"
+            className="hidden xl:inline-flex items-center justify-center rounded-full px-6 py-2.5 font-primary text-sm font-medium text-warm-beige bg-earth-brown hover:bg-[rgb(132,116,85)] transition-colors whitespace-nowrap"
           >
             Book Now
           </Link>
@@ -240,7 +240,7 @@ const MainNavigation = () => {
             {/* Close Button */}
             <button
               onClick={() => setIsMenuOpen(false)}
-              className="absolute top-4 right-4 inline-flex items-center justify-center w-11 h-11 text-[rgb(110,97,70)] hover:text-[rgb(110,97,70)]"
+              className="absolute top-4 right-4 inline-flex items-center justify-center w-11 h-11 text-earth-brown hover:text-earth-brown"
               aria-label="Close menu"
             >
               <X className="w-6 h-6" />
@@ -257,7 +257,7 @@ const MainNavigation = () => {
                         className={`block  text-lg px-4 py-2  p-text border-b-1 border-b-gray-200 ml-4 ${
                           pathname === item.path
                             ? "text-white bg-primary-gray2 rounded-lg"
-                            : "text-gray-800 hover:text-[rgb(110,97,70)]"
+                            : "text-charcoal hover:text-earth-brown"
                         }`}
                       >
                         {item.name}
@@ -271,7 +271,7 @@ const MainNavigation = () => {
               <Link
                 href="/stay-in-ratapani-tiger-reserve"
                 onClick={() => setIsMenuOpen(false)}
-                className="mt-6 w-full py-3 text-center rounded-full font-semibold  text-[#D1C8C1] bg-[rgb(110,97,70)] hover:bg-[rgb(132,116,85)] transition"
+                className="mt-6 w-full py-3 text-center rounded-full font-semibold  text-warm-beige bg-earth-brown hover:bg-[rgb(132,116,85)] transition"
               >
                 Book Now
               </Link>

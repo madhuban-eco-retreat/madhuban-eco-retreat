@@ -74,7 +74,7 @@ const DecorativeHeading = ({
       </div>
       {subheading && (
         <SubheadingTag
-          className="heading2 text-gray-400 mt-2 text-center"
+          className="heading2 text-earth-brown mt-2 text-center"
           style={{ color }}
         >
           {subheading}

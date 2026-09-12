@@ -78,7 +78,7 @@ const VisionMission = () => {
                   transition={{ duration: 0.7 }}
                   viewport={{ once: true }}
                 >
-                  <div className="max-w-4xl mx-auto px-4 py-10  text-lg text-gray-800">
+                  <div className="max-w-4xl mx-auto px-4 py-10  text-lg text-charcoal">
                     <div className=" max-md:text-(--primary-gray2) md:text-white  font-arial-narrow">
                       <h3 className="text-base md:text-lg font-semibold mb-4 text-primary-color-custom">
                         Our Vision
@@ -162,7 +162,7 @@ const VisionMission = () => {
                   transition={{ duration: 0.7 }}
                   viewport={{ once: true }}
                 >
-                  <div className="max-w-4xl mx-auto px-4 py-10 text-lg text-gray-800">
+                  <div className="max-w-4xl mx-auto px-4 py-10 text-lg text-charcoal">
                     <div className="max-md:text-(--primary-gray2) md:text-white font-arial-narrow">
                       <h3 className="text-2xl mb-4">Our Mission</h3>
                       <p className="mb-6 text-base md:text-lg   text-justify">

@@ -6,7 +6,7 @@ import React from "react";
 const CustomLinkBtn = ({
   href = "#",
   children,
-  color = "#6e6146ff",
+  color = "#6E6146",
   height = "50px",
   width,
   borderRadius = "12px",

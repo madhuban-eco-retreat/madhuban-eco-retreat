@@ -137,11 +137,11 @@ const ContactModal = () => {
           >
             <IoMdCloseCircle />
           </Box>
-          <div className="rounded-2xl shadow-lg p-2 py-4 md:p-8 bg-[#6e6146] ">
+          <div className="rounded-2xl shadow-lg p-2 py-4 md:p-8 bg-earth-brown ">
             <h2 className="heading1 font-semibold text-white text-center mb-1 font-primary">
               Send Us a Message
             </h2>
-            <p className="p-text text-gray-200 mb-1 md:mb-4 text-center">
+            <p className="p-text text-warm-beige mb-1 md:mb-4 text-center">
               Your message goes directly to WhatsApp.
             </p>
 
@@ -223,7 +223,7 @@ const ContactModal = () => {
                 </div>
                 <button
                   type="submit"
-                  className="submit-btn font-arial-narrow text-[rgb(110,97,70)] font-primary"
+                  className="submit-btn font-arial-narrow text-earth-brown font-primary"
                 >
                   {isSubmitting ? "Sending..." : "Submit"}
                 </button>

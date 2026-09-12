@@ -59,12 +59,12 @@ Message: ${data.message}
   };
 
   return (
-    <div className="sticky-contact-form rounded-2xl shadow-lg p-5 py-6 bg-[#6e6146]">
+    <div className="sticky-contact-form rounded-2xl shadow-lg p-5 py-6 bg-earth-brown">
       {/* Header */}
       <h2 className="text-xl font-semibold text-white text-center mb-1 font-primary">
         Send Us a Message
       </h2>
-      <p className="text-xs text-gray-200 mb-4 text-center">
+      <p className="text-xs text-warm-beige mb-4 text-center">
         Your message goes directly to WhatsApp.
       </p>
 
@@ -164,7 +164,7 @@ Message: ${data.message}
         </button>
       </form>
 
-      <p className="text-[11px] text-gray-300 mt-3 text-center">
+      <p className="text-[11px] text-warm-beige mt-3 text-center">
         We promise to respond within 24 hours.
       </p>
     </div>

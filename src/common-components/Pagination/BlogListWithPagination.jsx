@@ -75,7 +75,7 @@ function BlogList({ initialBlogs, totalPages, limit }) {
             onClick={handleLoadMore}
             loading={loading}
             disabled={loading}
-            color="#6e6146ff"
+            color="#6E6146"
             className="px-8 text-base"
             ariaLabel="Load more blogs"
           >

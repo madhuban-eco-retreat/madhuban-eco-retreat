@@ -74,7 +74,7 @@ const experiences = [
 ];
 const ImmersiveExperiences = () => {
   return (
-    <section className="py-8 px-4 md:px-8 bg-[#D1C8C1]">
+    <section className="py-8 px-4 md:px-8 bg-warm-beige">
       <div className="max-w-6xl mx-auto">
         <motion.div
           className="text-center mb-6 md:mb-8"

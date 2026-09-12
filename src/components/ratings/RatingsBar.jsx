@@ -34,7 +34,7 @@ export default function RatingsBar() {
   }, []);
 
   return (
-    <section className="bg-[#F5F0E8] border-t border-[#C8B99A] py-8 px-4">
+    <section className="bg-[#FAF7F2] border-t border-[#C8B99A] py-8 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Heading */}
         <h2 className="text-center text-sm font-medium text-charcoal/60 uppercase tracking-widest mb-6">

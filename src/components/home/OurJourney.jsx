@@ -63,7 +63,7 @@ const OurJourney = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
-    <section className="py-12 md:py-16 px-4 md:px-1 bg-[#D1C8C1]">
+    <section className="py-12 md:py-16 px-4 md:px-1 bg-warm-beige">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <motion.div
@@ -95,7 +95,7 @@ const OurJourney = () => {
                 whileHover={{ scale: 1.2 }}
                 aria-label={name}
                 title={name}
-                className="inline-flex items-center justify-center w-11 h-11 text-[rgb(110,97,70)] hover:text-[rgb(132,116,85)] transition-colors"
+                className="inline-flex items-center justify-center w-11 h-11 text-earth-brown hover:text-[rgb(132,116,85)] transition-colors"
               >
                 <Icon className="w-7 h-7" aria-hidden="true" />
               </motion.a>
@@ -207,7 +207,7 @@ const OurJourney = () => {
 const PlayIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    className="w-8 h-8 text-[#29561F]"
+    className="w-8 h-8 text-[#4A6741]"
     fill="currentColor"
     viewBox="0 0 16 16"
   >

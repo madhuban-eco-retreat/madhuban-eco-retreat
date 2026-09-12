@@ -59,7 +59,7 @@ const celebrities = [
 
 const GuestsSection = () => {
   return (
-    <section className="py-8 px-4 md:px-8 bg-[#D1C8C1]">
+    <section className="py-8 px-4 md:px-8 bg-warm-beige">
       <div className="max-w-6xl mx-auto">
         <motion.div
           className="text-center max-w-3xl mx-auto mb-6 md:mb-8"
@@ -86,7 +86,7 @@ const GuestsSection = () => {
             <motion.div
               key={i}
               // OPTIMIZATION: added 'will-change-transform' for smoother GPU scaling
-              className="relative h-80 rounded-lg overflow-hidden shadow-lg group bg-gray-300 will-change-transform"
+              className="relative h-80 rounded-lg overflow-hidden shadow-lg group bg-warm-beige will-change-transform"
               variants={itemVariants}
               whileHover={{ scale: 1.03 }}
             >

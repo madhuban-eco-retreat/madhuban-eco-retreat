@@ -136,7 +136,7 @@ const BirdWatchingAndWilderness = () => {
                   </svg>
                 </button>
                 <div
-                  className={`px-4 pb-3 text-[#D1C8C1] transition-all duration-300 ease-in-out ${
+                  className={`px-4 pb-3 text-warm-beige transition-all duration-300 ease-in-out ${
                     activeNestedAccordion === idx ? "block" : "hidden"
                   }`}
                 >
@@ -216,7 +216,7 @@ const BirdWatchingAndWilderness = () => {
                 .getElementById("accordion-section")
                 ?.scrollIntoView({ behavior: "smooth" })
             }
-            className="font-primary font-semibold tracking-wider mt-10 text-white border border-white px-4 py-2 rounded-full hover:bg-white hover:text-[rgb(110,97,70)] transition duration-300"
+            className="font-primary font-semibold tracking-wider mt-10 text-white border border-white px-4 py-2 rounded-full hover:bg-white hover:text-earth-brown transition duration-300"
           >
             ↓ Scroll Down
           </button>
@@ -260,7 +260,7 @@ const BirdWatchingAndWilderness = () => {
                 </button>
 
                 <div
-                  className={`px-4 pb-4 text-[rgb(110,97,70)] transition-all duration-300 ease-in-out ${
+                  className={`px-4 pb-4 text-earth-brown transition-all duration-300 ease-in-out ${
                     activeAccordion === index ? "block" : "hidden"
                   }`}
                 >

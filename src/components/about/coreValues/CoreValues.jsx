@@ -68,7 +68,7 @@ const coreValues = [
 const CoreValues = () => {
   return (
     <motion.div
-      className="text-center pb-16 pt-14 md:pt-20 bg-[#D1C8C1]"
+      className="text-center pb-16 pt-14 md:pt-20 bg-warm-beige"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
@@ -84,7 +84,7 @@ const CoreValues = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <div className=" mx-auto px-4  text-lg text-gray-800">
+            <div className=" mx-auto px-4  text-lg text-charcoal">
               <div className="text-primary-gray2 font-arial-narrow">
                 <p className="mb-4 p-text">
                   Our values shape every choice—from how we build, to how we

@@ -66,7 +66,7 @@ const BlogDescription = ({ blog }) => {
         {/* ========== MOBILE / TABLET: TOC Dropdown ========== */}
         <div className="xl:hidden w-full mb-6">
           <div className="bg-white rounded-lg shadow-md">
-            <button onClick={() => setOpen(!open)} className="w-full text-left px-5 py-4 font-semibold flex justify-between items-center text-gray-800" >
+            <button onClick={() => setOpen(!open)} className="w-full text-left px-5 py-4 font-semibold flex justify-between items-center text-charcoal" >
               📑 Table of Contents
               <span className="text-xl font-bold">{open ? "−" : "+"}</span>
             </button>
@@ -77,7 +77,7 @@ const BlogDescription = ({ blog }) => {
                   <li  key={item.id} className={`${ item.level === "H3" ? "ml-4" : "" }`} >
                     <a href={`#${item.id}`} onClick={() => setOpen(false)}
                       className={`block py-1 transition-colors ${
-                        activeId === item.id ? "text-green-700 font-semibold"  : "text-gray-600 hover:text-green-700"  }`} >
+                        activeId === item.id ? "text-moss-green font-semibold"  : "text-earth-brown hover:text-moss-green"  }`} >
                       {item.text}
                     </a>
                   </li>
@@ -94,7 +94,7 @@ const BlogDescription = ({ blog }) => {
             <div className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto scrollbar-thin">
               {headings.length > 0 && (
                 <div className="bg-white p-5 rounded-lg shadow-md">
-                  <h3 className="text-lg font-bold mb-4 text-gray-800 border-b pb-3"> 📑 Table of Contents </h3>
+                  <h3 className="text-lg font-bold mb-4 text-charcoal border-b pb-3"> 📑 Table of Contents </h3>
                   <nav>
                     <ul className="space-y-1 text-sm">
                       {headings.map((item) => (
@@ -102,8 +102,8 @@ const BlogDescription = ({ blog }) => {
                           <a href={`#${item.id}`}
                             className={`block py-1.5 px-3 rounded-md transition-all duration-200 ${
                               activeId === item.id
-                                ? "bg-green-50 text-green-700 font-semibold border-l-3 border-green-600"
-                                : "text-gray-600 hover:text-green-700 hover:bg-gray-50" }`}>
+                                ? "bg-cream text-moss-green font-semibold border-l-3 border-moss-green"
+                                : "text-earth-brown hover:text-moss-green hover:bg-cream" }`}>
                             {item.text}
                           </a>
                         </li>

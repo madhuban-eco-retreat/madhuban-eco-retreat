@@ -69,7 +69,7 @@ const WhyChoose = () => {
             transition={{ duration: 0.7 }}
             viewport={{ once: true }}
           >
-            <div className=" mx-auto px-4  text-lg text-gray-800">
+            <div className=" mx-auto px-4  text-lg text-charcoal">
               <div className="text-primary-gray2 font-arial-narrow">
                 <div className=" rounded-2xl p-4 ">
                   <motion.div

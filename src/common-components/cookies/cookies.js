@@ -135,12 +135,12 @@ const CookiesPopup = () => {
           </div>
           <div className=" w-full px-1 md:px-5 my-1.5   ">
             <div className="flex flex-row gap-2 sm:gap-4 justify-center md:justify-end  items-center">
-              <p className="dm_sans  responsive-text text-[#1A2E33] font-medium">
+              <p className="dm_sans  responsive-text text-charcoal font-medium">
                 <Link
                   onClick={handleManagePreferences}
                   href="/"
                   rel="noopener noreferrer"
-                  className="flex flex-row items-center gap-1.5 hover:underline cursor-pointer underline text-[#1A2E33] whitespace-nowrap"
+                  className="flex flex-row items-center gap-1.5 hover:underline cursor-pointer underline text-charcoal whitespace-nowrap"
                 >
                   {`Cookies Settings`}
                 </Link>
@@ -149,7 +149,7 @@ const CookiesPopup = () => {
                 <button
                   onClick={handleAcceptAll}
                   height={{ xs: "40px", sm: "50px" }}
-                  className=" px-4 py-2 rounded-md  font-semibold  text-[#D1C8C1] bg-[rgb(110,97,70)]  transition cursor-pointer"
+                  className=" px-4 py-2 rounded-md  font-semibold  text-warm-beige bg-earth-brown  transition cursor-pointer"
                   type="submit"
                   color="#1A2E33"
                 >
@@ -158,7 +158,7 @@ const CookiesPopup = () => {
                 <button
                   height={{ xs: "40px", sm: "50px" }}
                   onClick={handleRejectNonEssential}
-                  className=" px-4 py-2 rounded-md  font-semibold  border border-[#6E6146]  transition cursor-pointer hover:text-[#D1C8C1] hover:bg-[#6E6146]"
+                  className=" px-4 py-2 rounded-md  font-semibold  border border-earth-brown  transition cursor-pointer hover:text-warm-beige hover:bg-earth-brown"
                   type="submit"
                 >
                   {`Reject All`}
@@ -190,7 +190,7 @@ const CookiesPopup = () => {
         <IconButton
           aria-label="close"
           onClick={() => setShowPreferences(false)}
-          className="text-gray-500"
+          className="text-earth-brown"
           sx={{
             position: "absolute",
             right: 10,
@@ -209,13 +209,13 @@ const CookiesPopup = () => {
                 {`Necessary Cookies`}{" "}
               </p>
               <div className="flex items-center gap-2">
-                <p className="text-green-700 font-bold dm_sans text-[15px]">
+                <p className="text-moss-green font-bold dm_sans text-[15px]">
                   {" "}
                   {` ✔ Always Active`}{" "}
                 </p>
               </div>
             </div>
-            <p className=" dm_sans text-[15px] text-[#1A2E33]">
+            <p className=" dm_sans text-[15px] text-charcoal">
               {`These are essential for the website to function properly (you can't turn these off).`}
             </p>
           </div>
@@ -239,7 +239,7 @@ const CookiesPopup = () => {
                 className="m-0!"
               />
             </div>
-            <p className=" dm_sans text-[15px] text-[#1A2E33]">
+            <p className=" dm_sans text-[15px] text-charcoal">
               {` Help us understand how users interact with our site so we can improve the experience.`}
             </p>
           </div>
@@ -263,7 +263,7 @@ const CookiesPopup = () => {
                 className="m-0!"
               />
             </div>
-            <p className=" dm_sans text-[15px] text-[#1A2E33]">
+            <p className=" dm_sans text-[15px] text-charcoal">
               {`Allow us to show you personalized ads and offers on platforms like Instagram, Google, and YouTube.`}
             </p>
           </div>
@@ -271,7 +271,7 @@ const CookiesPopup = () => {
         <DialogActions className="p-6 pt-2">
           <button
             onClick={handleSavePreferences}
-            className="cursor-pointer mt-6 w-full py-3 text-center rounded-md font-semibold  text-[#D1C8C1] bg-[rgb(110,97,70)] hover:bg-[rgb(132,116,85)] transition primary-font-family"
+            className="cursor-pointer mt-6 w-full py-3 text-center rounded-md font-semibold  text-warm-beige bg-earth-brown hover:bg-[rgb(132,116,85)] transition primary-font-family"
           >
             Save My Preferences
           </button>

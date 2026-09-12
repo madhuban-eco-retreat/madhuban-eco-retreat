@@ -157,7 +157,7 @@ const Dining = () => {
 
   return (
     <>
-      <div className="farm-to-table bg-[#D1C8C1] flex flex-col items-center">
+      <div className="farm-to-table bg-warm-beige flex flex-col items-center">
         <div className="relative w-full h-[85vh]  ">
           <Image
             src={

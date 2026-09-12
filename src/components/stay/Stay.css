@@ -7,18 +7,18 @@
 
 /* Accommodations Section */
 .accommodations-section {
-    /* background: #E6F2D6; */
+    /* background: #FAF7F2; */
     /* background: #b4a681d8; */
     /* very soft pale green */
     padding: 3rem 4rem;
     border-radius: 60px 60px 0 0;
-    /* box-shadow: inset 0 10px 20px #C7E0A9; */
+    /* box-shadow: inset 0 10px 20px #D1C8C1; */
 }
 
 
 .section-description {
     /* text-align: center; */
-    /* color: #2E4D25; */
+    /* color: #2D3B2D; */
     font-size: 1.2rem;
     margin-bottom: 3rem;
     max-width: 800px;
@@ -31,11 +31,11 @@
     width: 100%;
     background: white;
     border-radius: 25px;
-    box-shadow: 0 6px 14px rgba(46, 77, 37, 0.15);
+    box-shadow: 0 6px 14px rgba(45, 59, 45, 0.15);
     overflow: hidden;
     flex: 1;
     transition: transform 0.5s ease, box-shadow 0.3s ease;
-    border: 2px solid #81C784;
+    border: 2px solid #D1C8C1;
     animation: fadeIn 0.8s ease-out forwards;
 } */
 
@@ -71,8 +71,8 @@
 
 .accommodation-card:hover {
     transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 14px 30px rgba(34, 83, 34, 0.3);
-    border-color: #4CAF50;
+    box-shadow: 0 14px 30px rgba(45, 59, 45, 0.3);
+    border-color: #6E6146;
 }
 
 /* Animations */

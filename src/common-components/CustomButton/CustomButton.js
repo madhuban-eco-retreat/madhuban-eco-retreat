@@ -4,7 +4,7 @@ import React from "react";
 
 const CustomButton = ({
   children,
-  color = "#6e6146ff",
+  color = "#6E6146",
   type = "button",
   height,
   width,
@@ -40,7 +40,7 @@ const CustomButton = ({
         leading-[30px] whitespace-nowrap
         rounded-lg shadow 
         transition-all duration-300 ease-in-out
-        text-[#D1C8C1]
+        text-warm-beige
         hover:scale-[1.03] hover:opacity-90
         disabled:opacity-60 disabled:cursor-not-allowed
 
@@ -48,7 +48,7 @@ const CustomButton = ({
       `}
     >
       {loading && (
-        <span className="w-4 h-4 border-2 border-t-transparent border-black rounded-full animate-spin"></span>
+        <span className="w-4 h-4 border-2 border-t-transparent border-charcoal rounded-full animate-spin"></span>
       )}
 
       {startIcon && <span className="flex items-center">{startIcon}</span>}

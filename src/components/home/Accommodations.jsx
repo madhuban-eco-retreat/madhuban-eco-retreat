@@ -95,7 +95,7 @@ const accommodations = [
 
 const Accommodations = () => {
   return (
-    <section className="py-8 px-4 bg-cover bg-center bg-no-repeat bg-[rgb(110,97,70)]">
+    <section className="py-8 px-4 bg-cover bg-center bg-no-repeat bg-earth-brown">
       <div className="max-w-6xl mx-auto">
         {/* --- Header Section --- */}
         <motion.div
@@ -134,7 +134,7 @@ const Accommodations = () => {
               <Link
                 href={`/stay-in-ratapani-tiger-reserve/${item.slug}`}
                 aria-label={`View details for ${item.title}`}
-                className="group relative h-full overflow-hidden rounded-xl bg-[#D1C8C1] shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col isolate"
+                className="group relative h-full overflow-hidden rounded-xl bg-warm-beige shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col isolate"
               >
                 {/* Image - fixed height so the picture is the dominant element */}
                 <div className="relative h-48 md:h-56 w-full overflow-hidden">
@@ -154,7 +154,7 @@ const Accommodations = () => {
                   <h3 className="font-primary text-primary-gray2 text-base md:text-lg font-semibold mb-1">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-[#3a3d45]/70 leading-relaxed line-clamp-3">
+                  <p className="text-sm text-charcoal/70 leading-relaxed line-clamp-3">
                     {item.description}
                   </p>
                   <span className="mt-3 text-xs text-primary-gray2 underline-offset-2 group-hover:underline">
@@ -176,7 +176,7 @@ const Accommodations = () => {
         >
           <Link
             href="/stay-in-ratapani-tiger-reserve"
-            className="font-arial-narrow text-primary-gray2 inline-flex items-center justify-center h-10 px-6 md:h-12 md:px-8 bg-[#D1C8C1] hover:font-bold rounded-md font-medium p-text transition-all"
+            className="font-arial-narrow text-primary-gray2 inline-flex items-center justify-center h-10 px-6 md:h-12 md:px-8 bg-warm-beige hover:font-bold rounded-md font-medium p-text transition-all"
           >
             Explore All Accommodations
           </Link>
