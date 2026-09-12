@@ -178,7 +178,7 @@ const TariffSection = () => {
           <ul className="space-y-2 text-sm md:text-base text-charcoal list-disc pl-5">
             <li>
               <strong>Regular Season:</strong> 01 July – 20 December and 05 January
-              – 30 June (except long weekends)
+              – 30 June
             </li>
             <li>
               <strong>Peak Season (+{peakPct}%):</strong> 21 December – 04 January
