@@ -22,10 +22,18 @@ import {
 import { computeAdminQuote } from "./admin-quote.mjs";
 import {
   BASE_NIGHTLY_RATES,
+  PEAK_PERIODS,
   GST_THRESHOLD,
   GST_RATE_LOW,
   GST_RATE_HIGH,
   PEAK_SURCHARGE_RATE,
+  DAY_OUTING_RATE_PER_PERSON,
+  SAFARI_RATE,
+  SAFARI_WITH_NATURALIST_RATE,
+  GUIDED_HIKE_RATE_PER_PERSON,
+  GUIDED_HIKE_MIN_GUESTS,
+  BUSH_DINING_RATE_PER_COUPLE,
+  OTHER_CHARGES,
 } from "./config.mjs";
 
 const GLAMPING = BASE_NIGHTLY_RATES["glamping-tents"];
@@ -146,29 +154,60 @@ test("E: Mud House Standard, regular, 3 nights, 2 adults -> 7,200/night at 5%", 
 
 /* -- season classification ------------------------------------------------ */
 
-test("seasons are classified per night, inclusive of both range endpoints", () => {
+test("Christmas is peak on both endpoints and regular either side of them", () => {
   assert.equal(seasonForNight("2026-12-20").season, "regular");
   assert.equal(seasonForNight("2026-12-21").season, "peak");
+  assert.equal(seasonForNight("2026-12-25").season, "peak");
   assert.equal(seasonForNight("2027-01-04").season, "peak");
   assert.equal(seasonForNight("2027-01-05").season, "regular");
+});
 
-  assert.equal(seasonForNight("2026-10-16").season, "regular");
-  assert.equal(seasonForNight("2026-10-17").season, "peak");
-  assert.equal(seasonForNight("2026-10-20").season, "peak");
-  assert.equal(seasonForNight("2026-10-21").season, "regular");
-
-  assert.equal(seasonForNight("2026-11-06").season, "peak");
-  assert.equal(seasonForNight("2026-11-14").season, "peak");
-  assert.equal(seasonForNight("2026-11-15").season, "regular");
-
-  assert.equal(seasonForNight("2027-03-15").season, "peak");
-  assert.equal(seasonForNight("2027-03-22").season, "peak");
-  assert.equal(seasonForNight("2027-03-23").season, "regular");
-
-  // Christmas recurs without anyone refreshing the dated list.
+test("the Christmas window recurs every year, with no dated list to refresh", () => {
+  // Matched by month/day, so a booking years out is still peak.
+  assert.equal(seasonForNight("2029-12-21").season, "peak");
   assert.equal(seasonForNight("2029-12-25").season, "peak");
-  assert.equal(seasonForNight("2030-01-02").season, "peak");
+  assert.equal(seasonForNight("2030-01-04").season, "peak");
+  assert.equal(seasonForNight("2030-01-05").season, "regular");
+  assert.equal(seasonForNight("2031-12-25").season, "peak");
   assert.equal(seasonForNight("2029-07-04").season, "regular");
+});
+
+test("long weekends are no longer peak — Christmas is the only peak period", () => {
+  // Dussehra, Diwali and Holi carried the surcharge on an earlier rate card.
+  // They are regular season now; this guards against them creeping back in.
+  for (const date of [
+    "2026-10-16", "2026-10-17", "2026-10-20", "2026-10-21", // Dussehra
+    "2026-11-06", "2026-11-10", "2026-11-14", "2026-11-15", // Diwali
+    "2027-03-15", "2027-03-19", "2027-03-22", "2027-03-23", // Holi
+  ]) {
+    assert.equal(seasonForNight(date).season, "regular", date);
+  }
+
+  assert.equal(PEAK_PERIODS.length, 1);
+  assert.equal(PEAK_PERIODS[0].label, "Christmas & New Year");
+  assert.equal(PEAK_PERIODS[0].start, "2026-12-21");
+  assert.equal(PEAK_PERIODS[0].end, "2027-01-04");
+});
+
+test("a former long weekend is sold at the regular rate, discount included", () => {
+  // Diwali 2026: 2 nights at the plain tariff, and the long-stay discount now
+  // applies to both because neither night is peak any more.
+  const q = computeStayQuote({
+    baseNightlyRate: GLAMPING,
+    roomSlug: "glamping-tents",
+    checkIn: "2026-11-07",
+    checkOut: "2026-11-09",
+    adults: 2,
+  });
+
+  assert.equal(q.peakNights, 0);
+  assert.equal(q.longStayDiscountApplied, true);
+  for (const n of q.nightLines) {
+    assert.equal(n.seasonalBase, 7500);
+    assert.equal(n.effectiveValue, 6000);
+    assert.equal(n.gstRate, 5);
+  }
+  assert.equal(q.totalAmount, 12600);
 });
 
 test("a stay straddling 04/05 Jan prices each night on its own season", () => {
@@ -478,4 +517,32 @@ test("a per-night add-on multiplies by nights; a one-off does not", () => {
   assert.equal(q.addonsBreakdown[0].amount, 3000);
   assert.equal(q.addonsBreakdown[1].amount, 2000);
   assert.equal(q.addonsTotal, 5000);
+});
+
+/* -- other charges -------------------------------------------------------- */
+
+test("the other-charge rate card is what the property signed off on", () => {
+  assert.equal(DAY_OUTING_RATE_PER_PERSON, 1500);
+  assert.equal(SAFARI_RATE, 6500);
+  assert.equal(SAFARI_WITH_NATURALIST_RATE, 8000);
+  assert.equal(GUIDED_HIKE_RATE_PER_PERSON, 2000);
+  assert.equal(GUIDED_HIKE_MIN_GUESTS, 4);
+  assert.equal(BUSH_DINING_RATE_PER_COUPLE, 3000);
+
+  // The tariff page renders OTHER_CHARGES, so the rows must track the rates.
+  const byKey = Object.fromEntries(OTHER_CHARGES.map((c) => [c.key, c]));
+  assert.equal(byKey.safari.amount, SAFARI_RATE);
+  assert.equal(byKey["safari-naturalist"].amount, SAFARI_WITH_NATURALIST_RATE);
+  assert.equal(byKey["day-outing"].amount, DAY_OUTING_RATE_PER_PERSON);
+});
+
+/* -- GST slabs, restated ---------------------------------------------------
+   The slab rule is unchanged by this rate-card revision and is asserted above
+   in cases A-E; these pin the three configured values themselves so a future
+   edit to config.mjs cannot move a slab silently. */
+
+test("the configured GST slabs are 5% / 18% either side of 7,500", () => {
+  assert.equal(GST_THRESHOLD, 7500);
+  assert.equal(GST_RATE_LOW, 5);
+  assert.equal(GST_RATE_HIGH, 18);
 });

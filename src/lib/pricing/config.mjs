@@ -63,30 +63,17 @@ export const ROOM_CATEGORIES = [
 export const PEAK_SURCHARGE_RATE = 1.2;
 
 /**
- * Peak periods, evaluated PER NIGHT.
+ * The Christmas–New Year turn: the property's only peak period.
  *
- * `start` and `end` are both INCLUSIVE stayed nights (see quote.mjs), so a
- * guest checking out on the morning after `end` paid the surcharge on `end`
- * itself. The Christmas block is what fixes the convention: the rate card puts
- * regular season at 05 Jan onward, so 04 Jan must still be a peak night.
+ * Matched by month and day rather than as a dated range, so it applies every
+ * year without anyone refreshing a list — a booking for 25 Dec 2031 is peak
+ * for the same reason 25 Dec 2026 is. The window wraps the year boundary, so
+ * reading it is two tests, not one (see seasonForNight in quote.mjs).
  *
- * Configurable by design — these move every year with the festival calendar,
- * and replacing the list is the entire yearly maintenance task.
- */
-export const PEAK_PERIODS = [
-  { label: "Dussehra", start: "2026-10-17", end: "2026-10-20" },
-  { label: "Diwali", start: "2026-11-06", end: "2026-11-14" },
-  { label: "Christmas & New Year", start: "2026-12-21", end: "2027-01-04" },
-  { label: "Holi", start: "2027-03-15", end: "2027-03-22" },
-];
-
-/**
- * The Christmas–New Year turn, which recurs on the same calendar dates every
- * year and so is matched month/day rather than by a dated range.
- *
- * PEAK_PERIODS carries the 2026-27 instance explicitly for its label; this
- * catches every other year, so a booking for 25 Dec 2028 is not quietly sold
- * at the regular rate because nobody refreshed the list.
+ * Both ends are INCLUSIVE stayed nights: a guest checking out on the morning
+ * of 05 Jan paid the surcharge on the night of the 4th. The rate card is what
+ * fixes that convention — it puts regular season at 05 Jan onward, so 04 Jan
+ * has to still be peak.
  */
 export const RECURRING_PEAK_MONTH_DAYS = {
   label: "Christmas & New Year",
@@ -95,6 +82,41 @@ export const RECURRING_PEAK_MONTH_DAYS = {
   /** … through 04 Jan, wrapping the year boundary. */
   to: { month: 1, day: 4 },
 };
+
+/**
+ * The calendar year the current tariff sheet's peak window opens in.
+ *
+ * Only ever used to print concrete dates on the public tariff page. Nothing
+ * prices from it: classification is month/day, so a stale value here shows the
+ * wrong year on a page and cannot mis-charge a booking.
+ */
+export const TARIFF_PEAK_DISPLAY_YEAR = 2026;
+
+const pad = (n) => String(n).padStart(2, "0");
+
+/**
+ * Peak periods as concrete dated ranges, evaluated PER NIGHT.
+ *
+ * Long weekends are deliberately absent. Dussehra, Diwali and Holi were peak
+ * on an earlier rate card and are not any more: the only nights that carry the
+ * surcharge, and the only nights the long-stay discount is withheld from, are
+ * the Christmas–New Year ones. Adding a festival back means adding it here.
+ *
+ * The one entry is derived from RECURRING_PEAK_MONTH_DAYS rather than written
+ * out again, so the dates the tariff page publishes and the dates the engine
+ * charges cannot disagree — editing the month/day above moves both.
+ */
+export const PEAK_PERIODS = [
+  {
+    label: RECURRING_PEAK_MONTH_DAYS.label,
+    start: `${TARIFF_PEAK_DISPLAY_YEAR}-${pad(RECURRING_PEAK_MONTH_DAYS.from.month)}-${pad(
+      RECURRING_PEAK_MONTH_DAYS.from.day,
+    )}`,
+    end: `${TARIFF_PEAK_DISPLAY_YEAR + 1}-${pad(RECURRING_PEAK_MONTH_DAYS.to.month)}-${pad(
+      RECURRING_PEAK_MONTH_DAYS.to.day,
+    )}`,
+  },
+];
 
 /* ── Long-stay discount ───────────────────────────────────────────────────── */
 
@@ -134,8 +156,8 @@ export const CHILD_MAX_AGE = 12;
 /* ── Other charges (GST as applicable) ────────────────────────────────────── */
 
 export const DAY_OUTING_RATE_PER_PERSON = 1500;
-export const SAFARI_RATE = 5500;
-export const SAFARI_WITH_NATURALIST_RATE = 6000;
+export const SAFARI_RATE = 6500;
+export const SAFARI_WITH_NATURALIST_RATE = 8000;
 export const GUIDED_HIKE_RATE_PER_PERSON = 2000;
 export const GUIDED_HIKE_MIN_GUESTS = 4;
 export const BUSH_DINING_RATE_PER_COUPLE = 3000;
