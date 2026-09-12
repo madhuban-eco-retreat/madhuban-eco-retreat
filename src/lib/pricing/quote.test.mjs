@@ -13,7 +13,13 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { computeStayQuote, seasonForNight, gstRateForEffectiveValue } from "./quote.mjs";
+import {
+  computeStayQuote,
+  seasonForNight,
+  gstRateForEffectiveValue,
+  longStayDiscountForStay,
+} from "./quote.mjs";
+import { computeAdminQuote } from "./admin-quote.mjs";
 import {
   BASE_NIGHTLY_RATES,
   GST_THRESHOLD,
@@ -364,4 +370,112 @@ test("a coupon cannot drive the room line below zero", () => {
   assert.equal(q.nightLines[0].roomValue, 0);
   assert.equal(q.taxableAmount, 0);
   assert.equal(q.totalAmount, 0);
+});
+
+/* -- invoice-side reconstruction ------------------------------------------ */
+
+test("a past stay's long-stay discount is reconstructed from its room total", () => {
+  const d = longStayDiscountForStay({
+    baseNightlyTotal: 27000, // 3 x 9,000, all regular
+    nights: 3,
+    checkIn: "2026-09-10",
+    checkOut: "2026-09-13",
+  });
+
+  assert.equal(d.applied, true);
+  assert.equal(d.amount, 5400);
+});
+
+test("reconstruction gives nothing back on an all-peak stay", () => {
+  const d = longStayDiscountForStay({
+    baseNightlyTotal: 28800,
+    nights: 2,
+    checkIn: "2027-01-01",
+    checkOut: "2027-01-03",
+  });
+
+  assert.equal(d.applied, false);
+  assert.equal(d.amount, 0);
+  assert.match(d.reason, /Christmas & New Year/);
+});
+
+test("reconstruction weights a mixed stay by what each night was sold at", () => {
+  // 04 Jan at 9,000 (peak) + 05 Jan at 7,500 (regular) = 16,500 room rent.
+  // Only the regular night is eligible, so 20% of 7,500 comes off.
+  const d = longStayDiscountForStay({
+    baseNightlyTotal: 16500,
+    nights: 2,
+    checkIn: "2027-01-04",
+    checkOut: "2027-01-06",
+  });
+
+  assert.equal(d.applied, true);
+  assert.equal(d.amount, 1500);
+});
+
+test("a staff rate rule suppresses the reconstructed discount", () => {
+  const d = longStayDiscountForStay({
+    baseNightlyTotal: 27000,
+    nights: 3,
+    checkIn: "2026-09-10",
+    checkOut: "2026-09-13",
+    multiplier: 1.3,
+  });
+
+  assert.equal(d.applied, false);
+  assert.equal(d.amount, 0);
+});
+
+/* -- admin quote ---------------------------------------------------------- */
+
+test("admin add-ons are taxed beside the room, not folded into its slab", () => {
+  const q = computeAdminQuote({
+    baseNightlyRate: GLAMPING,
+    roomSlug: "glamping-tents",
+    checkIn: "2026-09-10",
+    checkOut: "2026-09-11",
+    adults: 2,
+    addons: [{ label: "Bush Dining", price: 3000, qty: 1, unit: "per couple" }],
+  });
+
+  // The room is still a 7,500 night at 5% — dinner does not move its slab.
+  assert.equal(q.roomTotal, 7500);
+  assert.equal(q.gstRatePct, 5);
+  assert.equal(q.addonsTotal, 3000);
+  assert.equal(q.subtotalBeforeGst, 10500);
+  assert.equal(q.gstAmount, 525);
+  assert.equal(q.totalAmount, 11025);
+});
+
+test("admin pricing carries the peak surcharge the old inline maths ignored", () => {
+  const q = computeAdminQuote({
+    baseNightlyRate: BASE_NIGHTLY_RATES["safari-tent"],
+    roomSlug: "safari-tent",
+    checkIn: "2026-12-25",
+    checkOut: "2026-12-26",
+    adults: 2,
+  });
+
+  assert.equal(q.roomTotal, 14400);
+  assert.equal(q.gstRatePct, 18);
+  assert.equal(q.totalAmount, 16992);
+});
+
+test("a per-night add-on multiplies by nights; a one-off does not", () => {
+  const q = computeAdminQuote({
+    baseNightlyRate: GLAMPING,
+    roomSlug: "glamping-tents",
+    checkIn: "2026-09-10",
+    checkOut: "2026-09-12",
+    adults: 2,
+    addons: [
+      { label: "Extra Mattress", price: 1500, qty: 1, unit: "per night" },
+      { label: "Late Check-out", price: 2000, qty: 1, unit: "flat" },
+    ],
+  });
+
+  assert.equal(q.nights, 2);
+  assert.equal(q.addonsBreakdown[0].amount, 3000);
+  assert.equal(q.addonsBreakdown[1].amount, 2000);
+  assert.equal(q.addonsTotal, 5000);
 });

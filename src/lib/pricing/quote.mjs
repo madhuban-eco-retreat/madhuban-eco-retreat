@@ -371,6 +371,59 @@ export function computeStayQuote({
 }
 
 /**
+ * The long-stay discount for a stay that has already been sold, reconstructed
+ * from its stored room-rent total.
+ *
+ * Invoicing works backwards: it has a booking row, not a quote, and must arrive
+ * at the same discount checkout gave without re-pricing the stay at today's
+ * tariff. `baseNightlyTotal` is gross room rent at the rate actually charged.
+ *
+ * Per night, like everything else here — a stay that straddles Christmas earns
+ * the discount on its regular nights and nothing on its peak ones, where the
+ * older stay-level test withheld it from the whole stay. Peak nights cost more,
+ * so the eligible share is weighted by the rate each night was sold at rather
+ * than being a flat 1/nights.
+ *
+ * `multiplier` above 1 means a staff rate rule was in force, which suppresses
+ * the discount outright: marking a date up and then discounting it is not a
+ * rate the property sells.
+ */
+export function longStayDiscountForStay({ baseNightlyTotal, nights, checkIn, checkOut, multiplier = 1 }) {
+  if (nights < LONG_STAY_MIN_NIGHTS) {
+    return { amount: 0, applied: false, reason: null };
+  }
+
+  const dates = stayNights(checkIn, checkOut);
+  const eligible = dates.filter((d) => !isPeakNight(d));
+
+  if (eligible.length === 0 || multiplier > 1) {
+    const labels = [...new Set(dates.map((d) => seasonForNight(d).label).filter(Boolean))].join(", ");
+    return {
+      amount: 0,
+      applied: false,
+      reason: labels ? `Not available for ${labels} dates` : "Not available on peak season dates",
+    };
+  }
+
+  const weights = dates.map((d) => (isPeakNight(d) ? PEAK_SURCHARGE_RATE : 1));
+  const totalWeight = weights.reduce((s, w) => s + w, 0);
+  const eligibleWeight = dates.reduce((s, d, i) => (isPeakNight(d) ? s : s + weights[i]), 0);
+  const eligibleRent = (baseNightlyTotal * eligibleWeight) / totalWeight;
+
+  const pct = Math.round(LONG_STAY_DISCOUNT_RATE * 100);
+  return {
+    amount: roundTo2(eligibleRent * LONG_STAY_DISCOUNT_RATE),
+    applied: true,
+    reason:
+      eligible.length === dates.length
+        ? `${pct}% off for ${LONG_STAY_MIN_NIGHTS}+ nights stay`
+        : `${pct}% off room rent on your ${eligible.length} regular-season night${
+            eligible.length > 1 ? "s" : ""
+          }`,
+  };
+}
+
+/**
  * Why the long-stay discount was or was not given, in one guest-facing line.
  *
  * Kept beside the engine so checkout, the review step and the invoice cannot

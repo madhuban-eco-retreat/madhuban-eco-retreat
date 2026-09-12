@@ -5,16 +5,13 @@ import { computeGst } from "@/lib/gst";
 import { maxAdultsFor } from "@/lib/booking/occupancy";
 import {
   computeStayQuote,
+  longStayDiscountForStay,
   longStayDiscountReason,
   nightsBetween,
-  stayNights,
-  isPeakNight,
-  seasonForNight,
 } from "@/lib/pricing/quote.mjs";
 import {
   LONG_STAY_DISCOUNT_RATE,
   LONG_STAY_MIN_NIGHTS,
-  PEAK_SURCHARGE_RATE,
   PEAK_PERIODS,
 } from "@/lib/pricing/config.mjs";
 
@@ -43,68 +40,11 @@ export const MULTI_NIGHT_MIN_NIGHTS = LONG_STAY_MIN_NIGHTS;
 export const LONG_WEEKEND_BLOCKS = PEAK_PERIODS;
 
 /**
- * The long-stay discount for a stay, as a rupee figure off room rent alone.
- *
- * Retained for the invoice route, which reconstructs a past booking from the
- * stored figures rather than re-quoting it. It is now a per-night calculation
- * like everything else: a stay that straddles Christmas earns the discount on
- * its regular nights and nothing on its peak ones, where the old stay-level
- * test withheld it from the whole stay.
- *
- * `baseNightlyTotal` is gross room rent for the stay at the rate actually
- * charged; the discount is taken from the share of it that sits on
- * discount-eligible nights.
+ * The long-stay discount for a past stay, under the name the invoice route
+ * already imports. The implementation is in the pure module, where it is
+ * covered by tests; this is only the alias.
  */
-export function calculateMultiNightDiscount({
-  baseNightlyTotal,
-  nights,
-  checkIn,
-  checkOut,
-  multiplier = 1,
-}) {
-  if (nights < MULTI_NIGHT_MIN_NIGHTS) {
-    return { amount: 0, applied: false, reason: null };
-  }
-
-  const dates = stayNights(checkIn, checkOut);
-  const eligible = dates.filter((d) => !isPeakNight(d));
-
-  if (eligible.length === 0 || multiplier > 1) {
-    const labels = [
-      ...new Set(dates.map((d) => seasonForNight(d).label).filter(Boolean)),
-    ].join(", ");
-    return {
-      amount: 0,
-      applied: false,
-      reason: labels
-        ? `Not available for ${labels} dates`
-        : "Not available on peak season dates",
-    };
-  }
-
-  // Peak nights cost more, so an eligible night is not simply 1/nights of the
-  // room rent. Weighting each night by the rate it was actually sold at keeps
-  // the reconstruction honest on a stay that spans both seasons.
-  const weights = dates.map((d) => (isPeakNight(d) ? PEAK_SURCHARGE_RATE : 1));
-  const totalWeight = weights.reduce((s, w) => s + w, 0);
-  const eligibleWeight = dates.reduce(
-    (s, d, i) => (isPeakNight(d) ? s : s + weights[i]),
-    0,
-  );
-  const eligibleRent = (baseNightlyTotal * eligibleWeight) / totalWeight;
-
-  const pct = Math.round(MULTI_NIGHT_DISCOUNT_RATE * 100);
-  return {
-    amount: +(eligibleRent * MULTI_NIGHT_DISCOUNT_RATE).toFixed(2),
-    applied: true,
-    reason:
-      eligible.length === dates.length
-        ? `${pct}% off for ${MULTI_NIGHT_MIN_NIGHTS}+ nights stay`
-        : `${pct}% off room rent on your ${eligible.length} regular-season night${
-            eligible.length > 1 ? "s" : ""
-          }`,
-  };
-}
+export const calculateMultiNightDiscount = longStayDiscountForStay;
 
 /**
  * A per-night multiplier lookup built from the pricing_rules rows.
