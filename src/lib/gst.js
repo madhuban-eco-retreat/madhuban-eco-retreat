@@ -1,19 +1,45 @@
 // @ts-check
+import {
+  GST_THRESHOLD,
+  GST_RATE_LOW,
+  GST_RATE_HIGH,
+} from "@/lib/pricing/config.mjs";
+import { gstRateForEffectiveValue } from "@/lib/pricing/quote.mjs";
+
+/** The slab boundary and the two rates, re-exported for display code. */
+export { GST_THRESHOLD, GST_RATE_LOW, GST_RATE_HIGH };
+
 /**
- * GST slab for a room by its nightly tariff: 5% at ₹7,500 and below, 18% above.
+ * GST slab for one night, by the value that night is actually sold at.
  *
- * The threshold is exclusive at the top of the lower slab — a ₹7,500 Glamping
- * Tent is taxed at 5%, and only a tariff strictly above ₹7,500 moves to 18%.
- * The slab is keyed to the nightly tariff alone, never to the booking total, so
- * a longer stay or an extra guest cannot push a room into the higher bracket.
+ * The threshold is inclusive at the bottom of the lower slab — a Rs 7,500
+ * night is taxed at 5%, and only strictly more moves to 18%.
+ *
+ * What gets passed in is the whole question. It must be the EFFECTIVE per-night
+ * value: the seasonal base (peak surcharge included), less the long-stay
+ * discount where the night earns it, plus that night's extra-person and bedding
+ * charges. This function used to be handed the catalogue tariff instead, which
+ * meant a Rs 7,500 tent stayed on 5% at Rs 9,000 over Christmas and at Rs 9,500
+ * with a third adult in it. src/lib/pricing/quote.mjs is what computes the
+ * effective value; prefer calling it rather than assembling one by hand.
  */
-export function gstRate(nightlyRate) {
-    return nightlyRate > 7500 ? 18 : 5;
+export function gstRate(effectivePerNightValue) {
+  return gstRateForEffectiveValue(effectivePerNightValue);
 }
-/** Always derived from base price — never read stored gst_rate column. */
+
+/**
+ * Slab for a room shown on its own, with no stay in hand.
+ *
+ * Admin room lists and rate editors display a slab against a catalogue tariff,
+ * where there is no season, no discount and no guest count to apply — the
+ * indicative rate for the room at its base price. It is NOT what a booking is
+ * taxed at; anything pricing a real stay must go through quote.mjs, whose slab
+ * follows the amount actually charged.
+ */
 export function computeRoomGstRate(basePricePerNight) {
-    return gstRate(basePricePerNight);
+  return gstRateForEffectiveValue(basePricePerNight);
 }
+
 /**
  * Adds GST on top of a pre-tax amount.
  *

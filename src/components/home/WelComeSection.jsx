@@ -48,7 +48,7 @@ const WelComeSection = () => {
     return () => observer.disconnect();
   }, []);
   return (
-    <section className="   pb-8 md:px-8 bg-[#D1C8C1] min-h-[60vh] max640:pt-0 max640:text-center">
+    <section className="   pb-8 md:px-8 bg-warm-beige min-h-[60vh] max640:pt-0 max640:text-center">
       <div className="max-w-7xl mx-auto px-2 py-7 md:px-6">
         <motion.div
           className="grid md:grid-cols-2 xl:grid-cols-2 gap-12 items-center justify-between"
@@ -57,7 +57,7 @@ const WelComeSection = () => {
           viewport={{ once: true, margin: "-100px" }}
           variants={containerVariants}
         >
-          {/* Text Section text-[rgb(110,97,70)] */}
+          {/* Text Section text-earth-brown */}
           <motion.div
             className="h-full flex flex-col justify-center"
             variants={itemVariants}

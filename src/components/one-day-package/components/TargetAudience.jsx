@@ -40,7 +40,7 @@ export const TargetAudience = () => {
             as="h2"
             color="#fff"
           />
-          <p className="text-gray-200 max-w-2xl mx-auto font-light p-text">
+          <p className="text-warm-beige max-w-2xl mx-auto font-light p-text">
             Escape the bustle of Bhopal and reconnect with nature in a sanctuary
             designed for every kind of explorer.
           </p>
@@ -60,7 +60,7 @@ export const TargetAudience = () => {
                 <h4 className=" text-white text-xl primary-font-family">
                   {item.title}
                 </h4>
-                <p className="text-gray-200 leading-relaxed font-light text-justify md:text-left">
+                <p className="text-warm-beige leading-relaxed font-light text-justify md:text-left">
                   {item.description}
                 </p>
               </div>
@@ -77,7 +77,7 @@ export const TargetAudience = () => {
               <h4 className="text-xl primary-font-family   text-white text-center md:text-left">
                 {segments[3].title}
               </h4>
-              <p className="text-gray-200 leading-relaxed font-light text-justify md:text-left">
+              <p className="text-warm-beige leading-relaxed font-light text-justify md:text-left">
                 {segments[3].description}
               </p>
             </div>
@@ -91,7 +91,7 @@ export const TargetAudience = () => {
               <h4 className="text-xl primary-font-family   text-white text-center md:text-left">
                 Pool & Lunch Seekers
               </h4>
-              <p className="text-gray-200 leading-relaxed font-light text-justify md:text-left">
+              <p className="text-warm-beige leading-relaxed font-light text-justify md:text-left">
                 Enjoy full access to our crystal-clear pool followed by a
                 gourmet buffet lunch. The ultimate combination for a relaxing
                 weekend or weekday break.

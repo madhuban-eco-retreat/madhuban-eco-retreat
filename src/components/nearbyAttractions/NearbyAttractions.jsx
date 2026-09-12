@@ -170,7 +170,7 @@ const NearbyAttractions = () => {
   }, [heroSlides.length]);
 
   return (
-    <div className="min-h-screen bg-[#D1C8C1]  ">
+    <div className="min-h-screen bg-warm-beige  ">
       {/* Hero Section */}
 
       <HeroSlider heroSlides={heroSlides} />
@@ -200,7 +200,7 @@ const NearbyAttractions = () => {
           {cardData.map((card, index) => (
             <motion.div
               key={index}
-              className="w-80 bg-[rgb(110,97,70)] rounded-lg shadow-lg overflow-hidden"
+              className="w-80 bg-earth-brown rounded-lg shadow-lg overflow-hidden"
               variants={item}
               whileHover={{
                 y: -10,
@@ -217,13 +217,13 @@ const NearbyAttractions = () => {
                 transition={{ delay: index * 0.1 + 0.2 }}
               />
               <div className="px-6 py-4">
-                <h3 className="font-arial-narrow text-[#D1C8C1] font-primary text-base md:text-lg font-semibold text-center mb-2">
+                <h3 className="font-arial-narrow text-warm-beige font-primary text-base md:text-lg font-semibold text-center mb-2">
                   {card.title}
                 </h3>
-                <p className="font-arial-narrow text-[#D1C8C1] text-sm leading-relaxed line-clamp-3">
+                <p className="font-arial-narrow text-warm-beige text-sm leading-relaxed line-clamp-3">
                   {card.description}
                 </p>
-                <p className="font-arial-narrow text-[#D1C8C1] text-sm  mt-2 text-justify">
+                <p className="font-arial-narrow text-warm-beige text-sm  mt-2 text-justify">
                   Best For : {card.bestFor}
                 </p>
               </div>

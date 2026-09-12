@@ -35,7 +35,7 @@ export const BookingBanner = () => {
       <Link
         href={`tel:+${phone}`}
         title="Call Now"
-        className="w-full md:w-auto bg-primary-gray2 text-white px-5 py-3 md:py-5 rounded-xl font-black text-sm md:text-base hover:bg-[#12b87f] transition-transform active:scale-95 flex items-center justify-center gap-2"
+        className="w-full md:w-auto bg-primary-gray2 text-white px-5 py-3 md:py-5 rounded-xl font-black text-sm md:text-base hover:bg-[#4A6741] transition-transform active:scale-95 flex items-center justify-center gap-2"
       >
         <svg
           className="w-5 h-5"

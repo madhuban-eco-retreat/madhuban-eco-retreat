@@ -14,7 +14,7 @@ export const Location = () => {
             color="#fff"
           />
 
-          <p className="text-gray-200 max-w-2xl mx-auto font-light text-sm md:text-lg">
+          <p className="text-warm-beige max-w-2xl mx-auto font-light text-sm md:text-lg">
             Madhuban Eco Retreat is conveniently reachable for day travelers
             seeking a peaceful escape from the city bustle.
           </p>
@@ -42,14 +42,14 @@ export const Location = () => {
           <div className="space-y-6">
             <div className="p-8 rounded-[32px] bg-white/[0.02] border border-white/5 group hover:bg-white/[0.05] transition-all duration-300">
               <div className="flex gap-6 items-center">
-                <div className="w-14  h-14 bg-white/5 rounded-2xl flex items-center justify-center text-gray-200  transition-colors">
+                <div className="w-14  h-14 bg-white/5 rounded-2xl flex items-center justify-center text-warm-beige  transition-colors">
                   <Car size={28} aria-label="car" />
                 </div>
                 <div className="space-y-2">
                   <h4 className="text-lg md:text-xl font-bold text-white">
                     From Bhopal
                   </h4>
-                  <p className=" text-sm leading-relaxed text-gray-200">
+                  <p className=" text-sm leading-relaxed text-warm-beige">
                     Ideal same-day return for urban explorers.
                   </p>
                   <div className="flex items-center gap-2 text-white font-bold text-sm pt-2">
@@ -62,14 +62,14 @@ export const Location = () => {
 
             <div className="p-8 rounded-[32px] bg-white/[0.02] border border-white/5 group hover:bg-white/[0.05] transition-all duration-300">
               <div className="flex gap-6 items-center">
-                <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-gray-200  transition-colors">
+                <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-warm-beige  transition-colors">
                   <Users size={28} aria-label="users" />
                 </div>
                 <div className="space-y-2">
                   <h4 className="text-lg md:text-xl font-bold text-white">
                     From Indore
                   </h4>
-                  <p className="text-sm leading-relaxed text-gray-200">
+                  <p className="text-sm leading-relaxed text-warm-beige">
                     Popular choice for planned weekend group outings.
                   </p>
                   <div className="flex items-center gap-2 text-white font-bold text-sm pt-2">
@@ -82,14 +82,14 @@ export const Location = () => {
 
             <div className="p-8 rounded-[32px] bg-white/[0.02] border border-white/5 group hover:bg-white/[0.05] transition-all duration-300">
               <div className="flex gap-6 items-center">
-                <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-gray-200  transition-colors">
+                <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-warm-beige  transition-colors">
                   <TreePine size={28} aria-label="tree" />
                 </div>
                 <div className="space-y-2">
                   <h4 className="text-lg md:text-xl font-bold text-white">
                     Near Ratapani & Satpura
                   </h4>
-                  <p className="text-sm leading-relaxed text-gray-200">
+                  <p className="text-sm leading-relaxed text-warm-beige">
                     Perfect nature setting integrated within MP's finest
                     reserves.
                   </p>

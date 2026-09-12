@@ -37,7 +37,7 @@ const itemVariants = {
 const AboutSection = () => {
   return (
     <motion.div
-      className="text-center pb-16 pt-12 bg-[#D1C8C1] overflow-hidden"
+      className="text-center pb-16 pt-12 bg-warm-beige overflow-hidden"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
@@ -53,7 +53,7 @@ const AboutSection = () => {
               transition={{ duration: 0.7 }}
               viewport={{ once: true }}
             >
-              <div className="max-w-4xl mx-auto px-4 py-10 text-lg text-gray-800">
+              <div className="max-w-4xl mx-auto px-4 py-10 text-lg text-charcoal">
                 <div className="p-text-black p-text font-arial-narrow text-justify">
                   <p className="mb-4">
                     Madhuban Eco Retreat is a regenerative forest and experiential travel destination nestled across 20 acres of land that was once barren and degraded. Today it stands as one of the most thoughtfully built eco-luxury resorts near Bhopal — welcoming solo travelers, families, and conscious explorers alike. Our eco-conscious design blends rustic charm with comfort, inviting you to slow down and reconnect with the rhythms of nature.
@@ -72,7 +72,7 @@ const AboutSection = () => {
               transition={{ duration: 0.7 }}
               viewport={{ once: true }}
             >
-              <div className=" rounded-2xl shadow-lg p-8 bg-[#6e6146]">
+              <div className=" rounded-2xl shadow-lg p-8 bg-earth-brown">
                 <h2 className="font-primary text-2xl md:text-3xl font-semibold text-white mb-4">
                   Today Madhuban stands As
                 </h2>
@@ -86,7 +86,7 @@ const AboutSection = () => {
                         variants={itemVariants}
                         whileHover={{ scale: 1.03 }}
                       >
-                        <div className="text-base block rounded-xl border border-[#6e6146ff]  p-4  font-medium bg-[#d1c8c1] transition">
+                        <div className="text-base block rounded-xl border border-[#6E6146]  p-4  font-medium bg-warm-beige transition">
                           {item}
                         </div>
                       </motion.div>

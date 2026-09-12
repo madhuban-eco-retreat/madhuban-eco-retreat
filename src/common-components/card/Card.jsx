@@ -43,11 +43,11 @@ const Card = ({
       </div>
 
       <div className="p-4 md:p-5">
-        <p className="text-xs text-[#3a3d45]/50 leading-relaxed">{createdAt}</p>
-        <h3 className="mt-2 text-base font-semibold leading-relaxed line-clamp-2 text-[#3a3d45]">
+        <p className="text-xs text-charcoal/50 leading-relaxed">{createdAt}</p>
+        <h3 className="mt-2 text-base font-semibold leading-relaxed line-clamp-2 text-charcoal">
           {title}
         </h3>
-        <span className="mt-3 inline-flex items-center gap-2 rounded-lg bg-[#6e6146] px-4 h-10 text-sm font-medium text-[#D1C8C1] transition-opacity duration-300 group-hover:opacity-90">
+        <span className="mt-3 inline-flex items-center gap-2 rounded-lg bg-earth-brown px-4 h-10 text-sm font-medium text-warm-beige transition-opacity duration-300 group-hover:opacity-90">
           Explore More <FaChevronRight size={13} aria-hidden="true" />
         </span>
       </div>

@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { Calendar, User, Sparkles, FileText, ChevronLeft, Info, Minus, Plus, Circle, } from "lucide-react";
 import { Card, Button, Input, Select, Toggle, DatePicker, TextArea, } from "@/components/admin/ui";
 import { BOOKING_ADDONS } from "@/lib/admin/booking-addons";
+import { computeAdminQuote } from "@/lib/pricing/admin-quote.mjs";
 import { cn } from "@/lib/utils";
 // ─── Draft ────────────────────────────────────────────────────────────────────
 const DRAFT_KEY = "madhuban-admin-booking-draft";
@@ -79,26 +80,33 @@ const defaultValues = {
     paymentMethod: "",
     sendEmail: true,
 };
-function computeClientPricing(basePricePerNight, checkIn, checkOut, enabledAddons) {
-    if (!checkIn || !checkOut || checkIn >= checkOut)
+/**
+ * Preview total for the staff form.
+ *
+ * Delegates to the same engine the create route prices with, so the figure on
+ * screen is the figure that gets written. This used to be its own arithmetic —
+ * a 12%/18% slab keyed to `>= 7500`, and GST divided back out of an
+ * "inclusive" total — which disagreed with the server on almost every booking
+ * that was not a bare regular-season night.
+ */
+function computeClientPricing(room, checkIn, checkOut, enabledAddons, adults, children, extraBeds) {
+    if (!room || !checkIn || !checkOut || checkIn >= checkOut)
         return null;
-    const nights = Math.round((new Date(checkOut).getTime() - new Date(checkIn).getTime()) / 86400000);
-    if (nights < 1)
+    try {
+        return computeAdminQuote({
+            baseNightlyRate: Number(room.base_price_per_night),
+            roomSlug: room.slug,
+            checkIn,
+            checkOut,
+            adults,
+            children,
+            extraBeds,
+            addons: enabledAddons,
+        });
+    }
+    catch {
         return null;
-    const roomTotal = +(basePricePerNight * nights).toFixed(2);
-    const addonsBreakdown = enabledAddons.map(({ label, price, qty, unit }) => {
-        const multiplier = unit === "per night" ? nights : 1;
-        return { label, qty, amount: +(price * qty * multiplier).toFixed(2) };
-    });
-    const addonsTotal = +addonsBreakdown.reduce((s, a) => s + a.amount, 0).toFixed(2);
-    const subtotalInclusive = +(roomTotal + addonsTotal).toFixed(2);
-    const gstRatePct = basePricePerNight >= 7500 ? 18 : 12;
-    const subtotalBeforeGst = +(subtotalInclusive / (1 + gstRatePct / 100)).toFixed(2);
-    const gstAmount = +(subtotalInclusive - subtotalBeforeGst).toFixed(2);
-    return {
-        nights, roomTotal, addonsBreakdown, addonsTotal, subtotalInclusive,
-        gstRatePct, subtotalBeforeGst, gstAmount, totalAmount: subtotalInclusive,
-    };
+    }
 }
 function formatINR(n) {
     return `₹${n.toLocaleString("en-IN")}`;
@@ -261,8 +269,8 @@ export function BookingNewForm() {
     const pricing = useMemo(() => {
         if (!selectedRoom || !watched.checkIn || !watched.checkOut)
             return null;
-        return computeClientPricing(selectedRoom.base_price_per_night, watched.checkIn, watched.checkOut, enabledAddons);
-    }, [selectedRoom, watched.checkIn, watched.checkOut, enabledAddons]);
+        return computeClientPricing(selectedRoom, watched.checkIn, watched.checkOut, enabledAddons, watched.numAdults ?? 2, watched.numChildren ?? 0, watched.extraMattress ?? 0);
+    }, [selectedRoom, watched.checkIn, watched.checkOut, enabledAddons, watched.numAdults, watched.numChildren, watched.extraMattress]);
     // ── Date helpers ──────────────────────────────────────────────────────────
     const today = new Date().toISOString().split("T")[0];
     const minCheckout = watched.checkIn

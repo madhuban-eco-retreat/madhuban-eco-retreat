@@ -60,7 +60,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
       className="mt-10 flex justify-center"
       aria-label="Pagination Navigation"
     >
-      <ul className="inline-flex items-center gap-1 bg-white/80 border border-slate-200 rounded-full px-2 py-1 shadow-sm backdrop-blur">
+      <ul className="inline-flex items-center gap-1 bg-white/80 border border-warm-beige rounded-full px-2 py-1 shadow-sm backdrop-blur">
         <li>
           <button
             type="button"
@@ -68,8 +68,8 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
             disabled={!hasPrev}
             className={`w-8 h-8 flex items-center justify-center rounded-full border text-xs font-medium cursor-pointer
               ${hasPrev
-                ? "border-slate-200 text-slate-700 hover:bg-slate-100"
-                : "border-transparent text-slate-300 cursor-not-allowed"
+                ? "border-warm-beige text-charcoal hover:bg-cream"
+                : "border-transparent text-warm-beige cursor-not-allowed"
               }`}
             aria-label="Previous page"
           >
@@ -81,7 +81,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
           if (page === "left-ellipsis" || page === "right-ellipsis") {
             return (
               <li key={page + index}>
-                <span className="px-2 text-xs text-slate-400 select-none">
+                <span className="px-2 text-xs text-warm-beige select-none">
                   ...
                 </span>
               </li>
@@ -98,7 +98,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
                 className={`min-w-[2rem] h-8 px-2 rounded-full text-xs font-medium transition-colors cursor-pointer
                   ${isActive
                     ? "bg-primary-gray2 text-white shadow-sm"
-                    : "text-slate-700 hover:bg-slate-100"
+                    : "text-charcoal hover:bg-cream"
                   }`}
                 aria-current={isActive ? "page" : undefined}
               >
@@ -114,8 +114,8 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
             disabled={!hasNext}
             className={`w-8 h-8 flex items-center justify-center rounded-full border text-xs font-medium cursor-pointer
               ${hasNext
-                ? "border-slate-200 text-slate-700 hover:bg-slate-100"
-                : "border-transparent text-slate-300 cursor-not-allowed"
+                ? "border-warm-beige text-charcoal hover:bg-cream"
+                : "border-transparent text-warm-beige cursor-not-allowed"
               }`}
             aria-label="Next page"
           >

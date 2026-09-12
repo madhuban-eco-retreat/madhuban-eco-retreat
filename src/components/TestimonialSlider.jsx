@@ -109,7 +109,7 @@ export default function App() {
             <div key={testimonial.id} className="w-full ">
               <div className="p-8 flex flex-col justify-center items-center text-center h-full">
                 <div className="flex items-center mb-4 justify-center">
-                  <div className="flex text-yellow-500 mr-2">
+                  <div className="flex text-gold-accent mr-2">
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}

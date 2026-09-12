@@ -109,7 +109,7 @@ const BlogDesc = async ({ params }) => {
             nature-inspired stories while we bring this one back.
           </p>
           <CustomLinkBtn
-            color="#6e6146ff"
+            color="#6E6146"
             height="30px"
             href={"/blogs"}
             textColor="#D1C8C1"

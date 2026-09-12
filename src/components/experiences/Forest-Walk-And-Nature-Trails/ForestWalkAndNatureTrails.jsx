@@ -130,7 +130,7 @@ const ForestWalkAndNatureTrails = () => {
                   </svg>
                 </button>
                 <div
-                  className={`px-4 pb-3 text-[#D1C8C1] transition-all duration-300 ease-in-out ${
+                  className={`px-4 pb-3 text-warm-beige transition-all duration-300 ease-in-out ${
                     activeNestedAccordion === idx ? "block" : "hidden"
                   }`}
                 >
@@ -210,7 +210,7 @@ const ForestWalkAndNatureTrails = () => {
                 .getElementById("accordion-section")
                 ?.scrollIntoView({ behavior: "smooth" })
             }
-            className="font-primary font-semibold tracking-wider mt-10 text-white border border-white px-4 py-2 rounded-full hover:bg-white hover:text-[rgb(110,97,70)] transition duration-300"
+            className="font-primary font-semibold tracking-wider mt-10 text-white border border-white px-4 py-2 rounded-full hover:bg-white hover:text-earth-brown transition duration-300"
           >
             ↓ Scroll Down
           </button>
@@ -253,7 +253,7 @@ const ForestWalkAndNatureTrails = () => {
                   </svg>
                 </button>
                 <div
-                  className={` px-4 pb-4 text-[#D1C8C1]  transition-all duration-300 ease-in-out ${
+                  className={` px-4 pb-4 text-warm-beige  transition-all duration-300 ease-in-out ${
                     activeAccordion === index ? "block" : "hidden"
                   }`}
                 >
@@ -321,7 +321,7 @@ const ForestWalkAndNatureTrails = () => {
       )}
 
       {/* FAQs */}
-      <section className="py-10 px-4 md:px-8 	bg-[#D1C8C1]">
+      <section className="py-10 px-4 md:px-8 	bg-warm-beige">
         <CommonFaqs faqs={forestWalkFaqs} />
       </section>
     </div>

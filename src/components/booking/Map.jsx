@@ -18,7 +18,7 @@ const Map = () => {
           </h4>
         </div>
 
-        <div className="relative max-w-7xl overflow-hidden w-full h-[500px] rounded-xl  bg-[#1a2e28] shadow-md ">
+        <div className="relative max-w-7xl overflow-hidden w-full h-[500px] rounded-xl  bg-[#2D3B2D] shadow-md ">
           {/* <div
           className="absolute inset-0 opacity-40 grayscale contrast-125"
           data-alt="Topographic satellite map of central India forest area"
@@ -61,7 +61,7 @@ const Map = () => {
         </div>
 
         <div className="absolute bottom-6 left-6 right-6 flex flex-wrap gap-4">
-          <div className="bg-background-dark/80 backdrop-blur-md px-4 py-3 rounded-lg flex items-center gap-3 border border-[#283933]">
+          <div className="bg-background-dark/80 backdrop-blur-md px-4 py-3 rounded-lg flex items-center gap-3 border border-[#2D3B2D]">
             <span className="material-symbols-outlined text-primary">
               directions_car
             </span>
@@ -72,7 +72,7 @@ const Map = () => {
               <p className="text-sm font-bold">1 hour 15 mins (45km)</p>
             </div>
           </div>
-          <div className="bg-background-dark/80 backdrop-blur-md px-4 py-3 rounded-lg flex items-center gap-3 border border-[#283933]">
+          <div className="bg-background-dark/80 backdrop-blur-md px-4 py-3 rounded-lg flex items-center gap-3 border border-[#2D3B2D]">
             <span className="material-symbols-outlined text-primary">
               forest
             </span>

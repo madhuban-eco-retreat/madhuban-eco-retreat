@@ -26,7 +26,7 @@ export const BookingCTA = () => {
             </h2>
           </div>
 
-          <p className="text-gray-200 p-text text-justify md:text-center  max-w-3xl mx-auto mb-6 md:mb-8">
+          <p className="text-warm-beige p-text text-justify md:text-center  max-w-3xl mx-auto mb-6 md:mb-8">
             If you're exploring resorts near Bhopal for a day outing that offers
             genuine nature, good food, open spaces, and meaningful activities —
             Madhuban Eco Retreat is the right choice. Spend a day surrounded by
@@ -39,7 +39,7 @@ export const BookingCTA = () => {
               onClick={() => {
                 window.open(`https://wa.me/${phone}`, "_blank");
               }}
-              className="cursor-pointer w-full sm:w-auto bg-[#22c55e] text-white px-10 py-5 rounded-2xl font-bold text-sm md:text-lg hover:bg-[#16a34a] transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-3 "
+              className="cursor-pointer w-full sm:w-auto bg-[#25D366] text-white px-10 py-5 rounded-2xl font-bold text-sm md:text-lg hover:bg-[#1da851] transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-3 "
             >
               <div>
                 <FaWhatsapp size={22} aria-label="whatsapp" />

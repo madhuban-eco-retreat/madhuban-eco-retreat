@@ -254,7 +254,7 @@ const Accommodations = () => {
                 />
               </motion.div>
 
-              <div className="p-6 flex flex-col flex-grow bg-[#D1C8C1]">
+              <div className="p-6 flex flex-col flex-grow bg-warm-beige">
                 <h3 className="text-base md:text-lg font-semibold font-primary text-primary-gray2 mb-2">
                   {accommodation.name}
                 </h3>
@@ -274,10 +274,10 @@ const Accommodations = () => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        <span className="relative flex items-center justify-center w-10 h-10 rounded-full bg-[rgb(110,97,70)] group/icon mb-2">
+                        <span className="relative flex items-center justify-center w-10 h-10 rounded-full bg-earth-brown group/icon mb-2">
                           {feature.icon}
                           <motion.span
-                            className="absolute inset-0 rounded-full bg-[rgb(110,97,70)] opacity-0 group-hover/icon:opacity-30"
+                            className="absolute inset-0 rounded-full bg-earth-brown opacity-0 group-hover/icon:opacity-30"
                             animate={{
                               scale: [1, 1.5, 1],
                               opacity: [0, 0.3, 0],
@@ -303,7 +303,7 @@ const Accommodations = () => {
 
                 <Link
                   href={`/stay-in-ratapani-tiger-reserve/${accommodation.slug}`}
-                  className="mt-auto relative inline-block w-full text-center bg-[rgb(110,97,70)] text-white font-medium py-3 px-6 rounded-md overflow-hidden"
+                  className="mt-auto relative inline-block w-full text-center bg-earth-brown text-white font-medium py-3 px-6 rounded-md overflow-hidden"
                 >
                   <motion.span
                     className="absolute inset-0 bg-[rgb(117,105,83)] h-full"
@@ -320,7 +320,7 @@ const Accommodations = () => {
         </motion.div>
       ) : (
         <motion.p
-          className="text-center text-gray-700 text-xl"
+          className="text-center text-charcoal text-xl"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}

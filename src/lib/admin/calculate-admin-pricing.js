@@ -1,52 +1,43 @@
 import "server-only";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { computeRoomGstRate, addGst } from "@/lib/gst";
-function diffDays(a, b) {
-    return Math.round((new Date(b).getTime() - new Date(a).getTime()) / 86400000);
-}
-function calcAddonTotal(addons, nights) {
-    return addons.reduce((sum, addon) => {
-        // 'per night' addons multiply by nights; all others use qty directly
-        const multiplier = addon.unit === 'per night' ? nights : 1;
-        return sum + addon.price * addon.qty * multiplier;
-    }, 0);
-}
+import { computeAdminQuote } from "@/lib/pricing/admin-quote.mjs";
+
+/**
+ * Authoritative pricing for an admin-created booking.
+ *
+ * The rate card itself is src/lib/pricing; all this does is fetch the room and
+ * hand the stay over. It previously multiplied the base rate by the nights and
+ * read the GST slab straight off `base_price_per_night`, which ignored the
+ * season, the long-stay discount and the guest count alike — a walk-in booked
+ * over Christmas was written into the ledger at the regular tariff and taxed
+ * at the wrong slab on top of it.
+ */
 export async function calculateAdminPricing(params) {
-    const { roomId, checkIn, checkOut, addons } = params;
+    const { roomId, checkIn, checkOut, adults = 2, children = 0, extraBeds = 0, addons } = params;
     const supabase = createAdminClient();
     const { data: room, error } = await supabase
         .from("rooms")
-        .select("id, name, base_price_per_night")
+        .select("id, name, slug, base_price_per_night")
         .eq("id", roomId)
         .single();
     if (error || !room)
         throw new Error("Room not found");
-    const nights = diffDays(checkIn, checkOut);
-    if (nights < 1)
-        throw new Error("Check-out must be after check-in");
-    const basePricePerNight = Number(room.base_price_per_night);
-    const roomTotal = +(basePricePerNight * nights).toFixed(2);
-    const addonsTotal = +calcAddonTotal(addons, nights).toFixed(2);
-    // Room tariffs and addon prices are both pre-GST, so the subtotal is the
-    // taxable base and the tax goes on top of it.
-    const subtotalBeforeGst = +(roomTotal + addonsTotal).toFixed(2);
-    const gstRatePct = computeRoomGstRate(basePricePerNight);
-    const { gst: gstAmount, total: totalAmount } = addGst(subtotalBeforeGst, gstRatePct);
-    return {
-        roomId: room.id,
-        roomName: room.name,
+
+    const quote = computeAdminQuote({
+        baseNightlyRate: Number(room.base_price_per_night),
+        roomSlug: room.slug,
         checkIn,
         checkOut,
-        nights,
-        basePricePerNight,
-        roomTotal,
-        addonsTotal,
-        gstRatePct,
-        subtotalBeforeGst,
-        gstAmount,
-        totalAmount,
-        // Kept as an alias so existing admin callers reading `subtotalInclusive`
-        // get the payable figure rather than a stale pre-tax one.
-        subtotalInclusive: totalAmount,
+        adults,
+        children,
+        extraBeds,
+        addons,
+    });
+
+    return {
+        ...quote,
+        roomId: room.id,
+        roomName: room.name,
+        basePricePerNight: Number(room.base_price_per_night),
     };
 }

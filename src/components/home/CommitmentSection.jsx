@@ -67,7 +67,7 @@ const sustainabilityFeatures = [
 
 const CommitmentSection = () => {
   return (
-    <section className="py-8 px-4 md:px-8 bg-[rgb(110,97,70)] text-white">
+    <section className="py-8 px-4 md:px-8 bg-earth-brown text-white">
       <div className="max-w-6xl mx-auto">
         <motion.div
           className="text-center mb-6 md:mb-8"
@@ -81,7 +81,7 @@ const CommitmentSection = () => {
             color="#fff"
           />
 
-          <p className="mt-1 p-text max-w-2xl mx-auto   font-arial-narrow text-[#D1C8C1] px-4 tracking-wide">
+          <p className="mt-1 p-text max-w-2xl mx-auto   font-arial-narrow text-warm-beige px-4 tracking-wide">
            As a leading eco-friendly resort near Bhopal, Madhuban Eco Retreat is built on practices that preserve the environment and support local communities.
           </p>
         </motion.div>
@@ -108,7 +108,7 @@ const CommitmentSection = () => {
           variants={fadeInUp}
           viewport={{ once: true }}
         >
-          <p className="p-text mt-4 max-w-2xl mx-auto  font-arial-narrow text-[#D1C8C1] px-4 tracking-wide text-center">
+          <p className="p-text mt-4 max-w-2xl mx-auto  font-arial-narrow text-warm-beige px-4 tracking-wide text-center">
             Every stay contributes to responsible tourism in Madhya Pradesh.
           </p>
         </motion.div>

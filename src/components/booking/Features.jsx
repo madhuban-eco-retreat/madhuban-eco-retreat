@@ -5,7 +5,7 @@ import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
 
 const Features = () => {
   return (
-    <section className="py-16 bg-[#f7f5f0] relative overflow-hidden">
+    <section className="py-16 bg-[#FAF7F2] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 text-center">
         <div className="space-y-4 mb-8">
           <DecorativeHeading text={"Reconnect with Wilderness"} as="h2" />

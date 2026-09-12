@@ -58,7 +58,7 @@ const Footer = () => {
   if (isLandingRoute(pathname)) return null;
 
   return (
-    <footer className="bg-[#F5F0E8] text-charcoal footer-section">
+    <footer className="bg-[#FAF7F2] text-charcoal footer-section">
       <div className="max-w-6xl mx-auto px-4 lg:px-8 w-full pt-12 pb-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Column 1 - identity, address, social, WhatsApp */}
@@ -189,7 +189,7 @@ const Footer = () => {
                 />
                 <button
                   type="submit"
-                  className="bg-[rgb(110,97,70)] hover:bg-[rgb(87,75,58)] text-[#F5F0E8] px-4 py-4 rounded-r-md font-primary font-medium cursor-pointer"
+                  className="bg-earth-brown hover:bg-[rgb(87,75,58)] text-[#FAF7F2] px-4 py-4 rounded-r-md font-primary font-medium cursor-pointer"
                 >
                   Subscribe
                 </button>
@@ -204,7 +204,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom bar */}
-      <div className="bg-[rgb(110,97,70)] text-[#D1C8C1]">
+      <div className="bg-earth-brown text-warm-beige">
         <div className="max-w-6xl mx-auto px-4 lg:px-8 w-full py-5 flex flex-col md:flex-row items-center justify-between gap-5">
           <div className="flex items-center gap-3">
             <Image

@@ -1,7 +1,12 @@
+/* The two --primary-gray* names predate the brand tokens in globals.css and are
+   referenced by name across the older marketing CSS. They are kept as aliases
+   of those tokens rather than as their own literals, so the palette has one
+   definition per colour. --text-color was a bluish #3a3d45 against a warm
+   palette; it now resolves to the brand charcoal. */
 :root{
-    --primary-gray: #d1c8c1;
-    --primary-gray2: #6E6146;
-    --text-color: #3a3d45
+    --primary-gray: var(--color-warm-beige);
+    --primary-gray2: var(--color-earth-brown);
+    --text-color: var(--color-charcoal)
 }
 
 

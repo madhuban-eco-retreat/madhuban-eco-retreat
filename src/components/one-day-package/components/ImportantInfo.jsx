@@ -21,7 +21,7 @@ export const ImportantInfo = () => {
                   <Briefcase size={24} aria-label="briefcase"/>
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold uppercase  text-gray-200 mb-1">
+                  <p className="text-[10px] font-bold uppercase  text-warm-beige mb-1">
                     Package Type
                   </p>
                   <p className="text-sm md:text-xl font-bold text-white">
@@ -35,7 +35,7 @@ export const ImportantInfo = () => {
                   <Ban size={24} aria-label="ban"/>
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold uppercase  text-gray-200 mb-1">
+                  <p className="text-[10px] font-bold uppercase  text-warm-beige mb-1">
                     Alcohol
                   </p>
                   <p className="text-sm md:text-xl font-bold text-white">
@@ -52,13 +52,13 @@ export const ImportantInfo = () => {
                   <span className="text-xl font-bold">₹</span>
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold uppercase  text-gray-200 mb-1">
+                  <p className="text-[10px] font-bold uppercase  text-warm-beige mb-1">
                     Price
                   </p>
                   <p className="text-sm md:text-xl font-bold text-white">
                     ₹1500 per person
                   </p>
-                  <p className="text-[10px] text-gray-300 mt-1">
+                  <p className="text-[10px] text-warm-beige mt-1">
                     GST extra as applicable
                   </p>
                 </div>
@@ -69,7 +69,7 @@ export const ImportantInfo = () => {
                   <Calendar size={24} aria-label="calendar"/>
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold uppercase  text-gray-200 mb-1">
+                  <p className="text-[10px] font-bold uppercase  text-warm-beige mb-1">
                     Advance Booking
                   </p>
                   <p className="text-sm md:text-xl font-bold text-white">
@@ -86,7 +86,7 @@ export const ImportantInfo = () => {
                   <Leaf size={24} aria-label="leaf" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold uppercase  text-gray-200 mb-1">
+                  <p className="text-[10px] font-bold uppercase  text-warm-beige mb-1">
                     Food
                   </p>
                   <p className="text-sm md:text-xl font-bold text-white">

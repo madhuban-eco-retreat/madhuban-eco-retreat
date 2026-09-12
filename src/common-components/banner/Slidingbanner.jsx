@@ -77,7 +77,7 @@ const Slidingbanner = ({ images = [], heading, subHeading, buttonLink }) => {
               {buttonLink && (
                 <Link
                   href={buttonLink}
-                  className="inline-block mt-6 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+                  className="inline-block mt-6 px-6 py-3 bg-moss-green text-white rounded-lg hover:bg-moss-green transition"
                 >
                   Explore More
                 </Link>
@@ -90,11 +90,11 @@ const Slidingbanner = ({ images = [], heading, subHeading, buttonLink }) => {
       {/* Swiper Pagination Styling */}
       <style jsx>{`
         .swiper-pagination-bullet {
-          background: #d1fae5;
+          background: #D1C8C1;
           opacity: 1;
         }
         .swiper-pagination-bullet-active {
-          background: #22c55e;
+          background: #6E6146;
         }
       `}</style>
     </div>

@@ -72,8 +72,8 @@ const BookingWidget = () => {
   };
 
   return (
-    <div className="w-full px-4 sm:px-6 lg:px-8 max-sm:py-4 bg-[#D1C8C1]">
-      <div className="bg-[rgb(110,97,70)] rounded-lg shadow-xl p-3 sm:p-4 max-sm:my-6 z-10 relative sm:bottom-0 mx-auto max-w-4xl">
+    <div className="w-full px-4 sm:px-6 lg:px-8 max-sm:py-4 bg-warm-beige">
+      <div className="bg-earth-brown rounded-lg shadow-xl p-3 sm:p-4 max-sm:my-6 z-10 relative sm:bottom-0 mx-auto max-w-4xl">
         <form onSubmit={handleCheckAvailability}>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 justify-center">
             {/* Check-in Date */}
@@ -82,7 +82,7 @@ const BookingWidget = () => {
                 <label className="block text-xs font-semibold text-primary-gray text-center mb-1">
                   Check-in
                 </label>
-                <div className="relative text-black">
+                <div className="relative text-charcoal">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Calendar
                       className="h-4 w-4 text-primary-gray2 z-1"
@@ -97,7 +97,7 @@ const BookingWidget = () => {
                     endDate={checkOut}
                     minDate={new Date()}
                     placeholderText="Select date"
-                    className="pl-10 w-40 text-sm font-arial-narrow tracking-wider font-medium bg-[#D1C8C1] border-black text-white placeholder-[rgb(110,97,70)] hover:border-black outline-none rounded-md py-2 px-3 transition-all duration-150"
+                    className="pl-10 w-40 text-sm font-arial-narrow tracking-wider font-medium bg-warm-beige border-charcoal text-white placeholder-earth-brown hover:border-charcoal outline-none rounded-md py-2 px-3 transition-all duration-150"
                   />
                 </div>
               </div>
@@ -124,7 +124,7 @@ const BookingWidget = () => {
                     endDate={checkOut}
                     minDate={checkIn || new Date()}
                     placeholderText="Select date"
-                    className="pl-10 w-40 text-sm font-arial-narrow tracking-wider font-medium bg-[#D1C8C1] text-white placeholder-[rgb(110,97,70)] hover:border-black focus:border-black outline-none rounded-md py-2 px-3 transition-all duration-150"
+                    className="pl-10 w-40 text-sm font-arial-narrow tracking-wider font-medium bg-warm-beige text-white placeholder-earth-brown hover:border-charcoal focus:border-charcoal outline-none rounded-md py-2 px-3 transition-all duration-150"
                   />
                 </div>
               </div>
@@ -141,7 +141,7 @@ const BookingWidget = () => {
                     <select
                       value={adults}
                       onChange={(e) => setAdults(parseInt(e.target.value))}
-                      className=" bg-[#D1C8C1] text-sm font-arial-narrow  font-medium rounded-md py-2 px-3 focus:outline-none text-[rgb(110,97,70)] hover:border-black focus:border-black"
+                      className=" bg-warm-beige text-sm font-arial-narrow  font-medium rounded-md py-2 px-3 focus:outline-none text-earth-brown hover:border-charcoal focus:border-charcoal"
                     >
                       <option label="1 Adult" value="1"></option>
                       <option label="2 Adults" value="2"></option>
@@ -153,7 +153,7 @@ const BookingWidget = () => {
                     <select
                       value={children}
                       onChange={(e) => setChildren(parseInt(e.target.value))}
-                      className=" bg-[#D1C8C1] text-sm font-arial-narrow  font-medium rounded-md py-2 px-3 focus:outline-none text-[rgb(110,97,70)] hover:border-black focus:border-black"
+                      className=" bg-warm-beige text-sm font-arial-narrow  font-medium rounded-md py-2 px-3 focus:outline-none text-earth-brown hover:border-charcoal focus:border-charcoal"
                     >
                       <option label="0 Child" value="0"></option>
                       <option label="1 Child" value="1"></option>
@@ -175,7 +175,7 @@ const BookingWidget = () => {
                 <select
                   value={accommodationType}
                   onChange={(e) => setAccommodationType(e.target.value)}
-                  className="w-40 rounded-md bg-[#D1C8C1] text-sm font-arial-narrow  font-medium text-[rgb(110,97,70)] py-2 px-3 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                  className="w-40 rounded-md bg-warm-beige text-sm font-arial-narrow  font-medium text-earth-brown py-2 px-3 focus:outline-none focus:ring-2 focus:ring-charcoal focus:border-transparent"
                 >
                   <option label="Select type" value=""></option>
                   <option label="All Types" value={ALL_TYPES}></option>
@@ -201,7 +201,7 @@ const BookingWidget = () => {
               <div className="w-full">
                 <button
                   type="submit"
-                  className="w-full h-10 text-sm font-arial-narrow cursor-pointer  font-semibold flex items-center justify-center px-6 border border-transparent rounded-full shadow-sm text-[rgb(110,97,70)] bg-[#D1C8C1]"
+                  className="w-full h-10 text-sm font-arial-narrow cursor-pointer  font-semibold flex items-center justify-center px-6 border border-transparent rounded-full shadow-sm text-earth-brown bg-warm-beige"
                 >
                   Check Availability{" "}
                   <ChevronRight className="ml-2 h-4 w-4" aria-label="arrow" />

@@ -382,7 +382,7 @@ const Gallery = () => {
   }, [activeTab]);
 
   return (
-    <div className="min-h-screen bg-[#D1C8C1]">
+    <div className="min-h-screen bg-warm-beige">
       <section className="relative w-full h-[85vh] overflow-hidden mb-20 ">
         {/* Video Layer */}
         <video

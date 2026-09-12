@@ -17,17 +17,28 @@ import CommonFaqs from "@/common-components/faqs/CommonFaqs";
 import { accommodationsData } from "./Stay.functions";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
 import { STAY_PAGE_CTAS, ALL_ROOMS_URL } from "@/lib/rooms/booking-links";
+import {
+  GST_THRESHOLD,
+  GST_RATE_LOW,
+  GST_RATE_HIGH,
+  PEAK_SURCHARGE_RATE,
+} from "@/lib/pricing/config.mjs";
 
 const getAccommodation = (slug) => {
   return accommodationsData.find((acc) => acc.slug === slug);
 };
 
-// Derive per-room GST slab and peak-season rate from the base price string.
-// 5% GST on rooms priced at ₹7,500 and below, 18% above. Peak season is +20%
-// and only applies to per-night room rates.
+// Derive the per-room GST slab and peak rate from the base price string, using
+// the same rate card the booking engine prices with rather than a second copy
+// of the threshold. Peak season applies only to per-night room rates.
+//
+// The slab shown here is the one for a bare double-occupancy regular night —
+// what the room costs on its own. A guest adding a third adult or booking over
+// Christmas is quoted the higher slab at checkout, because the slab follows
+// the value of the night actually sold.
 const parsePrice = (p) => Number(String(p).replace(/[^\d]/g, ""));
 const formatINR = (n) => n.toLocaleString("en-IN");
-const getGstRate = (priceNum) => (priceNum <= 7500 ? 5 : 18);
+const getGstRate = (priceNum) => (priceNum > GST_THRESHOLD ? GST_RATE_HIGH : GST_RATE_LOW);
 
 const AccommodationDetail = () => {
   const params = useParams();
@@ -46,16 +57,16 @@ const AccommodationDetail = () => {
   if (!accommodation) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-stone-50 text-center px-4">
-        <MountainSnow size={64} className="text-green-700 mb-4" />
-        <h1 className="text-3xl md:text-4xl font-inter font-bold text-green-800 mb-2">
+        <MountainSnow size={64} className="text-moss-green mb-4" />
+        <h1 className="text-3xl md:text-4xl font-inter font-bold text-forest-green mb-2">
           Oops! Accommodation Not Found
         </h1>
-        <p className="font-openSans text-lg text-gray-600 mb-6">
+        <p className="font-openSans text-lg text-earth-brown mb-6">
           We couldn't find the accommodation you were looking for.
         </p>
         <Link
           href="/stay-in-ratapani-tiger-reserve"
-          className="mt-[30px] font-primary inline-flex items-center bg-green-700 text-gray-500 font-medium py-3 px-6 rounded-md hover:bg-green-600 transition-colors duration-300"
+          className="mt-[30px] font-primary inline-flex items-center bg-moss-green text-cream font-medium py-3 px-6 rounded-md hover:bg-forest-green transition-colors duration-300"
         >
           <ChevronLeft size={20} className="mr-2" aria-label="Left" />
           Back to All Accommodations
@@ -71,7 +82,7 @@ const AccommodationDetail = () => {
           <div className="mb-8">
             <Link
               href="/stay-in-ratapani-tiger-reserve"
-              className="inline-flex items-center font-semibold text-[rgb(110,97,70)] mt-8 transition-colors duration-300 group"
+              className="inline-flex items-center font-semibold text-earth-brown mt-8 transition-colors duration-300 group"
             >
               <ChevronLeft
                 aria-label="left"
@@ -82,7 +93,7 @@ const AccommodationDetail = () => {
             </Link>
           </div>
 
-          <div className="bg-[#F5F5F5] rounded-xl shadow-xl overflow-hidden">
+          <div className="bg-[#FAF7F2] rounded-xl shadow-xl overflow-hidden">
             <div className="md:flex md:items-stretch">
               <div className="md:w-1/2 h-auto">
                 {accommodation.image.toLowerCase().endsWith(".mp4") ? (
@@ -117,7 +128,7 @@ const AccommodationDetail = () => {
 
               <div className="md:w-1/2 p-6 md:p-8 flex flex-col justify-between h-auto md:min-h-[400px]">
                 <div>
-                  <h1 className="heading1 font-primary  text-[rgb(110,97,70)] mb-3">
+                  <h1 className="heading1 font-primary  text-earth-brown mb-3">
                     {accommodation.name}
                   </h1>
                   <div className="flex items-center mb-4">
@@ -127,14 +138,14 @@ const AccommodationDetail = () => {
                         size={20}
                         className={
                           i < Math.floor(accommodation.rating)
-                            ? "text-yellow-500 fill-current"
+                            ? "text-gold-accent fill-current"
                             : i < accommodation.rating
-                              ? "text-yellow-500"
-                              : "text-gray-300"
+                              ? "text-gold-accent"
+                              : "text-warm-beige"
                         }
                       />
                     ))}
-                    <span className="ml-2 text-gray-600 text-sm">
+                    <span className="ml-2 text-earth-brown text-sm">
                       ({accommodation.rating})
                     </span>
                   </div>
@@ -143,7 +154,7 @@ const AccommodationDetail = () => {
                     return (
                       <p
                         key={i}
-                        className="text-[rgb(110,97,70)] mb-6  text-justify font-arial-narrow p-text"
+                        className="text-earth-brown mb-6  text-justify font-arial-narrow p-text"
                       >
                         {des}
                       </p>
@@ -187,7 +198,7 @@ const AccommodationDetail = () => {
                       const gstRate = getGstRate(priceNum);
                       const isPerNight = /night/i.test(bookOpt.rateUnit || "");
                       const peak = isPerNight
-                        ? Math.round(priceNum * 1.2)
+                        ? Math.round(priceNum * PEAK_SURCHARGE_RATE)
                         : null;
                       return (
                         <div
@@ -201,13 +212,13 @@ const AccommodationDetail = () => {
                             </span>
                           </p>
                           <div className="flex flex-col items-end gap-1">
-                            <div className="bg-[rgb(110,97,70)] text-white rounded-full  px-8 px-4 md:px-6 lg:px-8 py-3 flex flex-col items-center">
+                            <div className="bg-earth-brown text-white rounded-full  px-8 px-4 md:px-6 lg:px-8 py-3 flex flex-col items-center">
                               <span className="text-sm font-bold">
                                 Rs. {bookOpt.price}
                               </span>
                               <span className="text-xs">{bookOpt.rateUnit}</span>
                             </div>
-                            <p className="text-xs font-medium text-[rgb(110,97,70)] text-right">
+                            <p className="text-xs font-medium text-earth-brown text-right">
                               + {gstRate}% GST
                               {peak
                                 ? ` | Peak Season: Rs. ${formatINR(peak)}`
@@ -221,12 +232,12 @@ const AccommodationDetail = () => {
 
                   {accommodation.extraBedding && (
                     <div className="mt-4 space-y-4">
-                      <div className="rounded-lg border border-[rgb(110,97,70)]/20 bg-[rgb(110,97,70)]/5 p-4 space-y-2">
-                        <p className="flex items-start gap-2 text-sm text-[rgb(110,97,70)]">
+                      <div className="rounded-lg border border-earth-brown/20 bg-earth-brown/5 p-4 space-y-2">
+                        <p className="flex items-start gap-2 text-sm text-earth-brown">
                           <span className="font-semibold">✓</span>
                           Double occupancy basis
                         </p>
-                        <p className="flex items-start gap-2 text-sm text-[rgb(110,97,70)]">
+                        <p className="flex items-start gap-2 text-sm text-earth-brown">
                           <span className="font-semibold">✓</span>
                           <span>
                             <strong>2+ nights stay — flat 20% off on room rent</strong>
@@ -240,24 +251,24 @@ const AccommodationDetail = () => {
                       </div>
 
                       <div>
-                        <p className="text-sm font-semibold text-[rgb(110,97,70)] mb-2">
+                        <p className="text-sm font-semibold text-earth-brown mb-2">
                           Extra Guest Charges:
                         </p>
-                        <ul className="text-sm text-[rgb(110,97,70)]">
-                          <li className="flex justify-between border-b border-[rgb(110,97,70)]/10 py-1">
+                        <ul className="text-sm text-earth-brown">
+                          <li className="flex justify-between border-b border-earth-brown/10 py-1">
                             <span>Infant (up to 5 yrs)</span>
                             <span className="font-medium">Free</span>
                           </li>
-                          <li className="flex justify-between border-b border-[rgb(110,97,70)]/10 py-1">
+                          <li className="flex justify-between border-b border-earth-brown/10 py-1">
                             <span>Child (5–12 yrs)</span>
                             <span className="font-medium">₹1,500 / night</span>
                           </li>
-                          <li className="flex justify-between border-b border-[rgb(110,97,70)]/10 py-1">
+                          <li className="flex justify-between border-b border-earth-brown/10 py-1">
                             <span>Adult (above 12 yrs)</span>
                             <span className="font-medium">₹2,000 / night</span>
                           </li>
                         </ul>
-                        <p className="text-xs text-[rgb(110,97,70)]/80 mt-1">
+                        <p className="text-xs text-earth-brown/80 mt-1">
                           GST extra on above charges
                         </p>
                       </div>
@@ -283,7 +294,7 @@ const AccommodationDetail = () => {
 
                   {accommodation.capacity && (
                     <div className="flex justify-between items-center">
-                      <p className="text-base text-[rgb(110,97,70)] mb-2">
+                      <p className="text-base text-earth-brown mb-2">
                         <strong className="  font-semibold">Capacity:</strong>{" "}
                         {accommodation.capacity}
                       </p>
@@ -305,7 +316,7 @@ const AccommodationDetail = () => {
                           href={cta.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="font-inter w-full flex items-center justify-center bg-[rgb(110,97,70)] text-white font-medium py-3 px-6 rounded-md hover:bg-[rgb(123,108,80)] p-text"
+                          className="font-inter w-full flex items-center justify-center bg-earth-brown text-white font-medium py-3 px-6 rounded-md hover:bg-[rgb(123,108,80)] p-text"
                         >
                           <CalendarDays
                             size={20}
@@ -318,7 +329,7 @@ const AccommodationDetail = () => {
                         <Link
                           key={cta.href}
                           href={cta.href}
-                          className="font-inter w-full flex items-center justify-center bg-[rgb(110,97,70)] text-white font-medium py-3 px-6 rounded-md hover:bg-[rgb(123,108,80)] p-text"
+                          className="font-inter w-full flex items-center justify-center bg-earth-brown text-white font-medium py-3 px-6 rounded-md hover:bg-[rgb(123,108,80)] p-text"
                         >
                           <CalendarDays
                             size={20}
@@ -336,7 +347,7 @@ const AccommodationDetail = () => {
 
             {accommodation.galleryImages &&
               accommodation.galleryImages.length > 0 && (
-                <div className="p-6 md:p-8 border-t border-gray-200">
+                <div className="p-6 md:p-8 border-t border-warm-beige">
                   <DecorativeHeading
                     text={"Gallery"}
                     as="h2"

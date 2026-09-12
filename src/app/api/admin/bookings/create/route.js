@@ -63,7 +63,7 @@ export async function POST(req) {
     if (!parsed.success) {
         return NextResponse.json({ error: parsed.error.issues[0]?.message ?? "Invalid input" }, { status: 400 });
     }
-    const { checkIn, checkOut, roomId, numAdults, numChildren, specialRequests, guest, source, corporate, addons, internalNote, assignedUnit, advance, sendEmail: doSendEmail, } = parsed.data;
+    const { checkIn, checkOut, roomId, numAdults, numChildren, extraMattress, specialRequests, guest, source, corporate, addons, internalNote, assignedUnit, advance, sendEmail: doSendEmail, } = parsed.data;
     if (checkIn >= checkOut) {
         return NextResponse.json({ error: "Check-out must be after check-in" }, { status: 400 });
     }
@@ -75,7 +75,7 @@ export async function POST(req) {
         }
         // Authoritative server-side pricing
         const pricing = await calculateAdminPricing({
-            roomId, checkIn, checkOut, adults: numAdults, children: numChildren, addons,
+            roomId, checkIn, checkOut, adults: numAdults, children: numChildren, extraBeds: extraMattress, addons,
         });
         const bookingRef = await generateBookingReference();
         const supabase = createAdminClient();

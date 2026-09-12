@@ -33,7 +33,7 @@ export const Experience = () => {
                 <h4 className="text-lg font-bold mb-2 text-primary-gray2">
                   Forest-Side Luxury
                 </h4>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-earth-brown">
                   Elegant spaces nestled right at the edge of the wilderness.
                 </p>
               </div>
@@ -47,7 +47,7 @@ export const Experience = () => {
                 <h4 className="text-lg font-bold mb-2 text-primary-gray2">
                   Tranquil Environment
                 </h4>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-earth-brown">
                   A peaceful escape from the noise and hustle of city life.
                 </p>
               </div>

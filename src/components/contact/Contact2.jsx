@@ -79,13 +79,13 @@ Message: ${data.message}
   };
 
   return (
-    <section className="bg-[#f7f5f0] pt-25 md:pt-40 pb-10 px-6">
+    <section className="bg-[#FAF7F2] pt-25 md:pt-40 pb-10 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Page Heading */}
         <div className="text-center mb-4 md:mb-14">
           <DecorativeHeading text={"Contact Us"} as="h1" />
 
-          <p className="text-gray-700 text-justify md:text-center p-text max-w-3xl mx-auto">
+          <p className="text-charcoal text-justify md:text-center p-text max-w-3xl mx-auto">
             Whether you’re planning a peaceful retreat or seeking information
             about our eco tourism experiences, our team at{" "}
             <span className="font-semibold">Madhuban Eco Retreat</span> is here
@@ -98,7 +98,7 @@ Message: ${data.message}
           {/* LEFT SIDE – CONTACT INFO */}
           <div className="space-y-8">
             {/* Description */}
-            <p className="text-gray-700 text-justify md:text-center p-text">
+            <p className="text-charcoal text-justify md:text-center p-text">
               Nestled on the edge of the Ratapani Wildlife Sanctuary, our nature
               resort near Ratapani is the perfect escape into nature and an
               ideal digital detox retreat.
@@ -109,12 +109,12 @@ Message: ${data.message}
               <h3 className="text-base md:text-lg font-semibold flex items-center gap-1  text-primary-gray2 mb-2 font-primary">
                 <IoLocation /> Location
               </h3>
-              <p className="text-gray-700">
+              <p className="text-charcoal">
                 Salkanpur, Road, Dongri, Near Ratapani Wildlife Sanctuary,
                 <br />
                 Bhopal, Madhya Pradesh, India – 466446
               </p>
-              <p className="text-sm text-gray-600 mt-1">
+              <p className="text-sm text-earth-brown mt-1">
                 (Exact location shown on the map below)
               </p>
             </div>
@@ -124,8 +124,8 @@ Message: ${data.message}
               <h3 className="text-base md:text-lg font-semibold flex items-center gap-1  text-primary-gray2 mb-2 font-primary">
                 <IoCall /> Call / WhatsApp
               </h3>
-              <p className="text-gray-700 font-medium">+{phone}</p>
-              <p className="p-text text-gray-600">
+              <p className="text-charcoal font-medium">+{phone}</p>
+              <p className="p-text text-earth-brown">
                 We’re just a message away! Send us a WhatsApp message and we’ll
                 respond within 24 hours. Perfect for resorts near Bhopal for day
                 outing inquiries.
@@ -137,8 +137,8 @@ Message: ${data.message}
               <h3 className="text-base md:text-lg font-semibold flex items-center gap-1  text-primary-gray2 mb-2 font-primary">
                 <IoMail /> Email
               </h3>
-              <p className="text-gray-700 p-text">{gmail}</p>
-              <p className=" text-gray-600 p-text">
+              <p className="text-charcoal p-text">{gmail}</p>
+              <p className=" text-earth-brown p-text">
                 Prefer email? Write to us anytime and our team will get back to
                 you promptly.
               </p>
@@ -149,11 +149,11 @@ Message: ${data.message}
               <h3 className="text-base md:text-lg font-semibold   text-primary-gray2  font-primary">
                 Follow Us on Social Media
               </h3>
-              <p className="text-gray-600 p-text">
+              <p className="text-earth-brown p-text">
                 Stay connected with us for the latest updates, offers, and
                 glimpses of life at Madhuban Eco Retreat.
               </p>
-              <div className="flex gap-4 text-gray-700 mt-4">
+              <div className="flex gap-4 text-charcoal mt-4">
                 <Link href={facebook} className="text-2xl text-primary-gray2">
                   <FaFacebookSquare />
                 </Link>
@@ -170,7 +170,7 @@ Message: ${data.message}
             </div>
 
             {/* CTA */}
-            <div className="mt-8 rounded-xl bg-[#6e6146]/10 p-6">
+            <div className="mt-8 rounded-xl bg-earth-brown/10 p-6">
               <h3 className="text-base md:text-lg font-semibold  text-primary-gray2 mb-2 font-primary">
                 Looking for the Best Weekend Digital Detox Stay Near Ratapani?
               </h3>
@@ -178,13 +178,13 @@ Message: ${data.message}
                 Madhuban Eco Retreat is Here!
               </p>
 
-              <p className="text-gray-700 mb-4 p-text">
+              <p className="text-charcoal mb-4 p-text">
                 Escape the city, immerse yourself in nature, and rejuvenate your
                 mind and body.
               </p>
               <Link
                 href="/stay-in-ratapani-tiger-reserve"
-                className="inline-block rounded-full bg-[#6e6146] px-6 py-3 text-white font-semibold hover:bg-[#5b503a] transition "
+                className="inline-block rounded-full bg-earth-brown px-6 py-3 text-white font-semibold hover:bg-[#5b503a] transition "
               >
                 Book Now
               </Link>
@@ -193,13 +193,13 @@ Message: ${data.message}
 
           {/* RIGHT SIDE – CONTACT FORM */}
           <div
-            className=" rounded-2xl shadow-lg p-4 md:p-8  bg-[#6e6146]"
+            className=" rounded-2xl shadow-lg p-4 md:p-8  bg-earth-brown"
             style={{ height: "fit-content" }}
           >
             <h2 className="heading1 text-center  font-semibold text-white mb-2 font-primary">
               Send Us a Message
             </h2>
-            <p className="text-gray-200 mb-6  text-center">
+            <p className="text-warm-beige mb-6  text-center">
               Your message goes directly to WhatsApp.
             </p>
 
@@ -281,7 +281,7 @@ Message: ${data.message}
                 </div>
                 <button
                   type="submit"
-                  className="submit-btn font-arial-narrow text-[rgb(110,97,70)] font-primary"
+                  className="submit-btn font-arial-narrow text-earth-brown font-primary"
                 >
                   {isSubmitting ? "Sending..." : "Submit"}
                 </button>
@@ -297,7 +297,7 @@ Message: ${data.message}
         {/* MAP SECTION */}
         <div className="mt-16 text-center">
           <DecorativeHeading text={"Find Us Here"} as="h2" />
-          <p className="mb-4 text-gray-700 p-text">
+          <p className="mb-4 text-charcoal p-text">
             Explore our beautiful location near Ratapani Wildlife Sanctuary. The
             map below will help you find us easily and plan your visit.
           </p>
