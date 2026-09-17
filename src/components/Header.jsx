@@ -21,7 +21,6 @@ import {
   youtube,
 } from "@/utills/constants";
 import { isLandingRoute } from "@/utills/landingRoutes";
-import Image from "next/image";
 
 // Desktop nav is deliberately short so the bar fits inside max-w-6xl without
 // wrapping. Everything trimmed from the top level is reachable under Explore,
@@ -121,23 +120,21 @@ const MainNavigation = () => {
         <div className="max-w-6xl mx-auto px-4 lg:px-8 w-full py-3 flex justify-between items-center relative">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 z-20">
-            {/* `shrink-0` is what actually stops the distortion: the source is
-                512x512, so 44x44 cannot stretch it, but as a flex child next to
-                the nowrap text block it was being compressed horizontally when
-                the row ran out of room. object-contain guards the rest. */}
-            <Image
-              src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-tree-logo-transparent-512.png"
+            {/* Height is set explicitly to match the two-line text block's
+                height, with width left to follow the SVG's own aspect ratio
+                (no fixed width) — a fixed-width box was under-filling
+                vertically next to the brand name/tagline stack. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/Madhuban_Logo_tight_crop.svg"
               alt="Madhuban Eco Retreat"
-              width={44}
-              height={44}
-              className="object-contain w-10 h-10 shrink-0"
-              priority
+              className="object-contain h-14 md:h-16 w-auto shrink-0"
             />
             <div className="flex flex-col justify-center">
-              <div className="font-primary tracking-wide text-lg font-bold text-earth-brown leading-tight whitespace-nowrap">
+              <div className="font-primary tracking-wide text-xl md:text-2xl font-bold text-earth-brown leading-tight whitespace-nowrap">
                 Madhuban Eco Retreat
               </div>
-              <p className="font-primary tracking-wider text-xs text-earth-brown leading-tight whitespace-nowrap">
+              <p className="font-primary tracking-wider text-xs md:text-sm text-earth-brown leading-tight whitespace-nowrap">
                 Ratapani Tiger Reserve, Bhopal
               </p>
             </div>
@@ -163,7 +160,7 @@ const MainNavigation = () => {
                 <Link
                   href={item.path}
                   className={`
-                              block px-4 py-2 text-sm font-medium
+                              block px-4 py-2 text-base font-medium
                               font-primary text-[rgb(120,100,60)]
                               relative tracking-wide cursor-pointer whitespace-nowrap
                               after:content-[''] after:absolute after:w-[calc(100%-2rem)]  ${
@@ -188,7 +185,7 @@ const MainNavigation = () => {
                 type="button"
                 aria-haspopup="true"
                 className={`
-                          inline-flex items-center gap-1 px-4 py-2 text-sm font-medium
+                          inline-flex items-center gap-1 px-4 py-2 text-base font-medium
                           font-primary text-[rgb(120,100,60)]
                           relative tracking-wide cursor-pointer whitespace-nowrap
                           after:content-[''] after:absolute after:w-[calc(100%-2rem)] ${
@@ -212,7 +209,7 @@ const MainNavigation = () => {
                     <li key={link.name}>
                       <Link
                         href={link.path}
-                        className="block px-4 py-2 text-sm font-medium font-primary text-earth-brown hover:bg-earth-brown/10 tracking-wide"
+                        className="block px-4 py-2 text-base font-medium font-primary text-earth-brown hover:bg-earth-brown/10 tracking-wide"
                       >
                         {link.name}
                       </Link>
@@ -226,7 +223,7 @@ const MainNavigation = () => {
           {/* Book Now Button - Desktop */}
           <Link
             href="/stay-in-ratapani-tiger-reserve"
-            className="hidden xl:inline-flex items-center justify-center rounded-full px-6 py-2.5 font-primary text-sm font-medium text-warm-beige bg-earth-brown hover:bg-[rgb(132,116,85)] transition-colors whitespace-nowrap"
+            className="hidden xl:inline-flex items-center justify-center rounded-full px-7 py-3 font-primary text-base font-medium text-warm-beige bg-earth-brown hover:bg-[rgb(132,116,85)] transition-colors whitespace-nowrap"
           >
             Book Now
           </Link>

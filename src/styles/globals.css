@@ -364,8 +364,22 @@ body {
 
 /* ── Brand direct utilities ─────────────────────────────────────────────── */
 @theme {
+  /* Brand guide (ArchiNova, Aug 2024) primary swatches:
+       beige  rgb(224,209,188) = #E0D1BC
+       bronze rgb(154,136,100) = #9A8864
+     --color-warm-beige below is now the exact beige swatch.
+     --color-earth-brown is INTENTIONALLY darker than the exact bronze
+     swatch (#9A8864) — it's used as a background under cream/ivory/white
+     text across buttons, table headers, the footer, and the mobile
+     booking bar. The literal swatch bronze only gives ~3.2:1 contrast
+     against cream text (fails WCAG AA's 4.5:1); this darkened value
+     gives ~5.7:1 (passes). The exact swatch bronze is available as
+     --color-brand-bronze for decorative/accent use on light backgrounds
+     (borders, underlines, logo tint) — matching how the brand guide
+     itself uses it: dark ink on a light ground, never light text on it. */
   --color-earth-brown: #6E6146;
-  --color-warm-beige: #D1C8C1;
+  --color-brand-bronze: #9A8864;
+  --color-warm-beige: #E0D1BC;
   --color-cream: #FAF7F2;
   --color-charcoal: #2A2A2A;
   --color-ivory: #FEFCF8;

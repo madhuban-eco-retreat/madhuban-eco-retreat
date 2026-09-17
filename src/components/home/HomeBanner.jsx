@@ -8,7 +8,7 @@ const heroSlides = [
   { image: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/madhuban-eco-retreat-home-page-banner-aerial-view.jpg", alt: "Aerial view of Madhuban Eco Retreat near Ratapani Tiger Reserve Bhopal", position: "object-center" },
   { image: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/madhuban-eco-retreat-home-page-banner-jungle-safari(1).jpg", alt: "Jungle safari at Ratapani Tiger Reserve near Madhuban Eco Retreat", position: "object-center" },
   { image: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/madhuban-eco-retreat-home-page-banner-ratapani-forest-aerial-road.jpg", alt: "Ratapani forest aerial road view near Madhuban Eco Retreat Bhopal", position: "object-center" },
-  { image: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/madhuban-eco-retreat-home-page-banner-common-iora-bird.jpg", alt: "Common Iora bird at Ratapani Wildlife Sanctuary near Madhuban Eco Retreat", position: "object-center" },
+  { image: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/Madhuban_Eco_Retreat_3000x1688.jpg", alt: "Madhuban Eco Retreat lodge exterior at dusk, Ratapani Tiger Reserve, Bhopal", position: "object-center" },
 ];
 
 export default function HomeBanner() {

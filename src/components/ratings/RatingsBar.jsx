@@ -38,7 +38,7 @@ export default function RatingsBar() {
       <div className="max-w-6xl mx-auto">
         {/* Heading */}
         <h2 className="text-center text-sm font-medium text-charcoal/60 uppercase tracking-widest mb-6">
-          Rated by Our Guests
+          Reviews & Recognition
         </h2>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-16">
@@ -131,6 +131,29 @@ export default function RatingsBar() {
                 <span className="text-xs text-charcoal/50">Google</span>
               </div>
             </a>
+          </div>
+
+          {/* Divider */}
+          <div className="hidden sm:block w-px h-16 bg-[#C8B99A]" />
+
+          {/* TTF Excellence Award 2026 — from the organizer, not a guest review,
+              which is why it's kept visually distinct from the two review
+              widgets and the section heading no longer implies guests gave it. */}
+          <div className="flex flex-col items-center gap-2">
+            <p className="text-xs text-charcoal/50 uppercase tracking-wider mb-1">
+              Award Winner
+            </p>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/Madhuban_Award_Certificate_800x627.jpg"
+              alt="TTF Excellence Award 2026 — Best Value Leisure Product, presented to Madhuban Eco Retreat"
+              width={160}
+              height={125}
+              className="rounded-md shadow-sm object-cover"
+            />
+            <span className="text-xs text-charcoal/50">
+              TTF Best Value Leisure Product
+            </span>
           </div>
         </div>
       </div>
