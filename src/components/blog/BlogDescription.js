@@ -1,5 +1,4 @@
 "use client";
-import StickyContactForm from "@/common-components/stickyContactForm/StickyContactForm";
 import React, { useEffect, useState } from "react";
 
 const BlogDescription = ({ blog }) => {
@@ -7,7 +6,7 @@ const BlogDescription = ({ blog }) => {
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState("");
 
-  let data = blog?.description?.replace(
+  let data = blog?.content?.replace(
     /(<iframe\b[^>]*?)\s*sandbox=(["']?)?[^"'\s>]*?(["']?)?([^>]*>)/gi,
     "$1 $4"
   );
@@ -21,7 +20,7 @@ const BlogDescription = ({ blog }) => {
     const content = document.querySelector(".discriptionContent");
     if (!content) return;
 
-    const elements = content.querySelectorAll("h2, h3");
+    const elements = content.querySelectorAll("h2");
 
     const newHeadings = Array.from(elements).map((el, index) => {
       const id = `heading-${index}`;
@@ -60,24 +59,24 @@ const BlogDescription = ({ blog }) => {
   }, [headings]);
 
   return (
-    <div className="bg-[#b4a681d8] pt-10">
-      <div className="max-w-[1400px] mx-auto px-4">
+    <div className="bg-[#FAF7F2] pt-8">
+      <div className="custom-container">
 
         {/* ========== MOBILE / TABLET: TOC Dropdown ========== */}
-        <div className="xl:hidden w-full mb-6">
-          <div className="bg-white rounded-lg shadow-md">
-            <button onClick={() => setOpen(!open)} className="w-full text-left px-5 py-4 font-semibold flex justify-between items-center text-charcoal" >
-              📑 Table of Contents
-              <span className="text-xl font-bold">{open ? "−" : "+"}</span>
+        {headings.length > 0 && (
+          <div className="xl:hidden w-full mb-6">
+            <button onClick={() => setOpen(!open)} className="w-full text-left py-3 border-b border-earth-brown/20 font-primary text-lg flex justify-between items-center text-earth-brown" >
+              Contents
+              <span className="text-xl font-normal">{open ? "−" : "+"}</span>
             </button>
 
             {open && (
-              <ul className="px-5 pb-4 space-y-2 text-sm">
+              <ul className="pt-3 pb-2 space-y-2 text-sm">
                 {headings.map((item) => (
-                  <li  key={item.id} className={`${ item.level === "H3" ? "ml-4" : "" }`} >
+                  <li key={item.id}>
                     <a href={`#${item.id}`} onClick={() => setOpen(false)}
                       className={`block py-1 transition-colors ${
-                        activeId === item.id ? "text-moss-green font-semibold"  : "text-earth-brown hover:text-moss-green"  }`} >
+                        activeId === item.id ? "text-earth-brown font-semibold"  : "text-charcoal/70 hover:text-earth-brown"  }`} >
                       {item.text}
                     </a>
                   </li>
@@ -85,59 +84,51 @@ const BlogDescription = ({ blog }) => {
               </ul>
             )}
           </div>
-        </div>
+        )}
 
-        {/* MAIN LAYOUT  */}
-        <div className="flex flex-col xl:flex-row gap-4 md:gap-6">
-          {/* Table of Contents  */}
-          <aside className="hidden xl:block xl:w-[22%]">
+        {/* MAIN LAYOUT — just TOC + content, no sidebar. Centered as a pair
+            (not left-aligned) since the content column is capped narrower
+            than the outer container for readability — left-aligning it
+            would otherwise dump all the leftover width as dead space on
+            the right. */}
+        <div className="flex flex-col xl:flex-row xl:justify-center gap-8 md:gap-10 pb-6 md:pb-8">
+          {/* Table of Contents — plain list, no box, just an accent line on
+              the active item. Fixed narrow width so the article gets the
+              rest of the space instead of splitting it three ways. */}
+          <aside className="hidden xl:block xl:w-[200px] shrink-0">
             <div className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto scrollbar-thin">
               {headings.length > 0 && (
-                <div className="bg-white p-5 rounded-lg shadow-md">
-                  <h3 className="text-lg font-bold mb-4 text-charcoal border-b pb-3"> 📑 Table of Contents </h3>
-                  <nav>
-                    <ul className="space-y-1 text-sm">
-                      {headings.map((item) => (
-                        <li  key={item.id} className={`${ item.level === "H3" ? "ml-4" : "" }`} >
-                          <a href={`#${item.id}`}
-                            className={`block py-1.5 px-3 rounded-md transition-all duration-200 ${
-                              activeId === item.id
-                                ? "bg-cream text-moss-green font-semibold border-l-3 border-moss-green"
-                                : "text-earth-brown hover:text-moss-green hover:bg-cream" }`}>
-                            {item.text}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </nav>
-                </div>
+                <nav>
+                  <h3 className="font-primary text-base text-earth-brown mb-4"> Contents </h3>
+                  <ul className="space-y-3 text-sm border-l border-earth-brown/15">
+                    {headings.map((item) => (
+                      <li key={item.id}>
+                        <a href={`#${item.id}`}
+                          className={`block pl-4 -ml-px border-l-2 transition-colors duration-200 ${
+                            activeId === item.id
+                              ? "border-earth-brown text-earth-brown font-semibold"
+                              : "border-transparent text-charcoal/60 hover:text-earth-brown" }`}>
+                          {item.text}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
               )}
             </div>
           </aside>
 
-          {/*  Blog Content */}
-          <main className="w-full xl:w-[52%]">
+          {/* Blog Content — no card, no border, no shadow: flows directly
+              on the page background so it doesn't read as a separate box
+              sitting on top of the page, just the article itself. */}
+          <main className="w-full min-w-0 max-w-3xl">
             <div className="no-tailwind">
-              <div className="discriptionContent prose max-w-none bg-white p-6 md:p-8 rounded-lg shadow-md"
+              <div className="discriptionContent prose max-w-none"
                 dangerouslySetInnerHTML={{ __html: data }} ></div>
             </div>
           </main>
-
-          {/* Contact Form / Modal  */}
-          <aside className="hidden xl:block xl:w-[26%]">
-            <div className="sticky top-28 space-y-6 max-h-[calc(100vh-8rem)] overflow-y-auto scrollbar-thin">
-              <StickyContactForm />
-            </div>
-          </aside>
-        </div>
-
-        {/*  Contact Form Below Content  */}
-        <div className="xl:hidden w-full  py-10">
-          <StickyContactForm />
         </div>
       </div>
-
-      
     </div>
   );
 };

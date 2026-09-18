@@ -51,6 +51,7 @@ const nextConfig = {
 
   images: {
     formats: ["image/avif", "image/webp"],
+    qualities: [75, 90],
     remotePatterns: [
       {
         protocol: "https",
@@ -359,6 +360,16 @@ const nextConfig = {
     ];
   },
   async headers() {
+    // These long-lived "immutable" caches are safe in production, where
+    // Next.js content-hashes static filenames — a changed file gets a new
+    // name, so caching the old one forever is harmless. In `next dev`
+    // (Turbopack), chunk filenames can be reused across edits, so the same
+    // header tells the browser to keep serving a stale bundle even past a
+    // hard refresh. That's very likely why CSS/JS changes kept appearing
+    // not to have applied during local testing — this was never a code bug.
+    if (process.env.NODE_ENV !== "production") {
+      return [];
+    }
     return [
       // Static assets - 1 year
       {

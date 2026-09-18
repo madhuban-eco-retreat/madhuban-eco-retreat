@@ -1,4 +1,4 @@
-import { getPublishedBlogSlugs } from "@/lib/blog/queries";
+import { getPublishedBlogSlugs, getAllCategories, getAllAuthors } from "@/lib/blog/queries";
 
 const sitemapUrls = [
   { url: "/", priority: 1.0 },
@@ -42,6 +42,8 @@ export const revalidate = 3600;
 
 export default async function sitemap() {
   let blogEntries = [];
+  let categoryEntries = [];
+  let authorEntries = [];
   try {
     // Sourced from Supabase. This previously called the MongoDB backend, which
     // no longer receives new posts — anything written in the admin panel would
@@ -58,6 +60,30 @@ export default async function sitemap() {
     console.error("[sitemap] could not load blog posts:", error);
   }
 
+  try {
+    const categories = await getAllCategories();
+    categoryEntries = categories.map((cat) => ({
+      url: `${BASE_URL}/blogs/category/${cat.slug}`,
+      lastModified: STATIC_LASTMOD,
+      changeFrequency: "weekly",
+      priority: 0.5,
+    }));
+  } catch (error) {
+    console.error("[sitemap] could not load blog categories:", error);
+  }
+
+  try {
+    const authors = await getAllAuthors();
+    authorEntries = authors.map((author) => ({
+      url: `${BASE_URL}/blogs/author/${author.slug}`,
+      lastModified: STATIC_LASTMOD,
+      changeFrequency: "monthly",
+      priority: 0.4,
+    }));
+  } catch (error) {
+    console.error("[sitemap] could not load blog authors:", error);
+  }
+
   return [
     ...sitemapUrls.map((item) => ({
       url: `${BASE_URL}${item.url}`,
@@ -66,5 +92,7 @@ export default async function sitemap() {
       changeFrequency: "weekly",
     })),
     ...blogEntries,
+    ...categoryEntries,
+    ...authorEntries,
   ];
 }

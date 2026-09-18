@@ -2,7 +2,7 @@
  * Supabase connection config, resolved once and validated in one place.
  *
  * WHY THIS FILE EXISTS
- * NEXT_PUBLIC_* values are substituted by the bundler during `next build` —
+ * NEXT_PUBLIC_* values are substituted by the bundler during `next build` â€”
  * they are not read from the environment when the request runs. A deployment
  * built while these were unset stays broken until it is REBUILT; adding them
  * in the Vercel dashboard afterwards does nothing for an already-built
@@ -37,7 +37,7 @@ export function isSupabaseConfigured() {
 export class SupabaseConfigError extends Error {
   constructor(missing = missingSupabaseEnv()) {
     super(
-      `Supabase is not configured — ${missing.join(" and ")} ` +
+      `Supabase is not configured â€” ${missing.join(" and ")} ` +
         `${missing.length === 1 ? "was" : "were"} unset when this build ran. ` +
         `NEXT_PUBLIC_* values are baked in by \`next build\`, so setting them ` +
         `in the hosting dashboard is not enough: the deployment must be rebuilt.`,

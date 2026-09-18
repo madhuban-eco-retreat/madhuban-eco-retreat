@@ -220,6 +220,23 @@ export async function getAllCategories() {
   return data ?? [];
 }
 
+/** One active category by slug, or null. */
+export async function getCategoryBySlug(slug) {
+  const supabase = createPublicClient();
+  const { data, error } = await supabase
+    .from("blog_categories")
+    .select("*")
+    .eq("slug", slug)
+    .eq("is_active", true)
+    .single();
+
+  if (error) {
+    if (error.code === PGRST_NO_ROWS) return null;
+    fail(`Could not load category "${slug}"`, error);
+  }
+  return data;
+}
+
 /** One active author by slug, or null. */
 export async function getAuthorBySlug(slug) {
   const supabase = createPublicClient();
@@ -235,6 +252,20 @@ export async function getAuthorBySlug(slug) {
     fail(`Could not load author "${slug}"`, error);
   }
   return data;
+}
+
+/** Active authors with at least one published post, for author archive
+ *  listing and the sitemap. */
+export async function getAllAuthors() {
+  const supabase = createPublicClient();
+  const { data, error } = await supabase
+    .from("blog_authors")
+    .select("*")
+    .eq("is_active", true)
+    .gt("article_count", 0)
+    .order("name");
+  if (error) fail("Could not load blog authors", error);
+  return data ?? [];
 }
 
 /** Published posts by one author, newest first. */

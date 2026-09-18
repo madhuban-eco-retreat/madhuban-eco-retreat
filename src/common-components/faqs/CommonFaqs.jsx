@@ -46,6 +46,10 @@ export default function CommonFaqs({
   faqs = [],
   heading = "FAQs",
   bgColor = "bg-primary-gray",
+  accordionBg = "var(--primary-gray2)",
+  accordionColor = "white",
+  dense = false,
+  maxWidth = "max-w-6xl",
 }) {
   const [expanded, setExpanded] = useState(false);
 
@@ -57,7 +61,7 @@ export default function CommonFaqs({
 
   return (
     <section className={`py-8 px-4 md:px-8 ${bgColor}`}>
-      <div className="max-w-6xl mx-auto">
+      <div className={`${maxWidth} mx-auto`}>
         <motion.div
           className="text-center mb-6 md:mb-8"
           initial="hidden"
@@ -88,22 +92,47 @@ export default function CommonFaqs({
                   style={{
                     margin: 0,
                     overflow: "hidden",
-                    borderBottom: "1px solid white",
+                    borderBottom: dense
+                      ? "1px solid var(--color-warm-beige, #E0D1BC)"
+                      : "1px solid white",
                   }}
                 >
                   <AccordionSummary
-                    expandIcon={<ExpandMoreIcon className="text-white" />}
+                    expandIcon={
+                      <ExpandMoreIcon
+                        style={{ color: accordionColor }}
+                      />
+                    }
                     aria-controls="panel1-content"
                     id="panel1-header"
                     sx={{
-                      background: "var(--primary-gray2)",
-                      color: "white",
+                      background: accordionBg,
+                      color: accordionColor,
+                      minHeight: dense ? 44 : undefined,
+                      "&.Mui-expanded": {
+                        minHeight: dense ? 44 : undefined,
+                      },
+                      "& .MuiAccordionSummary-content": {
+                        margin: dense ? "10px 0" : undefined,
+                      },
                     }}
                   >
-                    <p className="p-text">{item?.question}</p>
+                    <p className={dense ? "text-sm" : "p-text"}>
+                      {item?.question}
+                    </p>
                   </AccordionSummary>
-                  <AccordionDetails>
-                    <p className="text-primary-gray2 p-text">{item?.answer}</p>
+                  <AccordionDetails
+                    sx={dense ? { padding: "10px 16px 14px" } : undefined}
+                  >
+                    <p
+                      className={
+                        dense
+                          ? "text-earth-brown text-sm"
+                          : "text-primary-gray2 p-text"
+                      }
+                    >
+                      {item?.answer}
+                    </p>
                   </AccordionDetails>
                 </Accordion>
               </motion.div>
