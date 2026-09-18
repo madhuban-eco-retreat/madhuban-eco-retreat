@@ -112,58 +112,47 @@ const CookiesPopup = () => {
 
   return (
     <>
-      <div className="fixed  bottom-5 md:bottom-5 left-0 right-0 mx-2  md:mx-5 lg:mx-12 z-30  ">
+      <div className="fixed bottom-3 md:bottom-5 left-0 right-0 mx-2 md:mx-5 lg:mx-12 z-30">
         <Box
-          className="flex flex-col md:flex-row  gap-0.5 md:gap-2   items-center bg-primary-gray  rounded-t-xl rounded-xl md:rounded-full  "
+          className="flex flex-col sm:flex-row gap-1.5 sm:gap-3 items-center bg-primary-gray rounded-xl sm:rounded-full px-3 py-2"
           sx={{
             boxShadow: "0 0px 50px 4px #00000040",
           }}
         >
-          <div className=" w-full px-2 m-2.5">
-            <div className="flex flex-row gap-1.5 md:gap-2  items-center">
-              <div className="w-[40px] h-[40px] md:w-[60px] md:h-[60px] lg:w-[70px] lg:h-[70px] relative shrink-0">
-                <Image
-                  src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/cookies.svg"
-                  alt="logo"
-                  fill
-                />
-              </div>
-              <div className="text-base">
-                <p className="text-sm md:text-lg">{`We use cookies to improve your experience. By continuing, you agree to our use of cookies`}</p>
-              </div>
+          <div className="flex flex-row gap-2 items-center flex-1 min-w-0">
+            <div className="w-[26px] h-[26px] md:w-[32px] md:h-[32px] relative shrink-0">
+              <Image
+                src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/cookies.svg"
+                alt="logo"
+                fill
+              />
             </div>
+            <p className="text-xs md:text-sm leading-snug">{`We use cookies to improve your experience.`}</p>
           </div>
-          <div className=" w-full px-1 md:px-5 my-1.5   ">
-            <div className="flex flex-row gap-2 sm:gap-4 justify-center md:justify-end  items-center">
-              <p className="dm_sans  responsive-text text-charcoal font-medium">
-                <Link
-                  onClick={handleManagePreferences}
-                  href="/"
-                  rel="noopener noreferrer"
-                  className="flex flex-row items-center gap-1.5 hover:underline cursor-pointer underline text-charcoal whitespace-nowrap"
-                >
-                  {`Cookies Settings`}
-                </Link>
-              </p>
-              <div className="flex sm:flex-row gap-2 sm:gap-5 text-xs md:text-lg">
-                <button
-                  onClick={handleAcceptAll}
-                  height={{ xs: "40px", sm: "50px" }}
-                  className=" px-4 py-2 rounded-md  font-semibold  text-warm-beige bg-earth-brown  transition cursor-pointer"
-                  type="submit"
-                  color="#1A2E33"
-                >
-                  {`Accept All`}
-                </button>
-                <button
-                  height={{ xs: "40px", sm: "50px" }}
-                  onClick={handleRejectNonEssential}
-                  className=" px-4 py-2 rounded-md  font-semibold  border border-earth-brown  transition cursor-pointer hover:text-warm-beige hover:bg-earth-brown"
-                  type="submit"
-                >
-                  {`Reject All`}
-                </button>
-              </div>
+          <div className="flex flex-row gap-2 sm:gap-3 items-center justify-between sm:justify-end w-full sm:w-auto">
+            <Link
+              onClick={handleManagePreferences}
+              href="/"
+              rel="noopener noreferrer"
+              className="text-xs md:text-sm font-medium hover:underline underline text-charcoal whitespace-nowrap shrink-0"
+            >
+              {`Settings`}
+            </Link>
+            <div className="flex flex-row gap-2 shrink-0">
+              <button
+                onClick={handleRejectNonEssential}
+                className="px-3 py-1.5 text-xs md:text-sm rounded-md font-semibold border border-earth-brown transition cursor-pointer hover:text-warm-beige hover:bg-earth-brown whitespace-nowrap"
+                type="submit"
+              >
+                {`Reject`}
+              </button>
+              <button
+                onClick={handleAcceptAll}
+                className="px-3 py-1.5 text-xs md:text-sm rounded-md font-semibold text-warm-beige bg-earth-brown transition cursor-pointer whitespace-nowrap"
+                type="submit"
+              >
+                {`Accept All`}
+              </button>
             </div>
           </div>
         </Box>
