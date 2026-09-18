@@ -16,13 +16,13 @@ export function bookingConfirmationGuestEmail(data) {
     <tr><td align="center">
       <table width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #EAE5DC;">
         <tr>
-          <td style="background:#2D3B2D;padding:24px 32px;">
-            <p style="margin:0;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#D1C8C1;">Madhuban Eco Retreat</p>
+          <td style="background:#6E6146;padding:24px 32px;">
+            <p style="margin:0;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#E0D1BC;">Madhuban Eco Retreat</p>
             <h1 style="margin:6px 0 0;font-size:20px;font-weight:600;color:#FEFCF8;">Booking Confirmed</h1>
           </td>
         </tr>
         <tr>
-          <td style="background:#4A6741;padding:12px 32px;">
+          <td style="background:#78684A;padding:12px 32px;">
             <p style="margin:0;font-size:13px;color:#FEFCF8;">
               ✓ &nbsp;Payment received in full. Your stay is confirmed.
             </p>
@@ -81,8 +81,8 @@ export function bookingConfirmationGuestEmail(data) {
                       <td colspan="2" style="padding:4px 0;border-top:1px solid #EAE5DC;"></td>
                     </tr>` : ""}
                     <tr>
-                      <td style="font-size:13px;color:#4A6741;padding:4px 0;font-weight:600;">Total Paid</td>
-                      <td align="right" style="font-size:14px;font-weight:700;color:#4A6741;">₹${formatAmount(data.totalAmount)}</td>
+                      <td style="font-size:13px;color:#6E6146;padding:4px 0;font-weight:600;">Total Paid</td>
+                      <td align="right" style="font-size:14px;font-weight:700;color:#6E6146;">₹${formatAmount(data.totalAmount)}</td>
                     </tr>
                     <tr>
                       <td colspan="2" style="padding:4px 0;border-top:1px solid #EAE5DC;"></td>

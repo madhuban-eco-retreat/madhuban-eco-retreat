@@ -9,7 +9,7 @@ export function bookingCancelledGuestEmail(data) {
       <table width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #EAE5DC;">
         <tr>
           <td style="background:#6E6146;padding:24px 32px;">
-            <p style="margin:0;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#D1C8C1;">Madhuban Eco Retreat</p>
+            <p style="margin:0;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#E0D1BC;">Madhuban Eco Retreat</p>
             <h1 style="margin:6px 0 0;font-size:20px;font-weight:600;color:#FEFCF8;">Booking Cancelled</h1>
           </td>
         </tr>
@@ -23,7 +23,7 @@ export function bookingCancelledGuestEmail(data) {
               ${row("Room", escapeHtml(data.roomName))}
               ${row("Check-in", formatDate(data.checkIn))}
               ${row("Check-out", formatDate(data.checkOut))}
-              ${data.refundAmount > 0 ? row("Refund Amount", `<strong style="color:#4A6741;">₹${formatAmount(data.refundAmount)}</strong> (will be processed within 5–7 business days)`) : row("Refund", "No refund applicable per cancellation policy")}
+              ${data.refundAmount > 0 ? row("Refund Amount", `<strong style="color:#6E6146;">₹${formatAmount(data.refundAmount)}</strong> (will be processed within 5–7 business days)`) : row("Refund", "No refund applicable per cancellation policy")}
             </table>
             <p style="margin-top:24px;font-size:13px;color:#2A2A2A;line-height:1.6;">
               Questions? Contact us at <a href="https://wa.me/919770558419" style="color:#6E6146;">+91 97705 58419</a>

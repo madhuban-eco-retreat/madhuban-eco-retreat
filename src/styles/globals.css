@@ -2,6 +2,24 @@
 
 @import "tailwindcss";
 
+/* @tailwindcss/forms was listed as a plugin in tailwind.config.js, but that
+   file is never loaded under v4 (see note below) — so despite being an
+   installed dependency, its form-element reset was never actually applied
+   anywhere on the site. This is the v4-native way to load it. */
+@plugin "@tailwindcss/forms";
+
+/* tailwind.config.js also defined these as custom max-width breakpoints.
+   v4 doesn't read that file at all (postcss.config.mjs uses
+   @tailwindcss/postcss directly, no @config pointing at it), so every
+   max640:/max500:/max-sm:/max-Xsm:/max-340:/max-367: class in the codebase
+   was silently a no-op until this. */
+@custom-variant max640 (max-width: 640px);
+@custom-variant max500 (max-width: 500px);
+@custom-variant max-sm (max-width: 640px);
+@custom-variant max-Xsm (max-width: 400px);
+@custom-variant max-340 (max-width: 340px);
+@custom-variant max-367 (max-width: 367px);
+
 /* The @tailwind base/components/utilities trio was removed: those are v3
    directives and are inert under v4, which this project uses via
    @import "tailwindcss" and @tailwindcss/postcss. */
@@ -25,8 +43,70 @@ body {
   font-family: 'Playfair Display', serif;
 }
 
+/* Custom container padding, migrated from tailwind.config.js's
+   theme.container config — v4 doesn't read JS container config, so this is
+   the CSS-native equivalent (used across 9 files). */
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+@media (min-width: 640px) {
+  .container { padding-inline: 2rem; }
+}
+@media (min-width: 1024px) {
+  .container { padding-inline: 4rem; }
+}
+@media (min-width: 1280px) {
+  .container { padding-inline: 5rem; }
+}
+
 @theme {
-  --font-primary: "Sitka Banner", serif; 
+  --font-primary: "Sitka Banner", serif;
+
+  /* Everything below is migrated from tailwind.config.js (dead under v4,
+     see note above) — restores real utilities that ~35 files across the
+     codebase already reference but that were previously no-ops:
+     font-arial-narrow (24 files), font-poppins/openSans/inter (9 files),
+     shadow-subtle and the green/brown/stone ramps + text-title (a few each). */
+  --font-poppins: "Poppins", sans-serif;
+  --font-openSans: "Open Sans", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-arial-narrow: "Arial Narrow", sans-serif;
+
+  --shadow-subtle: 0 2px 10px rgba(0, 0, 0, 0.05);
+
+  --color-title: rgb(154, 136, 100);
+
+  --color-green-50: #F2F8F0;
+  --color-green-100: #DDEED9;
+  --color-green-200: #BBDDB4;
+  --color-green-300: #99CB8F;
+  --color-green-400: #79B86B;
+  --color-green-500: #5BA84C;
+  --color-green-600: #4A8B40;
+  --color-green-700: #3A6B35;
+  --color-green-800: #2D5F2D;
+
+  --color-brown-50: #F8ECE4;
+  --color-brown-100: #F1D9CA;
+  --color-brown-200: #E4C6B0;
+  --color-brown-300: #D7B291;
+  --color-brown-400: #CA9F77;
+  --color-brown-500: #BD8C5E;
+  --color-brown-600: #AD7B4D;
+  --color-brown-700: #9C6A3C;
+  --color-brown-800: #8B5A2B;
+
+  --color-stone-50: #F5F0E8;
+  --color-stone-100: #D0C2A8;
+  --color-stone-200: #BAAD97;
+  --color-stone-300: #A59985;
+  --color-stone-400: #8F8474;
+  --color-stone-500: #7A7063;
+  --color-stone-600: #655D52;
+  --color-stone-700: #504A41;
+  --color-stone-800: #3C3730;
+  --color-stone-900: #28241F;
 }
 
 /* Custom animations */
@@ -378,6 +458,9 @@ body {
      (borders, underlines, logo tint) — matching how the brand guide
      itself uses it: dark ink on a light ground, never light text on it. */
   --color-earth-brown: #6E6146;
+  --color-earth-brown-light: #78684A; /* secondary bands, button hovers, borders —
+     replaces the old moss-green (#4A6741). Passes ~5:1 contrast against
+     cream/white text, same accessibility reasoning as earth-brown above. */
   --color-brand-bronze: #9A8864;
   --color-warm-beige: #E0D1BC;
   --color-cream: #FAF7F2;

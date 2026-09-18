@@ -29,14 +29,14 @@ const s = StyleSheet.create({
         padding: 36,
     },
     header: {
-        backgroundColor: "#2D3B2D",
+        backgroundColor: "#6E6146",
         borderRadius: 8,
         padding: 20,
         marginBottom: 16,
     },
-    headerProp: { fontSize: 8, letterSpacing: 1.5, color: "#D1C8C1", textTransform: "uppercase" },
+    headerProp: { fontSize: 8, letterSpacing: 1.5, color: "#E0D1BC", textTransform: "uppercase" },
     headerTitle: { fontSize: 20, fontWeight: 700, color: "#FEFCF8", marginTop: 4 },
-    headerSub: { fontSize: 10, color: "#A8C5A0", marginTop: 2 },
+    headerSub: { fontSize: 10, color: "#E0D1BC", marginTop: 2 },
     refBox: {
         borderRadius: 8,
         border: "1.5pt solid #6E6146",
@@ -62,7 +62,7 @@ const s = StyleSheet.create({
     totalLabel: { fontWeight: 700, fontSize: 10, color: "#6E6146" },
     totalValue: { fontFamily: FONT_STACK[1], fontWeight: 700, fontSize: 12, color: "#6E6146" },
     banner: {
-        backgroundColor: "#4A6741",
+        backgroundColor: "#78684A",
         borderRadius: 6,
         padding: 10,
         marginBottom: 12,

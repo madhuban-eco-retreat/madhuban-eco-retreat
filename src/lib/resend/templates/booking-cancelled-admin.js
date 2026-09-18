@@ -24,7 +24,7 @@ export function bookingCancelledAdminEmail(data) {
               ${row("Check-in", formatDate(data.checkIn))}
               ${row("Check-out", formatDate(data.checkOut))}
               ${row("Cancelled By", escapeHtml(data.cancelledBy))}
-              ${data.refundAmount > 0 ? row("Refund Amount", `<strong style="color:#4A6741;">₹${formatAmount(data.refundAmount)}</strong> — process in Razorpay dashboard`) : row("Refund", "No refund")}
+              ${data.refundAmount > 0 ? row("Refund Amount", `<strong style="color:#6E6146;">₹${formatAmount(data.refundAmount)}</strong> — process in Razorpay dashboard`) : row("Refund", "No refund")}
             </table>
           </td>
         </tr>

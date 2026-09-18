@@ -20,7 +20,7 @@ export function bookingConfirmationAdminEmail(data) {
       <table width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #EAE5DC;">
         <tr>
           <td style="background:#6E6146;padding:24px 32px;">
-            <p style="margin:0;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#D1C8C1;">Madhuban Admin</p>
+            <p style="margin:0;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#E0D1BC;">Madhuban Admin</p>
             <h1 style="margin:6px 0 0;font-size:20px;font-weight:600;color:#FEFCF8;">New Booking Confirmed</h1>
           </td>
         </tr>
@@ -51,12 +51,12 @@ export function bookingConfirmationAdminEmail(data) {
               ${row("Guests", `${data.adults} adult${data.adults !== 1 ? "s" : ""}${data.children > 0 ? `, ${data.children} child${data.children !== 1 ? "ren" : ""}` : ""}`)}
               ${row("Source", escapeHtml(data.source))}
               ${data.specialRequests ? row("Special requests", `<span style="white-space:pre-wrap;">${escapeHtml(data.specialRequests)}</span>`) : ""}
-              ${data.discountAmount ? row("Discount", `<span style="color:#4A6741;">−₹${formatAmount(data.discountAmount)}${data.couponCode ? ` (coupon ${escapeHtml(data.couponCode)})` : ""}</span>`) : ""}
+              ${data.discountAmount ? row("Discount", `<span style="color:#6E6146;">−₹${formatAmount(data.discountAmount)}${data.couponCode ? ` (coupon ${escapeHtml(data.couponCode)})` : ""}</span>`) : ""}
               ${data.baseAmount != null ? row("Taxable Amount", `₹${formatAmount(data.baseAmount)}`) : ""}
               ${tax ? row(`CGST (${tax.cgstRate}%)`, `₹${formatAmount(tax.cgstAmount)}`) : ""}
               ${tax ? row(`SGST (${tax.sgstRate}%)`, `₹${formatAmount(tax.sgstAmount)}`) : ""}
               ${row("Total Amount", `₹${formatAmount(data.totalAmount)}`)}
-              ${row("Payment Received", `<strong style="color:#4A6741;">₹${formatAmount(data.paidAmount ?? data.totalAmount)}</strong>`)}
+              ${row("Payment Received", `<strong style="color:#6E6146;">₹${formatAmount(data.paidAmount ?? data.totalAmount)}</strong>`)}
               ${row("Balance at Check-in", `₹0`)}
             </table>
             ${adminUrl ? `<table width="100%" cellpadding="0" cellspacing="0" style="margin-top:24px;">

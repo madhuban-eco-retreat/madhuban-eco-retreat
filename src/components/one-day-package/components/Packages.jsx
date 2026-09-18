@@ -116,7 +116,7 @@ export const Packages = () => {
               <div></div>
               <button
                 title="Contact Us"
-                className="w-full sm:w-auto cursor-pointer bg-primary-gray2 text-white px-8 py-4 rounded-full font-bold flex items-center justify-center gap-3 hover:bg-[#4A6741] transition-all transform hover:translate-x-1"
+                className="w-full sm:w-auto cursor-pointer bg-primary-gray2 text-white px-8 py-4 rounded-full font-bold flex items-center justify-center gap-3 hover:bg-earth-brown-light transition-all transform hover:translate-x-1"
                 onClick={() => {
                   window.open(`https://wa.me/${phone}`, "_blank");
                 }}

@@ -9,9 +9,9 @@ export function bookingCustomEmail(data) {
     <tr><td align="center">
       <table width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #EAE5DC;">
         <tr>
-          <td style="background:#2D3B2D;padding:24px 32px;">
-            <p style="margin:0;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#D1C8C1;">Madhuban Eco Retreat</p>
-            <p style="margin:4px 0 0;font-size:12px;color:#D1C8C1;">Re: Booking ${escapeHtml(data.bookingRef)}</p>
+          <td style="background:#6E6146;padding:24px 32px;">
+            <p style="margin:0;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#E0D1BC;">Madhuban Eco Retreat</p>
+            <p style="margin:4px 0 0;font-size:12px;color:#E0D1BC;">Re: Booking ${escapeHtml(data.bookingRef)}</p>
           </td>
         </tr>
         <tr>
