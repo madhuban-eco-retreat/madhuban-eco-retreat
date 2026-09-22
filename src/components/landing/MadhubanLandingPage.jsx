@@ -35,42 +35,42 @@ const STAYS = [
     name: "Camping Tent",
     price: 2500,
     desc: "Back-to-basics canvas tent. Closest you get to the wild.",
-    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/camping-tent-image-1-madhuban-eco-retreat-bhopal.webp",
+    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/madhuban-camping-hammock-under-100kb.jpg",
     tag: null,
   },
   {
     name: "Glamping Tent",
     price: 7500,
     desc: "Luxury under canvas. Proper beds, en-suite, jungle views.",
-    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/madhuban-eco-retreat-glamping-tent-gallery-image-1.webp",
+    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/madhuban-eco-retreat-glamping-tent-exterior-image-home-page-card.jpg",
     tag: "Couples favourite",
   },
   {
     name: "Mud House — Standard",
     price: 9000,
     desc: "Traditional mud architecture, naturally cool. Without bathtub.",
-    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/Mud_House_Image_2_-_Madhuban_Eco_Retreat_Bhopal_lbzlrg.webp",
+    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/madhuban-eco-retreat-mud-house-exterior-image-home-page-card.jpg",
     tag: null,
   },
   {
     name: "Mud House — Premium",
     price: 10000,
     desc: "Same earthy stay with a private bathtub. The slow-down room.",
-    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/readyForEco/mud-house-madhuban-eco-retreat-bhopal.webp",
+    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/madhuban-eco-retreat-mud-house-exterior-image-home-page-card.jpg",
     tag: null,
   },
   {
     name: "Safari Tent",
     price: 12000,
     desc: "Elevated canvas tent on stilts. The naturalist's pick.",
-    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/Safari_Tent_-_Madhuban_Eco_Retreat_Bhopal_pbpcgr.webp",
+    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/madhuban-eco-retreat-safari-tent-exterior-image-home-page-card.jpg",
     tag: null,
   },
   {
     name: "Pool Side Villa",
     price: 12000,
     desc: "Two rooms, sleeps four. Direct pool access. Only one available.",
-    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/Pool_Image_2_-_Madhuban_Eco_Retreat_Bhopal_yl1tbg.webp",
+    img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/poolside-villa-madhuban-eco-retreat-home-page-card.jpg",
     tag: "Only 1 villa",
   },
 ];
@@ -398,7 +398,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
           </span>
           <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight font-bold max-w-3xl">
             {v.h1Pre}{" "}
-            <em className="font-serif italic text-[#d8b66e]">{v.h1Em}</em>{" "}
+            <em className="font-serif italic text-gold-accent">{v.h1Em}</em>{" "}
             — {v.h1Post}
           </h1>
           <p className="mt-4 md:mt-6 text-sm md:text-base text-white/90 max-w-[30ch] sm:max-w-[40ch] md:max-w-[44ch] leading-relaxed">
@@ -458,7 +458,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
             ].map((b) => (
               <div key={b.n}>
                 <div className="w-10 h-px bg-stone-300 mb-5" />
-                <p className="text-4xl md:text-5xl text-moss-green mb-5 font-bold leading-none">
+                <p className="text-4xl md:text-5xl text-earth-brown mb-5 font-bold leading-none">
                   {b.n}
                 </p>
                 <h3 className="text-xl md:text-2xl text-stone-900 mb-3 font-semibold leading-tight">
@@ -510,7 +510,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   {s.tag ? (
-                    <span className="absolute top-3 left-3 bg-white text-forest-green text-[11px] tracking-wide font-semibold px-2.5 py-1 rounded-full shadow-md">
+                    <span className="absolute top-3 left-3 bg-white text-earth-brown text-[11px] tracking-wide font-semibold px-2.5 py-1 rounded-full shadow-md">
                       {s.tag}
                     </span>
                   ) : null}
@@ -520,7 +520,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
                     <h3 className="text-base sm:text-lg text-stone-900 font-semibold leading-tight">
                       {s.name}
                     </h3>
-                    <span className="text-base sm:text-lg text-moss-green font-bold whitespace-nowrap">
+                    <span className="text-base sm:text-lg text-earth-brown font-bold whitespace-nowrap">
                       {formatINR(s.price)}
                       <span className="text-[11px] text-stone-500 font-normal">
                         {" "}
@@ -539,14 +539,14 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
       </section>
 
       {/* ───── DAY OUTING ───── */}
-      <section className="py-12 md:py-16 lg:py-20 px-5 sm:px-8 bg-gradient-to-br from-forest-green to-moss-green text-white">
+      <section className="py-12 md:py-16 lg:py-20 px-5 sm:px-8 bg-gradient-to-br from-earth-brown to-brand-bronze text-white">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-[11px] tracking-[0.18em] font-semibold text-white/70 mb-3">
             DAY OUTING
           </p>
           <h2 className="text-2xl sm:text-3xl md:text-4xl leading-tight font-semibold">
             A full day in the wild —{" "}
-            <em className="font-serif italic text-[#f1d28a]">
+            <em className="font-serif italic text-warm-beige">
               ₹1,500 per person
             </em>
           </h2>
@@ -558,7 +558,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
           <button
             type="button"
             onClick={openDayOuting}
-            className="mt-6 bg-white text-forest-green hover:bg-stone-100 text-sm md:text-base font-bold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition"
+            className="mt-6 bg-white text-earth-brown hover:bg-stone-100 text-sm md:text-base font-bold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition"
           >
             Book day outing
           </button>
@@ -570,7 +570,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8 md:mb-12">
             <div className="inline-flex items-center gap-2 text-xs sm:text-sm text-stone-700 bg-white border border-stone-200 rounded-full px-3 py-1.5 shadow-sm">
-              <span className="font-bold text-forest-green">4.5</span>
+              <span className="font-bold text-earth-brown">4.5</span>
               <Stars />
               <span className="text-stone-500">on Google · 586 reviews</span>
             </div>
@@ -597,7 +597,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
                   {r.text}
                 </blockquote>
                 <figcaption className="mt-auto flex items-center gap-2.5">
-                  <span className="w-8 h-8 rounded-full bg-moss-green text-white text-[11px] font-bold flex items-center justify-center shrink-0">
+                  <span className="w-8 h-8 rounded-full bg-earth-brown text-white text-[11px] font-bold flex items-center justify-center shrink-0">
                     {getInitials(r.name)}
                   </span>
                   <div className="min-w-0">
@@ -617,7 +617,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
               href={REVIEWS_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-moss-green underline underline-offset-4 hover:text-forest-green text-xs sm:text-sm"
+              className="text-earth-brown underline underline-offset-4 hover:text-earth-brown text-xs sm:text-sm"
             >
               Read all reviews on Google →
             </a>
@@ -674,7 +674,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
               rel="noopener noreferrer"
               className="self-start mt-auto pt-6 inline-block"
             >
-              <span className="inline-block bg-moss-green hover:bg-forest-green text-white text-sm md:text-base font-semibold px-5 py-2.5 rounded-full shadow hover:shadow-md transition">
+              <span className="inline-block bg-earth-brown hover:bg-earth-brown text-white text-sm md:text-base font-semibold px-5 py-2.5 rounded-full shadow hover:shadow-md transition">
                 Get directions
               </span>
             </a>
@@ -727,7 +727,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
                       {item.q}
                     </span>
                     <span
-                      className={`text-moss-green text-lg leading-none transition-transform shrink-0 ${
+                      className={`text-earth-brown text-lg leading-none transition-transform shrink-0 ${
                         open ? "rotate-45" : ""
                       }`}
                       aria-hidden="true"
@@ -751,7 +751,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
       <section
         ref={formRef}
         id="booking"
-        className="py-12 md:py-16 lg:py-20 px-4 sm:px-8 bg-gradient-to-br from-stone-900 to-forest-green text-white"
+        className="py-12 md:py-16 lg:py-20 px-4 sm:px-8 bg-gradient-to-br from-charcoal to-earth-brown text-white"
       >
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-5 md:mb-8">
@@ -770,7 +770,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
                 onClick={() => setTab("overnight")}
                 className={`py-2 rounded-full transition ${
                   tab === "overnight"
-                    ? "bg-moss-green text-white shadow"
+                    ? "bg-earth-brown text-white shadow"
                     : "text-stone-600 hover:text-stone-900"
                 }`}
               >
@@ -781,7 +781,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
                 onClick={() => setTab("dayout")}
                 className={`py-2 rounded-full transition ${
                   tab === "dayout"
-                    ? "bg-moss-green text-white shadow"
+                    ? "bg-earth-brown text-white shadow"
                     : "text-stone-600 hover:text-stone-900"
                 }`}
               >
@@ -802,7 +802,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
                     id="stayType"
                     value={stayType}
                     onChange={(e) => setStayType(e.target.value)}
-                    className="w-full max-w-full truncate bg-stone-50 border border-stone-200 rounded-lg px-3 py-2.5 text-sm md:text-base text-stone-900 focus:outline-none focus:ring-2 focus:ring-moss-green"
+                    className="w-full max-w-full truncate bg-stone-50 border border-stone-200 rounded-lg px-3 py-2.5 text-sm md:text-base text-stone-900 focus:outline-none focus:ring-2 focus:ring-earth-brown"
                   >
                     {STAY_TYPES.map((s) => (
                       <option key={s.value} value={s.value}>
@@ -827,7 +827,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
                     min={todayISO()}
                     value={checkin}
                     onChange={(e) => setCheckin(e.target.value)}
-                    className="w-full max-w-full bg-stone-50 border border-stone-200 rounded-lg px-3 py-2.5 text-sm md:text-base text-stone-900 focus:outline-none focus:ring-2 focus:ring-moss-green"
+                    className="w-full max-w-full bg-stone-50 border border-stone-200 rounded-lg px-3 py-2.5 text-sm md:text-base text-stone-900 focus:outline-none focus:ring-2 focus:ring-earth-brown"
                   />
                 </div>
                 <div>
@@ -841,7 +841,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
                     id="guests"
                     value={guests}
                     onChange={(e) => setGuests(e.target.value)}
-                    className="w-full max-w-full truncate bg-stone-50 border border-stone-200 rounded-lg px-3 py-2.5 text-sm md:text-base text-stone-900 focus:outline-none focus:ring-2 focus:ring-moss-green"
+                    className="w-full max-w-full truncate bg-stone-50 border border-stone-200 rounded-lg px-3 py-2.5 text-sm md:text-base text-stone-900 focus:outline-none focus:ring-2 focus:ring-earth-brown"
                   >
                     {GUEST_OPTIONS.map((g) => (
                       <option key={g.value} value={g.value}>
@@ -866,7 +866,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Aditi Sharma"
-                  className="w-full bg-stone-50 border border-stone-200 rounded-lg px-3 py-2.5 text-sm md:text-base text-stone-900 focus:outline-none focus:ring-2 focus:ring-moss-green"
+                  className="w-full bg-stone-50 border border-stone-200 rounded-lg px-3 py-2.5 text-sm md:text-base text-stone-900 focus:outline-none focus:ring-2 focus:ring-earth-brown"
                   required
                 />
               </div>
@@ -888,7 +888,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
                     setPhoneInput(e.target.value.replace(/[^\d+\s-]/g, ""))
                   }
                   placeholder="10-digit mobile number"
-                  className="w-full bg-stone-50 border border-stone-200 rounded-lg px-3 py-2.5 text-sm md:text-base text-stone-900 focus:outline-none focus:ring-2 focus:ring-moss-green"
+                  className="w-full bg-stone-50 border border-stone-200 rounded-lg px-3 py-2.5 text-sm md:text-base text-stone-900 focus:outline-none focus:ring-2 focus:ring-earth-brown"
                   required
                 />
               </div>
@@ -903,7 +903,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-2xl md:text-3xl text-forest-green font-bold">
+                  <p className="text-2xl md:text-3xl text-earth-brown font-bold">
                     {formatINR(estimate)}
                   </p>
                   <p className="text-[11px] text-stone-500">+ GST as applicable</p>
@@ -938,7 +938,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
         <div className="grid grid-cols-2 gap-2 p-2.5">
           <a
             href={`tel:+${phone}`}
-            className="text-center py-2.5 rounded-full border border-moss-green text-forest-green text-sm font-semibold"
+            className="text-center py-2.5 rounded-full border border-earth-brown text-earth-brown text-sm font-semibold"
           >
             Call
           </a>
