@@ -7,6 +7,7 @@
    installed dependency, its form-element reset was never actually applied
    anywhere on the site. This is the v4-native way to load it. */
 @plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
 
 /* tailwind.config.js also defined these as custom max-width breakpoints.
    v4 doesn't read that file at all (postcss.config.mjs uses
@@ -728,4 +729,17 @@ body {
   .blog-card-img-trio {
     height: 260px;
   }
+}
+
+/* Admin blog editor — links inside the TipTap editing area default to
+   browser blue since neither the browser default nor Tailwind Typography's
+   own default link color matches the brand. .ProseMirror is the class
+   TipTap itself puts on the editable content root, so this reaches every
+   link typed or pasted into the editor regardless of how it was created. */
+.ProseMirror a {
+  color: var(--color-brand-bronze) !important;
+  text-decoration: none;
+}
+.ProseMirror a:hover {
+  color: var(--color-earth-brown) !important;
 }

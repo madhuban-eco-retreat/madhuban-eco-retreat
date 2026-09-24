@@ -8,10 +8,10 @@ import SEO from "@/components/seo/Seo";
 const schema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "Book Madhuban Eco Retreat | Hotel Near Ratapani Jungle",
+  name: "Resort in Ratapani | Book Your Eco-Luxury Jungle Stay",
   url: "https://www.madhubanecoretreat.com/booking",
   description:
-    "Book Madhuban Eco Retreat near Ratapani Wildlife Sanctuary. Check resort price, availability & secure your eco-friendly jungle stay today!",
+    "Book a resort in Ratapani, on the edge of the Tiger Reserve near Bhopal — safari tents, mud houses, pool villas and more. Check prices and availability.",
   inLanguage: "en-IN",
   mainEntity: {
     "@type": "LodgingBusiness",
@@ -103,17 +103,17 @@ const BookingModal = () => {
 };
 
 export const metadata = buildMetadata({
-  title: "Book Madhuban Eco Retreat | Hotel Near Ratapani Jungle",
+  title: "Resort in Ratapani | Book Your Eco-Luxury Jungle Stay",
   description:
-    "Book Madhuban Eco Retreat near Ratapani Wildlife Sanctuary. Check resort price, availability & secure your eco-friendly jungle stay today!",
+    "Book a resort in Ratapani, on the edge of the Tiger Reserve near Bhopal — safari tents, mud houses, pool villas and more. Check prices and availability.",
   path: "/booking",
   keywords: [
-    "Book resort near ratapani jungle",
-    "Ratapani resort price",
-    "Madhuban Eco Retreat price",
-    "Ratapani resort booking",
-    "Hotels near Ratapani Wildlife Sanctuary",
-    "Hotel in Ratapani online booking",
+    "resort in ratapani",
+    "resort near ratapani jungle",
+    "ratapani resort price",
+    "ratapani resort booking",
+    "hotels near ratapani wildlife sanctuary",
+    "hotel in ratapani online booking",
   ],
 });
 
