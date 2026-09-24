@@ -109,7 +109,7 @@ const VisionMission = () => {
                       whileHover={{ scale: 1.02 }}
                       transition={{ type: "spring", stiffness: 200 }}
                     >
-                      <Image
+                      <Image quality={90}
                         src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/about/vision-mission/tourists-jungle-safari-jeep-madhuban-eco-retreat-ratapani.avif"
                         alt={getAltFromUrl(
                           "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/about/vision-mission/tourists-jungle-safari-jeep-madhuban-eco-retreat-ratapani.avif",
@@ -141,7 +141,7 @@ const VisionMission = () => {
                       whileHover={{ scale: 1.02 }}
                       transition={{ type: "spring", stiffness: 200 }}
                     >
-                      <Image
+                      <Image quality={90}
                         src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/about/vision-mission/camping-tent-new-madhuban-eco-retreat-bhopal.avif"
                         alt={getAltFromUrl(
                           "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/about/vision-mission/camping-tent-new-madhuban-eco-retreat-bhopal.avif",

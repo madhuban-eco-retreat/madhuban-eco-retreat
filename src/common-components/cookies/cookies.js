@@ -121,7 +121,7 @@ const CookiesPopup = () => {
         >
           <div className="flex flex-row gap-2 items-center flex-1 min-w-0">
             <div className="w-[26px] h-[26px] md:w-[32px] md:h-[32px] relative shrink-0">
-              <Image
+              <Image quality={90}
                 src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/cookies.svg"
                 alt="logo"
                 fill
@@ -200,7 +200,7 @@ const CookiesPopup = () => {
               <div className="flex items-center gap-2">
                 <p className="text-moss-green font-bold dm_sans text-[15px]">
                   {" "}
-                  {` ✔ Always Active`}{" "}
+                  {` âœ” Always Active`}{" "}
                 </p>
               </div>
             </div>

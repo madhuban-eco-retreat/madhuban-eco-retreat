@@ -378,7 +378,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
       {/* ───── HERO ───── */}
       <section className="relative min-h-[560px] md:min-h-[680px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <Image
+          <Image quality={90}
             src={HERO_IMAGE}
             alt="Madhuban Eco Retreat at the edge of Ratapani forest"
             width={1920}
@@ -501,7 +501,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
                 className="bg-white rounded-xl overflow-hidden ring-1 ring-stone-200 hover:ring-stone-300 hover:shadow-lg transition group"
               >
                 <div className="relative aspect-[4/3] overflow-hidden">
-                  <Image
+                  <Image quality={90}
                     src={s.img}
                     alt={s.name}
                     width={800}

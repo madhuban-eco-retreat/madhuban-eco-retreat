@@ -246,7 +246,7 @@ ${guests}`;
         <main className="relative min-h-screen flex flex-col items-center justify-center pt-50 pb-24 overflow-hidden  ">
           <div className="absolute inset-0 z-0">
             <div className="absolute inset-0 hero-overlay z-10"></div>
-            <Image
+            <Image quality={90}
               width={1200}
               height={400}
               alt="Lush tropical jungle retreat with luxury wooden cabins"

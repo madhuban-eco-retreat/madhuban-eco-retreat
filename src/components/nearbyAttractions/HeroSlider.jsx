@@ -27,7 +27,7 @@ export default function HeroSlider({ heroSlides }) {
             index === currentSlide ? "opacity-100 z-0" : "opacity-0"
           }`}
         >
-          <Image
+          <Image quality={90}
             src={slide.image}
             alt={getAltFromUrl(slide.image)}
             fill

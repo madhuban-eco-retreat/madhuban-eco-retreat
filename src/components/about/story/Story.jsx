@@ -104,7 +104,7 @@ const Story = () => {
               viewport={{ once: true }}
             >
               <div className=" rounded-xl">
-                <Image
+                <Image quality={90}
                   src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/somaiya-group-logo.png"
                   alt={getAltFromUrl(
                     "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/somaiya-group-logo.png",

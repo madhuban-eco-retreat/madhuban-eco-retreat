@@ -151,7 +151,7 @@ const OurJourney = () => {
               className="relative cursor-pointer xl:w-[25vw] xl:h-[50vh] w-full h-[40vh]"
               onClick={() => setIsModalOpen(true)}
             >
-              <Image
+              <Image quality={90}
                 src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/journey/radhika-goyal-customer-review-for-madhuban-eco-retreat.webp"
                 alt="Video Thumbnail"
                 fill

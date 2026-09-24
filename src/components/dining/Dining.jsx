@@ -159,7 +159,7 @@ const Dining = () => {
     <>
       <div className="farm-to-table bg-warm-beige flex flex-col items-center">
         <div className="relative w-full h-[85vh]  ">
-          <Image
+          <Image quality={90}
             src={
               "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/dining/dinning-area-image-madhuban-eco-retreat.webp"
             }

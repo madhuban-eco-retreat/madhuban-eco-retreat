@@ -15,7 +15,7 @@ export default function BookingLayout({ children, }) {
               match Header.jsx rather than rebuilt from an env var, so the two
               cannot drift apart again. */}
           <Link href="/" aria-label="Madhuban Eco Retreat — home" className="flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-earth-brown focus-visible:ring-offset-2">
-            <Image src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-eco-retreat-bhopal-logo.png" alt="Madhuban Eco Retreat" width={120} height={120} className="h-10 w-10 filter brightness-75" priority/>
+            <Image quality={90} src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-eco-retreat-bhopal-logo.png" alt="Madhuban Eco Retreat" width={120} height={120} className="h-10 w-10 filter brightness-75" priority/>
             <span className="font-primary text-sm font-bold leading-tight tracking-wide text-earth-brown sm:text-base">
               Madhuban Eco Retreat
             </span>

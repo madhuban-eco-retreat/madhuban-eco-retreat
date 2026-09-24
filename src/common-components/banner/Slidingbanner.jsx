@@ -42,7 +42,7 @@ const Slidingbanner = ({ images = [], heading, subHeading, buttonLink }) => {
         {images.map((image, index) => (
           <SwiperSlide key={image.id || index}>
             <div className="relative w-full h-full">
-              <Image
+              <Image quality={90}
                 src={image.src}
                 alt={getAltFromUrl(image.src)}
                 fill

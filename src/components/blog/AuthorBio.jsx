@@ -12,7 +12,7 @@ export default function AuthorBio({ author, headingLevel = "h2" }) {
   return (
     <div className="flex items-center gap-5 bg-white rounded-xl p-5 md:p-6 border border-warm-beige/60 shadow-sm w-full">
       <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden shrink-0 border-2 border-earth-brown/15">
-        <Image
+        <Image quality={90}
           src={author.avatar_url || FALLBACK_AVATAR}
           alt={author.avatar_alt || author.name}
           fill

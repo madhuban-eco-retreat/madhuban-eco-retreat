@@ -22,7 +22,7 @@ export function AdminAuthShell({ title, subtitle, children, footer }) {
     return (<div className="flex min-h-screen">
       {/* Left — estate hero panel */}
       <div className="hidden lg:flex lg:w-1/2 relative flex-col justify-between p-10">
-        <Image src={HERO_IMAGE} alt="Aerial view of Madhuban Eco Retreat in the forest at Ratapani Tiger Reserve" fill priority sizes="50vw" className="object-cover"/>
+        <Image quality={90} src={HERO_IMAGE} alt="Aerial view of Madhuban Eco Retreat in the forest at Ratapani Tiger Reserve" fill priority sizes="50vw" className="object-cover"/>
         {/* Overlay — the photo is bright, and the marks below sit on top of it */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/35 to-black/65"/>
 
@@ -31,7 +31,7 @@ export function AdminAuthShell({ title, subtitle, children, footer }) {
             site's, unmodified. */}
         <div className="relative z-10 flex items-center gap-3">
           <span className="inline-flex items-center justify-center rounded-xl bg-[var(--color-ivory)]/90 p-2 shadow-sm">
-            <Image src={SITE_LOGO} width={120} height={120} alt="Madhuban Eco Retreat" className="h-11 w-11 object-contain"/>
+            <Image quality={90} src={SITE_LOGO} width={120} height={120} alt="Madhuban Eco Retreat" className="h-11 w-11 object-contain"/>
           </span>
           <div>
             <p className="text-[var(--color-ivory)] font-body font-semibold tracking-widest text-xs uppercase">
@@ -74,7 +74,7 @@ export function AdminAuthShell({ title, subtitle, children, footer }) {
           {/* The logo repeats here for the mobile layout, where the hero panel
               is hidden entirely and the page would otherwise carry no brand. */}
           <Link href="/" className="mb-8 flex items-center gap-3 lg:hidden">
-            <Image src={SITE_LOGO} width={120} height={120} alt="Madhuban Eco Retreat" className="h-12 w-12 object-contain"/>
+            <Image quality={90} src={SITE_LOGO} width={120} height={120} alt="Madhuban Eco Retreat" className="h-12 w-12 object-contain"/>
             <span className="font-body text-sm font-semibold tracking-wide text-[var(--color-earth-brown)]">
               Madhuban Eco Retreat
             </span>

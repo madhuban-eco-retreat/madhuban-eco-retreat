@@ -60,7 +60,7 @@ const StayCard = React.memo(({ title, subtitle, imageUrl, className = "" }) => (
   <div
     className={`group relative overflow-hidden rounded-3xl aspect-[3/4] md:aspect-auto md:h-[400px] ${className}`}
   >
-    <Image
+    <Image quality={90}
       fill // Use fill for absolute positioning inside a relative parent
       src={imageUrl}
       alt={title}

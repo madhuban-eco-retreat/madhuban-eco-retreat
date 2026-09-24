@@ -472,7 +472,7 @@ const Gallery = () => {
               >
                 {item.type === "image" ? (
                   <>
-                    <Image
+                    <Image quality={90}
                       width={300}
                       height={300}
                       src={item.src}

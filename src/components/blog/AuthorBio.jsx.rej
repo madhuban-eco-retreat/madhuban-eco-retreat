@@ -1,0 +1,130 @@
+diff a/src/components/blog/AuthorBio.jsx b/src/components/blog/AuthorBio.jsx	(rejected hunks)
+@@ -8,18 +8,19 @@
+ /**
+  * Author bio card. Used after the FAQs on an article page (where the writer
+  * is a footnote, not the headline) and at the top of the author's own
+- * archive page — same visual language in both places. Centered layout
+- * (avatar-above-name, not side-by-side) — reads as a calm profile card
+- * rather than a wide banner competing with the article above it.
++ * archive page — same visual language in both places. Horizontal layout
++ * (avatar on the left, text to its right) — a wide box with a centered
++ * column inside it read as mostly empty space on either side; this fills
++ * the width properly instead.
+  */
+ export default function AuthorBio({ author, headingLevel = "h2" }) {
+   if (!author) return null;
+   const HeadingTag = headingLevel;
+ 
+   return (
+-    <div className="flex flex-col items-center text-center gap-3 bg-white rounded-xl p-6 md:p-8 border border-warm-beige/60 shadow-sm max-w-md mx-auto">
+-      <div className="relative w-20 h-20 rounded-full overflow-hidden shrink-0 border-2 border-earth-brown/15">
+-        <Image
++    <div className="flex items-center gap-5 bg-white rounded-xl p-5 md:p-6 border border-warm-beige/60 shadow-sm w-full">
++      <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden shrink-0 border-2 border-earth-brown/15">
++        <Image quality={90}
+           src={author.avatar_url || FALLBACK_AVATAR}
+           alt={author.avatar_alt || author.name}
+           fill
+@@ -27,12 +28,12 @@
+           className="object-cover"
+         />
+       </div>
+-      <div>
++      <div className="flex-1 min-w-0">
+         <p className="text-xs text-charcoal/45 uppercase tracking-wide">
+           Written by
+         </p>
+         <Link href={`/blogs/author/${author.slug}`}>
+-          <HeadingTag className="font-primary text-xl text-earth-brown hover:underline mt-1">
++          <HeadingTag className="font-primary text-lg md:text-xl text-earth-brown hover:underline mt-0.5">
+             {author.name}
+           </HeadingTag>
+         </Link>
+@@ -41,47 +42,47 @@
+             {author.designation}
+           </p>
+         )}
++        {author.bio && (
++          <p className="text-sm text-charcoal leading-relaxed mt-2">{author.bio}</p>
++        )}
++        {(author.twitter_url || author.linkedin_url || author.instagram_url) && (
++          <div className="flex items-center gap-4 mt-3">
++            {author.twitter_url && (
++              <a
++                href={author.twitter_url}
++                target="_blank"
++                rel="noopener noreferrer"
++                aria-label={`${author.name} on Twitter`}
++                className="text-earth-brown hover:text-brand-bronze"
++              >
++                <FaTwitter size={16} />
++              </a>
++            )}
++            {author.linkedin_url && (
++              <a
++                href={author.linkedin_url}
++                target="_blank"
++                rel="noopener noreferrer"
++                aria-label={`${author.name} on LinkedIn`}
++                className="text-earth-brown hover:text-brand-bronze"
++              >
++                <FaLinkedin size={16} />
++              </a>
++            )}
++            {author.instagram_url && (
++              <a
++                href={author.instagram_url}
++                target="_blank"
++                rel="noopener noreferrer"
++                aria-label={`${author.name} on Instagram`}
++                className="text-earth-brown hover:text-brand-bronze"
++              >
++                <FaInstagram size={16} />
++              </a>
++            )}
++          </div>
++        )}
+       </div>
+-      {author.bio && (
+-        <p className="text-sm text-charcoal leading-relaxed">{author.bio}</p>
+-      )}
+-      {(author.twitter_url || author.linkedin_url || author.instagram_url) && (
+-        <div className="flex items-center justify-center gap-4 mt-1">
+-          {author.twitter_url && (
+-            <a
+-              href={author.twitter_url}
+-              target="_blank"
+-              rel="noopener noreferrer"
+-              aria-label={`${author.name} on Twitter`}
+-              className="text-earth-brown hover:text-brand-bronze"
+-            >
+-              <FaTwitter size={16} />
+-            </a>
+-          )}
+-          {author.linkedin_url && (
+-            <a
+-              href={author.linkedin_url}
+-              target="_blank"
+-              rel="noopener noreferrer"
+-              aria-label={`${author.name} on LinkedIn`}
+-              className="text-earth-brown hover:text-brand-bronze"
+-            >
+-              <FaLinkedin size={16} />
+-            </a>
+-          )}
+-          {author.instagram_url && (
+-            <a
+-              href={author.instagram_url}
+-              target="_blank"
+-              rel="noopener noreferrer"
+-              aria-label={`${author.name} on Instagram`}
+-              className="text-earth-brown hover:text-brand-bronze"
+-            >
+-              <FaInstagram size={16} />
+-            </a>
+-          )}
+-        </div>
+-      )}
+     </div>
+   );
+ }

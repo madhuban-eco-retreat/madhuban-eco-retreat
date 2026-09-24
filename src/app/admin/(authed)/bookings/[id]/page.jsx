@@ -440,7 +440,7 @@ export default async function BookingDetailPage({ params }) {
             {/* Room thumbnail */}
             <div className="flex-shrink-0">
               {roomThumb ? (<div className="relative h-24 w-24 overflow-hidden rounded-xl">
-                  <Image src={roomThumb} alt={roomName} fill className="object-cover" sizes="96px"/>
+                  <Image quality={90} src={roomThumb} alt={roomName} fill className="object-cover" sizes="96px"/>
                 </div>) : (<div className="flex h-24 w-24 items-center justify-center rounded-xl bg-admin-status-neutral-bg">
                   <BedDouble className="w-8 h-8 text-charcoal/20"/>
                 </div>)}

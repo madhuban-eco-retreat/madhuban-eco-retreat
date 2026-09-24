@@ -64,7 +64,7 @@ const Footer = () => {
           {/* Column 1 - identity, address, social, WhatsApp */}
           <div>
             <Link href="/" className="inline-flex flex-col items-start gap-2">
-              <Image
+              <Image quality={90}
                 width={160}
                 height={80}
                 src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-footer-logo-200.png"
@@ -207,7 +207,7 @@ const Footer = () => {
       <div className="bg-earth-brown text-warm-beige">
         <div className="max-w-6xl mx-auto px-4 lg:px-8 w-full py-5 flex flex-col md:flex-row items-center justify-between gap-5">
           <div className="flex items-center gap-3">
-            <Image
+            <Image quality={90}
               src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/somaiya-group-logo.png"
               alt="Somaiya Group"
               width={80}
