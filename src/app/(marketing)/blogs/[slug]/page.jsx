@@ -137,7 +137,7 @@ const BlogDesc = async ({ params }) => {
       {blog.blog_authors?.name && (
         <div className="bg-warm-beige/20 py-8 md:py-10">
           <div className="custom-container">
-            <AuthorBio author={blog.blog_authors} headingLevel="h2" />
+            <AuthorBio author={blog.blog_authors} headingLevel="p" />
           </div>
         </div>
       )}

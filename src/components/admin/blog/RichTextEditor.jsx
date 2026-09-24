@@ -47,6 +47,36 @@ import { cn } from "@/lib/utils";
 const HEADING_LEVELS = [1, 2, 3, 4];
 const SWATCHES = ["#2F3E34", "#6B7F5E", "#B4894A", "#8C3B2E", "#2B4C6F", "#4A4A4A"];
 
+/**
+ * Google Docs' HTML clipboard output doesn't use real <h1>-<h6> tags for
+ * text styled with its Heading 1/2/3 paragraph styles — it exports plain
+ * <p> tags with inline font-size/weight CSS, styled to *look* like a
+ * heading but with no semantic tag backing it. Pasted as-is, that content
+ * loses its heading structure entirely: it won't show up in the site's
+ * auto-generated table of contents, and it won't carry proper SEO/heading
+ * hierarchy on the published page.
+ *
+ * What Google Docs does preserve reliably is `role="heading"` and
+ * `aria-level="N"` on those paragraphs (it needs that for the pasted
+ * content to stay screen-reader accessible), so this rewrites any such
+ * element into a real <hN> tag before TipTap's normal paste parsing runs —
+ * at that point the Heading extension picks it up exactly like manually
+ * toggling the heading button would.
+ */
+function normalizeGoogleDocsHeadings(html) {
+  if (typeof window === "undefined" || !html) return html;
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  const headingCandidates = doc.querySelectorAll('[role="heading"][aria-level]');
+  headingCandidates.forEach((el) => {
+    const rawLevel = parseInt(el.getAttribute("aria-level"), 10) || 2;
+    const level = Math.min(Math.max(rawLevel, 1), 4);
+    const heading = doc.createElement(`h${level}`);
+    heading.innerHTML = el.innerHTML;
+    el.replaceWith(heading);
+  });
+  return doc.body.innerHTML;
+}
+
 function ToolbarButton({ onClick, active, disabled, label, children }) {
   return (
     <button
@@ -111,6 +141,7 @@ export function RichTextEditor({
         class:
           "prose prose-sm sm:prose-base max-w-none focus:outline-none min-h-[28rem] px-5 py-4",
       },
+      transformPastedHTML: normalizeGoogleDocsHeadings,
     },
     onUpdate: ({ editor: instance }) => {
       if (!hydratedRef.current) return;

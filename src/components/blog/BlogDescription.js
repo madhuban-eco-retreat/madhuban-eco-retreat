@@ -86,12 +86,22 @@ const BlogDescription = ({ blog }) => {
           </div>
         )}
 
-        {/* MAIN LAYOUT — just TOC + content, no sidebar. Centered as a pair
-            (not left-aligned) since the content column is capped narrower
-            than the outer container for readability — left-aligning it
-            would otherwise dump all the leftover width as dead space on
-            the right. */}
+        {/* MAIN LAYOUT — content first, TOC second: renders content on the
+            left and TOC on the right. Centered as a pair (not left-aligned)
+            since the content column is capped narrower than the outer
+            container for readability — left-aligning it would otherwise
+            dump all the leftover width as dead space on the right. */}
         <div className="flex flex-col xl:flex-row xl:justify-center gap-8 md:gap-10 pb-6 md:pb-8">
+          {/* Blog Content — no card, no border, no shadow: flows directly
+              on the page background so it doesn't read as a separate box
+              sitting on top of the page, just the article itself. */}
+          <main className="w-full min-w-0 max-w-3xl">
+            <div className="no-tailwind">
+              <div className="discriptionContent prose max-w-none"
+                dangerouslySetInnerHTML={{ __html: data }} ></div>
+            </div>
+          </main>
+
           {/* Table of Contents — plain list, no box, just an accent line on
               the active item. Fixed narrow width so the article gets the
               rest of the space instead of splitting it three ways. */}
@@ -117,16 +127,6 @@ const BlogDescription = ({ blog }) => {
               )}
             </div>
           </aside>
-
-          {/* Blog Content — no card, no border, no shadow: flows directly
-              on the page background so it doesn't read as a separate box
-              sitting on top of the page, just the article itself. */}
-          <main className="w-full min-w-0 max-w-3xl">
-            <div className="no-tailwind">
-              <div className="discriptionContent prose max-w-none"
-                dangerouslySetInnerHTML={{ __html: data }} ></div>
-            </div>
-          </main>
         </div>
       </div>
     </div>

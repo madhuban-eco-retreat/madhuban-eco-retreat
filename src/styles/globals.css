@@ -3,7 +3,7 @@
 @import "tailwindcss";
 
 /* @tailwindcss/forms was listed as a plugin in tailwind.config.js, but that
-   file is never loaded under v4 (see note below) â€” so despite being an
+   file is never loaded under v4 (see note below) Ã¢â‚¬â€ so despite being an
    installed dependency, its form-element reset was never actually applied
    anywhere on the site. This is the v4-native way to load it. */
 @plugin "@tailwindcss/forms";
@@ -44,7 +44,7 @@ body {
 }
 
 /* Custom container padding, migrated from tailwind.config.js's
-   theme.container config â€” v4 doesn't read JS container config, so this is
+   theme.container config Ã¢â‚¬â€ v4 doesn't read JS container config, so this is
    the CSS-native equivalent (used across 9 files). */
 @utility container {
   margin-inline: auto;
@@ -64,7 +64,7 @@ body {
   --font-primary: "Sitka Banner", "Playfair Display", serif;
 
   /* Everything below is migrated from tailwind.config.js (dead under v4,
-     see note above) â€” restores real utilities that ~35 files across the
+     see note above) Ã¢â‚¬â€ restores real utilities that ~35 files across the
      codebase already reference but that were previously no-ops:
      font-arial-narrow (24 files), font-poppins/openSans/inter (9 files),
      shadow-subtle and the green/brown/stone ramps + text-title (a few each). */
@@ -211,10 +211,10 @@ body {
 /* Old posts imported from the pre-Supabase MongoDB system have table headers
    with inline styles from the old (pre-rebrand) dark-green palette baked
    directly into the stored HTML. A stylesheet rule can't out-rank an inline
-   style on specificity, so this is !important on purpose â€” the only way to
+   style on specificity, so this is !important on purpose Ã¢â‚¬â€ the only way to
    force brand-consistent table headers across old content without editing
    and re-saving every affected post individually. */
-/* Pull-quote styling for blockquotes inside article content â€” the CMS
+/* Pull-quote styling for blockquotes inside article content Ã¢â‚¬â€ the CMS
    content is raw HTML, so this targets whatever <blockquote> the rich-text
    editor produces, giving it the indented-italic-with-accent treatment
    rather than default browser blockquote styling (just indentation). */
@@ -250,17 +250,14 @@ body {
 }
 .discriptionContent a {
   color: var(--color-brand-bronze) !important;
-  text-decoration: underline;
-  text-decoration-color: var(--color-brand-bronze);
-  text-underline-offset: 2px;
+  text-decoration: none;
   transition: color 0.2s ease;
 }
 .discriptionContent a:hover {
   color: var(--color-earth-brown) !important;
-  text-decoration-color: var(--color-earth-brown);
 }
 
-/* Drop cap on the article's opening paragraph â€” only fires when the very
+/* Drop cap on the article's opening paragraph Ã¢â‚¬â€ only fires when the very
    first child really is a <p> (rich-text content sometimes opens with an
    image or heading instead), so it never applies to the wrong element. */
 .discriptionContent > p:first-child::first-letter {
@@ -488,7 +485,7 @@ body {
   }
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
    BOOKING ENGINE DESIGN TOKENS
    Ported from madhuban-web. Everything below is additive: it introduces new
    utility names (bg-cream, text-earth-brown, border-border, ...) that the
@@ -499,25 +496,25 @@ body {
        bg-background }`), which would restyle every existing marketing page;
      - its --radius-* remapping, which would override Tailwind's defaults and
        change the footer, whose CSS reads var(--radius-md) directly.
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 
-/* â”€â”€ Brand direct utilities â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ Brand direct utilities Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 @theme {
   /* Brand guide (ArchiNova, Aug 2024) primary swatches:
        beige  rgb(224,209,188) = #E0D1BC
        bronze rgb(154,136,100) = #9A8864
      --color-warm-beige below is now the exact beige swatch.
      --color-earth-brown is INTENTIONALLY darker than the exact bronze
-     swatch (#9A8864) â€” it's used as a background under cream/ivory/white
+     swatch (#9A8864) Ã¢â‚¬â€ it's used as a background under cream/ivory/white
      text across buttons, table headers, the footer, and the mobile
      booking bar. The literal swatch bronze only gives ~3.2:1 contrast
      against cream text (fails WCAG AA's 4.5:1); this darkened value
      gives ~5.7:1 (passes). The exact swatch bronze is available as
      --color-brand-bronze for decorative/accent use on light backgrounds
-     (borders, underlines, logo tint) â€” matching how the brand guide
+     (borders, underlines, logo tint) Ã¢â‚¬â€ matching how the brand guide
      itself uses it: dark ink on a light ground, never light text on it. */
   --color-earth-brown: #6E6146;
-  --color-earth-brown-light: #78684A; /* secondary bands, button hovers, borders â€”
+  --color-earth-brown-light: #78684A; /* secondary bands, button hovers, borders Ã¢â‚¬â€
      replaces the old moss-green (#4A6741). Passes ~5:1 contrast against
      cream/white text, same accessibility reasoning as earth-brown above. */
   --color-brand-bronze: #9A8864;
@@ -539,9 +536,9 @@ body {
   --font-body: 'Lato', sans-serif;
 }
 
-/* â”€â”€ Admin design system tokens â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ Admin design system tokens Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 @theme {
-  /* Sidebar â€” dark forest-green shell */
+  /* Sidebar Ã¢â‚¬â€ dark forest-green shell */
   --color-admin-sidebar-bg: #1F2D1F;
   --color-admin-sidebar-fg: #E8E4DC;
   --color-admin-sidebar-fg-muted: #A8A099;
@@ -566,7 +563,7 @@ body {
   --color-admin-status-neutral-fg: #5A5247;
 }
 
-/* â”€â”€ Semantic tokens mapped to the brand palette â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ Semantic tokens mapped to the brand palette Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 :root {
   --background: #FAF7F2;
   --foreground: #2A2A2A;
@@ -591,7 +588,7 @@ body {
   --admin-card-shadow: 0 1px 3px rgba(42, 42, 42, 0.04), 0 1px 2px rgba(42, 42, 42, 0.06);
 }
 
-/* â”€â”€ Semantic names â†’ Tailwind colour utilities â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ Semantic names Ã¢â€ â€™ Tailwind colour utilities Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -617,7 +614,7 @@ body {
   --color-sidebar-border: var(--border);
 }
 
-/* â”€â”€ Engine helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ Engine helpers Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -627,17 +624,17 @@ body {
 }
 
 
-/* â”€â”€ Booking funnel typography â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* Ã¢â€â‚¬Ã¢â€â‚¬ Booking funnel typography Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
    /book/* was built against font-display / font-body, which both resolve to
    Lato. The marketing site sets its headings in --font-primary ("Sitka Banner",
    serif) via the .font-primary utility, so the booking funnel rendered every
-   heading in a sans face the rest of the site never uses â€” the two halves of a
+   heading in a sans face the rest of the site never uses Ã¢â‚¬â€ the two halves of a
    single journey looked like two different sites.
 
    Rather than rewrite the class on every heading in the funnel, this scopes a
    remap onto the layout wrapper. The declarations set font-family outright
    instead of only redefining the custom property, because Tailwind v4 may
-   inline a @theme value into the utility rather than emit var() â€” overriding
+   inline a @theme value into the utility rather than emit var() Ã¢â‚¬â€ overriding
    the property alone is not guaranteed to cascade. The extra class in the
    selector also keeps these ahead of the plain utilities on specificity. */
 .booking-typography {
@@ -660,9 +657,9 @@ body {
   font-family: var(--font-primary);
 }
 
-/* Blog list asymmetric grid â€” hand-authored, not Tailwind utility classes.
+/* Blog list asymmetric grid Ã¢â‚¬â€ hand-authored, not Tailwind utility classes.
    Turbopack's dev-mode JIT scanner failed to generate lg:grid-cols-12 and
-   lg:col-span-8 (confirmed by inspecting the actual compiled CSS output â€”
+   lg:col-span-8 (confirmed by inspecting the actual compiled CSS output Ã¢â‚¬â€
    every lg:col-span-1 through -4 was present since they're used elsewhere
    in the codebase, but -8 and grid-cols-12 were completely absent, since
    this grid is the only place in the whole project that needs them).
@@ -695,7 +692,7 @@ body {
   }
 }
 
-/* Blog card image heights â€” hand-authored, same reasoning as .blog-grid
+/* Blog card image heights Ã¢â‚¬â€ hand-authored, same reasoning as .blog-grid
    above: these are the two most likely candidates for the same "brand new
    utility value, not used anywhere else" JIT miss, so writing them as plain
    CSS avoids the risk entirely rather than trusting Tailwind's scanner
