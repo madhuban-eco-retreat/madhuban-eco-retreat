@@ -226,9 +226,9 @@ export function RichTextEditor({
   const inTable = editor.isActive("table");
 
   return (
-    <div className="overflow-hidden rounded-xl border border-admin-card-border bg-admin-card-bg shadow-[var(--admin-card-shadow)]">
+    <div className="rounded-xl border border-admin-card-border bg-admin-card-bg shadow-[var(--admin-card-shadow)]">
       <div
-        className="sticky top-0 z-10 flex flex-wrap items-center gap-0.5 border-b border-admin-card-border bg-admin-canvas-bg px-2 py-1.5"
+        className="sticky top-20 z-10 flex flex-wrap items-center gap-0.5 rounded-t-xl border-b border-admin-card-border bg-admin-canvas-bg px-2 py-1.5"
         role="toolbar"
         aria-label="Formatting"
       >
@@ -488,7 +488,7 @@ export function RichTextEditor({
 
       <EditorContent editor={editor} />
 
-      <div className="flex justify-end gap-4 border-t border-admin-card-border bg-admin-canvas-bg px-5 py-2 font-body text-xs tabular-nums text-charcoal/50">
+      <div className="flex justify-end gap-4 rounded-b-xl border-t border-admin-card-border bg-admin-canvas-bg px-5 py-2 font-body text-xs tabular-nums text-charcoal/50">
         <span>{editor.storage.characterCount.words()} words</span>
         <span>{editor.storage.characterCount.characters()} characters</span>
       </div>
