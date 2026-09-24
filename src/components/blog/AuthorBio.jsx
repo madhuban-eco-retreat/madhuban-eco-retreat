@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import { FaTwitter, FaLinkedin, FaInstagram } from "react-icons/fa";
 
@@ -40,35 +40,17 @@ export default function AuthorBio({ author, headingLevel = "h2" }) {
         {(author.twitter_url || author.linkedin_url || author.instagram_url) && (
           <div className="flex items-center gap-4 mt-3">
             {author.twitter_url && (
-              
-                href={author.twitter_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${author.name} on Twitter`}
-                className="text-earth-brown hover:text-brand-bronze"
-              >
+              <a href={author.twitter_url} target="_blank" rel="noopener noreferrer" aria-label={`${author.name} on Twitter`} className="text-earth-brown hover:text-brand-bronze">
                 <FaTwitter size={16} />
               </a>
             )}
             {author.linkedin_url && (
-              
-                href={author.linkedin_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${author.name} on LinkedIn`}
-                className="text-earth-brown hover:text-brand-bronze"
-              >
+              <a href={author.linkedin_url} target="_blank" rel="noopener noreferrer" aria-label={`${author.name} on LinkedIn`} className="text-earth-brown hover:text-brand-bronze">
                 <FaLinkedin size={16} />
               </a>
             )}
             {author.instagram_url && (
-              
-                href={author.instagram_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${author.name} on Instagram`}
-                className="text-earth-brown hover:text-brand-bronze"
-              >
+              <a href={author.instagram_url} target="_blank" rel="noopener noreferrer" aria-label={`${author.name} on Instagram`} className="text-earth-brown hover:text-brand-bronze">
                 <FaInstagram size={16} />
               </a>
             )}
