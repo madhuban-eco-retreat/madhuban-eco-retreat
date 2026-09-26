@@ -77,7 +77,7 @@ const Slidingbanner = ({ images = [], heading, subHeading, buttonLink }) => {
               {buttonLink && (
                 <Link
                   href={buttonLink}
-                  className="inline-block mt-6 px-6 py-3 bg-moss-green text-white rounded-lg hover:bg-moss-green transition"
+                  className="inline-block mt-6 px-6 py-3 bg-earth-brown text-warm-beige rounded-lg hover:bg-[rgb(132,116,85)] transition"
                 >
                   Explore More
                 </Link>

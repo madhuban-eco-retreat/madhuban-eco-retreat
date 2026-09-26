@@ -297,8 +297,7 @@ const BirdWatchingAndWilderness = () => {
                     width={1200}
                     height={800}
                     sizes="(max-width: 1024px) 100vw, 50vw"
-                    quality={90} className="w-full h-full object-cover rounded-xl shadow-lg"
-                    quality={90}/>
+                    quality={90} className="w-full h-full object-cover rounded-xl shadow-lg"/>
                 </SwiperSlide>
               ))}
             </Swiper>

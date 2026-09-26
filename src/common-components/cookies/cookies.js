@@ -198,9 +198,9 @@ const CookiesPopup = () => {
                 {`Necessary Cookies`}{" "}
               </p>
               <div className="flex items-center gap-2">
-                <p className="text-moss-green font-bold dm_sans text-[15px]">
+                <p className="text-success font-bold dm_sans text-[15px]">
                   {" "}
-                  {` âœ” Always Active`}{" "}
+                  {` Ã¢Å“â€ Always Active`}{" "}
                 </p>
               </div>
             </div>

@@ -101,8 +101,8 @@ export default async function ConfirmationPage({ searchParams }) {
       <div className="mx-auto max-w-2xl">
         {/* Success banner */}
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-moss-green)]/10">
-            <svg className="h-8 w-8 text-[var(--color-moss-green)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <div className="mx-auto mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-success/10">
+            <svg className="h-8 w-8 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/>
             </svg>
           </div>
@@ -166,7 +166,7 @@ export default async function ConfirmationPage({ searchParams }) {
             Payment Summary
           </h2>
           <div className="space-y-2 font-body text-sm">
-            {discountAmount > 0 && (<div className="flex justify-between text-[var(--color-moss-green)]">
+            {discountAmount > 0 && (<div className="flex justify-between text-success">
                 <span>
                   {booking.coupon_code ? `Coupon discount (${booking.coupon_code})` : "Discount"}
                 </span>
@@ -196,7 +196,7 @@ export default async function ConfirmationPage({ searchParams }) {
                 <span className="font-medium">₹{formatAmount(totalAmount)}</span>
               </div>)}
 
-            <div className="flex justify-between border-t border-border pt-2 font-semibold text-[var(--color-moss-green)]">
+            <div className="flex justify-between border-t border-border pt-2 font-semibold text-success">
               <span>Total Paid</span>
               <span>₹{formatAmount(totalAmount)}</span>
             </div>

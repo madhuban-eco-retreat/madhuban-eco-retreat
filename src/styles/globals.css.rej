@@ -1,0 +1,25 @@
+diff a/src/styles/globals.css b/src/styles/globals.css	(rejected hunks)
+@@ -62,7 +60,7 @@
+ }
+ 
+ @theme {
+-  --font-primary: "Sitka Banner", "Playfair Display", serif;
++  --font-primary: "Sitka Banner", var(--font-playfair-display), serif;
+ 
+   /* Everything below is migrated from tailwind.config.js (dead under v4,
+      see note above) — restores real utilities that ~35 files across the
+@@ -545,10 +543,10 @@
+   --color-warning: #C9A84C;
+   --color-error: #B84A4A;
+ 
+-  /* The source mapped these to its Lato next/font variable. Lato is already
+-     loaded here via the Google Fonts @import at the top of this file. */
+-  --font-display: 'Lato', sans-serif;
+-  --font-body: 'Lato', sans-serif;
++  /* Lato is self-hosted via next/font (see src/app/layout.js) instead of a
++     Google Fonts @import — see the comment at the top of this file. */
++  --font-display: var(--font-lato), sans-serif;
++  --font-body: var(--font-lato), sans-serif;
+ }
+ 
+ /* ── Admin design system tokens ─────────────────────────────────────────── */

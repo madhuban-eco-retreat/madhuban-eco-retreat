@@ -56,17 +56,17 @@ const AccommodationDetail = () => {
 
   if (!accommodation) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-stone-50 text-center px-4">
-        <MountainSnow size={64} className="text-moss-green mb-4" />
-        <h1 className="text-3xl md:text-4xl font-inter font-bold text-forest-green mb-2">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-cream text-center px-4">
+        <MountainSnow size={64} className="text-earth-brown mb-4" />
+        <h1 className="text-3xl md:text-4xl font-primary font-bold text-earth-brown mb-2">
           Oops! Accommodation Not Found
         </h1>
-        <p className="font-openSans text-lg text-earth-brown mb-6">
+        <p className="font-body text-lg text-charcoal/70 mb-6">
           We couldn't find the accommodation you were looking for.
         </p>
         <Link
           href="/stay-in-ratapani-tiger-reserve"
-          className="mt-[30px] font-primary inline-flex items-center bg-moss-green text-cream font-medium py-3 px-6 rounded-md hover:bg-forest-green transition-colors duration-300"
+          className="mt-[30px] font-primary inline-flex items-center bg-earth-brown text-warm-beige font-medium py-3 px-6 rounded-md hover:bg-[rgb(132,116,85)] transition-colors duration-300"
         >
           <ChevronLeft size={20} className="mr-2" aria-label="Left" />
           Back to All Accommodations
@@ -120,9 +120,9 @@ const AccommodationDetail = () => {
                     alt={accommodation.altText}
                     width={1200}
                     height={800}
+                    priority
                     sizes="(max-width: 768px) 100vw, 60vw"
-                    quality={90} className="w-full h-full object-cover md:min-h-[400px]"
-                    quality={90}/>
+                    quality={90} className="w-full h-full object-cover md:min-h-[400px]"/>
                 )}
               </div>
 
@@ -363,8 +363,7 @@ const AccommodationDetail = () => {
                         width={600}
                         height={400}
                         sizes="(max-width: 640px) 50vw, 33vw"
-                        quality={90} className="w-full h-48 object-cover rounded-lg shadow-sm"
-                        quality={90}/>
+                        quality={90} className="w-full h-48 object-cover rounded-lg shadow-sm"/>
                     ))}
                   </div>
                 </div>

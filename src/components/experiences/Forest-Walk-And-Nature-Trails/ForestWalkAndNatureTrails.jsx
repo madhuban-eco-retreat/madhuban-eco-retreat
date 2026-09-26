@@ -314,8 +314,7 @@ const ForestWalkAndNatureTrails = () => {
               width={0}
               height={0}
               sizes="100vw"
-              quality={90} className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
-              quality={90}/>
+              quality={90} className="w-full h-auto max-h-[80vh] object-contain rounded-lg"/>
           </div>
         </div>
       )}

@@ -330,7 +330,7 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
                 </span>
               </p>)}
 
-            {!checkingAvailability && availability?.available === true && (<p className="mt-3 flex items-center gap-1.5 font-body text-xs font-medium text-[var(--color-moss-green)]">
+            {!checkingAvailability && availability?.available === true && (<p className="mt-3 flex items-center gap-1.5 font-body text-xs font-medium text-success">
                 <Check className="h-3.5 w-3.5" aria-hidden="true"/>
                 These dates are available.
               </p>)}
@@ -473,7 +473,7 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
                 Please double-check your coupon code
               </p>)}
 
-            {pricing?.couponCode && !couponError && (<p className="mt-1 flex items-center gap-1.5 font-body text-xs font-medium text-[var(--color-moss-green)]">
+            {pricing?.couponCode && !couponError && (<p className="mt-1 flex items-center gap-1.5 font-body text-xs font-medium text-success">
                 <Check className="h-3.5 w-3.5" aria-hidden="true"/>
                 Coupon {pricing.couponCode} applied.
               </p>)}
@@ -524,14 +524,14 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
                 {/* Named as its own saving rather than folded into the room
                     line, so a guest can see what the second night bought them
                     and that it came off the tariff, not the extra-guest fees. */}
-                {pricing.multiNightDiscount > 0 && (<div className="flex justify-between text-[var(--color-moss-green)]">
+                {pricing.multiNightDiscount > 0 && (<div className="flex justify-between text-success">
                     <span>
                       2+ nights discount ({Math.round(pricing.multiNightDiscountRate * 100)}%)
                     </span>
                     <span>−&#8377;{formatPrice(pricing.multiNightDiscount)}</span>
                   </div>)}
 
-                {pricing.discountAmount > 0 && (<div className="flex justify-between text-moss-green">
+                {pricing.discountAmount > 0 && (<div className="flex justify-between text-success">
                     <span>Coupon ({pricing.couponCode})</span>
                     <span>−&#8377;{formatPrice(pricing.discountAmount)}</span>
                   </div>)}
@@ -604,13 +604,13 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
                   <span>{line.label} × {line.qty}</span>
                   <span>&#8377;{formatPrice(line.amount)}</span>
                 </div>))}
-              {pricing.multiNightDiscount > 0 && (<div className="flex justify-between text-[var(--color-moss-green)]">
+              {pricing.multiNightDiscount > 0 && (<div className="flex justify-between text-success">
                   <span>
                     2+ nights discount ({Math.round(pricing.multiNightDiscountRate * 100)}%)
                   </span>
                   <span>−&#8377;{formatPrice(pricing.multiNightDiscount)}</span>
                 </div>)}
-              {pricing.discountAmount > 0 && (<div className="flex justify-between text-moss-green">
+              {pricing.discountAmount > 0 && (<div className="flex justify-between text-success">
                   <span>Coupon ({pricing.couponCode})</span>
                   <span>−&#8377;{formatPrice(pricing.discountAmount)}</span>
                 </div>)}

@@ -1,6 +1,33 @@
 import "../styles/globals.css";
 import "../styles/variables.css";
 import Script from "next/script";
+import { Playfair_Display, Lato } from "next/font/google";
+
+// Self-hosted via next/font (downloaded at build time, served from this
+// domain) instead of the previous `@import url(fonts.googleapis.com/...)` in
+// globals.css. That import was render-blocking: the browser had to fetch and
+// parse globals.css, discover the @import, then make two more sequential
+// round-trips (fonts.googleapis.com for the stylesheet, fonts.gstatic.com for
+// the actual font files) before any text could render in the right font.
+// next/font eliminates both of those external round-trips entirely, and
+// applies font-display: swap plus matched fallback-font metrics automatically
+// (the latter is what actually reduces layout shift when the real font
+// swaps in — this file only wires up the CSS variables; --font-primary
+// below still lists "Sitka Banner" first, so the fallback order guests
+// actually see is unchanged).
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-playfair-display",
+  display: "swap",
+});
+
+const lato = Lato({
+  subsets: ["latin"],
+  weight: ["300", "400", "700"],
+  variable: "--font-lato",
+  display: "swap",
+});
 
 export const metadata = {
   title: "Madhuban Eco Retreat | Nature Resort Near Ratapani Tiger Reserve",
@@ -19,7 +46,7 @@ export const metadata = {
 // has to keep firing.
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${playfairDisplay.variable} ${lato.variable}`}>
       <head>
         <Script
           strategy="afterInteractive"

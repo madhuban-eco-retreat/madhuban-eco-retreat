@@ -164,7 +164,7 @@ const TariffSection = () => {
                   <tr key={r.category} className={i % 2 ? "bg-cream" : "bg-ivory"}>
                     <td className="px-4 py-3 text-sm md:text-base text-charcoal font-medium">{r.category}</td>
                     <td className="px-4 py-3 text-sm md:text-base text-earth-brown line-through whitespace-nowrap">{inr(r.regular)}</td>
-                    <td className="px-4 py-3 text-sm md:text-base text-moss-green font-bold whitespace-nowrap">{inr(r.longStay)}</td>
+                    <td className="px-4 py-3 text-sm md:text-base text-success font-bold whitespace-nowrap">{inr(r.longStay)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -211,7 +211,7 @@ const TariffSection = () => {
           </div>
           <div className="bg-ivory rounded-xl shadow-subtle p-5 md:p-6">
             <h3 className="text-lg md:text-xl font-semibold text-charcoal mb-3">Day Outing</h3>
-            <p className="text-2xl font-bold text-moss-green">
+            <p className="text-2xl font-bold text-success">
               {inr(DAY_OUTING_RATE_PER_PERSON)}{" "}
               <span className="text-base font-normal text-charcoal">per person</span>
             </p>

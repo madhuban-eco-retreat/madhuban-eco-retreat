@@ -1,0 +1,10 @@
+diff a/src/common-components/cookies/cookies.js b/src/common-components/cookies/cookies.js	(rejected hunks)
+@@ -198,7 +198,7 @@
+                 {`Necessary Cookies`}{" "}
+               </p>
+               <div className="flex items-center gap-2">
+-                <p className="text-moss-green font-bold dm_sans text-[15px]">
++                <p className="text-success font-bold dm_sans text-[15px]">
+                   {" "}
+                   {` ✔ Always Active`}{" "}
+                 </p>

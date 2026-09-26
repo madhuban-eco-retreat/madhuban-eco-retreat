@@ -247,6 +247,8 @@ ${guests}`;
           <div className="absolute inset-0 z-0">
             <div className="absolute inset-0 hero-overlay z-10"></div>
             <Image quality={90}
+              priority
+              fetchPriority="high"
               width={1200}
               height={400}
               alt="Madhuban Eco Retreat lodge exterior at dusk, Ratapani Tiger Reserve, Bhopal"
@@ -258,8 +260,8 @@ ${guests}`;
             <div className="mb-6 md:mb-8">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-white text-white text-xs font-bold uppercase tracking-widest mb-6">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-moss-green opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-moss-green"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-success"></span>
                 </span>
                 Now Open for Bookings
               </div>
@@ -279,7 +281,7 @@ ${guests}`;
               </p>
             </div>
             <div className="mt-12 glass rounded-3xl p-8 md:p-10 max-w-3xl mx-auto shadow-2xl relative">
-              <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 bg-moss-green/10 blur-3xl"></div>
+              <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 bg-success/10 blur-3xl"></div>
 
               <div className="space-y-1 mb-8">
                 <h3 className="text-xl text-white font-bold">
