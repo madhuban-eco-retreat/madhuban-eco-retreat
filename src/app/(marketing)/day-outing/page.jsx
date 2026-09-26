@@ -62,9 +62,9 @@ const OneDayPackagePage = () => {
 export default OneDayPackagePage;
 
 export const metadata = buildMetadata({
-  title: "Resorts Near Bhopal for Day Outing | Madhuban Eco Retreat",
+  title: "Resort Near Bhopal for Day Outing | Pool & Lunch Package",
   description:
-    "Looking for resorts near Bhopal for day outing? Enjoy breakfast, lunch, pool access, nature walk & activities at Madhuban Eco Retreat.",
+    "Book a resort near Bhopal for a day outing — pool access, breakfast, lunch, nature walks and games, all in one day. From ₹1,500 per person.",
   path: "/day-outing",
   keywords: [
     "resorts near bhopal for day outing",

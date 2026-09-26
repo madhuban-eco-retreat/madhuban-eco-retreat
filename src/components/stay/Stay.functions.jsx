@@ -366,6 +366,8 @@ const safariTentSchema = {
     itemOffered: {
       "@type": "Product",
       name: "Safari Tent House – Ratapani",
+      image:
+        "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/safari-tent/Safari_Tent_-_Madhuban_Eco_Retreat_Bhopal_pbpcgr.avif",
       description:
         "Premium safari tent stay near Bhopal with streamside views, cane furniture, open-to-sky shower, and eco-luxury comforts.",
       brand: "Madhuban Eco Retreat",
@@ -496,6 +498,8 @@ const mudHouseSchema = {
       itemOffered: {
         "@type": "Product",
         name: "Mud House Standard – Traditional Mud Cottage",
+        image:
+          "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/mud-house/mud-house-image-madhuban-eco-retreat-bhopal.avif",
         brand: "Madhuban Eco Retreat",
         sku: "MUD-HOUSE-1",
       },
@@ -512,6 +516,8 @@ const mudHouseSchema = {
       itemOffered: {
         "@type": "Product",
         name: "Mud House Premium – Mud Cottage with Bathtub",
+        image:
+          "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/mud-house/mud-house-image-madhuban-eco-retreat-bhopal.avif",
         brand: "Madhuban Eco Retreat",
         sku: "MUD-HOUSE-2",
       },
@@ -624,6 +630,8 @@ const poolsideSchema = {
     itemOffered: {
       "@type": "Product",
       name: "Pool Side Villa – Ratapani",
+      image:
+        "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/pool/pool-side-vila-madhuban-eco-retreat-bhopal.avif",
       brand: "Madhuban Eco Retreat",
       sku: "POOL-VILLA-01",
     },
@@ -739,6 +747,8 @@ const glampingTentSchema = {
     itemOffered: {
       "@type": "Product",
       name: "Glamping Tent – Ratapani",
+      image:
+        "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/glamping-tent/glamping-tent-madhuban-eco-retreat-bhopal.avif",
       brand: "Madhuban Eco Retreat",
       sku: "GLAMPING-TENT-01",
     },
@@ -860,6 +870,8 @@ const nightCampingSchema = {
     itemOffered: {
       "@type": "Product",
       name: "Camping Tent – Ratapani",
+      image:
+        "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/camping-tent/camping-tent-new-madhuban-eco-retreat-bhopal.avif",
       brand: "Madhuban Eco Retreat",
       sku: "CAMPING-TENT-01",
     },
