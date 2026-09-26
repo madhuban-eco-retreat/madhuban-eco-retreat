@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import "./Dining.css";
+import Link from "next/link";
 import DiningSpacial from "./DiningSpacial";
 import DiningOptions from "./DiningOptions";
 import CommonFaqs from "@/common-components/faqs/CommonFaqs";
@@ -301,8 +302,7 @@ const Dining = () => {
                   width={1600}
                   height={1200}
                   sizes="100vw"
-                  quality={90} className="w-auto h-auto"
-                  quality={90}/>
+                  quality={90} className="w-auto h-auto"/>
               )}
               <h3>{selectedMedia.title}</h3>
             </div>
@@ -311,6 +311,30 @@ const Dining = () => {
       </div>
       <DiningSpacial />
       <DiningOptions />
+      <section className="px-4 py-12 md:py-16 bg-warm-beige/20 text-center">
+        <div className="max-w-2xl mx-auto">
+          <h2 className="font-primary text-2xl md:text-3xl text-earth-brown mb-3">
+            Stay for More Than a Meal
+          </h2>
+          <p className="text-charcoal/80 leading-relaxed mb-6">
+            Every dish here is served at{" "}
+            <Link href="/stay-in-ratapani-tiger-reserve" className="text-brand-bronze hover:text-earth-brown font-medium">
+              our resort in Ratapani
+            </Link>
+            , inside the Tiger Reserve itself.{" "}
+            <Link href="/booking" className="text-brand-bronze hover:text-earth-brown font-medium">
+              Book a stay near Bhopal
+            </Link>{" "}
+            and make farm-to-table dining part of a full jungle getaway.
+          </p>
+          <Link
+            href="/booking"
+            className="inline-flex items-center justify-center rounded-full px-7 py-3 font-primary text-base font-medium text-warm-beige bg-earth-brown hover:bg-[rgb(132,116,85)] transition-colors"
+          >
+            Book Your Stay
+          </Link>
+        </div>
+      </section>
       <CommonFaqs faqs={foodAndDiningFaqs} />
     </>
   );

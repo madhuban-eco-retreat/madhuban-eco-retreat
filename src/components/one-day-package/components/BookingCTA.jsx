@@ -31,7 +31,11 @@ export const BookingCTA = () => {
             genuine nature, good food, open spaces, and meaningful activities —
             Madhuban Eco Retreat is the right choice. Spend a day surrounded by
             forests, enjoy mindful experiences, and return home relaxed and
-            refreshed.
+            refreshed. Want to stay longer?{" "}
+            <Link href="/booking" className="text-white underline hover:text-warm-beige">
+              Book a resort stay near Ratapani
+            </Link>{" "}
+            and wake up inside the forest.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-6 md:mb-8">

@@ -180,9 +180,9 @@ const StayPage = () => {
 export default StayPage;
 
 export const metadata = buildMetadata({
-  title: "Jungle Stays Near Ratapani | Safari Tents & Villas",
+  title: "Resort in Ratapani | Safari Tents, Villas & Mud Houses",
   description:
-    "Choose from safari tents, glamping tents, mud houses & poolside villas at Madhuban Eco Retreat near Ratapani Tiger Reserve, Bhopal. Prices from ₹7,500/night. Book your nature stay today!",
+    "A resort in Ratapani Tiger Reserve near Bhopal — choose safari tents, mud houses, glamping or a private pool villa. Prices from ₹7,500/night. Book direct.",
   path: "/stay-in-ratapani-tiger-reserve",
   ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-og-social-1200x630.jpg",
   keywords: [

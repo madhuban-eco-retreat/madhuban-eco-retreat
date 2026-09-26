@@ -39,7 +39,7 @@ export default function HomeBanner() {
 
       <section className="bg-[#FAF7F2] py-8 md:py-10 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="font-primary text-2xl md:text-3xl lg:text-4xl font-bold text-earth-brown mb-3 leading-tight">Eco Luxury Forest Stay - Ratapani Tiger Reserve</h1>
+          <h1 className="font-primary text-2xl md:text-3xl lg:text-4xl font-bold text-earth-brown mb-3 leading-tight">Jungle Resort Near Bhopal — Ratapani Tiger Reserve</h1>
           <p className="text-sm md:text-base text-charcoal/70 leading-relaxed max-w-3xl mx-auto">Madhuban Eco Retreat is a nature resort nestled in the heart of Ratapani Tiger Reserve, near Bhopal. Surrounded by ancient forests and wildlife, we offer an eco-luxury escape through safari tents, mud houses, glamping and poolside villas.</p>
         </div>
       </section>

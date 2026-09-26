@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import CommonFaqs from "@/common-components/faqs/CommonFaqs";
 import HeroSlider from "./HeroSlider";
 import { getAltFromUrl } from "@/utills/helperFunctions";
@@ -230,6 +231,31 @@ const NearbyAttractions = () => {
             </motion.div>
           ))}
         </motion.div>
+      </section>
+
+      <section className="px-4 py-12 md:py-16 bg-warm-beige/20 text-center">
+        <div className="max-w-2xl mx-auto">
+          <h2 className="font-primary text-2xl md:text-3xl text-earth-brown mb-3">
+            Stay Close to All of This
+          </h2>
+          <p className="text-charcoal/80 leading-relaxed mb-6">
+            Every attraction above is a short drive from{" "}
+            <Link href="/stay-in-ratapani-tiger-reserve" className="text-brand-bronze hover:text-earth-brown font-medium">
+              our resort in Ratapani
+            </Link>
+            , on the edge of the Tiger Reserve itself.{" "}
+            <Link href="/booking" className="text-brand-bronze hover:text-earth-brown font-medium">
+              Book a stay near Bhopal
+            </Link>{" "}
+            and explore the reserve, Bhimbetka and Ginnourgarh Fort from a base inside the forest.
+          </p>
+          <Link
+            href="/booking"
+            className="inline-flex items-center justify-center rounded-full px-7 py-3 font-primary text-base font-medium text-warm-beige bg-earth-brown hover:bg-[rgb(132,116,85)] transition-colors"
+          >
+            Book Your Stay
+          </Link>
+        </div>
       </section>
 
       <section className=" px-4 py-4 rounded-bl-[60px] rounded-br-[60px] flex flex-col justify-center items-center">

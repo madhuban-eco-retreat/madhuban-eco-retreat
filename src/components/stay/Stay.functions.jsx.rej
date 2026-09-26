@@ -1,0 +1,53 @@
+diff a/src/components/stay/Stay.functions.jsx b/src/components/stay/Stay.functions.jsx	(rejected hunks)
+@@ -206,10 +206,10 @@
+ };
+ 
+ const mudHouseMetadata = {
+-  title: "Mud House Stay Ratapani | Eco Mud Cottage Near Bhopal",
++  title: "Mud House Near Bhopal | Eco Stay in Ratapani",
+ 
+   description:
+-    "Stay in authentic mud houses inspired by Gond architecture. Orchard setting, 360° rooftop views, luxury amenities & eco-comfort near Bhopal. Book now.",
++    "A traditional mud house near Bhopal, Gond-inspired and air-conditioned, with rooftop views over Ratapani Tiger Reserve. Check availability and book direct.",
+ 
+   keywords: [
+     "mud house bhopal",
+@@ -233,10 +233,10 @@
+ };
+ 
+ const poolSideMetadata = {
+-  title: "Pool Side Villa – Villas Near Bhopal | Ratapani Tiger Reserve",
++  title: "Pool Villa Near Bhopal | Private Villa in Ratapani",
+ 
+   description:
+-    "Looking for villas in Bhopal? Stay at Madhuban's private poolside villa near Ratapani — infinity pool, forest views & boutique luxury. Book now!",
++    "A private pool villa near Bhopal on the edge of Ratapani Tiger Reserve — infinity pool, forest views, boutique interiors. Only one available — book direct.",
+ 
+   keywords: [
+     "villas in Bhopal",
+@@ -259,10 +259,10 @@
+ };
+ 
+ const glampingTentMetadata = {
+-  title: "Glamping Tents in Ratapani | Luxury Stay Near Bhopal",
++  title: "Glamping Near Bhopal | Luxury Tents in Ratapani",
+ 
+   description:
+-    "Experience boutique luxury glamping tents in Ratapani at Madhuban Eco Retreat. King-size beds, private lawn & forest views. Perfect romantic escape near Bhopal!",
++    "Glamping near Bhopal with king-size beds, private lawns and forest views inside Ratapani Tiger Reserve. A romantic escape — book direct for best rates.",
+ 
+   keywords: [
+     "glamping tent Ratapani",
+@@ -282,10 +282,10 @@
+   },
+ };
+ const nightCampingMetadata = {
+-  title: "Camping in Ratapani | Night Camping Near Bhopal – ₹2500",
++  title: "Camping Near Bhopal | Night Camping in Ratapani",
+ 
+   description:
+-    "Enjoy night camping in Ratapani at ₹2,500 per person. Includes food, pool access, nature walk & adventure activities. Best jungle camping near Bhopal. Book now.",
++    "Night camping near Bhopal inside Ratapani Tiger Reserve — canvas tents, campfire, star-filled skies. From ₹2,500 per person including food. Book direct.",
+ 
+   keywords: [
+     "camping in ratapani",

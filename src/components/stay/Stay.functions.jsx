@@ -206,10 +206,10 @@ const safariTentMetadata = {
 };
 
 const mudHouseMetadata = {
-  title: "Mud House Stay Ratapani | Eco Mud Cottage Near Bhopal",
+  title: "Mud House Near Bhopal | Eco Stay in Ratapani",
 
   description:
-    "Stay in authentic mud houses inspired by Gond architecture. Orchard setting, 360° rooftop views, luxury amenities & eco-comfort near Bhopal. Book now.",
+    "A traditional mud house near Bhopal, Gond-inspired and air-conditioned, with rooftop views over Ratapani Tiger Reserve. Check availability and book direct.",
 
   keywords: [
     "mud house bhopal",
@@ -233,13 +233,15 @@ const mudHouseMetadata = {
 };
 
 const poolSideMetadata = {
-  title: "Poolside Villa Ratapani | Luxury Eco Stay Near Bhopal",
+  title: "Pool Villa Near Bhopal | Private Villa in Ratapani",
 
   description:
-    " Stay in our private poolside villa at Madhuban Ratapani — infinity pool, forest views & boutique luxury. Perfect for couples & families near Bhopal. Book now!",
+    "A private pool villa near Bhopal on the edge of Ratapani Tiger Reserve — infinity pool, forest views, boutique interiors. Only one available — book direct.",
 
   keywords: [
-    " private poolside villa Ratapani",
+    "villas in Bhopal",
+    "villa near Bhopal",
+    "private poolside villa Ratapani",
     "luxury villa with pool near Bhopal",
     "poolside villa near Bhopal",
     "resorts with swimming pools near Bhopal",
@@ -257,10 +259,10 @@ const poolSideMetadata = {
 };
 
 const glampingTentMetadata = {
-  title: "Glamping Tents in Ratapani | Luxury Stay Near Bhopal",
+  title: "Glamping Near Bhopal | Luxury Tents in Ratapani",
 
   description:
-    "Experience boutique luxury glamping tents in Ratapani at Madhuban Eco Retreat. King-size beds, private lawn & forest views. Perfect romantic escape near Bhopal!",
+    "Glamping near Bhopal with king-size beds, private lawns and forest views inside Ratapani Tiger Reserve. A romantic escape — book direct for best rates.",
 
   keywords: [
     "glamping tent Ratapani",
@@ -280,10 +282,10 @@ const glampingTentMetadata = {
   },
 };
 const nightCampingMetadata = {
-  title: "Camping in Ratapani | Night Camping Near Bhopal – ₹2500",
+  title: "Camping Near Bhopal | Night Camping in Ratapani",
 
   description:
-    "Enjoy night camping in Ratapani at ₹2,500 per person. Includes food, pool access, nature walk & adventure activities. Best jungle camping near Bhopal. Book now.",
+    "Night camping near Bhopal inside Ratapani Tiger Reserve — canvas tents, campfire, star-filled skies. From ₹2,500 per person including food. Book direct.",
 
   keywords: [
     "camping in ratapani",
@@ -1057,7 +1059,7 @@ export const accommodationsData = [
     altText: "A beautiful treehouse offering panoramic views of the forest",
     descriptions: [
       "Discover serenity and slow living in our private poolside villa in Ratapani, designed for travelers seeking comfort, privacy, and a refreshing nature-dipped experience. Wake up to gentle sunlight shimmering on the eco-pool, breathe in the fresh forest air, and enjoy calm moments surrounded by greenery. As one of the most stunning villas in Bhopal with a private pool experience, Madhuban's Pool Side Villa redefines what a nature retreat can feel like.",
-      "Perfect for families, couples, and wellness seekers, this poolside villa near Bhopal blends eco-conscious design with boutique luxury. Among the finest resorts with swimming pools near Bhopal, Madhuban offers a stay that is as peaceful as it is beautiful. Whether you prefer a morning dip, a quiet poolside chai, or calm evenings under the stars, this luxury villa with pool near Bhopal invites you to reconnect with yourself and nature. Couples looking for a private, romantic escape will find this poolside villa in Ratapani for couples an especially memorable choice.",
+      "Perfect for families, couples, and wellness seekers, this poolside villa near Bhopal blends eco-conscious design with boutique luxury — among the villas in Bhopal and its surrounding forests, it's built for travelers who want water, greenery and quiet in one stay. Among the finest resorts with swimming pools near Bhopal, Madhuban offers a stay that is as peaceful as it is beautiful. Whether you prefer a morning dip, a quiet poolside chai, or calm evenings under the stars, this luxury villa with pool near Bhopal invites you to reconnect with yourself and nature. Couples looking for a private, romantic escape will find this poolside villa in Ratapani for couples an especially memorable choice.",
     ],
     galleryImages: [
       "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/stay/pool/pool-side-image-madhuban-eco-retreat-bhopal-1.avif",

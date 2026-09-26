@@ -265,11 +265,11 @@ ${guests}`;
               </div>
               <div className="flex justify-center">
                 <h1 className="bannerHeading primary-font-family text-center  text-white md:w-[70%]  mb-6 ">
-                  Escape to Ratapani’s{" "}
+                  A{" "}
                   <span className="text-primary text-mask-nature heading-glow font-serif-luxury">
-                    Premier
+                    Resort
                   </span>{" "}
-                  Eco-Luxury Retreat
+                  in Ratapani, Near Bhopal
                 </h1>
               </div>
               <p className="text-sm md:text-xl text-white/80 font-light leading-relaxed max-w-2xl mx-auto">
