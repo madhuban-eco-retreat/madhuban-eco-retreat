@@ -1,5 +1,6 @@
 ﻿export const dynamic = "force-static";
 import { buildMetadata } from "@/lib/seo";
+import { lowestRegularRate, formatInr } from "@/lib/pricing/rate-card.mjs";
 import SEO from "@/components/seo/Seo";
 import Stay from "@/components/stay/Stay";
 
@@ -182,7 +183,7 @@ export default StayPage;
 export const metadata = buildMetadata({
   title: "Resort in Ratapani | Safari Tents, Villas & Mud Houses",
   description:
-    "A resort in Ratapani Tiger Reserve near Bhopal — choose safari tents, mud houses, glamping or a private pool villa. Prices from ₹7,500/night. Book direct.",
+    `A resort in Ratapani Tiger Reserve near Bhopal — choose safari tents, mud houses, glamping or a private pool villa. From ${formatInr(lowestRegularRate())}/night with meals. Book direct.`,
   path: "/stay-in-ratapani-tiger-reserve",
   ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-og-social-1200x630.jpg",
   keywords: [

@@ -1,5 +1,6 @@
 ﻿export const dynamic = "force-static";
 import { buildMetadata } from "@/lib/seo";
+import { rateCardRows, cheapestRoom, priciestRooms, lowestRegularRate, highestRegularRate, apPremium, formatInr } from "@/lib/pricing/rate-card.mjs";
 import SEO from "@/components/seo/Seo";
 import Home from "./home/home";
 
@@ -28,9 +29,9 @@ const HomeSchema = {
     latitude: 22.88,
     longitude: 77.52,
   },
-  priceRange: "₹7,500 - ₹12,000 per night",
+  priceRange: `${formatInr(lowestRegularRate())} - ${formatInr(Math.max(...rateCardRows().map((r) => r.regular.AP)))} per night (2 guests, meals included)`,
   checkinTime: "14:00",
-  checkoutTime: "11:30",
+  checkoutTime: "11:00",
   numberOfRooms: 6,
   amenityFeature: [
     "Eco-Friendly Stays",
@@ -82,7 +83,7 @@ const HomeFaqSchema = {
       name: "What is the price of staying at Madhuban Eco Retreat?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Room rates start from ₹7,500 per night for Glamping Tent to ₹12,000 per night for Safari Tent and Pool Side Villa. GST extra as applicable.",
+        text: `Room rates start from ${formatInr(cheapestRoom().rate)} per night for the ${cheapestRoom().label} to ${formatInr(highestRegularRate())} per night for the ${priciestRooms().map((r) => r.label).join(" and ")}, for two guests on the MAP plan (breakfast, lunch/dinner). The AP plan (all three meals) adds ${formatInr(apPremium())} per night. GST extra as applicable.`,
       },
     },
     {

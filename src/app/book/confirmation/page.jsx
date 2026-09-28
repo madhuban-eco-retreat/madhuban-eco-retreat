@@ -1,4 +1,5 @@
 import { createAdminClient } from "@/lib/supabase/admin";
+import { mealPlanFacts } from "@/lib/booking/meal-plan";
 import Link from "next/link";
 import { ALL_ROOMS_URL, stayPageForRoomSlug } from "@/lib/rooms/booking-links";
 import { splitGst } from "@/lib/gst";
@@ -40,7 +41,7 @@ export default async function ConfirmationPage({ searchParams }) {
         .select(`
       id, booking_ref, status, base_amount, gst_amount, total_amount,
       discount_amount, coupon_code, checkin, checkout,
-      num_adults, num_children, special_requests, created_at,
+      num_adults, num_children, special_requests, internal_notes, created_at,
       guests!guest_id ( name, email, mobile ),
       rooms!room_id ( name, slug, base_price_per_night )
     `)
@@ -96,6 +97,10 @@ export default async function ConfirmationPage({ searchParams }) {
         ? splitGst(gstAmount, gstRatePct)
         : null;
     const discountAmount = Number(booking.discount_amount ?? 0);
+    const mealPlan = mealPlanFacts(booking);
+    const mealPlanText = mealPlan.mealPlanLabel
+        ? `${mealPlan.mealPlanLabel} — ${mealPlan.mealPlanIncludes}`
+        : null;
     const nights = Math.round((new Date(booking.checkout).getTime() - new Date(booking.checkin).getTime()) / 86400000);
     return (<div className="py-12 px-4">
       <div className="mx-auto max-w-2xl">
@@ -153,6 +158,10 @@ export default async function ConfirmationPage({ searchParams }) {
               {booking.num_adults} adult{booking.num_adults !== 1 ? "s" : ""}
               {booking.num_children > 0 && `, ${booking.num_children} child${booking.num_children !== 1 ? "ren" : ""}`}
             </dd>
+            {mealPlanText && (<>
+                <dt className="text-muted-foreground">Meal plan</dt>
+                <dd className="font-medium text-charcoal">{mealPlanText}</dd>
+              </>)}
             {guest && (<>
                 <dt className="text-muted-foreground">Guest</dt>
                 <dd className="font-medium text-charcoal">{guest.name}</dd>
@@ -230,6 +239,7 @@ export default async function ConfirmationPage({ searchParams }) {
             checkIn: formatDate(booking.checkin),
             checkOut: formatDate(booking.checkout),
             nights,
+            mealPlan: mealPlanText,
             guestSummary: `${booking.num_adults} adult${booking.num_adults !== 1 ? "s" : ""}${booking.num_children > 0 ? `, ${booking.num_children} child${booking.num_children !== 1 ? "ren" : ""}` : ""}`,
             baseAmount,
             gstAmount,

@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { isValidPhone, PHONE_ERROR } from "@/lib/validation/phone";
 import { MAX_ADULTS_ANY_ROOM, MAX_CHILDREN, MAX_INFANTS } from "@/lib/booking/occupancy";
+import { MEAL_PLAN_CODES } from "@/lib/pricing/config.mjs";
 const dateStr = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Use YYYY-MM-DD format");
 // Occupancy caps are enforced server-side as well as in the form: the counts
 // drive extra-guest charges, so a hand-crafted request must not be able to book
@@ -12,6 +13,9 @@ const dateStr = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Use YYYY-MM-DD format")
 const adults = z.number().int().min(1).max(MAX_ADULTS_ANY_ROOM);
 const children = z.number().int().min(0).max(MAX_CHILDREN);
 const infants = z.number().int().min(0).max(MAX_INFANTS).optional().default(0);
+// MAP or AP. Optional: an omitted plan is priced on the default, and a room that is
+// not on the tariff sheet (camping) ignores it, so older clients keep working.
+const mealPlan = z.enum(MEAL_PLAN_CODES).optional();
 export const checkAvailabilitySchema = z.object({
     roomId: z.string().uuid(),
     checkIn: dateStr,
@@ -31,6 +35,7 @@ export const calculatePriceSchema = z.object({
     adults,
     children,
     infants,
+    mealPlan,
     couponCode: z.string().max(30).optional(),
 }).refine((d) => d.checkOut > d.checkIn, {
     message: "Check-out must be after check-in",
@@ -43,6 +48,7 @@ export const createBookingSchema = z.object({
     adults,
     children,
     infants,
+    mealPlan,
     guestName: z.string().min(1).max(100),
     guestEmail: z.string().email(),
     guestPhone: z.string().refine(isValidPhone, PHONE_ERROR),

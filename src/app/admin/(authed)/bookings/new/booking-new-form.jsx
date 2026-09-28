@@ -10,6 +10,8 @@ import { Calendar, User, Sparkles, FileText, ChevronLeft, Info, Minus, Plus, Cir
 import { Card, Button, Input, Select, Toggle, DatePicker, TextArea, } from "@/components/admin/ui";
 import { BOOKING_ADDONS } from "@/lib/admin/booking-addons";
 import { computeAdminQuote } from "@/lib/pricing/admin-quote.mjs";
+import { MEAL_PLANS, MEAL_PLAN_CODES, DEFAULT_MEAL_PLAN } from "@/lib/pricing/config.mjs";
+import { hasTariff } from "@/lib/pricing/rate-card.mjs";
 import { cn } from "@/lib/utils";
 // ─── Draft ────────────────────────────────────────────────────────────────────
 const DRAFT_KEY = "madhuban-admin-booking-draft";
@@ -27,6 +29,8 @@ const schema = z
     numAdults: z.number().int().min(1, "At least 1 adult"),
     numChildren: z.number().int().min(0),
     extraMattress: z.number().int().min(0),
+    // MAP or AP. Optional so a draft saved before the field existed still validates.
+    mealPlan: z.enum(MEAL_PLAN_CODES).optional(),
     specialRequests: z.string().optional(),
     guestName: z.string().min(1, "Guest name required"),
     guestMobile: z.string().refine(isValidPhone, PHONE_ERROR),
@@ -67,6 +71,7 @@ const schema = z
 const defaultValues = {
     checkIn: "", checkOut: "", roomId: "",
     numAdults: 2, numChildren: 0, extraMattress: 0,
+    mealPlan: DEFAULT_MEAL_PLAN,
     specialRequests: "",
     guestName: "", guestMobile: "", guestEmail: "",
     idType: "", idNumber: "",
@@ -89,7 +94,7 @@ const defaultValues = {
  * "inclusive" total — which disagreed with the server on almost every booking
  * that was not a bare regular-season night.
  */
-function computeClientPricing(room, checkIn, checkOut, enabledAddons, adults, children, extraBeds) {
+function computeClientPricing(room, checkIn, checkOut, enabledAddons, adults, children, extraBeds, mealPlan) {
     if (!room || !checkIn || !checkOut || checkIn >= checkOut)
         return null;
     try {
@@ -102,6 +107,8 @@ function computeClientPricing(room, checkIn, checkOut, enabledAddons, adults, ch
             children,
             extraBeds,
             addons: enabledAddons,
+            // A room that is not on the tariff sheet (camping) has no plan.
+            mealPlan: hasTariff(room.slug) ? (mealPlan ?? DEFAULT_MEAL_PLAN) : null,
         });
     }
     catch {
@@ -269,8 +276,8 @@ export function BookingNewForm() {
     const pricing = useMemo(() => {
         if (!selectedRoom || !watched.checkIn || !watched.checkOut)
             return null;
-        return computeClientPricing(selectedRoom, watched.checkIn, watched.checkOut, enabledAddons, watched.numAdults ?? 2, watched.numChildren ?? 0, watched.extraMattress ?? 0);
-    }, [selectedRoom, watched.checkIn, watched.checkOut, enabledAddons, watched.numAdults, watched.numChildren, watched.extraMattress]);
+        return computeClientPricing(selectedRoom, watched.checkIn, watched.checkOut, enabledAddons, watched.numAdults ?? 2, watched.numChildren ?? 0, watched.extraMattress ?? 0, watched.mealPlan);
+    }, [selectedRoom, watched.checkIn, watched.checkOut, enabledAddons, watched.numAdults, watched.numChildren, watched.extraMattress, watched.mealPlan]);
     // ── Date helpers ──────────────────────────────────────────────────────────
     const today = new Date().toISOString().split("T")[0];
     const minCheckout = watched.checkIn
@@ -293,6 +300,7 @@ export function BookingNewForm() {
                 numAdults: data.numAdults,
                 numChildren: data.numChildren,
                 extraMattress: data.extraMattress,
+                mealPlan: data.mealPlan ?? DEFAULT_MEAL_PLAN,
                 specialRequests: data.specialRequests || undefined,
                 guest: {
                     name: data.guestName,
@@ -450,6 +458,13 @@ export function BookingNewForm() {
                     </div>
                   </div>
                 </div>
+
+                {selectedRoom && hasTariff(selectedRoom.slug) && (<div className="mt-4">
+                    <Select label="Meal Plan" required options={MEAL_PLAN_CODES.map((code) => ({
+                    value: code,
+                    label: `${MEAL_PLANS[code].label} — ${MEAL_PLANS[code].includes} (+${formatINR(MEAL_PLANS[code].supplementPerNight)}/night)`,
+                }))} helperText="Room rate + meal plan = the fare. Extra-guest rates follow the plan." {...form.register("mealPlan")}/>
+                  </div>)}
 
                 <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <Input label="Assigned Unit" placeholder="e.g. ST-03, River-facing tent" helperText="Optional — physical unit identifier" {...form.register("assignedUnit")}/>
@@ -611,9 +626,25 @@ export function BookingNewForm() {
                             Room Rent ({pricing.nights} night{pricing.nights !== 1 ? "s" : ""})
                           </span>
                           <span className="font-body text-sm font-medium text-charcoal">
-                            {formatINR(pricing.roomTotal)}
+                            {formatINR(pricing.seasonalBaseTotal)}
                           </span>
                         </div>
+                        {pricing.longStayDiscountTotal > 0 && (<div className="flex items-baseline justify-between">
+                            <span className="font-body text-xs text-muted">2+ nights offer (20% of room rent)</span>
+                            <span className="font-body text-xs text-charcoal">−{formatINR(pricing.longStayDiscountTotal)}</span>
+                          </div>)}
+                        {pricing.mealPlan && (<div className="flex items-baseline justify-between">
+                            <span className="font-body text-sm text-charcoal">
+                              {pricing.mealPlanLabel} ({pricing.nights} night{pricing.nights !== 1 ? "s" : ""})
+                            </span>
+                            <span className="font-body text-sm font-medium text-charcoal">
+                              {formatINR(pricing.mealSupplementTotal)}
+                            </span>
+                          </div>)}
+                        {pricing.extraPersonTotal > 0 && (<div className="flex items-baseline justify-between">
+                            <span className="font-body text-xs text-muted">Extra guests / bedding</span>
+                            <span className="font-body text-xs text-charcoal">{formatINR(pricing.extraPersonTotal)}</span>
+                          </div>)}
 
                         {pricing.addonsBreakdown.map((a, i) => (<div key={i} className="flex items-baseline justify-between">
                             <span className="font-body text-xs text-muted">

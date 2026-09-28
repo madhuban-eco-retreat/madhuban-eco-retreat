@@ -20,13 +20,15 @@
 import {
   DEFAULT_ADULTS_INCLUDED as CONFIG_ADULTS_INCLUDED,
   DEFAULT_MAX_ADULTS as CONFIG_MAX_ADULTS,
+  DEFAULT_MEAL_PLAN,
   ROOM_OCCUPANCY_OVERRIDES as CONFIG_OVERRIDES,
   MAX_CHILDREN as CONFIG_MAX_CHILDREN,
   MAX_INFANTS as CONFIG_MAX_INFANTS,
-  EXTRA_ADULT_RATE as CONFIG_EXTRA_ADULT_RATE,
-  CHILD_RATE as CONFIG_CHILD_RATE,
   INFANT_RATE as CONFIG_INFANT_RATE,
 } from "@/lib/pricing/config.mjs";
+import { extraGuestRatesFor } from "@/lib/pricing/quote.mjs";
+
+export { extraGuestRatesFor };
 
 /** Adults covered by the nightly tariff for a room with no override. */
 export const DEFAULT_ADULTS_INCLUDED = CONFIG_ADULTS_INCLUDED;
@@ -59,10 +61,10 @@ export const MAX_ADULTS = DEFAULT_MAX_ADULTS;
 export const MAX_CHILDREN = CONFIG_MAX_CHILDREN;
 export const MAX_INFANTS = CONFIG_MAX_INFANTS;
 
-/** Per night, pre-GST. Charged per adult beyond the room's included count. */
-export const EXTRA_ADULT_RATE = CONFIG_EXTRA_ADULT_RATE;
-/** Per child per night, pre-GST. Applies to ages 5–12. */
-export const CHILD_RATE = CONFIG_CHILD_RATE;
+/**
+ * Extra-adult and child rates are not constants any more: they depend on the
+ * meal plan the room is booked on. Ask extraGuestRatesFor(plan).
+ */
 /** Under-5s stay free; tracked for headcount only, never charged. */
 export const INFANT_RATE = CONFIG_INFANT_RATE;
 
@@ -85,10 +87,21 @@ export function maxAdultsFor(roomSlug) {
  *
  * roomSlug decides where the surcharge starts. Omitting it falls back to double
  * occupancy, which is right for every room that has no override.
+ *
+ * mealPlan decides the rate: "MAP" or "AP" for a booking on the current tariff,
+ * and an explicit null for one taken before the meal-plan tariff, whose
+ * extra-guest lines must be rebuilt at the bedding-only rates it was charged.
  */
-export function extraGuestCharges({ adults, children, nights, roomSlug }) {
+export function extraGuestCharges({
+  adults,
+  children,
+  nights,
+  roomSlug,
+  mealPlan = DEFAULT_MEAL_PLAN,
+}) {
   const included = adultsIncludedFor(roomSlug);
   const extraAdults = Math.max(0, adults - included);
+  const rates = extraGuestRatesFor(mealPlan);
   const lines = [];
 
   if (extraAdults > 0) {
@@ -96,8 +109,8 @@ export function extraGuestCharges({ adults, children, nights, roomSlug }) {
       key: "extra_adult",
       label: "Extra adult",
       qty: extraAdults,
-      ratePerNight: EXTRA_ADULT_RATE,
-      amount: Math.round(extraAdults * EXTRA_ADULT_RATE * nights * 100) / 100,
+      ratePerNight: rates.adult,
+      amount: Math.round(extraAdults * rates.adult * nights * 100) / 100,
     });
   }
 
@@ -106,8 +119,8 @@ export function extraGuestCharges({ adults, children, nights, roomSlug }) {
       key: "child",
       label: "Child (5–12 yrs)",
       qty: children,
-      ratePerNight: CHILD_RATE,
-      amount: Math.round(children * CHILD_RATE * nights * 100) / 100,
+      ratePerNight: rates.child,
+      amount: Math.round(children * rates.child * nights * 100) / 100,
     });
   }
 

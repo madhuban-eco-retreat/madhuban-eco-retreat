@@ -49,6 +49,7 @@ export function bookingConfirmationAdminEmail(data) {
               ${row("Check-out", formatDate(data.checkOut))}
               ${row("Nights", String(data.nights))}
               ${row("Guests", `${data.adults} adult${data.adults !== 1 ? "s" : ""}${data.children > 0 ? `, ${data.children} child${data.children !== 1 ? "ren" : ""}` : ""}`)}
+              ${data.mealPlanLabel ? row("Meal plan", `${escapeHtml(data.mealPlanLabel)}${data.mealPlanIncludes ? ` — ${escapeHtml(data.mealPlanIncludes)}` : ""}`) : ""}
               ${row("Source", escapeHtml(data.source))}
               ${data.specialRequests ? row("Special requests", `<span style="white-space:pre-wrap;">${escapeHtml(data.specialRequests)}</span>`) : ""}
               ${data.discountAmount ? row("Discount", `<span style="color:#6E6146;">−₹${formatAmount(data.discountAmount)}${data.couponCode ? ` (coupon ${escapeHtml(data.couponCode)})` : ""}</span>`) : ""}

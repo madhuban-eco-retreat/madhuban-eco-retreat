@@ -11,6 +11,8 @@ import { createNotification } from "@/lib/admin/notifications";
 import { z } from "zod";
 import { assertAdmin } from "@/lib/admin/auth";
 import { validatePhone, PHONE_ERROR } from "@/lib/validation/phone";
+import { mealPlanNote, isMissingMealPlanColumn } from "@/lib/booking/meal-plan";
+import { MEAL_PLAN_CODES } from "@/lib/pricing/config.mjs";
 const addonSchema = z.object({
     id: z.string(),
     label: z.string(),
@@ -25,6 +27,7 @@ const createBookingBodySchema = z.object({
     numAdults: z.number().int().min(1),
     numChildren: z.number().int().min(0),
     extraMattress: z.number().int().min(0),
+    mealPlan: z.enum(MEAL_PLAN_CODES).optional(),
     specialRequests: z.string().optional(),
     guest: z.object({
         name: z.string().min(1),
@@ -63,7 +66,7 @@ export async function POST(req) {
     if (!parsed.success) {
         return NextResponse.json({ error: parsed.error.issues[0]?.message ?? "Invalid input" }, { status: 400 });
     }
-    const { checkIn, checkOut, roomId, numAdults, numChildren, extraMattress, specialRequests, guest, source, corporate, addons, internalNote, assignedUnit, advance, sendEmail: doSendEmail, } = parsed.data;
+    const { checkIn, checkOut, roomId, numAdults, numChildren, extraMattress, mealPlan, specialRequests, guest, source, corporate, addons, internalNote, assignedUnit, advance, sendEmail: doSendEmail, } = parsed.data;
     if (checkIn >= checkOut) {
         return NextResponse.json({ error: "Check-out must be after check-in" }, { status: 400 });
     }
@@ -75,7 +78,7 @@ export async function POST(req) {
         }
         // Authoritative server-side pricing
         const pricing = await calculateAdminPricing({
-            roomId, checkIn, checkOut, adults: numAdults, children: numChildren, extraBeds: extraMattress, addons,
+            roomId, checkIn, checkOut, adults: numAdults, children: numChildren, extraBeds: extraMattress, addons, mealPlan,
         });
         const bookingRef = await generateBookingReference();
         const supabase = createAdminClient();
@@ -139,9 +142,7 @@ export async function POST(req) {
             qty: a.qty,
             unit: a.unit,
         }));
-        const { data: booking, error: bookingErr } = await supabase
-            .from("bookings")
-            .insert({
+        const bookingRow = {
             booking_ref: bookingRef,
             room_id: roomId,
             guest_id: guestId,
@@ -163,9 +164,24 @@ export async function POST(req) {
             corporate_address: corporate?.address ?? null,
             addons: addonsForStorage,
             assigned_unit: assignedUnit?.trim() || null,
-        })
+            // The plan is recorded twice on purpose: the column, and a note that
+            // stays readable if this deploy lands before the migration has run.
+            internal_notes: mealPlanNote(pricing.mealPlan),
+            meal_plan: pricing.mealPlan,
+        };
+        let { data: booking, error: bookingErr } = await supabase
+            .from("bookings")
+            .insert(bookingRow)
             .select("id, booking_ref")
             .single();
+        if (bookingErr && isMissingMealPlanColumn(bookingErr)) {
+            const { meal_plan: _omitted, ...legacyRow } = bookingRow;
+            ({ data: booking, error: bookingErr } = await supabase
+                .from("bookings")
+                .insert(legacyRow)
+                .select("id, booking_ref")
+                .single());
+        }
         if (bookingErr || !booking) {
             console.error("[admin/bookings/create] booking insert:", bookingErr);
             return NextResponse.json({ error: "Failed to create booking" }, { status: 500 });
@@ -227,6 +243,8 @@ export async function POST(req) {
                 nights,
                 adults: numAdults,
                 children: numChildren,
+                mealPlanLabel: pricing.mealPlanLabel,
+                mealPlanIncludes: pricing.mealPlanIncludes,
                 // A walk-in confirmation carried no tax breakdown, so the guest
                 // had no CGST/SGST figures to reconcile against their invoice.
                 baseAmount: pricing.subtotalBeforeGst,

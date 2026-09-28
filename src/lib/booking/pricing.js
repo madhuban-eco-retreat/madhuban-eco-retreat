@@ -3,18 +3,22 @@ import "server-only";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { computeGst } from "@/lib/gst";
 import { maxAdultsFor } from "@/lib/booking/occupancy";
+import { planForRoom } from "@/lib/booking/meal-plan";
 import {
   computeStayQuote,
   longStayDiscountForStay,
   longStayDiscountReason,
   nightsBetween,
+  extraGuestRatesFor,
 } from "@/lib/pricing/quote.mjs";
 import {
   LONG_STAY_DISCOUNT_RATE,
   LONG_STAY_MIN_NIGHTS,
   PEAK_PERIODS,
-  DISCOUNT_BLACKOUT_PERIODS,
+  LONG_WEEKEND_PERIODS,
+  BASE_NIGHTLY_RATES,
 } from "@/lib/pricing/config.mjs";
+import { hasTariff } from "@/lib/pricing/rate-card.mjs";
 
 /**
  * Server-side quoting: fetch the room and any staff rate rules, then hand the
@@ -32,16 +36,14 @@ export const MULTI_NIGHT_DISCOUNT_RATE = LONG_STAY_DISCOUNT_RATE;
 export const MULTI_NIGHT_MIN_NIGHTS = LONG_STAY_MIN_NIGHTS;
 
 /**
- * The festival and long-weekend dates, under the name callers already use.
+ * The notified long weekends, under the name callers already use.
  *
- * These are now their own tier and no longer the same list as the peak period:
- * a long weekend is sold at the regular rate and only loses the long-stay
- * discount, while Christmas is marked up 20% and loses it as well. The name
- * means what it says again — it points at the long weekends, not at Christmas.
+ * On the 2026-27 tariff these are peak dates like Christmas — marked up and
+ * without the 2+ night offer — so they are also part of PEAK_SURCHARGE_PERIODS.
  */
-export const LONG_WEEKEND_BLOCKS = DISCOUNT_BLACKOUT_PERIODS;
+export const LONG_WEEKEND_BLOCKS = LONG_WEEKEND_PERIODS;
 
-/** The one marked-up period, for anything that needs the surcharge dates. */
+/** Every marked-up period — Christmas and the long weekends — for anything that needs the surcharge dates. */
 export const PEAK_SURCHARGE_PERIODS = PEAK_PERIODS;
 
 /**
@@ -74,7 +76,16 @@ function multiplierLookup(rules) {
 }
 
 export async function calculatePricing(params) {
-  const { roomSlug, checkIn, checkOut, adults, children, infants = 0, couponCode } = params;
+  const {
+    roomSlug,
+    checkIn,
+    checkOut,
+    adults,
+    children,
+    infants = 0,
+    couponCode,
+    mealPlan: requestedMealPlan,
+  } = params;
   const supabase = createAdminClient();
 
   const { data: room, error: roomError } = await supabase
@@ -110,6 +121,24 @@ export async function calculatePricing(params) {
     .or(`room_id.eq.${room.id},room_id.is.null`);
 
   const baseNightlyRate = Number(room.base_price_per_night);
+
+  // rooms.base_price_per_night is the room RENT, excluding meals — the same
+  // figure as BASE_NIGHTLY_RATES, to which the meal supplement is added. If the
+  // table holds the meal-inclusive rate instead (someone typed the sheet's
+  // ₹10,200 into the admin rate editor), the guest would be charged the
+  // supplement twice. That cannot be fixed here, but it can be made loud.
+  if (hasTariff(room.slug) && baseNightlyRate !== BASE_NIGHTLY_RATES[room.slug]) {
+    console.warn(
+      `[pricing] rooms.base_price_per_night for ${room.slug} is ${baseNightlyRate}, ` +
+        `but the rate card's room rent is ${BASE_NIGHTLY_RATES[room.slug]}. ` +
+        `The stored value must be room rent excluding meals.`,
+    );
+  }
+
+  // Rooms on the tariff sheet are priced on a meal plan; a room that is not on
+  // it (the camping tent) has none and prices exactly as it always did.
+  const mealPlan = planForRoom(room.slug, requestedMealPlan);
+
   const stay = {
     baseNightlyRate,
     checkIn,
@@ -118,6 +147,7 @@ export async function calculatePricing(params) {
     children,
     infants,
     roomSlug: room.slug,
+    mealPlan,
     peakMultiplierOverride: multiplierLookup(rules),
   };
 
@@ -189,6 +219,17 @@ export async function calculatePricing(params) {
     adultsIncluded: quote.adultsIncluded,
     maxAdults,
 
+    // The meal plan the stay was priced on (null for a room with no tariff).
+    // The room-rent lines below EXCLUDE meals; the supplement is its own line so
+    // a guest can see what MAP or AP adds, and so the two never blur together.
+    mealPlan: quote.mealPlan,
+    mealPlanLabel: quote.mealPlanLabel,
+    mealPlanIncludes: quote.mealPlanIncludes,
+    mealSupplementPerNight: quote.mealSupplementPerNight,
+    mealSupplementTotal: quote.mealSupplementTotal,
+    // Extra-guest rates for this plan, for the "extra adult ₹X/night" hints.
+    extraGuestRates: extraGuestRatesFor(mealPlan),
+
     // Per-night detail, so checkout can show a guest why two nights of one
     // stay cost different amounts instead of presenting an unexplained average.
     nightLines: quote.nightLines,
@@ -196,8 +237,8 @@ export async function calculatePricing(params) {
     regularNights: quote.regularNights,
     peakLabels: quote.peakLabels,
 
-    // An average once the stay straddles a season boundary; nightLines carries
-    // the authoritative per-night figures.
+    // Room rent per night (meals excluded), averaged once the stay straddles a
+    // season boundary; nightLines carries the authoritative per-night figures.
     pricePerNight: +(quote.seasonalBaseTotal / nights).toFixed(2),
     baseNightlyTotal: quote.seasonalBaseTotal,
     extraGuestLines: quote.extraGuestLines.map((l) => ({

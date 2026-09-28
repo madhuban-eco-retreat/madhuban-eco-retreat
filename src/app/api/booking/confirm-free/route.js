@@ -5,6 +5,7 @@ import { sendEmail } from "@/lib/resend";
 import { bookingConfirmationGuestEmail } from "@/lib/resend/templates/booking-confirmation-guest";
 import { bookingConfirmationAdminEmail } from "@/lib/resend/templates/booking-confirmation-admin";
 import { createNotification } from "@/lib/admin/notifications";
+import { mealPlanFacts } from "@/lib/booking/meal-plan";
 import { checkRateLimit } from "@/lib/ratelimit";
 
 export const runtime = "nodejs";
@@ -53,7 +54,7 @@ export async function POST(req) {
         .select(`
       id, booking_ref, status, total_amount, base_amount, gst_amount,
       discount_amount, coupon_code, created_at,
-      checkin, checkout, num_adults, num_children, source, special_requests,
+      checkin, checkout, num_adults, num_children, source, special_requests, internal_notes,
       guests!guest_id ( name, email, mobile ),
       rooms!room_id ( name, slug )
     `)
@@ -149,6 +150,7 @@ export async function POST(req) {
                 : null,
             totalAmount,
             specialRequests: booking.special_requests,
+                ...mealPlanFacts(booking),
         };
         // Email failures are logged, never fatal. The booking is already
         // confirmed at this point and answering with an error would send the

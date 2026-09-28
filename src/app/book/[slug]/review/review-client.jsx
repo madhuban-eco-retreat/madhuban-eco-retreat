@@ -43,6 +43,7 @@ export function ReviewClient({ slug }) {
                     adults: draft.pricing.adults,
                     children: draft.pricing.children,
                     infants: draft.pricing.infants ?? 0,
+                    mealPlan: draft.pricing.mealPlan ?? undefined,
                     guestName: draft.guest.name,
                     guestEmail: draft.guest.email,
                     guestPhone: draft.guest.phone,
@@ -115,6 +116,12 @@ export function ReviewClient({ slug }) {
             {pricing.children > 0 &&
             `, ${pricing.children} child${pricing.children > 1 ? "ren" : ""}`}
           </dd>
+          {pricing.mealPlan && (<>
+              <dt className="text-muted-foreground">Meal plan</dt>
+              <dd className="font-medium text-charcoal">
+                {pricing.mealPlanLabel} — {pricing.mealPlanIncludes}
+              </dd>
+            </>)}
         </dl>
       </section>
 
@@ -148,11 +155,17 @@ export function ReviewClient({ slug }) {
         <div className="space-y-2 font-body text-sm">
           <div className="flex justify-between text-charcoal/70">
             <span>
-              &#8377;{formatPrice(pricing.pricePerNight)} × {pricing.nights}{" "}
-              night{pricing.nights > 1 ? "s" : ""}
+              Room rate &#8377;{formatPrice(pricing.pricePerNight)} × {pricing.nights} night{pricing.nights > 1 ? "s" : ""}
             </span>
             <span>&#8377;{formatPrice(pricing.baseNightlyTotal)}</span>
           </div>
+          {pricing.mealPlan && (<div className="flex justify-between text-charcoal/70">
+              <span>
+                {pricing.mealPlanLabel} &#8377;{formatPrice(pricing.mealSupplementPerNight)} × {pricing.nights} night{pricing.nights > 1 ? "s" : ""}
+                <span className="block text-xs text-charcoal/50">{pricing.mealPlanIncludes}</span>
+              </span>
+              <span>&#8377;{formatPrice(pricing.mealSupplementTotal)}</span>
+            </div>)}
 
           {pricing.extraGuestLines?.map((line) => (<div key={line.key} className="flex justify-between text-charcoal/70">
               <span>
@@ -219,18 +232,22 @@ export function ReviewClient({ slug }) {
           </h2>
         </div>
         <ul className="ml-1 list-disc space-y-1.5 pl-4 font-body text-xs text-charcoal/80">
-          <li>More than 45 days before arrival: 10% cancellation charge</li>
-          <li>Between 15 and 45 days before arrival: 50% cancellation charge</li>
-          <li>Within 15 days of arrival / No Show: 100% cancellation charge</li>
+          <li>7 days or less before arrival: 100% of the booking amount</li>
+          <li>8 to 21 days before arrival: 20% cancellation charge</li>
+          <li>Date changes within 7 days of arrival count as a cancellation</li>
           <li>
-            Christmas, New Year, Holi, Diwali &amp; long weekend bookings:
-            Non-refundable
+            Christmas, New Year &amp; long weekend bookings: Non-refundable
           </li>
           <li>Group bookings (more than 3 rooms): Non-refundable</li>
+          <li>
+            Free rescheduling up to 8 days before arrival when travel is
+            affected by force majeure (permit charges apply if a safari permit
+            was issued)
+          </li>
         </ul>
         <p className="mt-3 font-body text-xs font-medium text-charcoal/80">
           Charges are calculated on the total booking value, not just the
-          advance paid.
+          advance paid. Cancellations are accepted only by email.
         </p>
       </section>
 

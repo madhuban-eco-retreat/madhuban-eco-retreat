@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { gstSentence } from "@/lib/pricing/rate-card.mjs";
 import {
   Container,
   Typography,
@@ -60,8 +61,10 @@ const t_and_c_data = {
         "A 50% advance payment is required to confirm your booking.",
         "The remaining balance must be paid at least one day prior to arrival.",
         "If the booking is made within 45 days of arrival, full payment is required at the time of booking.",
-        "Safari and special experiences must be paid in full at the time of confirmation.",
-        "Room rates are per night on double occupancy and are exclusive of GST. GST is charged separately as applicable — 5% GST on rooms priced at ₹7,500 and below, and 18% GST on rooms priced above ₹7,500.",
+        "Safari, special experiences and third-party services must be paid in full at the time of confirmation.",
+        "Safari confirmation is subject to the availability of permits, forest department rules and applicable government regulations. Full safari payment and guest ID details are required at the time of safari booking.",
+        `Room rates are per room per night on double occupancy, on the MAP or AP meal plan chosen at booking. ${gstSentence()}`,
+        "Guests who need a GST invoice are requested to share their GST details in advance.",
         "Prices, offers, and packages are subject to change without prior notice unless confirmed in writing.",
       ],
     },
@@ -69,21 +72,31 @@ const t_and_c_data = {
       title: "2. Check-In & Check-Out",
       items: [
         "Check-in time: 2:00 PM.",
-        "Check-out time: 11:30 AM.",
+        "Check-out time: 11:00 AM.",
         "Early check-in or late check-out may be permitted subject to availability and may incur additional charges.",
+        "Guests must carry an original government photo ID for check-in formalities and for safari.",
       ],
     },
     {
       title: "3. Cancellation & Refund",
       items: [
-        "Cancellations must be communicated to us in writing.",
-        "More than 45 days before arrival: 10% cancellation charge.",
-        "Between 15 and 45 days before arrival: 50% cancellation charge.",
-        "Within 15 days of arrival or in case of a No Show: 100% cancellation charge.",
+        "Cancellations are accepted only when sent by email.",
+        "7 days or less before arrival: 100% of the booking amount.",
+        "8 to 21 days before arrival: 20% cancellation charge.",
+        "An amendment of dates within 7 days of arrival is treated as a cancellation.",
+        "Bookings for Christmas, New Year and notified long weekends are non-refundable.",
         "Group bookings (more than 3 rooms) are strictly non-refundable.",
-        "Bookings for Christmas, New Year, Holi, Diwali, and long weekends are non-refundable.",
+        "In case of force majeure, Madhuban Eco Retreat may review these terms and the retention policy on a case-to-case basis.",
         "Cancellation charges are calculated on the total booking value, not just the advance paid.",
         "Approved refunds are processed via NEFT within 15 working days.",
+      ],
+    },
+    {
+      title: "Free Rescheduling",
+      items: [
+        "Due to unfavourable travel conditions, guests are encouraged to reschedule instead of cancelling.",
+        "There are no rescheduling charges from the resort side up to 8 days before arrival. Forest permit charges apply if safari permits have already been issued.",
+        "This option is restricted to bookings affected by force majeure. For a cancellation for any other reason, the regular cancellation policy applies.",
       ],
     },
     {
@@ -92,6 +105,7 @@ const t_and_c_data = {
         "Guests are expected to respect resort property, staff, and other visitors.",
         "Smoking is permitted only in designated areas.",
         "Use of alcohol, recreational substances, or behavior which endangers others is strictly prohibited.",
+        "Madhuban Eco Retreat follows Gandhian principles of simplicity, mindful living and respect for all life. Alcohol is not permitted on the premises and only vegetarian food is served; guests are requested not to carry or consume alcohol or non-vegetarian food within the property.",
         "The management reserves the right to refuse service or accommodation to anyone violating rules or behaving in an unsafe manner.",
       ],
     },
@@ -101,6 +115,9 @@ const t_and_c_data = {
         "Participation in outdoor experiences, forest walks, bird watching, nature trails, and leisure activities is voluntary and at your own risk.",
         "Guests should evaluate personal health suitability before joining any activity.",
         "Madhuban Eco Retreat is not responsible for injuries arising from personal participation in these activities.",
+        "Included experiences are subject to the resort schedule, weather conditions and prior booking.",
+        "Pool operations and outdoor activities are subject to weather and local authority guidelines. In standard cases the pool is open from 7 AM to 9 PM, and pool costume is mandatory.",
+        "The retreat is in a forest-fringe landscape; internet, network and digital payment services may occasionally be affected.",
       ],
     },
     {

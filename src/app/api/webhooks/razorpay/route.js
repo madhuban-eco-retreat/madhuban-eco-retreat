@@ -6,6 +6,7 @@ import { sendEmail } from "@/lib/resend";
 import { bookingConfirmationGuestEmail } from "@/lib/resend/templates/booking-confirmation-guest";
 import { bookingConfirmationAdminEmail } from "@/lib/resend/templates/booking-confirmation-admin";
 import { createNotification } from "@/lib/admin/notifications";
+import { mealPlanFacts } from "@/lib/booking/meal-plan";
 // Razorpay sends raw body for signature verification — must read as text.
 export async function POST(req) {
     const rawBody = await req.text();
@@ -50,7 +51,7 @@ export async function POST(req) {
         .select(`
       id, booking_ref, status, total_amount, base_amount, gst_amount,
       discount_amount, coupon_code,
-      checkin, checkout, num_adults, num_children, source, special_requests,
+      checkin, checkout, num_adults, num_children, source, special_requests, internal_notes,
       guests!guest_id ( name, email, mobile ),
       rooms!room_id ( name, slug )
     `)
@@ -106,6 +107,7 @@ export async function POST(req) {
                 : null,
             totalAmount,
             specialRequests: booking.special_requests,
+                ...mealPlanFacts(booking),
         };
         try {
             await sendEmail({ to: guest.email, ...bookingConfirmationGuestEmail(confirmationData) });

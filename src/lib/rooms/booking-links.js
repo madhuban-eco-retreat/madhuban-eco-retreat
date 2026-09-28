@@ -1,3 +1,4 @@
+import { regularRate, formatInr } from "@/lib/pricing/rate-card.mjs";
 /**
  * Where every "Book Now" / "Book Your Stay" CTA on the site points.
  *
@@ -68,11 +69,11 @@ export const STAY_PAGE_CTAS = {
   ],
   "mud-house-standard": [
     {
-      label: "Book Standard (₹9,000/night)",
+      label: `Book Standard (from ${formatInr(regularRate("mud-house-standard"))}/night)`,
       href: bookUrl(ROOM_SLUGS.mudHouseStandard),
     },
     {
-      label: "Book Premium (₹10,000/night)",
+      label: `Book Premium (from ${formatInr(regularRate("mud-house-premium"))}/night)`,
       href: bookUrl(ROOM_SLUGS.mudHousePremium),
     },
   ],

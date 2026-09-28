@@ -3,7 +3,9 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Check, ChevronDown } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
-import { MAX_CHILDREN, MAX_INFANTS, EXTRA_ADULT_RATE, DEFAULT_ADULTS_INCLUDED, DEFAULT_MAX_ADULTS } from "@/lib/booking/occupancy";
+import { MAX_CHILDREN, MAX_INFANTS, DEFAULT_ADULTS_INCLUDED, DEFAULT_MAX_ADULTS, extraGuestRatesFor } from "@/lib/booking/occupancy";
+import { BASE_NIGHTLY_RATES, MEAL_PLANS, MEAL_PLAN_CODES, DEFAULT_MEAL_PLAN } from "@/lib/pricing/config.mjs";
+import { hasTariff, regularRate, formatInr } from "@/lib/pricing/rate-card.mjs";
 
 /** "two" reads better than "2" in a sentence; anything unexpected falls back to the digit. */
 const ADULT_WORDS = ["zero", "one", "two", "three", "four", "five", "six"];
@@ -53,6 +55,12 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
     const [adults, setAdults] = useState(defaultAdults || adultsIncluded);
     const [children, setChildren] = useState(defaultChildren || 0);
     const [infants, setInfants] = useState(0);
+    // Rooms on the tariff sheet are sold as a meal-inclusive package, MAP or AP.
+    // The camping tent is not on the sheet and has no plan to choose.
+    const hasMealPlan = hasTariff(slug);
+    const [mealPlan, setMealPlan] = useState(DEFAULT_MEAL_PLAN);
+    // The extra-guest rate follows the plan, so the labels below must too.
+    const guestRates = extraGuestRatesFor(hasMealPlan ? mealPlan : null);
     const [couponCode, setCouponCode] = useState("");
     // Coupon attempt state. The code that is actually sent lives in a ref rather
     // than in the fetchPrice deps: changing dates must re-price the stay without
@@ -99,6 +107,7 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
                     adults,
                     children,
                     infants,
+                    mealPlan: hasMealPlan ? mealPlan : undefined,
                     couponCode: code || undefined,
                 }),
             });
@@ -138,7 +147,7 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
         finally {
             setLoadingPrice(false);
         }
-    }, [slug, checkIn, checkOut, adults, children, infants]);
+    }, [slug, checkIn, checkOut, adults, children, infants, mealPlan, hasMealPlan]);
     // Fetch price on mount and when booking params change.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     useEffect(() => { void fetchPrice(); }, [fetchPrice]);
@@ -354,7 +363,7 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
                         {n} adult{n > 1 ? "s" : ""}
                         {n === adultsIncluded ? " (included in base price)" : ""}
                         {extra > 0
-                    ? ` (+₹${(EXTRA_ADULT_RATE * extra).toLocaleString("en-IN")}/night)`
+                    ? ` (+₹${(guestRates.adult * extra).toLocaleString("en-IN")}/night)`
                     : ""}
                       </option>);
         })}
@@ -369,7 +378,7 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
                   {Array.from({ length: MAX_CHILDREN + 1 }, (_, i) => i).map((n) => (<option key={n} value={n}>
                       {n === 0
                     ? "No children"
-                    : `${n} child${n > 1 ? "ren" : ""} (+₹${(1500 * n).toLocaleString("en-IN")}/night)`}
+                    : `${n} child${n > 1 ? "ren" : ""} (+₹${(guestRates.child * n).toLocaleString("en-IN")}/night)`}
                     </option>))}
                 </select>
               </div>
@@ -388,10 +397,52 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
 
             <p className={NOTE_CLS}>
               Rate covers {adultWord(adultsIncluded)} adults. Extra adult
-              ₹{EXTRA_ADULT_RATE.toLocaleString("en-IN")}/night and child (5–12)
-              ₹1,500/night, plus GST. Infants stay free.
+              ₹{guestRates.adult.toLocaleString("en-IN")}/night and child (5–12)
+              ₹{guestRates.child.toLocaleString("en-IN")}/night, plus GST. One child
+              under 5 stays free; an additional child under 5 is booked as a child
+              (5–12).
             </p>
           </fieldset>
+
+          {/* Meal plan — the fare is the room rate plus the meal plan, shown as
+              exactly that so a guest can see what MAP or AP adds. The figures
+              on the cards are the regular-season, two-guest rates; the summary
+              on the right prices the dates actually chosen. */}
+          {hasMealPlan && (<fieldset className="rounded-xl border border-border p-6">
+            <legend className="px-1 font-body text-sm font-semibold text-charcoal">
+              Meal Plan
+            </legend>
+            <p className={NOTE_CLS}>
+              Your fare is the room rate plus the meal plan, per night for two
+              guests, before GST.
+            </p>
+            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {MEAL_PLAN_CODES.map((code) => {
+            const plan = MEAL_PLANS[code];
+            const selected = mealPlan === code;
+            return (<label key={code} className={`cursor-pointer rounded-xl border p-4 transition-colors focus-within:ring-2 focus-within:ring-earth-brown ${selected ? "border-earth-brown bg-warm-beige/40" : "border-border hover:border-earth-brown/50"}`}>
+                    <input type="radio" name="mealPlan" value={code} checked={selected} onChange={() => setMealPlan(code)} className="sr-only"/>
+                    <span className="block font-body text-sm font-semibold text-charcoal">
+                      {plan.label}
+                    </span>
+                    <span className="block font-body text-xs text-charcoal/70">
+                      {plan.includes}
+                    </span>
+                    <span className="mt-3 block font-body text-xs text-charcoal/80">
+                      Room {formatInr(BASE_NIGHTLY_RATES[slug])} + meals{" "}
+                      {formatInr(plan.supplementPerNight)}
+                    </span>
+                    <span className="block font-body text-sm font-semibold text-earth-brown">
+                      = {formatInr(regularRate(slug, code))} per night
+                    </span>
+                  </label>);
+        })}
+            </div>
+            <p className={NOTE_CLS}>
+              Peak season and long weekends add 20% to the room rate only; the
+              meal plan stays the same.
+            </p>
+          </fieldset>)}
 
           {/* Guest details */}
           <fieldset className="rounded-xl border border-border p-6">
@@ -508,11 +559,17 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
               </div>) : pricingError ? (<p className="mt-4 font-body text-sm text-red-600">{pricingError}</p>) : pricing ? (<div className="mt-6 space-y-3 font-body text-sm">
                 <div className="flex justify-between text-charcoal/70">
                   <span>
-                    &#8377;{formatPrice(pricing.pricePerNight)} × {pricing.nights} night
-                    {pricing.nights > 1 ? "s" : ""}
+                    Room rate &#8377;{formatPrice(pricing.pricePerNight)} × {pricing.nights} night{pricing.nights > 1 ? "s" : ""}
                   </span>
                   <span>&#8377;{formatPrice(pricing.baseNightlyTotal)}</span>
                 </div>
+                {pricing.mealPlan && (<div className="flex justify-between text-charcoal/70">
+                    <span>
+                      {pricing.mealPlanLabel} &#8377;{formatPrice(pricing.mealSupplementPerNight)} × {pricing.nights} night{pricing.nights > 1 ? "s" : ""}
+                      <span className="block text-xs text-charcoal/50">{pricing.mealPlanIncludes}</span>
+                    </span>
+                    <span>&#8377;{formatPrice(pricing.mealSupplementTotal)}</span>
+                  </div>)}
 
                 {pricing.extraGuestLines?.map((line) => (<div key={line.key} className="flex justify-between text-charcoal/70">
                     <span>
@@ -594,12 +651,18 @@ export function CheckoutForm({ slug, roomId, roomName, defaultCheckIn, defaultCh
         {mobilePriceExpanded && pricing && (<div id="mobile-price-breakdown" className="border-b border-border bg-warm-beige/40 px-4 py-3">
             <div className="space-y-2 font-body text-sm">
               <div className="flex justify-between text-charcoal/70">
-                <span>
-                  &#8377;{formatPrice(pricing.pricePerNight)} × {pricing.nights}{" "}
-                  night{pricing.nights > 1 ? "s" : ""}
-                </span>
-                <span>&#8377;{formatPrice(pricing.baseNightlyTotal)}</span>
-              </div>
+                  <span>
+                    Room rate &#8377;{formatPrice(pricing.pricePerNight)} × {pricing.nights} night{pricing.nights > 1 ? "s" : ""}
+                  </span>
+                  <span>&#8377;{formatPrice(pricing.baseNightlyTotal)}</span>
+                </div>
+                {pricing.mealPlan && (<div className="flex justify-between text-charcoal/70">
+                    <span>
+                      {pricing.mealPlanLabel} &#8377;{formatPrice(pricing.mealSupplementPerNight)} × {pricing.nights} night{pricing.nights > 1 ? "s" : ""}
+                      <span className="block text-xs text-charcoal/50">{pricing.mealPlanIncludes}</span>
+                    </span>
+                    <span>&#8377;{formatPrice(pricing.mealSupplementTotal)}</span>
+                  </div>)}
               {pricing.extraGuestLines?.map((line) => (<div key={line.key} className="flex justify-between text-charcoal/70">
                   <span>{line.label} × {line.qty}</span>
                   <span>&#8377;{formatPrice(line.amount)}</span>

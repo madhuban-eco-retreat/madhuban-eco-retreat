@@ -18,9 +18,12 @@
  * The slab boundary, in rupees, on the EFFECTIVE per-night room value.
  *
  * Effective value — not the catalogue tariff. It is what the night is actually
- * being sold for: seasonal base, less the long-stay discount if the night
- * qualifies, plus that night's extra-person and bedding charges. A ₹7,500 tent
- * with one extra adult is a ₹9,500 night and is taxed as one.
+ * being sold for: seasonal room rent, less the long-stay discount if the night
+ * qualifies, plus the meal-plan supplement the rate includes, plus that
+ * night's extra-person and bedding charges. Since the 2026-27 tariff every
+ * published rate is a meal-inclusive package (MAP or AP), so the meals are part
+ * of the value the slab is read from: a Glamping Tent is a ₹8,700 night on MAP,
+ * not a ₹7,500 one, and is taxed as such.
  */
 export const GST_THRESHOLD = 7500;
 
@@ -30,15 +33,35 @@ export const GST_RATE_LOW = 5;
 /** Slab above the threshold. */
 export const GST_RATE_HIGH = 18;
 
+/**
+ * Which value the slab is read from when a night has been discounted.
+ *
+ * false (the engine's long-standing behaviour): the slab follows what the guest
+ * is actually charged for the night — AFTER the long-stay discount and any
+ * coupon. A Glamping Tent on MAP is ₹8,700 (18%) on a single night and ₹7,200
+ * (5%) per night on a 2-night stay.
+ *
+ * true: the slab follows the declared tariff BEFORE any discount, so a discount
+ * never moves a night to a lower slab and a Glamping Tent stays 18% at ₹7,200.
+ * GST law reads the threshold on the declared tariff "without excluding any
+ * discount", so this is the setting to use if the property's accountant says
+ * the post-discount reading does not hold. It is a single switch on purpose:
+ * the tax basis is a decision for the accountant, not for the price list.
+ */
+export const GST_SLAB_ON_PRE_DISCOUNT_VALUE = false;
+
 /* ── Room tariffs ─────────────────────────────────────────────────────────── */
 
 /**
- * Base nightly rate per room, double occupancy, pre-GST.
+ * Room rent per night, double occupancy, pre-GST, EXCLUDING meals.
  *
- * Keyed by the slug the rooms table stores, which is also the /book/[slug]
- * route. These are the REGULAR-season rates; the peak figure is always this
- * times PEAK_SURCHARGE_RATE and is never stored separately, so the two can
- * never drift apart.
+ * Keyed by the slug the rooms table stores (rooms.base_price_per_night), which
+ * is also the /book/[slug] route. These are the REGULAR-season figures. The
+ * published tariff is built from them — regular = rent + meal supplement, peak
+ * = rent x PEAK_SURCHARGE_RATE + meal supplement, 2+ nights = rent x 0.8 + meal
+ * supplement — and none of those is stored separately, so the sheet can never
+ * drift from what the engine charges. The 2026-27 tariff sheet reconciles to
+ * these numbers exactly (Mud House Standard: 9,000 + 1,200 MAP = 10,200).
  */
 export const BASE_NIGHTLY_RATES = {
   "mud-house-standard": 9000,
@@ -56,6 +79,44 @@ export const ROOM_CATEGORIES = [
   { slug: "safari-tent", label: "Safari Tent" },
   { slug: "pool-side-villa", label: "Poolside Villa" },
 ];
+
+/* ── Meal plans ───────────────────────────────────────────────────────────── */
+
+/**
+ * Every published rate is a meal-inclusive package for two guests.
+ *
+ * The supplement is what the plan adds to the room rent per night for the two
+ * guests the rate covers. It is a flat amount: it is not marked up in peak
+ * season and it is not part of the room rent the long-stay discount comes off —
+ * "20% off on room rent" means the rent, not the food. Worked from the sheet:
+ * Mud House Standard MAP 10,200 = 9,000 + 1,200; AP 11,200 = 9,000 + 2,200.
+ */
+export const MEAL_PLANS = {
+  MAP: {
+    code: "MAP",
+    label: "MAP Plan",
+    includes: "Breakfast, lunch/dinner",
+    supplementPerNight: 1200,
+  },
+  AP: {
+    code: "AP",
+    label: "AP Plan",
+    includes: "Breakfast, lunch and dinner",
+    supplementPerNight: 2200,
+  },
+};
+
+/** Plan codes in the order the tariff lists them. */
+export const MEAL_PLAN_CODES = ["MAP", "AP"];
+
+/** The plan a booking is priced on when the guest does not choose one. */
+export const DEFAULT_MEAL_PLAN = "MAP";
+
+/* ── Season dates the tariff sheet is valid for ───────────────────────────── */
+
+export const TARIFF_LABEL = "2026-27";
+export const TARIFF_VALID_FROM = "2026-07-01";
+export const TARIFF_VALID_TO = "2027-06-30";
 
 /* ── Seasons ──────────────────────────────────────────────────────────────── */
 
@@ -95,16 +156,42 @@ export const TARIFF_PEAK_DISPLAY_YEAR = 2026;
 const pad = (n) => String(n).padStart(2, "0");
 
 /**
+ * Notified long weekends, as concrete dated ranges.
+ *
+ * !! THESE MUST BE UPDATED EVERY YEAR. !!
+ *
+ * Unlike Christmas, these are lunar-calendar festivals: Dussehra, Diwali and
+ * Holi land on different Gregorian dates each year, so they CANNOT be matched
+ * by month/day the way the 21 Dec - 04 Jan window is. They are written out as
+ * explicit dated ranges and simply stop applying once their year passes — which
+ * fails safe for the guest (they are charged the regular rate) but quietly
+ * costs the property money, so refresh this when the next year's tariff sheet
+ * names the new dates.
+ *
+ * `start` and `end` are both INCLUSIVE stayed nights. The 2026-27 sheet lists:
+ * Dussehra 17-20 October 2026, Diwali 06-14 November 2026, Holi 19-22 March
+ * 2027 (Holi/Rangwali falls on Monday 22 March, so the Friday-to-Monday weekend
+ * around it).
+ */
+export const LONG_WEEKEND_PERIODS = [
+  { label: "Dussehra", start: "2026-10-17", end: "2026-10-20" },
+  { label: "Diwali", start: "2026-11-06", end: "2026-11-14" },
+  { label: "Holi", start: "2027-03-19", end: "2027-03-22" },
+];
+
+/**
  * Peak periods as concrete dated ranges, evaluated PER NIGHT.
  *
- * Long weekends are deliberately absent. Dussehra, Diwali and Holi were peak
- * on an earlier rate card and are not any more: the only nights that carry the
- * surcharge, and the only nights the long-stay discount is withheld from, are
- * the Christmas–New Year ones. Adding a festival back means adding it here.
+ * The 2026-27 tariff sheet has one peak column, "Peak Season / Long Weekends
+ * (+20%)", covering Christmas / New Year AND the notified long weekends. Both
+ * are marked up by PEAK_SURCHARGE_RATE on the room rent and both withhold the
+ * 2+ night offer. (An earlier rate card treated the festivals as a middle tier
+ * — regular rate, no discount — and this list held Christmas alone; the current
+ * sheet retires that tier.)
  *
- * The one entry is derived from RECURRING_PEAK_MONTH_DAYS rather than written
- * out again, so the dates the tariff page publishes and the dates the engine
- * charges cannot disagree — editing the month/day above moves both.
+ * The Christmas entry is derived from RECURRING_PEAK_MONTH_DAYS rather than
+ * written out again, so the dates the tariff page publishes and the dates the
+ * engine charges cannot disagree.
  */
 export const PEAK_PERIODS = [
   {
@@ -116,36 +203,20 @@ export const PEAK_PERIODS = [
       RECURRING_PEAK_MONTH_DAYS.to.day,
     )}`,
   },
+  ...LONG_WEEKEND_PERIODS,
 ];
 
 /**
- * Festival and long-weekend dates: regular rate, but no long-stay discount.
+ * Dates that are sold at the REGULAR rate but still withhold the long-stay
+ * discount.
  *
- * The middle tier of three. A night here is sold at the plain tariff — the
- * +20% surcharge is exclusive to PEAK_PERIODS and never applies to these — but
- * the 2+ night discount is withheld, because these are the dates the property
- * fills at full rate without having to discount for length of stay.
- *
- * !! THESE MUST BE UPDATED EVERY YEAR. !!
- *
- * Unlike Christmas, these are lunar-calendar festivals: Dussehra, Diwali and
- * Holi land on different Gregorian dates each year, so they CANNOT be matched
- * by month/day the way the 21 Dec - 04 Jan window is. They are written out as
- * explicit dated ranges and simply stop applying once their year passes —
- * which fails safe (a guest gets the discount) rather than withholding a
- * discount on the wrong dates, but it does mean a stale list quietly costs the
- * property money. Refresh this when the next year's festival calendar is out.
- *
- * `start` and `end` are both INCLUSIVE stayed nights, the same convention
- * PEAK_PERIODS uses.
+ * Empty on the 2026-27 sheet: every date that loses the 2+ night offer is now
+ * also a peak date, so peak alone explains it. The mechanism is kept — the
+ * engine and the invoice reconstruction both consult it — so a future sheet
+ * that reintroduces a "regular price, no discount" tier is a list entry here
+ * and not an engine change.
  */
-export const DISCOUNT_BLACKOUT_PERIODS = [
-  // 2026-27. Holi 2027 (Rangwali) falls on Monday 22 March, so 19-22 is the
-  // Friday-to-Monday weekend around it.
-  { label: "Dussehra", start: "2026-10-17", end: "2026-10-20" },
-  { label: "Diwali", start: "2026-11-06", end: "2026-11-14" },
-  { label: "Holi", start: "2027-03-19", end: "2027-03-22" },
-];
+export const DISCOUNT_BLACKOUT_PERIODS = [];
 
 /* ── Long-stay discount ───────────────────────────────────────────────────── */
 
@@ -171,14 +242,32 @@ export const LONG_STAY_DISCOUNT_ON_PEAK_NIGHTS = false;
 
 /* ── Extra person / bedding, per night, pre-GST ───────────────────────────── */
 
+/**
+ * Additional-guest tariff, per person per night, by meal plan.
+ *
+ * The sheet prices an extra guest with the meals they eat, so the rate follows
+ * the plan the room is booked on: an extra adult is ₹2,600 on MAP and ₹3,200 on
+ * AP; a child (5-12) is ₹1,800 on MAP and ₹2,100 on AP. An extra bed for any age
+ * is charged at the adult rate of the plan.
+ */
+export const EXTRA_GUEST_RATES = {
+  MAP: { adult: 2600, child: 1800 },
+  AP: { adult: 3200, child: 2100 },
+};
+
+/**
+ * The extra-guest rates in force before the 2026-27 sheet: bedding only, no
+ * meals, whatever the plan.
+ *
+ * Not used to price anything new. Bookings taken before the meal-plan tariff
+ * carry no plan, and an invoice raised for one of them rebuilds its extra-guest
+ * lines from the headcount — at the rate the guest was actually charged, not at
+ * today's. See extraGuestRatesFor.
+ */
+export const LEGACY_EXTRA_GUEST_RATES = { adult: 2000, child: 1500 };
+
 /** Under-5s stay free; counted for headcount only. */
 export const INFANT_RATE = 0;
-
-/** Ages 5–12. */
-export const CHILD_RATE = 1500;
-
-/** Over 12, or an extra bed for any age. */
-export const EXTRA_ADULT_RATE = 2000;
 
 /** Upper age of a free infant, inclusive. */
 export const INFANT_MAX_AGE = 5;
@@ -244,12 +333,25 @@ export const DEFAULT_ADULTS_INCLUDED = 2;
 export const DEFAULT_MAX_ADULTS = 3;
 
 /**
- * Per-room occupancy overrides, keyed by slug. The Pool Side Villa is let
- * whole at a family rate that already covers four.
+ * Per-room occupancy overrides, keyed by slug.
+ *
+ * The 2026-27 sheet quotes every room, the Poolside Villa included, "per room
+ * per night on double occupancy", with additional guests charged at the
+ * additional-guest tariff. The villa therefore includes two adults like the
+ * rest; only its ceiling differs, because it is a whole villa that sleeps more.
+ * (Before the sheet it was let at a family rate that covered four — if that is
+ * still how it should sell, this is the one line to change.)
  */
 export const ROOM_OCCUPANCY_OVERRIDES = {
-  "pool-side-villa": { adultsIncluded: 4, maxAdults: 6 },
+  "pool-side-villa": { adultsIncluded: 2, maxAdults: 6 },
 };
 
 export const MAX_CHILDREN = 2;
-export const MAX_INFANTS = 2;
+
+/**
+ * Children under 5 who stay free: one, per the 2026-27 sheet ("One child below
+ * 5 years is complimentary, sharing the room with parents without extra bed").
+ * A second under-5 is not covered by that line, so a party with one is booked
+ * with the extra child charged at the child rate.
+ */
+export const MAX_INFANTS = 1;

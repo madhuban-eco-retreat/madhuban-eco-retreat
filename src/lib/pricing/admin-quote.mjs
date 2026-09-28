@@ -11,7 +11,7 @@
  */
 
 import { computeStayQuote, roundTo2 } from "./quote.mjs";
-import { ADDON_GST_FOLLOWS_ROOM_SLAB, GST_RATE_HIGH } from "./config.mjs";
+import { ADDON_GST_FOLLOWS_ROOM_SLAB, GST_RATE_HIGH, DEFAULT_MEAL_PLAN } from "./config.mjs";
 
 /**
  * Add-on lines for a stay. `unit` of "per night" multiplies by nights; every
@@ -48,6 +48,7 @@ export function computeAdminQuote({
   children = 0,
   extraBeds = 0,
   addons = [],
+  mealPlan = DEFAULT_MEAL_PLAN,
 }) {
   const quote = computeStayQuote({
     baseNightlyRate,
@@ -57,6 +58,7 @@ export function computeAdminQuote({
     adults,
     children,
     extraBeds,
+    mealPlan,
   });
 
   const addonsBreakdown = addonLines(addons, quote.nights);

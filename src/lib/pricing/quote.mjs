@@ -10,13 +10,14 @@
  * The sequence, per night, is the whole point:
  *
  *   1. classify the night — peak or regular, on its OWN date
- *   2. seasonal base   = base rate x (peak ? +20% : 1)
- *   3. long-stay cut   = 20% off, but only on a regular night of a 2+ stay
- *   4. extras          = extra adults / children / beds, per night
- *   5. effective value = (2 - 3) + 4          <- what the guest is charged
- *   6. GST slab        = decided by (5), not by the catalogue tariff
+ *   2. seasonal rent   = room rent x (peak ? +20% : 1)
+ *   3. long-stay cut   = 20% off the RENT, but only on a regular night of a 2+ stay
+ *   4. meals           = the meal-plan supplement (flat: never marked up, never cut)
+ *   5. extras          = extra adults / children / beds, per night, at the plan's rate
+ *   6. effective value = (2 - 3) + 4 + 5      <- what the guest is charged
+ *   7. GST slab        = decided by (6), not by the catalogue tariff
  *
- * Step 6 after step 5 is the fix. The previous implementation picked the slab
+ * Step 7 after step 6 is the fix. The previous implementation picked the slab
  * from rooms.base_price_per_night before any of steps 2-4 ran, so a Rs 7,500
  * tent stayed on the 5% slab whether it was sold at Rs 7,500, Rs 9,000 on a
  * peak night, or Rs 9,500 with a third adult in it — under-collecting GST on
@@ -27,6 +28,7 @@ import {
   GST_THRESHOLD,
   GST_RATE_LOW,
   GST_RATE_HIGH,
+  GST_SLAB_ON_PRE_DISCOUNT_VALUE,
   PEAK_SURCHARGE_RATE,
   PEAK_PERIODS,
   RECURRING_PEAK_MONTH_DAYS,
@@ -34,8 +36,10 @@ import {
   LONG_STAY_DISCOUNT_RATE,
   LONG_STAY_MIN_NIGHTS,
   LONG_STAY_DISCOUNT_ON_PEAK_NIGHTS,
-  CHILD_RATE,
-  EXTRA_ADULT_RATE,
+  MEAL_PLANS,
+  DEFAULT_MEAL_PLAN,
+  EXTRA_GUEST_RATES,
+  LEGACY_EXTRA_GUEST_RATES,
   DEFAULT_ADULTS_INCLUDED,
   DEFAULT_MAX_ADULTS,
   ROOM_OCCUPANCY_OVERRIDES,
@@ -202,6 +206,38 @@ export function maxAdultsFor(roomSlug) {
   return ROOM_OCCUPANCY_OVERRIDES[roomSlug]?.maxAdults ?? DEFAULT_MAX_ADULTS;
 }
 
+/* -- meal plan ------------------------------------------------------------ */
+
+/**
+ * Validates a meal plan and returns it, or null for the legacy regime.
+ *
+ * `undefined` is not the same as `null` and callers rely on it: an omitted plan
+ * means "price it on the current tariff" (the default plan), while an explicit
+ * `null` means "this booking predates the meal-plan tariff" — no supplement and
+ * the old bedding-only extra-guest rates. That is what lets an invoice for an
+ * old booking be rebuilt at the figures the guest was actually charged.
+ */
+export function resolveMealPlan(plan) {
+  if (plan === undefined) return DEFAULT_MEAL_PLAN;
+  if (plan === null) return null;
+  if (!Object.prototype.hasOwnProperty.call(MEAL_PLANS, plan)) {
+    throw new Error(`Unknown meal plan: ${plan}`);
+  }
+  return plan;
+}
+
+/** The flat per-night supplement a plan adds for the two guests the rate covers. */
+export function mealSupplementPerNight(plan) {
+  const resolved = resolveMealPlan(plan);
+  return resolved ? MEAL_PLANS[resolved].supplementPerNight : 0;
+}
+
+/** Extra-adult and child rates per night for a plan (legacy rates for null). */
+export function extraGuestRatesFor(plan) {
+  const resolved = resolveMealPlan(plan);
+  return resolved ? EXTRA_GUEST_RATES[resolved] : LEGACY_EXTRA_GUEST_RATES;
+}
+
 /**
  * Per-night extra-occupant charge, as lines plus a total.
  *
@@ -210,9 +246,16 @@ export function maxAdultsFor(roomSlug) {
  * are absent by construction — they are free, and a zero line on an invoice
  * invites the question of why it is there.
  */
-export function extraPersonChargesPerNight({ adults = 0, children = 0, extraBeds = 0, roomSlug }) {
+export function extraPersonChargesPerNight({
+  adults = 0,
+  children = 0,
+  extraBeds = 0,
+  roomSlug,
+  mealPlan = DEFAULT_MEAL_PLAN,
+}) {
   const included = adultsIncludedFor(roomSlug);
   const extraAdults = Math.max(0, adults - included);
+  const rates = extraGuestRatesFor(mealPlan);
   const lines = [];
 
   if (extraAdults > 0) {
@@ -220,8 +263,8 @@ export function extraPersonChargesPerNight({ adults = 0, children = 0, extraBeds
       key: "extra_adult",
       label: "Extra adult",
       qty: extraAdults,
-      ratePerNight: EXTRA_ADULT_RATE,
-      amountPerNight: roundTo2(extraAdults * EXTRA_ADULT_RATE),
+      ratePerNight: rates.adult,
+      amountPerNight: roundTo2(extraAdults * rates.adult),
     });
   }
   if (children > 0) {
@@ -229,8 +272,8 @@ export function extraPersonChargesPerNight({ adults = 0, children = 0, extraBeds
       key: "child",
       label: "Child (5-12 yrs)",
       qty: children,
-      ratePerNight: CHILD_RATE,
-      amountPerNight: roundTo2(children * CHILD_RATE),
+      ratePerNight: rates.child,
+      amountPerNight: roundTo2(children * rates.child),
     });
   }
   if (extraBeds > 0) {
@@ -238,8 +281,8 @@ export function extraPersonChargesPerNight({ adults = 0, children = 0, extraBeds
       key: "extra_bed",
       label: "Extra bedding",
       qty: extraBeds,
-      ratePerNight: EXTRA_ADULT_RATE,
-      amountPerNight: roundTo2(extraBeds * EXTRA_ADULT_RATE),
+      ratePerNight: rates.adult,
+      amountPerNight: roundTo2(extraBeds * rates.adult),
     });
   }
 
@@ -252,9 +295,15 @@ export function extraPersonChargesPerNight({ adults = 0, children = 0, extraBeds
 /**
  * Prices one stay.
  *
- * baseNightlyRate is the regular-season, double-occupancy, pre-GST tariff —
- * the figure the rooms table stores and the tariff table advertises. Peak
+ * baseNightlyRate is the regular-season, double-occupancy, pre-GST ROOM RENT —
+ * the figure the rooms table stores, excluding meals. The published rate is that
+ * rent plus the meal-plan supplement, which is added here from `mealPlan`. Peak
  * pricing is derived here rather than passed in, so no caller can forget it.
+ *
+ * mealPlan: "MAP" or "AP" for the current tariff (omitted means the default
+ * plan); an explicit null prices a booking under the pre-2026-27 regime — no
+ * meal supplement, bedding-only extra-guest rates — for reconstructing what an
+ * old booking was actually charged.
  *
  * peakMultiplierOverride exists for the admin pricing_rules table, which can
  * mark a date range up beyond the standard +20%. It only ever raises the
@@ -283,12 +332,22 @@ export function computeStayQuote({
   roomSlug,
   couponDiscount = 0,
   peakMultiplierOverride = 1,
+  mealPlan = DEFAULT_MEAL_PLAN,
+  slabOnPreDiscountValue = GST_SLAB_ON_PRE_DISCOUNT_VALUE,
 }) {
   const nightDates = stayNights(checkIn, checkOut);
   const nights = nightDates.length;
   if (nights < 1) throw new Error("Check-out must be after check-in");
 
-  const extras = extraPersonChargesPerNight({ adults, children, extraBeds, roomSlug });
+  const plan = resolveMealPlan(mealPlan);
+  const mealSupplement = mealSupplementPerNight(plan);
+  const extras = extraPersonChargesPerNight({
+    adults,
+    children,
+    extraBeds,
+    roomSlug,
+    mealPlan: plan,
+  });
   const stayQualifiesForLongStay = nights >= LONG_STAY_MIN_NIGHTS;
 
   // Pass 1 — season, surcharge and the long-stay cut, night by night. The
@@ -346,22 +405,31 @@ export function computeStayQuote({
     return share;
   });
 
-  // Pass 2 — extras, effective value, and only now the slab.
+  // Pass 2 — meals, extras, effective value, and only now the slab.
   const nightLines = draft.map((n, i) => {
     const couponShare = couponPerNight[i];
     const roomValue = roundTo2(n.roomRentAfterLongStay - couponShare);
-    const effectiveValue = roundTo2(roomValue + extras.total);
-    const gstRate = gstRateForEffectiveValue(effectiveValue);
+    const effectiveValue = roundTo2(roomValue + mealSupplement + extras.total);
+    // The slab is normally read from what the night was charged. With
+    // slabOnPreDiscountValue (default: GST_SLAB_ON_PRE_DISCOUNT_VALUE) the
+    // discounts are added back first, so no discount can move a night to a
+    // lower slab.
+    const slabValue = slabOnPreDiscountValue
+      ? roundTo2(effectiveValue + n.longStayDiscount + couponShare)
+      : effectiveValue;
+    const gstRate = gstRateForEffectiveValue(slabValue);
     const gstAmount = roundTo2((effectiveValue * gstRate) / 100);
 
     return {
       ...n,
       couponDiscount: couponShare,
+      mealSupplement,
       extraPersonCharges: extras.total,
       roomValue,
       // The number the slab is read from, surfaced so an invoice or a test can
       // assert on it instead of re-deriving it.
       effectiveValue,
+      slabValue,
       gstRate,
       gstAmount,
       totalWithGst: roundTo2(effectiveValue + gstAmount),
@@ -374,6 +442,7 @@ export function computeStayQuote({
   const longStayDiscountTotal = sum((n) => n.longStayDiscount);
   const couponDiscountTotal = sum((n) => n.couponDiscount);
   const extraPersonTotal = sum((n) => n.extraPersonCharges);
+  const mealSupplementTotal = sum((n) => n.mealSupplement);
   const taxableAmount = sum((n) => n.effectiveValue);
   const totalGst = sum((n) => n.gstAmount);
 
@@ -402,6 +471,13 @@ export function computeStayQuote({
     extraGuestLines: extras.lines,
     extraPersonPerNight: extras.total,
 
+    /** "MAP" | "AP", or null for a booking priced under the legacy regime. */
+    mealPlan: plan,
+    mealPlanLabel: plan ? MEAL_PLANS[plan].label : null,
+    mealPlanIncludes: plan ? MEAL_PLANS[plan].includes : null,
+    mealSupplementPerNight: mealSupplement,
+    mealSupplementTotal,
+
     nightLines,
 
     peakNights,
@@ -416,6 +492,7 @@ export function computeStayQuote({
     discountEligibleNights: nightLines.filter((n) => n.longStayDiscountApplied).length,
 
     baseNightlyRate: roundTo2(baseNightlyRate),
+    /** Room rent for the stay after the peak surcharge — meals excluded. */
     seasonalBaseTotal,
     longStayDiscountTotal,
     longStayDiscountApplied: longStayDiscountTotal > 0,

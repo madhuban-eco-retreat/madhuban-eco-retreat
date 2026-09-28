@@ -21,8 +21,13 @@ import {
   GST_THRESHOLD,
   GST_RATE_LOW,
   GST_RATE_HIGH,
-  PEAK_SURCHARGE_RATE,
+  BASE_NIGHTLY_RATES,
+  MEAL_PLANS,
+  MEAL_PLAN_CODES,
+  EXTRA_GUEST_RATES,
+  LONG_STAY_MIN_NIGHTS,
 } from "@/lib/pricing/config.mjs";
+import { regularRate, peakRate, longStayRate, formatInr } from "@/lib/pricing/rate-card.mjs";
 
 const getAccommodation = (slug) => {
   return accommodationsData.find((acc) => acc.slug === slug);
@@ -194,12 +199,68 @@ const AccommodationDetail = () => {
                     </h3>
 
                     {accommodation.bookingOptions.map((bookOpt, i) => {
+                      // Rooms on the tariff sheet are sold as room rate + meal
+                      // plan = fare. The camping tent is not on the sheet and keeps
+                      // its own per-person price.
+                      if (bookOpt.tariffSlug) {
+                        const slugKey = bookOpt.tariffSlug;
+                        const rent = BASE_NIGHTLY_RATES[slugKey];
+                        return (
+                          <div key={i} className="w-full space-y-3">
+                            <p className="text-sm md:text-base font-bold text-primary-gray2">
+                              • {bookOpt.optionName}
+                              {bookOpt.optionDetail ? (
+                                <span className="font-normal text-xs md:text-sm">
+                                  {" "}
+                                  {bookOpt.optionDetail}
+                                </span>
+                              ) : null}
+                            </p>
+                            <p className="text-xs text-earth-brown">
+                              Room rate {formatInr(rent)} per night + meal plan = your fare
+                              (regular season, two guests)
+                            </p>
+                            {MEAL_PLAN_CODES.map((code) => (
+                              <div
+                                key={code}
+                                className="flex items-center justify-between gap-3 rounded-2xl bg-earth-brown px-4 py-3 text-white"
+                              >
+                                <div className="text-left">
+                                  <span className="block text-sm font-bold">
+                                    {MEAL_PLANS[code].label}
+                                  </span>
+                                  <span className="block text-xs opacity-90">
+                                    {MEAL_PLANS[code].includes}
+                                  </span>
+                                  <span className="block text-xs opacity-90">
+                                    {formatInr(rent)} + {formatInr(MEAL_PLANS[code].supplementPerNight)} meals
+                                  </span>
+                                </div>
+                                <div className="text-right">
+                                  <span className="block text-base font-bold">
+                                    {formatInr(regularRate(slugKey, code))}
+                                  </span>
+                                  <span className="block text-xs">per night</span>
+                                </div>
+                              </div>
+                            ))}
+                            <p className="text-xs font-medium text-earth-brown">
+                              Peak season &amp; long weekends: MAP {formatInr(peakRate(slugKey, "MAP"))} · AP{" "}
+                              {formatInr(peakRate(slugKey, "AP"))}
+                            </p>
+                            <p className="text-xs font-medium text-earth-brown">
+                              {LONG_STAY_MIN_NIGHTS}+ nights: MAP {formatInr(longStayRate(slugKey, "MAP"))} · AP{" "}
+                              {formatInr(longStayRate(slugKey, "AP"))} per night
+                            </p>
+                            <p className="text-xs text-earth-brown/80">
+                              + GST as applicable ({GST_RATE_LOW}% up to {formatInr(GST_THRESHOLD)} a
+                              night, {GST_RATE_HIGH}% above)
+                            </p>
+                          </div>
+                        );
+                      }
                       const priceNum = parsePrice(bookOpt.price);
                       const gstRate = getGstRate(priceNum);
-                      const isPerNight = /night/i.test(bookOpt.rateUnit || "");
-                      const peak = isPerNight
-                        ? Math.round(priceNum * PEAK_SURCHARGE_RATE)
-                        : null;
                       return (
                         <div
                           key={i}
@@ -220,9 +281,6 @@ const AccommodationDetail = () => {
                             </div>
                             <p className="text-xs font-medium text-earth-brown text-right">
                               + {gstRate}% GST
-                              {peak
-                                ? ` | Peak Season: Rs. ${formatINR(peak)}`
-                                : ""}
                             </p>
                           </div>
                         </div>
@@ -243,8 +301,8 @@ const AccommodationDetail = () => {
                             <strong>2+ nights stay — flat 20% off on room rent</strong>
                             <br />
                             <span className="text-xs">
-                              (excludes peak season, Christmas/New Year &amp; long
-                              weekends)
+                              (meal plan not discounted; not available in peak
+                              season, Christmas/New Year &amp; long weekends)
                             </span>
                           </span>
                         </p>
@@ -256,17 +314,25 @@ const AccommodationDetail = () => {
                         </p>
                         <ul className="text-sm text-earth-brown">
                           <li className="flex justify-between border-b border-earth-brown/10 py-1">
-                            <span>Infant (up to 5 yrs)</span>
+                            <span>One child under 5 yrs</span>
                             <span className="font-medium">Free</span>
                           </li>
-                          <li className="flex justify-between border-b border-earth-brown/10 py-1">
-                            <span>Child (5–12 yrs)</span>
-                            <span className="font-medium">₹1,500 / night</span>
-                          </li>
-                          <li className="flex justify-between border-b border-earth-brown/10 py-1">
-                            <span>Adult (above 12 yrs)</span>
-                            <span className="font-medium">₹2,000 / night</span>
-                          </li>
+                          {MEAL_PLAN_CODES.map((code) => (
+                            <React.Fragment key={code}>
+                              <li className="flex justify-between border-b border-earth-brown/10 py-1">
+                                <span>Child 5–12 yrs ({code})</span>
+                                <span className="font-medium">
+                                  {formatInr(EXTRA_GUEST_RATES[code].child)} / night
+                                </span>
+                              </li>
+                              <li className="flex justify-between border-b border-earth-brown/10 py-1">
+                                <span>Adult above 12 yrs ({code})</span>
+                                <span className="font-medium">
+                                  {formatInr(EXTRA_GUEST_RATES[code].adult)} / night
+                                </span>
+                              </li>
+                            </React.Fragment>
+                          ))}
                         </ul>
                         <p className="text-xs text-earth-brown/80 mt-1">
                           GST extra on above charges

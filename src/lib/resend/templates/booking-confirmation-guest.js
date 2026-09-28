@@ -51,6 +51,7 @@ export function bookingConfirmationGuestEmail(data) {
               ${row("Check-out", formatDate(data.checkOut))}
               ${row("Duration", `${data.nights} night${data.nights !== 1 ? "s" : ""}`)}
               ${row("Guests", `${data.adults} adult${data.adults !== 1 ? "s" : ""}${data.children > 0 ? `, ${data.children} child${data.children !== 1 ? "ren" : ""}` : ""}`)}
+              ${data.mealPlanLabel ? row("Meal plan", `${escapeHtml(data.mealPlanLabel)}${data.mealPlanIncludes ? ` — ${escapeHtml(data.mealPlanIncludes)}` : ""}`) : ""}
               ${data.specialRequests ? row("Special requests", `<span style="white-space:pre-wrap;">${escapeHtml(data.specialRequests)}</span>`) : ""}
             </table>
 

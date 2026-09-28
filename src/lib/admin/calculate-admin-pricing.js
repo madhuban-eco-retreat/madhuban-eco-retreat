@@ -1,6 +1,7 @@
 import "server-only";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { computeAdminQuote } from "@/lib/pricing/admin-quote.mjs";
+import { planForRoom } from "@/lib/booking/meal-plan";
 
 /**
  * Authoritative pricing for an admin-created booking.
@@ -13,7 +14,7 @@ import { computeAdminQuote } from "@/lib/pricing/admin-quote.mjs";
  * at the wrong slab on top of it.
  */
 export async function calculateAdminPricing(params) {
-    const { roomId, checkIn, checkOut, adults = 2, children = 0, extraBeds = 0, addons } = params;
+    const { roomId, checkIn, checkOut, adults = 2, children = 0, extraBeds = 0, addons, mealPlan } = params;
     const supabase = createAdminClient();
     const { data: room, error } = await supabase
         .from("rooms")
@@ -32,6 +33,8 @@ export async function calculateAdminPricing(params) {
         children,
         extraBeds,
         addons,
+        // Null for a room that is not on the tariff sheet (camping).
+        mealPlan: planForRoom(room.slug, mealPlan),
     });
 
     return {

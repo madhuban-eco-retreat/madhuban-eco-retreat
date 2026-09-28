@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { isInterStateGuest, computeTaxBreakdown, getFinancialYear, HSN_ACCOMMODATION } from "@/lib/gst";
-import { gstRateForEffectiveValue } from "@/lib/pricing/quote.mjs";
+import { gstRateForEffectiveValue, mealSupplementPerNight } from "@/lib/pricing/quote.mjs";
+import { MEAL_PLANS, GST_SLAB_ON_PRE_DISCOUNT_VALUE } from "@/lib/pricing/config.mjs";
+import { resolveBookingMealPlan } from "@/lib/booking/meal-plan";
 import { extraGuestCharges } from "@/lib/booking/occupancy";
 import { calculateMultiNightDiscount, MULTI_NIGHT_DISCOUNT_RATE } from "@/lib/booking/pricing";
 import { assertAdmin } from "@/lib/admin/auth";
@@ -77,11 +79,20 @@ export async function POST(req) {
     const checkoutLabel = checkoutDate.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
     // Build line items — amounts are pre-GST, matching how rooms are tariffed.
     const addons = (Array.isArray(booking.addons) ? booking.addons : []);
+    // A "per night" add-on is charged for every night; any other unit is a
+    // one-off. This is the rule the admin quote prices with, so the invoice
+    // states what the booking was actually charged.
+    const addonMultiplier = (a) => (a.unit === "per night" ? nights : 1);
+    const addonAmount = (a) => roundTo2(Number(a.price ?? 0) * Number(a.qty ?? 0) * addonMultiplier(a));
     // Add-ons are a separate supply and are not part of the room's per-night
     // value, so they are held aside when the slab is read off the folio.
-    const addonsTaxable = roundTo2(
-        addons.reduce((s, a) => s + Number(a.price ?? 0) * Number(a.qty ?? 0), 0),
-    );
+    const addonsTaxable = roundTo2(addons.reduce((s, a) => s + addonAmount(a), 0));
+    // The meal plan the booking was sold on. null means it predates the
+    // meal-plan tariff: no meal supplement and the bedding-only extra-guest
+    // rates it was actually charged, so an invoice raised now reproduces it.
+    const mealPlan = resolveBookingMealPlan(booking);
+    const mealPerNight = mealSupplementPerNight(mealPlan);
+    const mealTotal = roundTo2(mealPerNight * nights);
     // Extra occupants are charged on the booking but are not addon rows, so they
     // are reconstructed from the stored headcount. Without these the invoice
     // total would fall short of what the guest actually paid.
@@ -93,6 +104,7 @@ export async function POST(req) {
         children: booking.num_children ?? 0,
         nights,
         roomSlug: room.slug,
+        mealPlan,
     });
     // The booking row, not the room catalogue, is what the guest was actually
     // charged. base_amount is stored NET of discount_amount, so the gross room
@@ -104,7 +116,12 @@ export async function POST(req) {
     // columns do not add up, falls back to the catalogue rate.
     const storedBase = Number(booking.base_amount ?? 0);
     const storedDiscount = Math.max(0, Number(booking.discount_amount ?? 0));
-    const derivedRoomTotal = roundTo2(storedBase + storedDiscount - extras.total);
+    // base_amount is the whole pre-GST charge: room rent, meals, extra guests and
+    // any add-ons, net of discount. Taking meals and add-ons back out leaves the
+    // gross room RENT, which is what the rent line and the long-stay discount are
+    // both measured against. (Add-ons were not taken out before, so an admin
+    // booking with add-ons was invoiced for them twice.)
+    const derivedRoomTotal = roundTo2(storedBase + storedDiscount - extras.total - mealTotal - addonsTaxable);
     const roomTotal = Number.isFinite(derivedRoomTotal) && derivedRoomTotal > 0
         ? derivedRoomTotal
         : roundTo2(room.base_price_per_night * nights);
@@ -162,6 +179,15 @@ export async function POST(req) {
             rate: nightlyRate,
             amount: roomTotal,
         },
+        ...(mealTotal > 0
+            ? [{
+                    description: `${MEAL_PLANS[mealPlan].label} (${MEAL_PLANS[mealPlan].includes}) · ${nights} night${nights > 1 ? "s" : ""}`,
+                    hsn: HSN_ACCOMMODATION,
+                    qty: nights,
+                    rate: mealPerNight,
+                    amount: mealTotal,
+                }]
+            : []),
         ...extras.lines.map((l) => ({
             description: `${l.label} × ${l.qty} · ${nights} night${nights > 1 ? "s" : ""}`,
             hsn: HSN_ACCOMMODATION,
@@ -170,11 +196,13 @@ export async function POST(req) {
             amount: l.amount,
         })),
         ...addons.map((a) => ({
-            description: `${a.label} × ${a.qty}`,
+            description: a.unit === "per night"
+                ? `${a.label} × ${a.qty} · ${nights} night${nights > 1 ? "s" : ""}`
+                : `${a.label} × ${a.qty}`,
             hsn: HSN_ACCOMMODATION,
-            qty: a.qty,
+            qty: a.qty * addonMultiplier(a),
             rate: a.price,
-            amount: Math.round(a.price * a.qty * 100) / 100,
+            amount: addonAmount(a),
         })),
         // Last, so the table reads as charges then deductions. Carried as a
         // negative line rather than its own column because the invoices table
@@ -193,8 +221,11 @@ export async function POST(req) {
     // room.base_price_per_night here — as this route used to — put a Rs 7,500
     // tent sold at Rs 9,500 with a third adult on the 5% slab, and issued a tax
     // invoice understating the GST due on it.
+    // With GST_SLAB_ON_PRE_DISCOUNT_VALUE the discounts are added back first, the
+    // same as the checkout engine does, so the invoice and the charge agree.
+    const discountTotal = roundTo2(discountLines.reduce((s, l) => s + Math.abs(l.amount), 0));
     const effectivePerNightValue = roundTo2(
-        Math.max(0, taxableAmount - addonsTaxable) / nights,
+        Math.max(0, taxableAmount - addonsTaxable + (GST_SLAB_ON_PRE_DISCOUNT_VALUE ? discountTotal : 0)) / nights,
     );
     const gstRatePct = gstRateForEffectiveValue(effectivePerNightValue);
     // Determine guest state for intra/inter-state split

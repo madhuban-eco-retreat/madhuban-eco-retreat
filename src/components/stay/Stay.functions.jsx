@@ -1,10 +1,30 @@
+import {
+  regularRate,
+  formatInr,
+  roomPriceSentence,
+  extraGuestSentence,
+  extraGuestSummary,
+  gstSentence,
+  peakSentence,
+} from "@/lib/pricing/rate-card.mjs";
+
+// Every price a guest reads on these pages is built from the rate card the
+// booking engine charges with (src/lib/pricing), never typed out: a number in a
+// sentence is a number that goes stale the next time the tariff moves.
+const SAFARI_PRICE_ANSWER = `${roomPriceSentence("safari-tent", "The safari tent stay")} ${peakSentence("safari-tent")} ${extraGuestSentence()} ${gstSentence()}`;
+const MUD_HOUSE_PRICE_ANSWER = `${roomPriceSentence("mud-house-standard", "Mud House Standard")} ${roomPriceSentence("mud-house-premium", "Mud House Premium (with bathtub)")} ${peakSentence("mud-house-standard")} ${extraGuestSentence()} ${gstSentence()}`;
+const POOL_VILLA_PRICE_ANSWER = `${roomPriceSentence("pool-side-villa", "The Pool Side Villa")} ${peakSentence("pool-side-villa")} ${extraGuestSentence()} ${gstSentence()}`;
+const GLAMPING_PRICE_ANSWER = `${roomPriceSentence("glamping-tents", "The Glamping Tent")} ${peakSentence("glamping-tents")} ${extraGuestSentence()} ${gstSentence()}`;
+const EXTRA_BEDDING_SUMMARY = extraGuestSummary();
+const rupees = (slug) => regularRate(slug).toLocaleString("en-IN");
+
 // FAQs
 
 const safariTentFaqs = [
   {
     question: "What is the price of the safari tent house in Ratapani?",
     answer:
-      "The safari tent stay at Madhuban Eco Retreat starts at ₹12,000 per night on double occupancy. Extra person charges apply — ₹1,500 per night for children (5–12 years) and ₹2,000 per night for adults. Rates are exclusive of GST, which is charged separately at 18% as applicable.",
+      SAFARI_PRICE_ANSWER,
   },
   {
     question: "Is this the best safari tent stay near Bhopal?",
@@ -42,7 +62,7 @@ const mudHouseFaqs = [
   {
     question: "What is the price of Mud House stay in Ratapani?",
     answer:
-      "Mud House Standard starts at ₹9,000 per night and Mud House Premium (with bathtub) at ₹10,000 per night on double occupancy. Extra person charges apply — ₹1,500 per night for children (5–12 years) and ₹2,000 per night for adults. Rates are exclusive of GST, which is charged separately at 18% as applicable.",
+      MUD_HOUSE_PRICE_ANSWER,
   },
   {
     question: "Are these the best mud houses near Bhopal?",
@@ -81,7 +101,7 @@ const poolSideVillaFaqs = [
   {
     question: "What is the price of a Pool Side Villa near Bhopal?",
     answer:
-      "The Pool Side Villa at Madhuban Eco Retreat is priced at ₹12,000 per night on double occupancy. Extra person charges apply — ₹1,500 per night for children (5–12 years) and ₹2,000 per night for adults. Rates are exclusive of GST, which is charged separately at 18% as applicable.",
+      POOL_VILLA_PRICE_ANSWER,
   },
   {
     question: "Is this the best pool villa stay near Bhopal?",
@@ -113,7 +133,7 @@ const glampingTentFaqs = [
   {
     question: "What is the price of Glamping Tent stay in Ratapani?",
     answer:
-      "The Glamping Tent at Madhuban Eco Retreat is priced at ₹7,500 per night on double occupancy. Extra person charges apply — ₹1,500 per night for children (5–12 years) and ₹2,000 per night for adults. Rates are exclusive of GST, which is charged separately at 5% as applicable.",
+      GLAMPING_PRICE_ANSWER,
   },
   {
     question: "Are Glamping Tents good for couples?",
@@ -358,11 +378,11 @@ const safariTentSchema = {
     "@type": "Offer",
     name: "Safari Tent Stay",
     url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/safari-tent",
-    price: "12000",
+    price: String(regularRate("safari-tent")),
     priceCurrency: "INR",
     availability: "https://schema.org/InStock",
     description:
-      "Classic safari-style tent on raised platform with forest views, king bed, open shower, WiFi, AC, breakfast and luxury eco amenities.",
+      "Classic safari-style tent on raised platform with forest views, king bed, open shower, WiFi, AC, meals on the MAP or AP plan and luxury eco amenities.",
     itemOffered: {
       "@type": "Product",
       name: "Safari Tent House – Ratapani",
@@ -385,7 +405,7 @@ const safariTentFaqSchema = {
       name: "What is the price of the safari tent house in Ratapani?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "The safari tent house stay at Madhuban Eco Retreat starts at ₹12,000 per night on double occupancy. Extra person charges apply — ₹1,500 per night for children (5–12 years) and ₹2,000 per night for adults. Rates are exclusive of GST, which is charged separately at 18% as applicable.",
+        text: SAFARI_PRICE_ANSWER,
       },
     },
     {
@@ -489,7 +509,7 @@ const mudHouseSchema = {
     {
       "@type": "Offer",
       name: "Mud House Standard",
-      price: "9000",
+      price: String(regularRate("mud-house-standard")),
       priceCurrency: "INR",
       availability: "https://schema.org/InStock",
       url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/mud-house",
@@ -507,7 +527,7 @@ const mudHouseSchema = {
     {
       "@type": "Offer",
       name: "Mud House Premium",
-      price: "10000",
+      price: String(regularRate("mud-house-premium")),
       priceCurrency: "INR",
       availability: "https://schema.org/InStock",
       url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/mud-house",
@@ -538,7 +558,7 @@ const mudHouseFaqsSchema = {
       name: "What is the price of Mud House stay in Ratapani?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Mud House Standard starts at ₹9,000 per night and Mud House Premium (with bathtub) at ₹10,000 per night on double occupancy. Extra person charges apply — ₹1,500 per night for children (5–12 years) and ₹2,000 per night for adults. Rates are exclusive of GST, which is charged separately at 18% as applicable.",
+        text: MUD_HOUSE_PRICE_ANSWER,
       },
     },
     {
@@ -621,7 +641,7 @@ const poolsideSchema = {
   makesOffer: {
     "@type": "Offer",
     name: "Pool Side Villa Stay",
-    price: "12000",
+    price: String(regularRate("pool-side-villa")),
     priceCurrency: "INR",
     availability: "https://schema.org/InStock",
     url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/poolside-villa",
@@ -651,7 +671,7 @@ const poolSideVillaFaqsMetadata = {
       name: "What is the price of the Pool Side Villa near Bhopal?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "The Pool Side Villa at Madhuban Eco Retreat is priced at ₹12,000 per night on double occupancy. Extra person charges apply — ₹1,500 per night for children (5–12 years) and ₹2,000 per night for adults. Rates are exclusive of GST, which is charged separately at 18% as applicable.",
+        text: POOL_VILLA_PRICE_ANSWER,
       },
     },
     {
@@ -738,7 +758,7 @@ const glampingTentSchema = {
   makesOffer: {
     "@type": "Offer",
     name: "Glamping Tent Stay",
-    price: "7500",
+    price: String(regularRate("glamping-tents")),
     priceCurrency: "INR",
     availability: "https://schema.org/InStock",
     url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/glamping-tent",
@@ -767,7 +787,7 @@ const glampingTentFaqsSchema = {
       name: "What is the price of Glamping Tent stay in Ratapani?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "The Glamping Tent stay is priced at ₹7,500 per night on double occupancy. Extra person charges apply — ₹1,500 per night for children (5–12 years) and ₹2,000 per night for adults. Rates are exclusive of GST, which is charged separately at 5% as applicable.",
+        text: GLAMPING_PRICE_ANSWER,
       },
     },
     {
@@ -957,7 +977,7 @@ export const accommodationsData = [
       "Infinity Pool",
       "Open shower",
       "WiFi",
-      "Breakfast Included",
+      "Meals included (MAP / AP plan)",
       "Free Slippers",
       "Pet Friendly",
       "Room Service",
@@ -978,15 +998,16 @@ export const accommodationsData = [
     ],
     whyChooseTitle: "Why Choose Our Safari Tent House Near Bhopal?",
     capacity: "Sleeps 2",
-    pricePerNightSefari: "Rs. 12,000 per night",
-    extraBedding: "Infant (up to 5 yrs) free · Child 5–12 yrs ₹1,500/night · Adult ₹2,000/night (GST extra)",
+    pricePerNightSefari: `From ${formatInr(regularRate("safari-tent"))} per night (MAP, 2 guests)`,
+    extraBedding: EXTRA_BEDDING_SUMMARY,
     rating: 4.5,
     faqs: safariTentFaqs,
     faqsTitle: "FAQs – Safari Tent House",
     bookingOptions: [
       {
         optionName: "SAFARI TENT",
-        price: "12,000",
+        tariffSlug: "safari-tent",
+        price: rupees("safari-tent"),
         rateUnit: "Per Night",
       },
     ],
@@ -1017,7 +1038,7 @@ export const accommodationsData = [
       "Infinity Pool",
       "Bathtub (Mud House Premium)",
       "WiFi",
-      "Breakfast Included",
+      "Meals included (MAP / AP plan)",
       "Free Slippers",
       "Pet Friendly",
       "Room Service",
@@ -1039,23 +1060,25 @@ export const accommodationsData = [
     ],
     whyChooseTitle: "Why Choose Our Mud Houses?",
     capacity: "Sleeps 2",
-    pricePerNightMud: "Mud House Standard ( Without Bathtub ): ₹ 9,000 per night",
-    pricePerNightMud1: "Mud House Premium ( With Bathtub ): ₹ 10,000 per night",
-    extraBedding: "Infant (up to 5 yrs) free · Child 5–12 yrs ₹1,500/night · Adult ₹2,000/night (GST extra)",
+    pricePerNightMud: `Mud House Standard ( Without Bathtub ): from ${formatInr(regularRate("mud-house-standard"))} per night (MAP, 2 guests)`,
+    pricePerNightMud1: `Mud House Premium ( With Bathtub ): from ${formatInr(regularRate("mud-house-premium"))} per night (MAP, 2 guests)`,
+    extraBedding: EXTRA_BEDDING_SUMMARY,
     rating: 4.5,
     faqs: mudHouseFaqs,
     faqsTitle: "FAQs – Mud House",
     bookingOptions: [
       {
         optionName: "MUD HOUSE STANDARD",
-        optionDetail: "(WITHOUT BATHHUB)",
-        price: "9,000",
+        optionDetail: "(WITHOUT BATHTUB)",
+        tariffSlug: "mud-house-standard",
+        price: rupees("mud-house-standard"),
         rateUnit: "Per Night",
       },
       {
         optionName: "MUD HOUSE PREMIUM",
-        optionDetail: "(WITH BATHHUB)",
-        price: "10,000",
+        optionDetail: "(WITH BATHTUB)",
+        tariffSlug: "mud-house-premium",
+        price: rupees("mud-house-premium"),
         rateUnit: "Per Night",
       },
     ],
@@ -1084,7 +1107,7 @@ export const accommodationsData = [
       "Infinity Pool",
       "Bathtub",
       "WiFi",
-      "Breakfast Included",
+      "Meals included (MAP / AP plan)",
       "Free Slippers",
       "Pet Friendly",
       "Room Service",
@@ -1097,14 +1120,15 @@ export const accommodationsData = [
       "Free Slippers",
     ],
     capacity: "Sleeps 4",
-    pricePerNightPool: "Pool Side Villa ( 2 Rooms ) : Rs. 12,000 per night",
-    extraBedding: "Infant (up to 5 yrs) free · Child 5–12 yrs ₹1,500/night · Adult ₹2,000/night (GST extra)",
+    pricePerNightPool: `Pool Side Villa ( 2 Rooms ) : from ${formatInr(regularRate("pool-side-villa"))} per night (MAP, 2 guests)`,
+    extraBedding: EXTRA_BEDDING_SUMMARY,
     rating: 4.5,
     bookingOptions: [
       {
         optionName: "POOLSIDE VILLA",
         optionDetail: "(2 ROOMS)",
-        price: "12,000",
+        tariffSlug: "pool-side-villa",
+        price: rupees("pool-side-villa"),
         rateUnit: "Per Night",
       },
     ],
@@ -1143,7 +1167,7 @@ export const accommodationsData = [
       "Infinity Pool",
       "Shower",
       "WiFi",
-      "Breakfast Included",
+      "Meals included (MAP / AP plan)",
       "Free Slippers",
       "Pet Friendly",
       "Room Service",
@@ -1156,14 +1180,15 @@ export const accommodationsData = [
       "Free Slippers",
     ],
     capacity: "Sleeps 2",
-    pricePerNightGlamping: "Rs. 7,500",
-    extraBedding: "Infant (up to 5 yrs) free · Child 5–12 yrs ₹1,500/night · Adult ₹2,000/night (GST extra)",
+    pricePerNightGlamping: `From ${formatInr(regularRate("glamping-tents"))} per night (MAP, 2 guests)`,
+    extraBedding: EXTRA_BEDDING_SUMMARY,
     rating: 4.6,
 
     bookingOptions: [
       {
         optionName: "Glamping Tents",
-        price: "7,500",
+        tariffSlug: "glamping-tents",
+        price: rupees("glamping-tents"),
         rateUnit: "Per Night",
       },
     ],

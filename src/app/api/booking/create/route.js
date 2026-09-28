@@ -6,6 +6,7 @@ import { generateBookingReference } from "@/lib/booking/reference";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { validatePhone } from "@/lib/validation/phone";
 import { createNotification } from "@/lib/admin/notifications";
+import { mealPlanNote, joinInternalNotes, isMissingMealPlanColumn } from "@/lib/booking/meal-plan";
 export async function POST(req) {
     let body;
     try {
@@ -18,7 +19,7 @@ export async function POST(req) {
     if (!parsed.success) {
         return NextResponse.json({ error: parsed.error.issues[0]?.message ?? "Invalid input" }, { status: 400 });
     }
-    const { roomSlug, checkIn, checkOut, adults, children, infants, guestName, guestEmail, guestPhone, specialRequests, couponCode, } = parsed.data;
+    const { roomSlug, checkIn, checkOut, adults, children, infants, guestName, guestEmail, guestPhone, specialRequests, couponCode, mealPlan, } = parsed.data;
     try {
         // Calculate pricing (also validates room exists)
         const pricing = await calculatePricing({
@@ -29,6 +30,7 @@ export async function POST(req) {
             children,
             infants,
             couponCode,
+            mealPlan,
         });
         // Re-check availability at point of booking
         const availability = await checkAvailability({
@@ -72,9 +74,7 @@ export async function POST(req) {
         // Not stored: nights (checkout - checkin), price_per_night (base_amount / nights),
         // gst_rate (on rooms), advance_amount / balance_due (derived as total * 0.5),
         // razorpay_* (on payments table).
-        const { data: booking, error } = await supabase
-            .from("bookings")
-            .insert({
+        const bookingRow = {
             booking_ref: bookingRef,
             room_id: pricing.roomId,
             guest_id: guestId,
@@ -93,16 +93,31 @@ export async function POST(req) {
             special_requests: specialRequests ?? null,
             // bookings has no infants column and they carry no charge, so the
             // headcount is recorded as a staff note — housekeeping still needs
-            // to know a cot is coming.
-            internal_notes: infants > 0
-                ? `Infants (under 5, no charge): ${infants}`
-                : null,
+            // to know a cot is coming. The meal plan rides in the same note as
+            // well as its own column: the column ships in a SQL migration, and
+            // the note is what keeps the plan readable until that has run.
+            internal_notes: joinInternalNotes(infants > 0 ? `Infants (under 5, no charge): ${infants}` : null, mealPlanNote(pricing.mealPlan)),
+            meal_plan: pricing.mealPlan,
             status: "PENDING_PAYMENT",
             payment_status: "pending",
             source: "website",
-        })
+        };
+        let { data: booking, error } = await supabase
+            .from("bookings")
+            .insert(bookingRow)
             .select("id, booking_ref")
             .single();
+        // A deploy can land before the meal_plan migration has run. Retry without
+        // the column rather than failing a paying guest; the note above still
+        // records the plan.
+        if (error && isMissingMealPlanColumn(error)) {
+            const { meal_plan: _omitted, ...legacyRow } = bookingRow;
+            ({ data: booking, error } = await supabase
+                .from("bookings")
+                .insert(legacyRow)
+                .select("id, booking_ref")
+                .single());
+        }
         if (error) {
             console.error("[booking/create]", error);
             return NextResponse.json({ error: "Failed to create booking" }, { status: 500 });

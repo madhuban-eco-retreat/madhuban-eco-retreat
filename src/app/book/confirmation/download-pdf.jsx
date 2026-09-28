@@ -101,6 +101,7 @@ function ConfirmationDoc({ booking }) {
           value={`${booking.nights} night${booking.nights !== 1 ? "s" : ""}`}
         />
         <Row label="Guests" value={booking.guestSummary} />
+        {booking.mealPlan && <Row label="Meal plan" value={booking.mealPlan} />}
 
         <Text style={styles.sectionLabel}>Payment Summary</Text>
         {booking.baseAmount != null && (

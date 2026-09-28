@@ -6,13 +6,14 @@ import { phone } from "@/utills/constants";
 import { captureAttribution, readAttribution } from "@/utills/tracking";
 import { normalisePhoneE164 } from "@/utills/helperFunctions";
 
+import { regularRate, lowestRegularRate, formatInr } from "@/lib/pricing/rate-card.mjs";
 const VARIANTS = {
   weekend: {
     badge: "WEEKEND SPOTS AVAILABLE",
     h1Pre: "Wake up in the",
     h1Em: "Ratapani jungle",
     h1Post: "just 1 hour from Bhopal",
-    sub: "Eco-luxury stays inside India's tiger reserve. Glamping, mud houses, pool villa. From ₹7,500 per night + GST.",
+    sub: `Eco-luxury stays inside India's tiger reserve. Glamping, mud houses, pool villa. From ${formatInr(lowestRegularRate())} per night (meals included) + GST.`,
   },
   dayout: {
     badge: "DAY OUTING — ₹1,500 PER PERSON",
@@ -26,7 +27,7 @@ const VARIANTS = {
     h1Pre: "Real jungle,",
     h1Em: "real quiet",
     h1Post: "just 1 hour from Bhopal",
-    sub: "A wilderness retreat in Madhya Pradesh's tiger country. Glamping, mud houses, and a poolside villa. From ₹7,500 per night + GST.",
+    sub: `A wilderness retreat in Madhya Pradesh's tiger country. Glamping, mud houses, and a poolside villa. From ${formatInr(lowestRegularRate())} per night (meals included) + GST.`,
   },
 };
 
@@ -40,35 +41,35 @@ const STAYS = [
   },
   {
     name: "Glamping Tent",
-    price: 7500,
+    price: regularRate("glamping-tents"),
     desc: "Luxury under canvas. Proper beds, en-suite, jungle views.",
     img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/madhuban-eco-retreat-glamping-tent-exterior-image-home-page-card.jpg",
     tag: "Couples favourite",
   },
   {
     name: "Mud House — Standard",
-    price: 9000,
+    price: regularRate("mud-house-standard"),
     desc: "Traditional mud architecture, naturally cool. Without bathtub.",
     img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/madhuban-eco-retreat-mud-house-exterior-image-home-page-card.jpg",
     tag: null,
   },
   {
     name: "Mud House — Premium",
-    price: 10000,
+    price: regularRate("mud-house-premium"),
     desc: "Same earthy stay with a private bathtub. The slow-down room.",
     img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/madhuban-eco-retreat-mud-house-exterior-image-home-page-card.jpg",
     tag: null,
   },
   {
     name: "Safari Tent",
-    price: 12000,
+    price: regularRate("safari-tent"),
     desc: "Elevated canvas tent on stilts. The naturalist's pick.",
     img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/madhuban-eco-retreat-safari-tent-exterior-image-home-page-card.jpg",
     tag: null,
   },
   {
     name: "Pool Side Villa",
-    price: 12000,
+    price: regularRate("pool-side-villa"),
     desc: "Two rooms, sleeps four. Direct pool access. Only one available.",
     img: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/poolside-villa-madhuban-eco-retreat-home-page-card.jpg",
     tag: "Only 1 villa",
@@ -139,11 +140,11 @@ const FAQ = [
 
 const STAY_TYPES = [
   { value: "camping", label: "Camping Tent", price: 2500 },
-  { value: "glamping", label: "Glamping Tent", price: 7500 },
-  { value: "mud-standard", label: "Mud House (no bathtub)", price: 9000 },
-  { value: "mud-premium", label: "Mud House (with bathtub)", price: 10000 },
-  { value: "safari", label: "Safari Tent", price: 12000 },
-  { value: "pool-villa", label: "Pool Side Villa", price: 12000 },
+  { value: "glamping", label: "Glamping Tent", price: regularRate("glamping-tents") },
+  { value: "mud-standard", label: "Mud House (no bathtub)", price: regularRate("mud-house-standard") },
+  { value: "mud-premium", label: "Mud House (with bathtub)", price: regularRate("mud-house-premium") },
+  { value: "safari", label: "Safari Tent", price: regularRate("safari-tent") },
+  { value: "pool-villa", label: "Pool Side Villa", price: regularRate("pool-side-villa") },
   { value: "recommend", label: "Help me pick", price: null },
 ];
 
@@ -258,12 +259,12 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
   const estimate = useMemo(() => {
     if (tab === "dayout") return 1500 * guestCount;
     const found = STAY_TYPES.find((s) => s.value === stayType);
-    if (!found || found.price == null) return 7500;
+    if (!found || found.price == null) return lowestRegularRate();
     return found.price;
   }, [tab, stayType, guestCount]);
 
   const estimateSubtitle =
-    tab === "overnight" ? "Breakfast included" : "Lunch & activities included";
+    tab === "overnight" ? "MAP plan (breakfast, lunch/dinner) included" : "Lunch & activities included";
 
   const scrollToForm = useCallback(() => {
     formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -421,7 +422,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
           </div>
           <div className="mt-7 pt-4 border-t border-white/20">
             <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.18em] font-medium text-white/70">
-              1 hour from Bhopal · From ₹7,500 per night + GST · Replies in 15 min
+              1 hour from Bhopal · From {formatInr(lowestRegularRate())} per night + GST · Replies in 15 min
             </p>
           </div>
         </div>
@@ -488,10 +489,12 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
               Where you&rsquo;ll sleep
             </h2>
             <p className="mt-3 text-sm text-stone-600">
-              All rates are per night on double occupancy. GST extra as
-              applicable — 5% GST on ₹7,500 rooms, 18% GST on rooms above
-              ₹7,500. Stay 2 nights or more and get a flat 20% off room rent
-              (excludes peak season, Christmas/New Year and long weekends).
+              All rates are per night on double occupancy on the MAP plan
+              (breakfast, lunch/dinner) &mdash; room rate + meal plan = fare.
+              AP (all three meals) adds ₹1,000. GST extra as applicable: 5% up
+              to ₹7,500 a night, 18% above. Stay 2 nights or more and get a
+              flat 20% off room rent (meals not discounted; not available in
+              peak season, Christmas/New Year or on long weekends).
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
