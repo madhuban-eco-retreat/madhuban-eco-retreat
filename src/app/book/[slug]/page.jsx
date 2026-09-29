@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getRoomBySlug } from "@/lib/rooms/queries";
+import { getRoomBySlug, getRooms } from "@/lib/rooms/queries";
 import { buildMetadata } from "@/lib/seo";
 import { DataUnavailable } from "@/components/ui/data-unavailable";
 import { CheckoutForm } from "./checkout-form";
@@ -28,9 +28,9 @@ function addDays(d, n) {
 export default async function BookCheckoutPage({ params, searchParams }) {
     const [{ slug }, sp] = await Promise.all([params, searchParams]);
     // `notFound()` stays outside the try: it signals control flow by throwing.
-    let room;
+    let room, allRooms;
     try {
-        room = await getRoomBySlug(slug);
+        [room, allRooms] = await Promise.all([getRoomBySlug(slug), getRooms()]);
     }
     catch (error) {
         console.error(`[book/${slug}] room fetch failed:`, error);
@@ -75,7 +75,7 @@ export default async function BookCheckoutPage({ params, searchParams }) {
           </h1>
         </div>
 
-        <CheckoutForm slug={slug} roomId={room.id} roomName={room.name} defaultCheckIn={checkIn} defaultCheckOut={checkOut} defaultAdults={adults} defaultChildren={children} minNights={minNights} adultsIncluded={adultsIncluded} maxAdults={maxAdults}/>
+        <CheckoutForm slug={slug} roomId={room.id} roomName={room.name} defaultCheckIn={checkIn} defaultCheckOut={checkOut} defaultAdults={adults} defaultChildren={children} minNights={minNights} adultsIncluded={adultsIncluded} maxAdults={maxAdults} allRooms={allRooms}/>
       </div>
     </div>);
 }

@@ -24,7 +24,10 @@ function formatAmount(n) {
         : n.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 export default async function ConfirmationPage({ searchParams }) {
-    const { ref } = await searchParams;
+    const sp = await searchParams;
+    const refsParam = sp.refs ? sp.refs.split(",").filter(Boolean) : [];
+    const ref = sp.ref || refsParam[0];
+    const extraRoomsCount = refsParam.length > 1 ? refsParam.length - 1 : 0;
     if (!ref) {
         return (<div className="flex min-h-[60vh] items-center justify-center px-4">
         <div className="text-center">
@@ -121,6 +124,9 @@ export default async function ConfirmationPage({ searchParams }) {
             Your booking is confirmed — we look forward to hosting you in the
             forest.
           </p>
+          {extraRoomsCount > 0 && (<p className="mt-2 font-body text-sm font-medium text-earth-brown">
+              + {extraRoomsCount} more room{extraRoomsCount > 1 ? "s" : ""} in this booking — each has been confirmed and a separate confirmation email sent for it.
+            </p>)}
           <p className="mt-3 font-body text-sm text-charcoal/70">
             A confirmation email has been sent to {guest?.email ?? "your email"}.
           </p>

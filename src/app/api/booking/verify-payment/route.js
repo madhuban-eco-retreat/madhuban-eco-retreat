@@ -102,9 +102,6 @@ export async function POST(req) {
         const totalAmount = Number(booking.total_amount);
         const nights = Math.round((new Date(booking.checkout).getTime() - new Date(booking.checkin).getTime()) / 86400000);
         if (guest && room) {
-            // Amounts come from the row rather than being recalculated, so the
-            // email always states what was actually charged even if the tariff
-            // or slab changes afterwards.
             const baseAmount = booking.base_amount != null ? Number(booking.base_amount) : null;
             const gstAmount = booking.gst_amount != null ? Number(booking.gst_amount) : null;
             const confirmationData = {
@@ -139,9 +136,6 @@ export async function POST(req) {
                     to: BOOKING_NOTIFICATION_EMAILS,
                     ...bookingConfirmationAdminEmail({
                         ...confirmationData,
-                        // Staff open this from a phone, so the mail carries a
-                        // deep link rather than asking them to go and find the
-                        // booking in a list.
                         bookingId,
                         discountAmount: booking.discount_amount != null ? Number(booking.discount_amount) : null,
                         couponCode: booking.coupon_code ?? null,

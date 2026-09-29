@@ -175,18 +175,18 @@ test("meals are a flat supplement: not marked up in peak, not cut by the 2+ nigh
   }
 });
 
-test("the meal plan is reported on the quote and defaults to MAP", () => {
+test("the meal plan is reported on the quote and defaults to AP", () => {
   const q = stay("safari-tent", undefined, REGULAR);
-  assert.equal(q.mealPlan, "MAP");
-  assert.equal(q.mealPlanLabel, "MAP Plan");
-  assert.equal(q.mealSupplementPerNight, 1200);
-  assert.equal(q.mealSupplementTotal, 1200);
-  assert.equal(DEFAULT_MEAL_PLAN, "MAP");
+  assert.equal(q.mealPlan, "AP");
+  assert.equal(q.mealPlanLabel, "AP Plan");
+  assert.equal(q.mealSupplementPerNight, 2200);
+  assert.equal(q.mealSupplementTotal, 2200);
+  assert.equal(DEFAULT_MEAL_PLAN, "AP");
 
-  const ap = stay("safari-tent", "AP", REGULAR, 3);
-  assert.equal(ap.mealSupplementPerNight, 2200);
-  assert.equal(ap.mealSupplementTotal, 6600);
-  assert.equal(ap.nightLines[0].mealSupplement, 2200);
+  const map = stay("safari-tent", "MAP", REGULAR, 3);
+  assert.equal(map.mealSupplementPerNight, 1200);
+  assert.equal(map.mealSupplementTotal, 3600);
+  assert.equal(map.nightLines[0].mealSupplement, 1200);
 });
 
 test("an unknown meal plan is refused rather than priced at nothing", () => {
@@ -574,6 +574,7 @@ test("admin add-ons are taxed beside the room, not folded into its slab", () => 
     checkIn: REGULAR,
     checkOut: "2026-09-11",
     adults: 2,
+    mealPlan: "MAP",
     addons: [{ label: "Bush Dining", price: 3000, qty: 1, unit: "per couple" }],
   });
   // The room is the ₹8,700 MAP night, on the 18% slab; dinner does not move it.
@@ -586,7 +587,7 @@ test("admin add-ons are taxed beside the room, not folded into its slab", () => 
   assert.equal(q.mealPlan, "MAP");
 });
 
-test("admin pricing takes a meal plan and defaults to MAP", () => {
+test("admin pricing takes a meal plan and defaults to AP", () => {
   const args = {
     baseNightlyRate: BASE_NIGHTLY_RATES["safari-tent"],
     roomSlug: "safari-tent",
@@ -594,8 +595,8 @@ test("admin pricing takes a meal plan and defaults to MAP", () => {
     checkOut: "2026-09-11",
     adults: 2,
   };
-  assert.equal(computeAdminQuote(args).roomTotal, 13200);
-  assert.equal(computeAdminQuote({ ...args, mealPlan: "AP" }).roomTotal, 14200);
+  assert.equal(computeAdminQuote(args).roomTotal, 14200);
+  assert.equal(computeAdminQuote({ ...args, mealPlan: "MAP" }).roomTotal, 13200);
 });
 
 test("admin pricing carries the peak surcharge on the rent and the meals on top", () => {
@@ -605,6 +606,7 @@ test("admin pricing carries the peak surcharge on the rent and the meals on top"
     checkIn: CHRISTMAS,
     checkOut: "2026-12-26",
     adults: 2,
+    mealPlan: "MAP",
   });
   assert.equal(q.roomTotal, 15600);
   assert.equal(q.gstRatePct, 18);
@@ -649,11 +651,13 @@ test("the other-charge rate card is what the sheet lists", () => {
 
 /* ══ Rate-card helpers (the source of every price a guest reads) ═══════════════ */
 
-test("the 'from' price is the cheapest regular MAP rate", () => {
-  assert.equal(lowestRegularRate(), 8700);
-  assert.equal(highestRegularRate(), 13200);
+test("the 'from' price is the cheapest regular rate on the default (AP) plan", () => {
+  assert.equal(lowestRegularRate(), 9700);
+  assert.equal(highestRegularRate(), 14200);
   assert.equal(cheapestRoom().slug, "glamping-tents");
   assert.deepEqual(priciestRooms().map((r) => r.slug).sort(), ["pool-side-villa", "safari-tent"]);
+  // The MAP figures from the printed sheet are still reachable explicitly.
+  assert.equal(regularRate("glamping-tents", "MAP"), 8700);
 });
 
 test("rooms without a published tariff are recognised (camping is not on the sheet)", () => {

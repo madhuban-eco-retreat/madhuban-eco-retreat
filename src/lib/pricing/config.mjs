@@ -110,7 +110,7 @@ export const MEAL_PLANS = {
 export const MEAL_PLAN_CODES = ["MAP", "AP"];
 
 /** The plan a booking is priced on when the guest does not choose one. */
-export const DEFAULT_MEAL_PLAN = "MAP";
+export const DEFAULT_MEAL_PLAN = "AP";
 
 /* ── Season dates the tariff sheet is valid for ───────────────────────────── */
 

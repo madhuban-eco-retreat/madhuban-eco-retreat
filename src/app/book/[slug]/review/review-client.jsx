@@ -2,134 +2,92 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { formatPrice } from "@/lib/utils";
+
+/**
+ * The booking(s) are already created by this point — checkout-form calls
+ * /api/booking/create per room unit before navigating here, so this step is
+ * display-only: show the guest what was created, then move to payment. A
+ * single room goes to the existing single-booking payment page; more than
+ * one goes to the same page with a comma-separated list of booking ids,
+ * which pays for all of them through one combined Razorpay order.
+ */
 export function ReviewClient({ slug }) {
-    const router = useRouter();
-    const [draft, setDraft] = useState(null);
-    const [submitting, setSubmitting] = useState(false);
-    const [error, setError] = useState("");
-    // Reading from sessionStorage (external system) and syncing to state.
-    useEffect(() => {
-        try {
-            const raw = sessionStorage.getItem("booking_draft");
-            if (!raw) {
-                router.replace(`/book/${slug}`);
-                return;
-            }
-            const parsed = JSON.parse(raw);
-            if (parsed.pricing.roomSlug !== slug) {
-                router.replace(`/book/${slug}`);
-                return;
-            }
-            // eslint-disable-next-line react-hooks/set-state-in-effect
-            setDraft(parsed);
-        }
-        catch {
-            router.replace(`/book/${slug}`);
-        }
-    }, [slug, router]);
-    const handleConfirm = async () => {
-        if (!draft)
-            return;
-        setSubmitting(true);
-        setError("");
-        try {
-            const res = await fetch("/api/booking/create", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    roomSlug: draft.pricing.roomSlug,
-                    checkIn: draft.pricing.checkIn,
-                    checkOut: draft.pricing.checkOut,
-                    adults: draft.pricing.adults,
-                    children: draft.pricing.children,
-                    infants: draft.pricing.infants ?? 0,
-                    mealPlan: draft.pricing.mealPlan ?? undefined,
-                    guestName: draft.guest.name,
-                    guestEmail: draft.guest.email,
-                    guestPhone: draft.guest.phone,
-                    specialRequests: draft.guest.specialRequests,
-                    couponCode: draft.pricing.couponCode ?? undefined,
-                }),
-            });
-            const data = (await res.json());
-            // Availability is settled on step 1, but the server re-checks before
-            // taking money because another guest can take the dates in between.
-            // That verdict belongs back on the date picker, not here — this page
-            // has no way to change dates, so showing the error would strand the
-            // guest. 409 sends them to step 1 with the reason carried across.
-            if (res.status === 409) {
-                const reason = data.error ?? "These dates are no longer available.";
-                try {
-                    sessionStorage.setItem("booking_unavailable", reason);
-                }
-                catch { /* non-fatal — step 1 re-checks on load anyway */ }
-                router.replace(`/book/${slug}?checkIn=${draft.pricing.checkIn}&checkOut=${draft.pricing.checkOut}`);
-                return;
-            }
-            if (!res.ok) {
-                setError(data.error ?? "Could not create booking. Please try again.");
-                setSubmitting(false);
-                return;
-            }
-            sessionStorage.removeItem("booking_draft");
-            router.push(`/book/${slug}/payment?id=${data.bookingId}`);
-        }
-        catch {
-            setError("A network error occurred. Please try again.");
-            setSubmitting(false);
-        }
-    };
-    if (!draft) {
-        return (<div className="flex min-h-[50vh] items-center justify-center">
-        <p className="font-body text-sm text-muted-foreground">Loading…</p>
-      </div>);
+  const router = useRouter();
+  const [draft, setDraft] = useState(null);
+
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem("booking_draft");
+      if (!raw) {
+        router.replace(`/book/${slug}`);
+        return;
+      }
+      const parsed = JSON.parse(raw);
+      if (!parsed.bookings?.length) {
+        router.replace(`/book/${slug}`);
+        return;
+      }
+      setDraft(parsed);
+    } catch {
+      router.replace(`/book/${slug}`);
     }
-    const { guest, pricing } = draft;
-    return (<div className="mx-auto max-w-2xl space-y-6">
+  }, [slug, router]);
+
+  const handleContinue = () => {
+    if (!draft) return;
+    sessionStorage.removeItem("booking_draft");
+    const ids = draft.bookings.map((b) => b.bookingId);
+    if (ids.length === 1) {
+      router.push(`/book/${slug}/payment?id=${ids[0]}`);
+    } else {
+      router.push(`/book/${slug}/payment?ids=${ids.join(",")}`);
+    }
+  };
+
+  if (!draft) {
+    return (
+      <div className="flex min-h-[50vh] items-center justify-center">
+        <p className="font-body text-sm text-muted-foreground">Loading…</p>
+      </div>
+    );
+  }
+
+  const { guest, checkIn, checkOut, mealPlan, bookings, totals } = draft;
+  const nights = Math.round((new Date(checkOut).getTime() - new Date(checkIn).getTime()) / 86400000);
+  const fmtDate = (iso) => new Date(iso).toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "long", year: "numeric" });
+
+  return (
+    <div className="mx-auto max-w-2xl space-y-6">
       {/* Stay summary */}
       <section className="rounded-xl border border-border p-6">
-        <h2 className="mb-4 font-body text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-          Your Stay
-        </h2>
+        <h2 className="mb-4 font-body text-sm font-semibold uppercase tracking-widest text-muted-foreground">Your Stay</h2>
         <dl className="grid grid-cols-2 gap-y-3 font-body text-sm">
-          <dt className="text-muted-foreground">Room</dt>
-          <dd className="font-medium text-charcoal">{pricing.roomName}</dd>
           <dt className="text-muted-foreground">Check-in</dt>
-          <dd className="font-medium text-charcoal">
-            {new Date(pricing.checkIn).toLocaleDateString("en-IN", {
-            weekday: "short", day: "numeric", month: "long", year: "numeric",
-        })}
-          </dd>
+          <dd className="font-medium text-charcoal">{fmtDate(checkIn)}</dd>
           <dt className="text-muted-foreground">Check-out</dt>
-          <dd className="font-medium text-charcoal">
-            {new Date(pricing.checkOut).toLocaleDateString("en-IN", {
-            weekday: "short", day: "numeric", month: "long", year: "numeric",
-        })}
-          </dd>
+          <dd className="font-medium text-charcoal">{fmtDate(checkOut)}</dd>
           <dt className="text-muted-foreground">Duration</dt>
-          <dd className="font-medium text-charcoal">
-            {pricing.nights} night{pricing.nights > 1 ? "s" : ""}
-          </dd>
-          <dt className="text-muted-foreground">Guests</dt>
-          <dd className="font-medium text-charcoal">
-            {pricing.adults} adult{pricing.adults > 1 ? "s" : ""}
-            {pricing.children > 0 &&
-            `, ${pricing.children} child${pricing.children > 1 ? "ren" : ""}`}
-          </dd>
-          {pricing.mealPlan && (<>
-              <dt className="text-muted-foreground">Meal plan</dt>
-              <dd className="font-medium text-charcoal">
-                {pricing.mealPlanLabel} — {pricing.mealPlanIncludes}
-              </dd>
-            </>)}
+          <dd className="font-medium text-charcoal">{nights} night{nights > 1 ? "s" : ""}</dd>
+          {mealPlan && (<>
+            <dt className="text-muted-foreground">Meal plan</dt>
+            <dd className="font-medium text-charcoal">{mealPlan}</dd>
+          </>)}
         </dl>
+
+        <h3 className="mt-5 mb-2 font-body text-xs font-semibold uppercase tracking-widest text-muted-foreground">Rooms</h3>
+        <ul className="space-y-1.5 font-body text-sm">
+          {bookings.map((b) => (
+            <li key={b.bookingId} className="flex justify-between text-charcoal">
+              <span>{b.roomName}</span>
+              <span className="text-muted-foreground">{b.bookingRef}</span>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* Guest details */}
       <section className="rounded-xl border border-border p-6">
-        <h2 className="mb-4 font-body text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-          Guest Details
-        </h2>
+        <h2 className="mb-4 font-body text-sm font-semibold uppercase tracking-widest text-muted-foreground">Guest Details</h2>
         <dl className="grid grid-cols-2 gap-y-3 font-body text-sm">
           <dt className="text-muted-foreground">Name</dt>
           <dd className="font-medium text-charcoal">{guest.name}</dd>
@@ -138,9 +96,9 @@ export function ReviewClient({ slug }) {
           <dt className="text-muted-foreground">Phone</dt>
           <dd className="font-medium text-charcoal">{guest.phone}</dd>
           {guest.specialRequests && (<>
-              <dt className="text-muted-foreground">Requests</dt>
-              <dd className="font-medium text-charcoal">{guest.specialRequests}</dd>
-            </>)}
+            <dt className="text-muted-foreground">Requests</dt>
+            <dd className="font-medium text-charcoal">{guest.specialRequests}</dd>
+          </>)}
         </dl>
         <button type="button" onClick={() => router.back()} className="mt-4 font-body text-xs text-earth-brown underline-offset-4 hover:underline">
           Edit details
@@ -149,122 +107,87 @@ export function ReviewClient({ slug }) {
 
       {/* Price breakdown */}
       <section className="rounded-xl border border-border p-6">
-        <h2 className="mb-4 font-body text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-          Price Breakdown
-        </h2>
+        <h2 className="mb-4 font-body text-sm font-semibold uppercase tracking-widest text-muted-foreground">Price Breakdown</h2>
         <div className="space-y-2 font-body text-sm">
           <div className="flex justify-between text-charcoal/70">
-            <span>
-              Room rate &#8377;{formatPrice(pricing.pricePerNight)} × {pricing.nights} night{pricing.nights > 1 ? "s" : ""}
-            </span>
-            <span>&#8377;{formatPrice(pricing.baseNightlyTotal)}</span>
+            <span>Room rent</span>
+            <span>&#8377;{formatPrice(totals.baseNightlyTotal)}</span>
           </div>
-          {pricing.mealPlan && (<div className="flex justify-between text-charcoal/70">
-              <span>
-                {pricing.mealPlanLabel} &#8377;{formatPrice(pricing.mealSupplementPerNight)} × {pricing.nights} night{pricing.nights > 1 ? "s" : ""}
-                <span className="block text-xs text-charcoal/50">{pricing.mealPlanIncludes}</span>
-              </span>
-              <span>&#8377;{formatPrice(pricing.mealSupplementTotal)}</span>
-            </div>)}
-
-          {pricing.extraGuestLines?.map((line) => (<div key={line.key} className="flex justify-between text-charcoal/70">
-              <span>
-                {line.label} × {line.qty}
-              </span>
-              <span>&#8377;{formatPrice(line.amount)}</span>
-            </div>))}
-
-          {pricing.multiNightDiscount > 0 && (<div className="flex justify-between text-success">
-              <span>
-                2+ nights discount ({Math.round(pricing.multiNightDiscountRate * 100)}%)
-              </span>
-              <span>−&#8377;{formatPrice(pricing.multiNightDiscount)}</span>
-            </div>)}
-
-          {pricing.discountAmount > 0 && (<div className="flex justify-between text-success">
-              <span>Coupon discount ({pricing.couponCode})</span>
-              <span>−&#8377;{formatPrice(pricing.discountAmount)}</span>
-            </div>)}
-
-          {/* Tariffs exclude GST, so the tax is added on top rather than carved
-              out of the total, and it is shown as the CGST and SGST halves the
-              supply is actually taxed as. Listing every line makes the
-              arithmetic checkable against the invoice that follows. */}
+          {totals.mealSupplementTotal > 0 && (
+            <div className="flex justify-between text-charcoal/70">
+              <span>Meal plan</span>
+              <span>&#8377;{formatPrice(totals.mealSupplementTotal)}</span>
+            </div>
+          )}
+          {totals.extraGuestTotal > 0 && (
+            <div className="flex justify-between text-charcoal/70">
+              <span>Extra guests</span>
+              <span>&#8377;{formatPrice(totals.extraGuestTotal)}</span>
+            </div>
+          )}
+          {totals.multiNightDiscount > 0 && (
+            <div className="flex justify-between text-success">
+              <span>2+ nights discount</span>
+              <span>−&#8377;{formatPrice(totals.multiNightDiscount)}</span>
+            </div>
+          )}
+          {totals.discountAmount > 0 && (
+            <div className="flex justify-between text-success">
+              <span>Coupon discount</span>
+              <span>−&#8377;{formatPrice(totals.discountAmount)}</span>
+            </div>
+          )}
           <div className="flex justify-between border-t border-border pt-3 text-charcoal/70">
             <span>Subtotal (excl. GST)</span>
-            <span>&#8377;{formatPrice(pricing.subtotalBeforeGst)}</span>
+            <span>&#8377;{formatPrice(totals.subtotalBeforeGst)}</span>
           </div>
-
           <div className="flex justify-between text-charcoal/70">
-            <span>CGST ({pricing.cgstRate}%)</span>
-            <span>+ &#8377;{formatPrice(pricing.cgstAmount)}</span>
+            <span>CGST</span>
+            <span>+ &#8377;{formatPrice(totals.cgstAmount)}</span>
           </div>
-
           <div className="flex justify-between text-charcoal/70">
-            <span>SGST ({pricing.sgstRate}%)</span>
-            <span>+ &#8377;{formatPrice(pricing.sgstAmount)}</span>
+            <span>SGST</span>
+            <span>+ &#8377;{formatPrice(totals.sgstAmount)}</span>
           </div>
-
           <div className="flex justify-between border-t border-border pt-3 text-base font-semibold text-charcoal">
             <span>Total</span>
-            <span>&#8377;{formatPrice(pricing.totalAmount)}</span>
+            <span>&#8377;{formatPrice(totals.totalAmount)}</span>
           </div>
-
           <div className="mt-4 rounded-lg bg-warm-beige/40 p-4 text-xs text-charcoal/70">
-            <p>
-              <strong className="text-charcoal">Due now (full payment):</strong>{" "}
-              &#8377;{formatPrice(pricing.totalAmount)}
-            </p>
+            <p><strong className="text-charcoal">Due now (full payment):</strong> &#8377;{formatPrice(totals.totalAmount)}</p>
             <p className="mt-1">No balance due at check-in.</p>
           </div>
         </div>
       </section>
 
-      {/* Cancellation policy — shown before the confirm button so the terms are
-          on screen at the moment of commitment, not linked away from it. */}
+      {/* Cancellation policy */}
       <section className="rounded-xl border border-[var(--color-warning)]/40 bg-[var(--color-warning)]/10 p-6">
         <div className="mb-3 flex items-start gap-2">
           <svg className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-warning)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
           </svg>
-          <h2 className="font-body text-sm font-semibold text-charcoal">
-            Cancellation Policy
-          </h2>
+          <h2 className="font-body text-sm font-semibold text-charcoal">Cancellation Policy</h2>
         </div>
         <ul className="ml-1 list-disc space-y-1.5 pl-4 font-body text-xs text-charcoal/80">
           <li>7 days or less before arrival: 100% of the booking amount</li>
           <li>8 to 21 days before arrival: 20% cancellation charge</li>
           <li>Date changes within 7 days of arrival count as a cancellation</li>
-          <li>
-            Christmas, New Year &amp; long weekend bookings: Non-refundable
-          </li>
+          <li>Christmas, New Year &amp; long weekend bookings: Non-refundable</li>
           <li>Group bookings (more than 3 rooms): Non-refundable</li>
-          <li>
-            Free rescheduling up to 8 days before arrival when travel is
-            affected by force majeure (permit charges apply if a safari permit
-            was issued)
-          </li>
         </ul>
         <p className="mt-3 font-body text-xs font-medium text-charcoal/80">
-          Charges are calculated on the total booking value, not just the
-          advance paid. Cancellations are accepted only by email.
+          Charges are calculated on the total booking value, not just the advance paid. Cancellations are accepted only by email.
         </p>
       </section>
 
-      {error && (<p className="rounded-lg bg-red-50 px-4 py-3 font-body text-sm text-red-600">
-          {error}
-        </p>)}
-
-      <button type="button" onClick={() => void handleConfirm()} disabled={submitting} className="inline-flex h-14 w-full items-center justify-center rounded-xl bg-earth-brown font-body text-base font-medium text-ivory transition-colors duration-200 hover:bg-earth-brown/90 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-earth-brown focus-visible:ring-offset-2">
-        {submitting ? "Creating booking…" : "Confirm & Proceed to Payment"}
+      <button type="button" onClick={handleContinue} className="inline-flex h-14 w-full items-center justify-center rounded-xl bg-earth-brown font-body text-base font-medium text-ivory transition-colors duration-200 hover:bg-earth-brown/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-earth-brown focus-visible:ring-offset-2">
+        Proceed to Payment
       </button>
 
       <p className="text-center font-body text-xs text-muted-foreground">
-        By confirming, you agree to our{" "}
-        <a href="/terms-and-condition" target="_blank" className="text-earth-brown underline-offset-4 hover:underline">
-          Terms & Conditions
-        </a>
-        .
+        By continuing, you agree to our{" "}
+        <a href="/terms-and-condition" target="_blank" className="text-earth-brown underline-offset-4 hover:underline">Terms &amp; Conditions</a>.
       </p>
-    </div>);
+    </div>
+  );
 }
