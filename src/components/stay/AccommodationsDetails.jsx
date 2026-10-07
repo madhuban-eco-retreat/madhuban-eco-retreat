@@ -254,7 +254,7 @@ const AccommodationDetail = () => {
                             </p>
                             <p className="text-xs text-earth-brown/80">
                               + GST as applicable ({GST_RATE_LOW}% up to {formatInr(GST_THRESHOLD)} a
-                              night, {GST_RATE_HIGH}% above)
+                              night, {GST_RATE_HIGH}% above, on the tariff before any discount)
                             </p>
                           </div>
                         );

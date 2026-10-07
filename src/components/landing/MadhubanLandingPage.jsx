@@ -492,7 +492,7 @@ export default function MadhubanLandingPage({ variant = "weekend" }) {
               All rates are per night on double occupancy on the MAP plan
               (breakfast, lunch/dinner) &mdash; room rate + meal plan = fare.
               AP (all three meals) adds ₹1,000. GST extra as applicable: 5% up
-              to ₹7,500 a night, 18% above. Stay 2 nights or more and get a
+              to ₹7,500 a night, 18% above (on the tariff before any discount). Stay 2 nights or more and get a
               flat 20% off room rent (meals not discounted; not available in
               peak season, Christmas/New Year or on long weekends).
             </p>

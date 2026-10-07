@@ -127,7 +127,10 @@ const notes = [
 ];
 
 const TariffSection = () => {
-  const gstLine = `GST extra as applicable — ${GST_RATE_LOW}% GST where the night is ${formatInr(
+  // The slab is read from the tariff for the night BEFORE any discount (see
+  // GST_SLAB_ON_PRE_DISCOUNT_VALUE), so a discounted fare below ₹7,500 on this
+  // page is still taxed on the tariff it was discounted from.
+  const gstLine = `GST extra as applicable — ${GST_RATE_LOW}% GST where the tariff for the night (before any discount) is ${formatInr(
     GST_THRESHOLD,
   )} or less, ${GST_RATE_HIGH}% where it is more`;
 

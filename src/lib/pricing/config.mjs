@@ -36,19 +36,23 @@ export const GST_RATE_HIGH = 18;
 /**
  * Which value the slab is read from when a night has been discounted.
  *
- * false (the engine's long-standing behaviour): the slab follows what the guest
- * is actually charged for the night — AFTER the long-stay discount and any
- * coupon. A Glamping Tent on MAP is ₹8,700 (18%) on a single night and ₹7,200
- * (5%) per night on a 2-night stay.
+ * true (the property's rule, and the setting in force): the slab follows the
+ * tariff for the night BEFORE any discount — the room rate plus the meal plan
+ * plus any extra guests, with the long-stay offer and any coupon added back. A
+ * discount never moves a night to a lower slab, so a Glamping Tent on MAP is an
+ * ₹8,700 night and is taxed at 18% whether it is sold at ₹8,700 or, on a
+ * 2-night stay, at ₹7,200. GST is still charged on what the guest actually
+ * pays; only the slab is read from the undiscounted tariff.
  *
- * true: the slab follows the declared tariff BEFORE any discount, so a discount
- * never moves a night to a lower slab and a Glamping Tent stays 18% at ₹7,200.
- * GST law reads the threshold on the declared tariff "without excluding any
- * discount", so this is the setting to use if the property's accountant says
- * the post-discount reading does not hold. It is a single switch on purpose:
- * the tax basis is a decision for the accountant, not for the price list.
+ * false (the engine's original behaviour, kept as an option): the slab follows
+ * what the guest is charged AFTER the discount, which put a 2-night Glamping
+ * stay on MAP at ₹7,200 a night and 5% — an invoice that under-collected
+ * ₹1,872 of GST on a ₹14,400 stay.
+ *
+ * It stays a single switch so the tax basis can be changed on the accountant's
+ * advice without touching the price list.
  */
-export const GST_SLAB_ON_PRE_DISCOUNT_VALUE = false;
+export const GST_SLAB_ON_PRE_DISCOUNT_VALUE = true;
 
 /* ── Room tariffs ─────────────────────────────────────────────────────────── */
 

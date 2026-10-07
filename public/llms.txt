@@ -94,4 +94,4 @@
 - Additional guests per night: adult ₹2,600 (MAP) or ₹3,200 (AP); child 5-12 years ₹1,800 (MAP) or ₹2,100 (AP); one child under 5 years is free
 - Tariff 2026-27, valid 1 July 2026 to 30 June 2027
 - Activities: Wildlife safari, nature walks, birdwatching, yoga, pottery, bush dining
-- GST (extra): 18% where the value of the night is above ₹7,500 | 5% where it is ₹7,500 or below
+- GST (extra): 18% where the tariff for the night (before any discount) is above ₹7,500 | 5% where it is ₹7,500 or below

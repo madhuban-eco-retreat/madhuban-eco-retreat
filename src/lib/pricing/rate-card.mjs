@@ -161,8 +161,9 @@ export function extraGuestSentence() {
 /** The sentence covering GST, for FAQ answers and the terms page. */
 export function gstSentence() {
   return (
-    `Rates are exclusive of GST, which is charged separately: ${GST_RATE_LOW}% where the value of the ` +
-    `night is ${formatInr(GST_THRESHOLD)} or less and ${GST_RATE_HIGH}% where it is more.`
+    `Rates are exclusive of GST, which is charged separately. The GST rate is set by the tariff for the night ` +
+    `before any discount: ${GST_RATE_LOW}% where it is ${formatInr(GST_THRESHOLD)} or less and ` +
+    `${GST_RATE_HIGH}% where it is more.`
   );
 }
 

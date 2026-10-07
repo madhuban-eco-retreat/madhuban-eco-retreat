@@ -312,12 +312,19 @@ test("a stay straddling 04/05 Jan prices each night on its own season", () => {
   assert.equal(jan5.season, "regular");
   assert.equal(jan5.longStayDiscount, 1500);
   assert.equal(jan5.effectiveValue, 7200);
-  assert.equal(jan5.gstRate, 5);
+  // Charged 7,200, but the tariff it was discounted from is 8,700: 18%, not 5%.
+  assert.equal(jan5.slabValue, 8700);
+  assert.equal(jan5.gstRate, 18);
 
-  assert.equal(q.mixedGstRates, true);
+  assert.equal(q.mixedGstRates, false);
   assert.equal(q.taxableAmount, 17400);
-  assert.equal(q.totalGst, 1836 + 360);
-  assert.equal(q.totalAmount, 19596);
+  assert.equal(q.totalGst, 3132); // 17,400 x 18%
+  assert.equal(q.totalAmount, 20532);
+
+  // The superseded reading (slab on what was charged) still works as an option.
+  const old = stay("glamping-tents", "MAP", "2027-01-04", 2, { slabOnPreDiscountValue: false });
+  assert.equal(old.mixedGstRates, true);
+  assert.equal(old.totalGst, 1836 + 360);
 });
 
 test("the offer comes off the rent only — never the meals, never the extras", () => {
@@ -421,24 +428,47 @@ test("the Glamping Tent moves from the 5% slab to 18% because the meal-inclusive
   assert.equal(q.totalAmount, 10266);
 });
 
-test("GST basis: by default a discounted night is taxed at the slab of what was charged", () => {
-  // Glamping MAP on a 2-night stay is ₹7,200 a night — under the line.
+test("GST basis: a discounted night is taxed at the slab of the tariff it was discounted from", () => {
+  // Glamping MAP: 7,500 rent + 1,200 meals = an 8,700 tariff. A 2-night stay is
+  // charged 7,200 a night, but the slab is read from 8,700, so it is 18%.
   const q = stay("glamping-tents", "MAP", REGULAR, 2);
-  assert.equal(q.taxableAmount, 14400);
-  assert.equal(q.gstRate, 5);
-  assert.equal(q.totalGst, 720);
-  assert.equal(q.totalAmount, 15120);
-  assert.equal(q.nightLines[0].slabValue, 7200);
-});
-
-test("GST basis: with the switch on, a discount never moves a night to a lower slab", () => {
-  const q = stay("glamping-tents", "MAP", REGULAR, 2, { slabOnPreDiscountValue: true });
-  // Same charge, but the slab is read from the declared 8,700 tariff.
-  assert.equal(q.taxableAmount, 14400);
+  assert.equal(q.taxableAmount, 14400); // GST is still charged on what the guest pays
+  assert.equal(q.nightLines[0].effectiveValue, 7200);
   assert.equal(q.nightLines[0].slabValue, 8700);
   assert.equal(q.gstRate, 18);
   assert.equal(q.totalGst, 2592);
   assert.equal(q.totalAmount, 16992);
+});
+
+test("GST basis: the invoice that under-collected GST (Glamping, MAP, 24-26 Oct 2026)", () => {
+  // MADH/INV/2026-27/0010 was issued at 5%: GST 720, total 15,120.
+  const q = stay("glamping-tents", "MAP", "2026-10-24", 2);
+  assert.equal(q.taxableAmount, 14400); // unchanged: the guest's room and meals cost the same
+  assert.equal(q.totalGst, 2592); // 18% of 14,400, not the 720 (5%) that was invoiced
+  assert.equal(q.totalAmount, 16992);
+  assert.equal(16992 - 15120, 1872); // the GST that invoice under-collected
+});
+
+test("GST basis: the superseded reading is still available as an option", () => {
+  // With the switch off the slab follows what was charged after the discount.
+  const q = stay("glamping-tents", "MAP", REGULAR, 2, { slabOnPreDiscountValue: false });
+  assert.equal(q.nightLines[0].slabValue, 7200);
+  assert.equal(q.gstRate, 5);
+  assert.equal(q.totalGst, 720);
+  assert.equal(q.totalAmount, 15120);
+});
+
+test("GST basis: a coupon never moves a night to a lower slab either", () => {
+  const q = stay("glamping-tents", "MAP", REGULAR, 1, { couponDiscount: 3000 });
+  assert.equal(q.nightLines[0].effectiveValue, 5700);
+  assert.equal(q.nightLines[0].slabValue, 8700);
+  assert.equal(q.gstRate, 18);
+});
+
+test("GST basis: a long weekend or peak night is unaffected (already above the line)", () => {
+  const q = stay("glamping-tents", "MAP", CHRISTMAS);
+  assert.equal(q.nightLines[0].slabValue, q.nightLines[0].effectiveValue);
+  assert.equal(q.gstRate, 18);
 });
 
 test("a child pushes a discounted night over the threshold", () => {
@@ -478,8 +508,10 @@ test("a coupon cannot drive the room rent below zero, and cannot touch the meals
   assert.equal(q.nightLines[0].roomValue, 0);
   // The meal supplement is not room rent, so it is still charged.
   assert.equal(q.taxableAmount, 1200);
-  assert.equal(q.gstRate, 5);
-  assert.equal(q.totalAmount, 1260);
+  // The slab is read from the 8,700 tariff the coupon was taken off, not from 1,200.
+  assert.equal(q.gstRate, 18);
+  assert.equal(q.totalGst, 216);
+  assert.equal(q.totalAmount, 1416);
 });
 
 /* ══ Invoice-side reconstruction ═══════════════════════════════════════════════ */
