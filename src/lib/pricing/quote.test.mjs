@@ -70,6 +70,7 @@ import {
   roomPriceSentence,
   extraGuestSentence,
   gstSentence,
+  roomGstRate,
 } from "./rate-card.mjs";
 
 /** The morning after a given night: the check-out date of a one-night stay. */
@@ -766,3 +767,25 @@ for (const plan of ["MAP", "AP", null]) {
     });
   }
 }
+
+/* ══ Admin display: the GST rate shown beside a room ═══════════════════════════ */
+
+test("the GST rate an admin screen shows for a room is the rate its sold tariff falls in", () => {
+  // rooms.base_price_per_night is rent excluding meals. A Glamping Tent's rent is
+  // 7,500 (the 5% line), but it is only ever sold with meals: 8,700 or more, 18%.
+  assert.equal(roomGstRate("glamping-tents", 7500), 18);
+  assert.equal(roomGstRate("mud-house-standard", 9000), 18);
+  assert.equal(roomGstRate("safari-tent", 12000), 18);
+  // Each tariff room's displayed rate agrees with what the engine charges a
+  // standard two-guest night on the cheapest plan.
+  for (const slug of Object.keys(SHEET)) {
+    const q = stay(slug, "MAP", REGULAR);
+    assert.equal(roomGstRate(slug, BASE_NIGHTLY_RATES[slug]), q.gstRate, slug);
+  }
+});
+
+test("a room with no meal plan (camping) is read from its own rate", () => {
+  assert.equal(roomGstRate("camping-tent", 2500), 5);
+  assert.equal(roomGstRate("camping-tent", 7500), 5); // threshold is inclusive at the bottom
+  assert.equal(roomGstRate("camping-tent", 7501), 18);
+});

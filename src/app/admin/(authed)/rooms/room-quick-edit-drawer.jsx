@@ -13,7 +13,7 @@ function QuickEditForm({ room, onSaved, onClose, }) {
     const [error, setError] = useState(null);
     const parsedPrice = parseFloat(price);
     const derivedGst = !isNaN(parsedPrice) && parsedPrice > 0
-        ? computeRoomGstRate(parsedPrice)
+        ? computeRoomGstRate(parsedPrice, room.slug)
         : null;
     async function handleSave() {
         const priceVal = parseFloat(price);

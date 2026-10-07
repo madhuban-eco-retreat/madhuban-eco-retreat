@@ -5,6 +5,7 @@ import {
   GST_RATE_HIGH,
 } from "@/lib/pricing/config.mjs";
 import { gstRateForEffectiveValue } from "@/lib/pricing/quote.mjs";
+import { roomGstRate } from "@/lib/pricing/rate-card.mjs";
 
 /** The slab boundary and the two rates, re-exported for display code. */
 export { GST_THRESHOLD, GST_RATE_LOW, GST_RATE_HIGH };
@@ -34,10 +35,17 @@ export function gstRate(effectivePerNightValue) {
  * where there is no season, no discount and no guest count to apply — the
  * indicative rate for the room at its base price. It is NOT what a booking is
  * taxed at; anything pricing a real stay must go through quote.mjs, whose slab
- * follows the amount actually charged.
+ * follows the tariff for the night.
+ *
+ * Pass the room's slug. rooms.base_price_per_night is the room rent EXCLUDING
+ * meals, and a room on the tariff sheet is always sold with a meal plan, so the
+ * slab is read from rent + the cheapest plan (see roomGstRate). Without a slug
+ * the number is read as given, which is right only for a room with no plan.
  */
-export function computeRoomGstRate(basePricePerNight) {
-  return gstRateForEffectiveValue(basePricePerNight);
+export function computeRoomGstRate(basePricePerNight, roomSlug) {
+  return roomSlug
+    ? roomGstRate(roomSlug, basePricePerNight)
+    : gstRateForEffectiveValue(basePricePerNight);
 }
 
 /**

@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { CheckCircle2, XCircle, Circle, Zap, CreditCard, Banknote, CalendarDays, Users, BedDouble, } from "lucide-react";
-import { computeRoomGstRate } from "@/lib/gst";
 import { Card, Badge } from "@/components/admin/ui";
 import { bookingStatusVariant, bookingStatusLabel, initialsFromName, avatarColor, } from "@/lib/admin/dashboard";
 import { BookingActionsPanel } from "./booking-actions";
@@ -189,7 +188,13 @@ export default async function BookingDetailPage({ params }) {
     const existingInvoiceId = invoiceRow?.id ?? null;
     // derived
     const nights = Math.max(1, Math.round((new Date(booking.checkout).getTime() - new Date(booking.checkin).getTime()) / 86400000));
-    const derivedGstRate = room ? computeRoomGstRate(room.base_price_per_night) : 0;
+    // The rate this booking was actually taxed at, read back from what was stored.
+    // It was derived from the room's catalogue rent before, which shows "5%" beside
+    // an 18% charge for a Glamping Tent (rent 7,500, sold at 8,700+ with meals).
+    const storedBase = Number(booking.base_amount);
+    const derivedGstRate = storedBase > 0 ? Math.round((Number(booking.gst_amount) / storedBase) * 100) : 0;
+    // What the night was sold at before discount: room, meals and extra guests together.
+    const tariffPerNight = (storedBase + Number(booking.discount_amount ?? 0)) / nights;
     const totalPaid = payments
         .filter(p => p.status === "captured")
         .reduce((s, p) => s + Number(p.amount), 0);
@@ -335,8 +340,8 @@ export default async function BookingDetailPage({ params }) {
                     {roomName} ({nights} night{nights !== 1 ? "s" : ""})
                   </p>
                   <p className="font-body text-xs text-charcoal/50">
-                    ₹{fmtAmt(room?.base_price_per_night ?? 0)}/night
-                    {room ? ` + ${derivedGstRate}% GST` : ""}
+                    ₹{fmtAmt(tariffPerNight)}/night (room, meals &amp; extras)
+                    {` + ${derivedGstRate}% GST`}
                   </p>
                 </div>
                 {/* Gross, so the discount below reads as a deduction from it.

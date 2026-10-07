@@ -186,16 +186,19 @@ function RatesTab({ rooms, editingId, editingVal, onStartEdit, onEditValChange, 
     return (<Card className="overflow-hidden p-0">
       <div className="border-b border-admin-card-border bg-admin-status-neutral-bg/40 px-6 py-3">
         <p className="font-body text-xs text-charcoal/50">
-          GST is always auto-computed from base price — 5% (2.5% CGST + 2.5% SGST) at ₹7,500 and
-          below, 18% (9% + 9%) above. The stored{" "}
-          <code className="font-mono">gst_rate</code> column is not used in display or pricing.
+          Enter the room rent EXCLUDING meals (for example ₹7,500 for a Glamping Tent) — the MAP or AP
+          meal plan is added automatically. GST is read from the tariff for the night (room rent + meal
+          plan + any extra guests, before any discount): 5% (2.5% CGST + 2.5% SGST) at ₹7,500 and
+          below, 18% (9% + 9%) above. The rate shown here is for the room rent plus the cheapest meal
+          plan (MAP). The stored <code className="font-mono">gst_rate</code> column is not used in
+          display or pricing.
         </p>
       </div>
       <table className="w-full">
         <thead>
           <tr className="border-b border-admin-card-border">
             <th className="px-6 py-3 text-left font-body text-xs font-semibold uppercase tracking-wider text-charcoal/50">Room</th>
-            <th className="px-6 py-3 text-left font-body text-xs font-semibold uppercase tracking-wider text-charcoal/50">Base Price / Night</th>
+            <th className="px-6 py-3 text-left font-body text-xs font-semibold uppercase tracking-wider text-charcoal/50">Room Rent / Night (excl. meals)</th>
             <th className="px-6 py-3 text-left font-body text-xs font-semibold uppercase tracking-wider text-charcoal/50">GST Rate</th>
             <th className="px-6 py-3"/>
           </tr>
@@ -204,8 +207,8 @@ function RatesTab({ rooms, editingId, editingVal, onStartEdit, onEditValChange, 
           {rooms.map((room) => {
             const isEditing = editingId === room.id;
             const previewGst = isEditing && editingVal
-                ? (() => { const v = parseFloat(editingVal); return isNaN(v) ? null : computeRoomGstRate(v); })()
-                : computeRoomGstRate(room.base_price_per_night);
+                ? (() => { const v = parseFloat(editingVal); return isNaN(v) ? null : computeRoomGstRate(v, room.slug); })()
+                : computeRoomGstRate(room.base_price_per_night, room.slug);
             return (<tr key={room.id} className="transition-colors hover:bg-warm-beige/20">
                 <td className="px-6 py-4">
                   <p className="font-body text-sm font-medium text-charcoal">{room.name}</p>

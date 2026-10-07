@@ -101,9 +101,11 @@ export function SettingsClient({ initialSettings }) {
             <SectionHeading>GST Rate Defaults</SectionHeading>
             <p className="font-body text-sm text-charcoal/60">
               These are read-only fallback values. The actual GST rate applied to each booking is
-              computed dynamically from the room's base price:
-              rooms priced at or below ₹{s.gst_rate_threshold.toLocaleString("en-IN")} per night
-              attract {s.default_gst_rate_low}% GST; above that threshold attract {s.default_gst_rate_high}% GST.
+              worked out per night from the tariff for that night: the room rent plus the meal plan
+              plus any extra guests, before any discount. A night at or below
+              ₹{s.gst_rate_threshold.toLocaleString("en-IN")} attracts {s.default_gst_rate_low}% GST;
+              above that threshold it attracts {s.default_gst_rate_high}% GST. GST is charged on what
+              the guest actually pays.
             </p>
             <dl className="grid grid-cols-3 gap-4">
               <div className="rounded-xl border border-admin-card-border p-4 text-center">

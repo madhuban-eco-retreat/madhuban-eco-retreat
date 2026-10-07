@@ -120,6 +120,27 @@ export function mealPlanLabel(plan) {
   return MEAL_PLANS[plan].label;
 }
 
+/**
+ * The GST rate a room's regular nightly tariff falls in, for admin screens that
+ * show a room on its own with no stay in hand.
+ *
+ * `rent` is rooms.base_price_per_night — the room rent EXCLUDING meals. A room
+ * on the tariff sheet is never sold without a meal plan, so the tariff its slab
+ * is read from is the rent plus the cheapest plan (MAP). Reading the rent alone
+ * put a Glamping Tent (rent ₹7,500) on "5%" while every night actually sold
+ * is ₹8,700 or more and is taxed at 18%. A room that is not on the sheet (the
+ * camping tent) has no plan and is read from its own rate.
+ *
+ * Indicative only: a real stay is priced by quote.mjs, which adds extra guests
+ * and the plan actually chosen.
+ */
+export function roomGstRate(slug, rent) {
+  const cheapestPlan = hasTariff(slug)
+    ? Math.min(...MEAL_PLAN_CODES.map((code) => MEAL_PLANS[code].supplementPerNight))
+    : 0;
+  return slabFor(Number(rent) + cheapestPlan);
+}
+
 /** The GST slab a bare double-occupancy regular night falls in. */
 export function slabFor(amount) {
   return amount > GST_THRESHOLD ? GST_RATE_HIGH : GST_RATE_LOW;
