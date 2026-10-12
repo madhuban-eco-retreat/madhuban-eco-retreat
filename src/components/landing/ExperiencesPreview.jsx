@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Hourglass, MapPinned, MessageCircle, TreePine } from "lucide-react";
+import { ArrowRight, ChevronDown, Hourglass, MapPinned, MessageCircle, TreePine } from "lucide-react";
+import ExperiencesHeroSlider from "@/components/landing/ExperiencesHeroSlider";
 import RevealOnScroll from "@/components/landing/RevealOnScroll";
 
 /**
@@ -10,8 +11,9 @@ import RevealOnScroll from "@/components/landing/RevealOnScroll";
  *   - content column 1120px: two 540px cards, then three 347px cards, 40px apart
  *   - cards: 16px radius, 1px border at 50%, photo 538x336 (large) / 4:3 (small),
  *     32px inner padding, "Ideal for" rule at 30%
- *   - hero 700px tall on #1B1B17, "Why different" strip on #F6F3EE (96px padding),
- *     closing call-to-action on #FCF9F4
+ *   - hero 700px tall on #1B1B17 with a 3-photo slideshow, dark "By the Numbers" strip,
+ *     "A Day at Madhuban" (4 moments), "Why different" strip on #F6F3EE, guest reviews,
+ *     FAQ on #FAF7F2 and a white closing call-to-action
  * The header, ratings bar, footer, cookie banner and floating contact buttons come
  * from the (marketing) layout, so this component is only the page body.
  *
@@ -33,9 +35,108 @@ import RevealOnScroll from "@/components/landing/RevealOnScroll";
 const PHOTOS = "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/experiences/New%20Experiences%20page/";
 const WHATSAPP_URL = "https://wa.me/919770558419";
 
-// The design's hero is a plain dark block. Set this to a photo URL and the hero
-// gets the picture with a gradient so the text stays readable.
-const HERO_IMAGE = null;
+// Hero slideshow, in the order they appear.
+const HERO_IMAGES = [
+  { src: `${PHOTOS}Hero%20imgs/experiences%20page%20hero%20img%201.png` },
+  { src: `${PHOTOS}Hero%20imgs/hero%20img%202.png` },
+  { src: `${PHOTOS}Hero%20imgs/hero%20img%203.png` },
+];
+
+const DAY_PHOTOS = `${PHOTOS}a%20day%20at%20madhuban/`;
+
+const STATS = [
+  { value: "150", suffix: "+", label: "Bird species recorded across Ratapani" },
+  { value: "1", suffix: "hr", label: "From Bhopal" },
+  { value: "5", label: "Ways to experience the reserve" },
+  { value: "1", label: "Tiger reserve at the doorstep" },
+];
+
+const DAY_MOMENTS = [
+  {
+    time: "06:00 AM",
+    title: "Sunrise Safari",
+    text: "First light over the sal forest, and the best chance of spotting movement before the heat sets in.",
+    photo: `${DAY_PHOTOS}experiences%20page%20safari%20section%20img.png`,
+    alt: "Sunrise jungle safari in Ratapani Tiger Reserve",
+  },
+  {
+    time: "10:30 AM",
+    title: "Midday Forest Walk",
+    text: "Slower, quieter, closer to the ground — the details you miss from a vehicle.",
+    photo: `${DAY_PHOTOS}experiences%20page%20mid%20day%20forest%20walk%20section%20img.png`,
+    alt: "Guided midday forest walk near Madhuban Eco Retreat",
+  },
+  {
+    time: "03:30 PM",
+    title: "Afternoon in the Village",
+    text: "Tea with a Gond family, and a look at architecture that’s shaped this land for generations.",
+    photo: `${DAY_PHOTOS}experience%20page%20village%20walk%20img.png`,
+    alt: "Afternoon village walk through a Gond village near Ratapani",
+  },
+  {
+    time: "07:30 PM",
+    title: "Bush Dinner at Dusk",
+    text: "Firelight, forest sounds, dinner under a sky with no city glow to compete with.",
+    photo: `${DAY_PHOTOS}experiences%20page%20bush%20dining%20section%20img.png`,
+    alt: "Bush dinner by firelight at dusk, Madhuban Eco Retreat",
+  },
+];
+
+const REVIEWS = [
+  {
+    quote:
+      "One of the best experiences I've had near Bhopal. The stay, the food, pottery, yoga, the healing power of nature — everything was top notch. So therapeutic. Going back relaxed and grateful.",
+    name: "Shristi Pandey",
+    note: "Local Guide",
+  },
+  {
+    quote:
+      "Truly enriching — scenic surroundings, comfortable stay, nature walks, birding, delicious food. The respect for tribal communities of Madhya Pradesh is beautifully reflected in the architecture and cuisine.",
+    name: "Amit Jethwa",
+    note: "Local Guide",
+  },
+  {
+    quote:
+      "Stayed overnight and had a truly amazing experience. Meditation, yoga, swimming, food — everything was perfect. Staff was outstanding. Highly recommended for family stay and a peaceful getaway.",
+    name: "Anshul Agrawal",
+    note: "Bhopal",
+  },
+];
+
+// The design only shows the questions (all collapsed). The answers are written to
+// match the rest of the page; please check them before this goes live.
+const FAQS = [
+  {
+    q: "How far is Madhuban from Bhopal?",
+    a: "Madhuban Eco Retreat is about an hour’s drive from Bhopal, on the edge of Ratapani Tiger Reserve. Every experience starts from the resort itself, so there is no long transfer on the day.",
+  },
+  {
+    q: "Can I do more than one experience during my stay?",
+    a: "Yes. Many guests pair a sunrise safari or forest walk with a village walk or a bush dinner in the evening. Tell us what you’d like when you book and we’ll plan the days around it.",
+  },
+  {
+    q: "Do I need to be an experienced hiker to join a hiking trail?",
+    a: "No. The trails are guided and paced to the group, from an easy morning walk to a longer trek with valley views. Your guide will suggest the right route once they know who’s walking.",
+  },
+  {
+    q: "Is the safari inside the actual tiger reserve?",
+    a: "Yes. The jungle safari goes into Ratapani Tiger Reserve with a naturalist guide. Entry timings and zones follow the forest department’s rules, and we’ll confirm what’s available for your dates.",
+  },
+  {
+    q: "Are these experiences suitable for children?",
+    a: "Most are, especially the safari, the village walk and the bush dinner. Hikes and camping depend on your children’s age and stamina, so let us know how old they are and we’ll suggest what fits.",
+  },
+];
+
+const FAQ_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQS.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
+};
 
 // Where each card's "Learn More" goes. The five dedicated experience pages do not
 // exist yet, so these point at the closest live pages. Change them here once the
@@ -213,12 +314,7 @@ export default function ExperiencesPreview() {
       <main>
         {/* HERO — 700px, left-aligned, text sits on the bottom edge */}
         <section className="relative isolate overflow-hidden bg-[#1B1B17]">
-          {HERO_IMAGE && (
-            <>
-              <Image src={HERO_IMAGE} alt="" fill priority quality={90} sizes="100vw" className="object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1B1B17] via-[#1B1B17]/55 to-[#1B1B17]/25" />
-            </>
-          )}
+          <ExperiencesHeroSlider images={HERO_IMAGES} />
           <div className="relative mx-auto flex min-h-[520px] max-w-[1440px] flex-col justify-end px-6 pb-14 md:min-h-[700px] md:px-[60px] md:pb-[97px]">
             <p className="flex items-center gap-2 pl-[15px]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#F6E0B7]" aria-hidden="true" />
@@ -265,6 +361,88 @@ export default function ExperiencesPreview() {
           </div>
         </section>
 
+        {/* BY THE NUMBERS — dark full-bleed strip */}
+        <section aria-labelledby="by-the-numbers" className="border-y border-[#292524] bg-[#2A2A2A] py-16 md:py-[97px]">
+          <div className="mx-auto max-w-[1380px] px-6 md:px-16">
+            <RevealOnScroll className="mx-auto max-w-[640px] text-center">
+              <p className="text-xs font-bold uppercase leading-4 tracking-[3px] text-[#C9A84C]">By the Numbers</p>
+              <h2
+                id="by-the-numbers"
+                className="mt-3 font-primary text-2xl font-normal leading-8 text-white md:text-[30px] md:leading-9"
+              >
+                An Untamed Sanctuary in Central India
+              </h2>
+            </RevealOnScroll>
+
+            <dl className="mt-12 grid grid-cols-2 gap-4 md:mt-16 lg:grid-cols-4 lg:gap-12">
+              {STATS.map((s, i) => (
+                <RevealOnScroll key={s.label} delay={i * 80} className="h-full">
+                  <div className="flex h-full flex-col items-center gap-3 rounded-xl border border-white/5 bg-white/[0.02] px-4 py-6 text-center md:p-[25px] md:pb-[44px]">
+                    <dt className="order-2 max-w-[200px] text-sm font-light leading-5 text-white/80">{s.label}</dt>
+                    <dd className="order-1 flex items-end justify-center font-primary leading-[60px] text-[#C9A84C]">
+                      <span className="text-[56px] md:text-[72px]">{s.value}</span>
+                      {s.suffix && (
+                        <span className={`pb-1 ${s.suffix === "hr" ? "pl-1 text-[28px] font-light md:text-[30px]" : "text-[30px] md:text-4xl"}`}>
+                          {s.suffix}
+                        </span>
+                      )}
+                    </dd>
+                  </div>
+                </RevealOnScroll>
+              ))}
+            </dl>
+          </div>
+        </section>
+
+        {/* A DAY AT MADHUBAN — four moments from dawn to dusk */}
+        <section aria-labelledby="a-day" className="bg-white py-16 md:py-24">
+          <div className="mx-auto max-w-[1380px] px-6 md:px-16">
+            <RevealOnScroll className="max-w-[672px]">
+              <p className="text-xs font-bold uppercase leading-4 tracking-[3px] text-earth-brown">
+                Rhythm of the Wilderness
+              </p>
+              <h2
+                id="a-day"
+                className="mt-2 font-primary text-[28px] font-normal leading-9 text-[#1C1C19] md:text-4xl md:leading-10"
+              >
+                A Day at Madhuban
+              </h2>
+              <p className="mt-3 text-base font-light leading-6 text-[#4B463D]">
+                The passage of light and stillness, from pre-dawn mist to ember-lit clear skies.
+              </p>
+            </RevealOnScroll>
+
+            <ol className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 md:mt-16 lg:grid-cols-4 lg:gap-6">
+              {DAY_MOMENTS.map((m, i) => (
+                <li key={m.title}>
+                  <RevealOnScroll delay={i * 80}>
+                    <figure>
+                      <div className="relative h-[320px] w-full overflow-hidden rounded-xl bg-[#EDE6DC] shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
+                        <Image
+                          src={m.photo}
+                          alt={m.alt}
+                          fill
+                          quality={90}
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 295px"
+                          className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                        <span className="absolute left-4 top-4 rounded bg-black/40 px-3 py-1 text-[11px] font-bold uppercase leading-[16.5px] tracking-[1.1px] text-white backdrop-blur-[6px]">
+                          {m.time}
+                        </span>
+                      </div>
+                      <figcaption className="px-1 pt-4">
+                        <h3 className="font-primary text-xl font-normal leading-7 text-[#1C1C19]">{m.title}</h3>
+                        <p className="mt-1 text-sm font-light leading-[22.75px] text-[#4B463D]">{m.text}</p>
+                      </figcaption>
+                    </figure>
+                  </RevealOnScroll>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
         {/* WHY AN EXPERIENCE AT MADHUBAN IS DIFFERENT */}
         <section aria-labelledby="why-different" className="bg-[#F6F3EE] py-16 md:py-24">
           {/* 1200px of content (1248 less the 24px side padding), the design's width;
@@ -296,8 +474,83 @@ export default function ExperiencesPreview() {
           </div>
         </section>
 
+        {/* WHAT GUESTS SAY */}
+        <section aria-labelledby="guest-voices" className="bg-white py-16 md:py-20">
+          <div className="mx-auto max-w-[1380px] px-6 md:px-16">
+            <RevealOnScroll className="mx-auto max-w-[672px] text-center">
+              <p className="text-xs font-bold uppercase leading-4 tracking-[3px] text-earth-brown">Guest Voices</p>
+              <h2
+                id="guest-voices"
+                className="mt-3 font-primary text-[28px] font-normal leading-9 text-[#1C1C19] md:text-4xl md:leading-10"
+              >
+                What Guests Say
+              </h2>
+            </RevealOnScroll>
+
+            <div className="mt-12 grid grid-cols-1 gap-6 md:mt-16 md:grid-cols-3 md:gap-10">
+              {REVIEWS.map((r, i) => (
+                <RevealOnScroll key={r.name} delay={i * 80} className="h-full">
+                  <figure className="relative flex h-full flex-col justify-between rounded-2xl border border-[#CEC5B9]/40 bg-[#F4EFE8]/60 p-8 md:p-[41px]">
+                    <span
+                      aria-hidden="true"
+                      className="absolute right-[23px] top-4 font-serif text-[60px] leading-[60px] text-earth-brown/20"
+                    >
+                      “
+                    </span>
+                    <blockquote className="pb-6 font-primary text-lg italic leading-7 text-[#1C1C19]">
+                      <p>“{r.quote}”</p>
+                    </blockquote>
+                    <figcaption className="mt-7 border-t border-[#CEC5B9]/30 pt-[17px]">
+                      <p className="text-sm leading-5 text-[#1C1C19]">{r.name}</p>
+                      <p className="text-xs font-light leading-4 text-[#7D766B]">{r.note}</p>
+                    </figcaption>
+                  </figure>
+                </RevealOnScroll>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ — native <details>, so it works without JavaScript and every answer
+            is in the page for search engines. */}
+        <section aria-labelledby="faq" className="border-t border-[#CEC5B9]/30 bg-[#FAF7F2] px-6 py-16 md:py-[112px]">
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }} />
+          <div className="mx-auto max-w-[672px]">
+            <RevealOnScroll className="text-center">
+              <p className="text-xs font-bold uppercase leading-4 tracking-[3px] text-earth-brown">Planning Ahead</p>
+              <h2
+                id="faq"
+                className="mt-3 font-primary text-[28px] font-normal leading-9 text-[#1C1C19] md:text-4xl md:leading-10"
+              >
+                Frequently Asked Questions
+              </h2>
+            </RevealOnScroll>
+
+            <div className="mt-12 flex flex-col gap-4 md:mt-14">
+              {FAQS.map((f) => (
+                <details
+                  key={f.q}
+                  className="group overflow-hidden rounded-xl border border-[#CEC5B9]/50 bg-white/50"
+                >
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 font-primary text-lg font-normal leading-7 text-[#1C1C19] marker:hidden md:p-6 md:text-xl [&::-webkit-details-marker]:hidden">
+                    {f.q}
+                    <ChevronDown
+                      size={16}
+                      aria-hidden="true"
+                      className="shrink-0 text-earth-brown transition-transform duration-300 group-open:rotate-180"
+                    />
+                  </summary>
+                  <p className="px-5 pb-6 text-[15px] font-light leading-6 tracking-[0.01em] text-[#4B463D] md:px-6">
+                    {f.a}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* CLOSING CALL TO ACTION */}
-        <section className="bg-[#FCF9F4] px-6 py-16 md:py-24">
+        <section className="bg-white px-6 py-16 md:py-24">
           <RevealOnScroll className="mx-auto flex max-w-[672px] flex-col items-center gap-8 text-center">
             <div className="flex flex-col items-center gap-2">
               <h2 className="font-primary text-[32px] font-normal leading-10 tracking-[-0.01em] text-[#1C1C19] md:text-[40px] md:leading-[50px]">
