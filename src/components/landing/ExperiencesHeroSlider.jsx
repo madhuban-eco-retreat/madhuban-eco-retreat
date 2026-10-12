@@ -37,8 +37,10 @@ export default function ExperiencesHeroSlider({ images }) {
             priority={i === 0}
             quality={90}
             sizes="100vw"
-            className={`object-cover transition-opacity duration-[1400ms] ease-in-out ${
-              i === active ? "opacity-80" : "opacity-0"
+            className={`object-cover ${
+              i === active
+                ? "scale-[1.07] opacity-80 [transition:opacity_1400ms_ease-in-out,transform_9000ms_ease-out]"
+                : "scale-100 opacity-0 [transition:opacity_1400ms_ease-in-out,transform_0s_1400ms]"
             }`}
           />
         ))}

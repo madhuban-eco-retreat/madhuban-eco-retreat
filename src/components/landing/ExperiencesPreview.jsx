@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, ChevronDown, Hourglass, MapPinned, MessageCircle, TreePine } from "lucide-react";
 import ExperiencesHeroSlider from "@/components/landing/ExperiencesHeroSlider";
 import RevealOnScroll from "@/components/landing/RevealOnScroll";
+import { CountUp } from "@/components/safari/SafariClient";
 
 /**
  * The redesigned Experiences page, built from the Figma design (1440px frame).
@@ -331,7 +332,7 @@ export default function ExperiencesPreview() {
         </section>
 
         {/* INTRO */}
-        <section className="px-6 pb-[70px] pt-[60px]">
+        <section className="px-6 pb-8 pt-10 md:pb-10 md:pt-12">
           <RevealOnScroll>
             <p className="mx-auto max-w-[768px] text-center text-lg leading-[29px] tracking-[0.02em] text-[#4B463D]">
               Madhuban Eco Retreat sits on the edge of Ratapani Tiger Reserve, where dry deciduous teak forest,
@@ -344,7 +345,7 @@ export default function ExperiencesPreview() {
         </section>
 
         {/* EXPERIENCE CARDS — 2 large, then 3 small */}
-        <section aria-labelledby="experiences-heading" className="px-6 pb-[60px] xl:px-0">
+        <section aria-labelledby="experiences-heading" className="px-6 pb-10 md:pb-14 xl:px-0">
           <h2 id="experiences-heading" className="sr-only">
             Experiences at Madhuban Eco Retreat
           </h2>
@@ -363,7 +364,7 @@ export default function ExperiencesPreview() {
         </section>
 
         {/* BY THE NUMBERS — dark full-bleed strip */}
-        <section aria-labelledby="by-the-numbers" className="bg-earth-brown py-12 md:py-14">
+        <section aria-labelledby="by-the-numbers" className="bg-earth-brown py-10 md:py-12">
           <div className="mx-auto max-w-[1380px] px-6 md:px-16">
             <RevealOnScroll className="mx-auto max-w-[640px] text-center">
               <p className="text-xs font-bold uppercase leading-4 tracking-[3px] text-warm-beige">By the Numbers</p>
@@ -375,13 +376,13 @@ export default function ExperiencesPreview() {
               </h2>
             </RevealOnScroll>
 
-            <dl className="mt-8 grid grid-cols-2 gap-4 md:mt-10 lg:grid-cols-4 lg:gap-8">
+            <dl className="mt-6 grid grid-cols-2 gap-4 md:mt-8 lg:grid-cols-4 lg:gap-8">
               {STATS.map((s, i) => (
                 <RevealOnScroll key={s.label} delay={i * 80} className="h-full">
                   <div className="flex h-full flex-col items-center justify-center gap-2 rounded-xl border border-warm-beige/20 bg-cream/[0.06] px-4 py-5 text-center">
                     <dt className="order-2 max-w-[200px] text-sm font-light leading-5 text-cream/90">{s.label}</dt>
                     <dd className="order-1 flex items-end justify-center font-primary leading-[52px] text-warm-beige">
-                      <span className="text-[48px] md:text-[56px]">{s.value}</span>
+                      <span className="text-[48px] md:text-[56px]"><CountUp to={Number(s.value)} /></span>
                       {s.suffix && (
                         <span className={`pb-1 ${s.suffix === "hr" ? "pl-1 text-[28px] font-light md:text-[30px]" : "text-[30px] md:text-4xl"}`}>
                           {s.suffix}
@@ -396,7 +397,7 @@ export default function ExperiencesPreview() {
         </section>
 
         {/* A DAY AT MADHUBAN — four moments from dawn to dusk */}
-        <section aria-labelledby="a-day" className="bg-white py-16 md:py-24">
+        <section aria-labelledby="a-day" className="bg-white py-12 md:py-16">
           <div className="mx-auto max-w-[1380px] px-6 md:px-16">
             <RevealOnScroll className="max-w-[672px]">
               <p className="text-xs font-bold uppercase leading-4 tracking-[3px] text-earth-brown">
@@ -413,11 +414,11 @@ export default function ExperiencesPreview() {
               </p>
             </RevealOnScroll>
 
-            <ol className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 md:mt-16 lg:grid-cols-4 lg:gap-6">
+            <ol className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 md:mt-10 lg:grid-cols-4 lg:gap-6">
               {DAY_MOMENTS.map((m, i) => (
                 <li key={m.title}>
                   <RevealOnScroll delay={i * 80}>
-                    <figure>
+                    <figure className="group">
                       <div className="relative h-[320px] w-full overflow-hidden rounded-xl bg-[#EDE6DC] shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
                         <Image
                           src={m.photo}
@@ -425,10 +426,10 @@ export default function ExperiencesPreview() {
                           fill
                           quality={90}
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 295px"
-                          className="object-cover"
+                          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                        <span className="absolute left-4 top-4 rounded bg-black/40 px-3 py-1 text-[11px] font-bold uppercase leading-[16.5px] tracking-[1.1px] text-white backdrop-blur-[6px]">
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#3A3123]/65 via-transparent to-transparent" />
+                        <span className="absolute left-4 top-4 rounded bg-[#3A3123]/50 px-3 py-1 text-[11px] font-bold uppercase leading-[16.5px] tracking-[1.1px] text-white backdrop-blur-[6px]">
                           {m.time}
                         </span>
                       </div>
@@ -445,7 +446,7 @@ export default function ExperiencesPreview() {
         </section>
 
         {/* WHY AN EXPERIENCE AT MADHUBAN IS DIFFERENT */}
-        <section aria-labelledby="why-different" className="bg-[#F6F3EE] py-16 md:py-24">
+        <section aria-labelledby="why-different" className="bg-[#F6F3EE] py-12 md:py-16">
           {/* 1200px of content (1248 less the 24px side padding), the design's width;
               the three columns sit 40px inside it, so each is 346.66px wide. */}
           <div className="mx-auto max-w-[1248px] px-6">
@@ -459,10 +460,10 @@ export default function ExperiencesPreview() {
               </h2>
             </RevealOnScroll>
 
-            <div className="mt-12 grid gap-10 md:mt-16 md:grid-cols-3 md:px-10">
+            <div className="mt-8 grid gap-8 md:mt-10 md:grid-cols-3 md:px-10">
               {PILLARS.map(({ icon: Icon, title, text }, i) => (
                 <RevealOnScroll key={title} delay={i * 80}>
-                  <div className="h-full border-l border-[#CEC5B9]/60 pl-4">
+                  <div className="h-full border-l border-[#CEC5B9]/60 pl-4 transition duration-300 hover:border-earth-brown">
                     <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FCF9F4] text-earth-brown">
                       <Icon size={17} strokeWidth={1.5} aria-hidden="true" />
                     </span>
@@ -476,7 +477,7 @@ export default function ExperiencesPreview() {
         </section>
 
         {/* WHAT GUESTS SAY */}
-        <section aria-labelledby="guest-voices" className="bg-white py-16 md:py-20">
+        <section aria-labelledby="guest-voices" className="bg-white py-12 md:py-16">
           <div className="mx-auto max-w-[1380px] px-6 md:px-16">
             <RevealOnScroll className="mx-auto max-w-[672px] text-center">
               <p className="text-xs font-bold uppercase leading-4 tracking-[3px] text-earth-brown">Guest Voices</p>
@@ -488,10 +489,10 @@ export default function ExperiencesPreview() {
               </h2>
             </RevealOnScroll>
 
-            <div className="mt-12 grid grid-cols-1 gap-6 md:mt-16 md:grid-cols-3 md:gap-10">
+            <div className="mt-8 grid grid-cols-1 gap-6 md:mt-10 md:grid-cols-3 md:gap-10">
               {REVIEWS.map((r, i) => (
                 <RevealOnScroll key={r.name} delay={i * 80} className="h-full">
-                  <figure className="relative flex h-full flex-col justify-between rounded-2xl border border-[#CEC5B9]/40 bg-[#F4EFE8]/60 p-8 md:p-[41px]">
+                  <figure className="relative flex h-full flex-col justify-between rounded-2xl border border-[#CEC5B9]/40 bg-[#F4EFE8]/60 p-8 transition duration-500 hover:-translate-y-1 hover:shadow-lg md:p-[41px]">
                     <span
                       aria-hidden="true"
                       className="absolute right-[23px] top-4 font-serif text-[60px] leading-[60px] text-earth-brown/20"
@@ -514,7 +515,7 @@ export default function ExperiencesPreview() {
 
         {/* FAQ — native <details>, so it works without JavaScript and every answer
             is in the page for search engines. */}
-        <section aria-labelledby="faq" className="border-t border-[#CEC5B9]/30 bg-[#FAF7F2] px-6 py-16 md:py-[112px]">
+        <section aria-labelledby="faq" className="border-t border-[#CEC5B9]/30 bg-[#FAF7F2] px-6 py-12 md:py-16">
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }} />
           <div className="mx-auto max-w-[672px]">
             <RevealOnScroll className="text-center">
@@ -527,7 +528,7 @@ export default function ExperiencesPreview() {
               </h2>
             </RevealOnScroll>
 
-            <div className="mt-12 flex flex-col gap-4 md:mt-14">
+            <div className="mt-8 flex flex-col gap-3 md:mt-10">
               {FAQS.map((f) => (
                 <details
                   key={f.q}
@@ -551,7 +552,7 @@ export default function ExperiencesPreview() {
         </section>
 
         {/* CLOSING CALL TO ACTION */}
-        <section className="bg-white px-6 py-16 md:py-24">
+        <section className="bg-white px-6 py-12 md:py-16">
           <RevealOnScroll className="mx-auto flex max-w-[672px] flex-col items-center gap-8 text-center">
             <div className="flex flex-col items-center gap-2">
               <h2 className="font-primary text-[32px] font-normal leading-10 tracking-[-0.01em] text-[#1C1C19] md:text-[40px] md:leading-[50px]">
