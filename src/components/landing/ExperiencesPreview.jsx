@@ -181,6 +181,7 @@ const SMALL_CARDS = [
     title: "Jungle Camping",
     photo: `${PHOTOS}jungle%20camping%20ratapani%20tiger%20reserve%20madhuban.jpg`,
     alt: "Jungle camping at the edge of Ratapani Tiger Reserve, Madhuban Eco Retreat",
+    position: "object-bottom", // keep the whole tent in frame
     description:
       "Spend a night under canvas at the edge of the reserve — campfire, star-filled skies, and the forest’s own night sounds instead of traffic. A camping experience near Bhopal built for groups, couples or anyone who wants to properly disconnect for a night.",
     idealFor: "Adventure groups, couples, corporate team outings",
@@ -249,7 +250,7 @@ function ExperienceCard({ item, large, index }) {
                 ? "(max-width: 768px) 100vw, 540px"
                 : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 347px"
             }
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            className={`object-cover ${item.position || "object-center"} transition-transform duration-700 ease-out group-hover:scale-105`}
           />
           <span className="absolute left-4 top-4 z-10 rounded border border-[#CEC5B9]/60 bg-white/90 px-3 py-1 text-xs font-medium leading-4 tracking-[0.025em] text-[#6C5C3C] backdrop-blur-[2px]">
             {item.tag}
@@ -362,25 +363,25 @@ export default function ExperiencesPreview() {
         </section>
 
         {/* BY THE NUMBERS — dark full-bleed strip */}
-        <section aria-labelledby="by-the-numbers" className="border-y border-[#292524] bg-[#2A2A2A] py-16 md:py-[97px]">
+        <section aria-labelledby="by-the-numbers" className="bg-earth-brown py-12 md:py-14">
           <div className="mx-auto max-w-[1380px] px-6 md:px-16">
             <RevealOnScroll className="mx-auto max-w-[640px] text-center">
-              <p className="text-xs font-bold uppercase leading-4 tracking-[3px] text-[#C9A84C]">By the Numbers</p>
+              <p className="text-xs font-bold uppercase leading-4 tracking-[3px] text-warm-beige">By the Numbers</p>
               <h2
                 id="by-the-numbers"
-                className="mt-3 font-primary text-2xl font-normal leading-8 text-white md:text-[30px] md:leading-9"
+                className="mt-2 font-primary text-2xl font-normal leading-8 text-cream md:text-[30px] md:leading-9"
               >
                 An Untamed Sanctuary in Central India
               </h2>
             </RevealOnScroll>
 
-            <dl className="mt-12 grid grid-cols-2 gap-4 md:mt-16 lg:grid-cols-4 lg:gap-12">
+            <dl className="mt-8 grid grid-cols-2 gap-4 md:mt-10 lg:grid-cols-4 lg:gap-8">
               {STATS.map((s, i) => (
                 <RevealOnScroll key={s.label} delay={i * 80} className="h-full">
-                  <div className="flex h-full flex-col items-center gap-3 rounded-xl border border-white/5 bg-white/[0.02] px-4 py-6 text-center md:p-[25px] md:pb-[44px]">
-                    <dt className="order-2 max-w-[200px] text-sm font-light leading-5 text-white/80">{s.label}</dt>
-                    <dd className="order-1 flex items-end justify-center font-primary leading-[60px] text-[#C9A84C]">
-                      <span className="text-[56px] md:text-[72px]">{s.value}</span>
+                  <div className="flex h-full flex-col items-center justify-center gap-2 rounded-xl border border-warm-beige/20 bg-cream/[0.06] px-4 py-5 text-center">
+                    <dt className="order-2 max-w-[200px] text-sm font-light leading-5 text-cream/90">{s.label}</dt>
+                    <dd className="order-1 flex items-end justify-center font-primary leading-[52px] text-warm-beige">
+                      <span className="text-[48px] md:text-[56px]">{s.value}</span>
                       {s.suffix && (
                         <span className={`pb-1 ${s.suffix === "hr" ? "pl-1 text-[28px] font-light md:text-[30px]" : "text-[30px] md:text-4xl"}`}>
                           {s.suffix}
