@@ -6,6 +6,7 @@ const sitemapUrls = [
   { url: "/about-us", priority: 0.8 },
   { url: "/stay-in-ratapani-tiger-reserve", priority: 0.8 },
   { url: "/experiences", priority: 0.8 },
+  { url: "/ratapani-tiger-safari", priority: 0.9 },
   { url: "/dining", priority: 0.8 },
   { url: "/nearby-attractions", priority: 0.8 },
   { url: "/gallery", priority: 0.8 },
