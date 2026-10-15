@@ -88,13 +88,13 @@ const NAV = [
 const HERO_FACTS = [
   ["Reserve area", "1,271 sq. km"],
   ["Status", "Tiger Reserve, 2024"],
-  ["Resident tigers", "40+"],
+  ["Resident tigers", "60+"],
   ["From Bhopal", "About 1 hour"],
 ];
 
 const STATS = [
   { to: 1271, label: "Sq. km of protected forest" },
-  { to: 40, suffix: "+", label: "Resident tigers" },
+  { to: 60, suffix: "+", label: "Resident tigers" },
   { to: 55, suffix: "%", label: "Teak canopy" },
   { to: 3, label: "Safari gates" },
   { to: 8, suffix: "th", label: "Tiger reserve of Madhya Pradesh" },
@@ -118,7 +118,7 @@ const WHY = [
   {
     tag: "Thriving fauna",
     title: "A rich wildlife habitat",
-    text: "Over 40 resident tigers, plus leopards, sloth bears, striped hyenas, dholes and herds of sambar and chital, share this dry deciduous forest.",
+    text: "More than 60 resident tigers, plus leopards, sloth bears, striped hyenas, dholes and herds of sambar and chital, share this dry deciduous forest. The sanctuary has recorded 35 mammal and 205 bird species.",
     img: IMG.tigerBanner,
     alt: "Bengal tiger in the dry deciduous forest of Ratapani Tiger Reserve",
   },
@@ -162,9 +162,9 @@ const FLORA = [
 ];
 
 const GATES = [
-  { n: "01", name: "Jhiri Gate", sub: "Deep teak valleys and waterholes", text: "A popular entry for tiger enthusiasts, leading into teak valleys, natural watering holes and prime predator territory.", km: "About 34 km" },
-  { n: "02", name: "Delawadi Gate", sub: "Scenic hills and canopy views", text: "Known for dramatic changes in elevation, bamboo ravines, birdlife and leopard sightings along rocky crags.", km: "About 52 km" },
-  { n: "03", name: "Bhimbetka Gate", sub: "Heritage and cultural forest", text: "Links the prehistoric rock shelters with peaceful woodland drives along the forest’s northern edge.", km: "About 44 km" },
+  { n: "01", name: "Jhiri Gate", sub: "Deep teak valleys and waterholes", text: "A popular entry for tiger enthusiasts, leading into teak valleys, natural watering holes and prime predator territory.", km: "About 34 km", book: "Safari can be booked online or at the entry gate, in vehicles registered with the sanctuary." },
+  { n: "02", name: "Delawadi Gate", sub: "Scenic hills and canopy views", text: "Known for dramatic changes in elevation, bamboo ravines, birdlife and leopard sightings along rocky crags.", km: "About 52 km", book: "Safari can be booked online or at the entry gate, in vehicles registered with the sanctuary." },
+  { n: "03", name: "Bhimbetka Gate", sub: "Heritage and cultural forest", text: "Links the prehistoric rock shelters with peaceful woodland drives along the forest’s northern edge.", km: "About 44 km", book: "Safari is booked offline only, and visitors can go in their own private vehicles." },
 ];
 
 const REQUIREMENTS = [
@@ -281,13 +281,13 @@ const ITINERARIES = [
 const FAQS = [
   ["When was Ratapani declared a Tiger Reserve?", "Ratapani became a wildlife sanctuary in 1976 and was notified as Madhya Pradesh’s 8th tiger reserve in December 2024."],
   ["How far is Ratapani Tiger Reserve from Bhopal?", "The safari gates are roughly 35 to 55 km from Bhopal depending on the gate, about 34 km to Jhiri, 44 km to Bhimbetka and 52 km to Delawadi. Madhuban Eco Retreat is about an hour from Bhopal."],
-  ["How many tigers live in Ratapani?", "The reserve is home to more than 40 resident tigers, along with leopards, sloth bears, striped hyenas and dholes."],
+  ["How many tigers live in Ratapani?", "The reserve is home to more than 60 resident tigers, along with leopards, sloth bears, striped hyenas and dholes. The sanctuary has also recorded 35 mammal, 205 bird, 33 reptile and 10 amphibian species."],
   ["What are the safari timings in Ratapani?", "Safaris run in two shifts, a morning drive and an afternoon drive. Exact timings change with the season and sunrise and sunset, so we confirm them for your dates."],
-  ["How do I book a Ratapani safari?", "Safari bookings are made through the Madhya Pradesh Forest Department’s MPOnline portal. We can guide you or help arrange it as part of your stay. Message us with your dates."],
+  ["How do I book a Ratapani safari?", "At Jhiri and Delawadi gates, safaris can be booked online or at the entry gate, and visitors travel in vehicles registered with the sanctuary. At Bhimbetka, safari is booked offline only. We can help arrange it as part of your stay. Message us with your dates."],
   ["Is Ratapani open all year?", "The core safari zones usually close during the monsoon, roughly July to mid-October, and reopen afterwards. Check the current dates before you plan, and we’ll confirm them when you book."],
   ["Which safari gate is best for tigers?", "Jhiri is popular for tiger sightings, while Delawadi is loved for scenery, leopards and sloth bears. No sighting can be guaranteed, since these are wild animals."],
   ["Can I visit Bhimbetka on the same trip?", "Yes. Bhimbetka sits at the edge of the reserve and pairs easily with a safari. We can include it in your itinerary."],
-  ["Can I drive my own vehicle inside the safari zones?", "No. Safaris use authorised open safari vehicles with registered drivers and a forest department naturalist."],
+  ["Can I drive my own vehicle inside the safari zones?", "At Jhiri and Delawadi, only vehicles registered with the sanctuary are allowed inside, with a registered driver and a forest guide. At Bhimbetka, visitors can go in their own private vehicles."],
   ["What should I wear on a safari?", "Earthy, muted colours such as khaki, olive and brown. Avoid bright white, neon shades and strong perfume, and bring light layers for cool mornings."],
   ["Is a Ratapani safari suitable for children and older guests?", "Yes. The short distance from Bhopal makes it far less tiring than remote reserves, and we can plan gentle itineraries and ground-level stays."],
   ["Can I go birdwatching outside the safari?", "Yes. The buffer areas, stream banks and the grounds of Madhuban offer good birding, with guided bird-watching available."],
@@ -485,8 +485,8 @@ export default function RatapaniSafariPage() {
               <ul className="mt-3 grid gap-x-8 gap-y-2 text-[15px] leading-6 text-charcoal/80 md:grid-cols-2">
                 <li><strong className="font-bold text-charcoal">What it is:</strong> Madhya Pradesh’s 8th tiger reserve (2024), about 1,271 sq. km of teak forest in Raisen and Sehore districts.</li>
                 <li><strong className="font-bold text-charcoal">Distance:</strong> The safari gates are roughly 35 to 55 km from Bhopal, about an hour by road.</li>
-                <li><strong className="font-bold text-charcoal">Tigers:</strong> More than 40 resident tigers, plus leopards, sloth bears and hyenas.</li>
-                <li><strong className="font-bold text-charcoal">Gates:</strong> Jhiri, Delawadi and Bhimbetka; permits are booked through the MPOnline forest portal.</li>
+                <li><strong className="font-bold text-charcoal">Tigers:</strong> More than 60 resident tigers, plus leopards, sloth bears and hyenas.</li>
+                <li><strong className="font-bold text-charcoal">Gates:</strong> Jhiri, Delawadi and Bhimbetka; Jhiri and Delawadi safaris can be booked online or at the gate; Bhimbetka is offline only.</li>
                 <li><strong className="font-bold text-charcoal">Best time:</strong> Winter for mist and birds, March to June for big-cat sightings; core zones usually close in the monsoon.</li>
                 <li><strong className="font-bold text-charcoal">Where to stay:</strong> <Link href="/stay-in-ratapani-tiger-reserve" className="font-medium text-earth-brown underline underline-offset-2">Madhuban Eco Retreat</Link>, on the edge of the reserve.</li>
               </ul>
@@ -629,7 +629,7 @@ export default function RatapaniSafariPage() {
                 <h3 className="mt-2 font-primary text-3xl leading-10">The Royal Bengal Tiger</h3>
                 <p className="text-sm italic text-charcoal/60">Panthera tigris tigris</p>
                 <p className="mt-4 text-base font-light leading-7 text-charcoal/80">
-                  Ratapani’s tigers have long thrived in near-secrecy. Across the valleys around Jhiri, Delawadi and beyond, more than 40 resident tigers hold territory, and their tracks crisscross quiet riverbeds and rocky teak plateaus.
+                  Ratapani’s tigers have long thrived in near-secrecy. Across the valleys around Jhiri, Delawadi and beyond, more than 60 resident tigers hold territory, and their tracks crisscross quiet riverbeds and rocky teak plateaus.
                 </p>
                 <div className="mt-5"><Link href="/booking" className={BTN_PRIMARY}>Book a tiger safari stay <ArrowRight size={16} aria-hidden="true" /></Link></div>
               </div>
@@ -690,6 +690,7 @@ export default function RatapaniSafariPage() {
                   <p className="text-sm font-medium text-earth-brown">{g.sub}</p>
                   <p className="mt-3 flex-1 text-[15px] font-light leading-6 text-charcoal/75">{g.text}</p>
                   <p className="mt-4 border-t border-[#CEC5B9]/40 pt-3 text-sm"><strong className="font-bold">Distance from Bhopal:</strong> {g.km}</p>
+                  <p className="mt-2 text-sm leading-5 text-charcoal/75"><strong className="font-bold">Booking:</strong> {g.book}</p>
                 </article>
               </RevealOnScroll>
             ))}
@@ -699,7 +700,7 @@ export default function RatapaniSafariPage() {
               <div>
                 <h3 className="font-primary text-xl leading-7">Safari permits are booked in advance</h3>
                 <p className="mt-1 max-w-[680px] text-[15px] font-light leading-6 text-cream/90">
-                  Safari vehicles, guides and permits are booked through the Madhya Pradesh Forest Department’s MPOnline portal. We can help you plan it around your stay.
+                  At Jhiri and Delawadi, safaris can be booked online through the Madhya Pradesh Forest Department portal or at the entry gate, and only vehicles registered with the sanctuary are allowed. Bhimbetka is booked offline only. We can plan it around your stay.
                 </p>
               </div>
               <Link href="/experiences/ratapani-jungle-safari" className={`${BTN_LIGHT} shrink-0`}>Plan my safari</Link>

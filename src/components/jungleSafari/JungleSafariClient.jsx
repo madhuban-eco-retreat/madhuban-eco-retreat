@@ -21,9 +21,47 @@ const subscribeHash = (cb) => {
 const getHash = () => window.location.hash.slice(1);
 const getServerHash = () => "";
 
-export function PackageTabs({ tabs }) {
+/** Switch package by id (keeps the URL hash in sync, so the choice can be linked). */
+export function selectPackage(id) {
+  window.history.replaceState(null, "", `#${id}`);
+  window.dispatchEvent(new Event("hashchange"));
+}
+
+/** The three "Only a day? / One night away? / Full forest weekend?" shortcut buttons. */
+export function PackageChooser({ options }) {
   const hash = useSyncExternalStore(subscribeHash, getHash, getServerHash);
-  const index = Math.max(0, tabs.findIndex((t) => t.id === hash));
+  const go = (id) => {
+    selectPackage(id);
+    const el = document.getElementById("package-tabs");
+    if (el) el.scrollIntoView({ behavior: reduceMotion() ? "auto" : "smooth", block: "start" });
+  };
+  return (
+    <div className="mx-auto mt-6 grid max-w-[900px] gap-3 sm:grid-cols-3">
+      {options.map(({ id, question, label }) => (
+        <button
+          key={id}
+          type="button"
+          onClick={() => go(id)}
+          aria-pressed={hash === id}
+          className={`flex min-h-[56px] items-center justify-between gap-3 rounded-2xl border px-4 py-3 text-left shadow-[0_1px_2px_rgba(0,0,0,0.05)] transition duration-300 hover:-translate-y-0.5 hover:border-earth-brown ${
+            hash === id ? "border-earth-brown bg-warm-beige/50" : "border-[#CEC5B9]/60 bg-white"
+          }`}
+        >
+          <span>
+            <span className="block text-xs text-charcoal/60">{question}</span>
+            <span className="block font-medium text-earth-brown">{label}</span>
+          </span>
+          <span aria-hidden="true" className="text-[#9A8864]">→</span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+export function PackageTabs({ tabs, defaultId }) {
+  const hash = useSyncExternalStore(subscribeHash, getHash, getServerHash);
+  const found = tabs.findIndex((t) => t.id === hash);
+  const index = found >= 0 ? found : Math.max(0, tabs.findIndex((t) => t.id === defaultId));
   const current = tabs[index].id;
   const panelsRef = useRef(null);
   const first = useRef(true);
@@ -48,10 +86,7 @@ export function PackageTabs({ tabs }) {
     });
   }, [current]);
 
-  const select = useCallback((id) => {
-    window.history.replaceState(null, "", `#${id}`);
-    window.dispatchEvent(new Event("hashchange"));
-  }, []);
+  const select = useCallback((id) => selectPackage(id), []);
 
   const onKeyDown = (e) => {
     const step = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
@@ -63,7 +98,7 @@ export function PackageTabs({ tabs }) {
   };
 
   return (
-    <div>
+    <div id="package-tabs" className="scroll-mt-24">
       <div
         role="tablist"
         aria-label="Ratapani safari packages"

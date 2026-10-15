@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 import RevealOnScroll from "@/components/landing/RevealOnScroll";
 import { CountUp, HeroPhoto } from "@/components/safari/SafariClient";
-import { PackageTabs, RoomPrice, StickyBookBar, Timeline } from "@/components/jungleSafari/JungleSafariClient";
+import { PackageChooser, PackageTabs, RoomPrice, StickyBookBar, Timeline } from "@/components/jungleSafari/JungleSafariClient";
 import { regularRate, formatInr } from "@/lib/pricing/rate-card.mjs";
 import { DAY_PRICE, SEASON, THREE_DAY, TWO_DAY, UPDATED_ISO, UPDATED_LABEL, lowest } from "@/components/jungleSafari/data";
 
@@ -46,6 +46,8 @@ const IMG = {
   safariDay: `${DAY}experiences%20page%20safari%20section%20img.png`,
   lodge: `${R2}home/banner/desktop/Madhuban_Eco_Retreat_3000x1688.jpg`,
   dinner: `${DAY}experiences%20page%20bush%20dining%20section%20img.png`,
+  walk: `${DAY}experiences%20page%20mid%20day%20forest%20walk%20section%20img.png`,
+  village: `${DAY}experience%20page%20village%20walk%20img.png`,
 };
 
 const ROOMS = [
@@ -150,10 +152,19 @@ const WHY = [
 ];
 
 const STATS = [
-  { to: 40, suffix: "+", label: "Resident tigers" },
+  { to: 60, suffix: "+", label: "Resident tigers" },
   { to: 1, suffix: " hr", label: "Drive from Bhopal" },
   { to: 5, suffix: "", label: "Room types" },
   { to: 3, suffix: "", label: "Safari gates" },
+];
+
+const BIO = [
+  [60, "Tigers"],
+  [35, "Mammal species"],
+  [205, "Bird species"],
+  [33, "Reptile species"],
+  [10, "Amphibian species"],
+  [129, "Tree species"],
 ];
 
 const REVIEWS = [
@@ -165,10 +176,11 @@ const REVIEWS = [
 const FAQS = [
   ["What is included in a Ratapani jungle safari package?", "Every package includes the Forest Department safari permit, an open gypsy with a driver and a guide. The 2-day and 3-day packages add your room and meals, and the day package adds lunch and hi-tea. Full inclusions are listed above for each package."],
   ["How far is Ratapani Tiger Reserve from Bhopal?", "Madhuban is roughly an hour's drive from Bhopal. The safari gate you are allotted adds a short further drive, which we confirm when we book your permit."],
+  ["Can I book a Ratapani safari online?", "At the Jhiri and Delawadi gates, safaris can be booked online or at the entry gate, and visitors travel in vehicles registered with the sanctuary. At Bhimbetka, safari is booked offline only, and visitors can go in their own private vehicles. Our packages take care of the permit and the vehicle for you."],
   ["Are safari permits included in the price?", "Yes. The permit, the gypsy and the driver are part of each package price. You do not pay the gate separately."],
   ["What are the morning and afternoon safari timings?", "Safaris run in a morning and an afternoon shift, and the hours shift a little with the season and the Forest Department schedule. We confirm your exact timing when your booking is confirmed. The day package uses the afternoon shift, roughly 3 to 6 PM."],
-  ["Which animals can we expect to see?", "Ratapani has more than 40 resident tigers, along with leopards, sloth bears, striped hyenas, dholes, sambar, chital, nilgai and many bird species. Sightings are never guaranteed, because these are wild animals."],
-  ["Which safari gate will we use?", "Ratapani has several entry points, including Jhiri, Delawadi and Bhimbetka. Your gate depends on your dates and on permit availability, and we confirm it when we book the permit."],
+  ["Which animals can we expect to see?", "Ratapani has more than 60 resident tigers, along with leopards, sloth bears, striped hyenas, dholes, sambar, chital and nilgai. The sanctuary has recorded 35 mammal species and 205 bird species. Sightings are never guaranteed, because these are wild animals."],
+  ["Which safari gate will we use?", "The sanctuary has three gates: Jhiri, Delawadi and Bhimbetka. Jhiri and Delawadi are the safari gates, and Bhimbetka is the heritage gate near the rock shelters. Your safari gate depends on your dates and permit availability, and we confirm it when we book."],
   ["Is the safari safe for children and senior citizens?", "Yes, but forest tracks are dusty and uneven. Morning or afternoon shifts both work for families; we suggest carrying a light jacket in winter and a hat in summer. Tell us your group when you book and we will plan accordingly."],
   ["Can we add extra safaris to the 2-day or 3-day stay?", "Yes. Extra shifts can be added when permits are available. Tell us when you book, and we will check the quota for your dates."],
   ["Which documents do we need for the safari?", "Every guest needs a valid government photo ID, such as Aadhaar, passport, voter ID or driving licence. Foreign guests carry their passport. The same ID used for booking must be carried on the safari."],
@@ -292,6 +304,15 @@ function PhotoTop({ src, alt }) {
   );
 }
 
+function PhotoFill({ src, alt, caption }) {
+  return (
+    <div className="relative min-h-[220px] flex-1 overflow-hidden rounded-2xl bg-[#E0D1BC]">
+      <Image src={src} alt={alt} fill quality={75} sizes="(min-width:1024px) 600px, 100vw" className="object-cover" />
+      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#3A3123]/80 to-transparent px-4 pb-3 pt-10 text-sm font-medium text-cream">{caption}</div>
+    </div>
+  );
+}
+
 function Cell({ v }) {
   if (v === true) return <Check size={18} className="mx-auto text-earth-brown" aria-label="Included" />;
   if (v === false) return <Minus size={18} className="mx-auto text-charcoal/30" aria-label="Not included" />;
@@ -301,7 +322,7 @@ function Cell({ v }) {
 /* ---------- the three package panels ---------- */
 
 const dayPanel = (
-  <div className="grid gap-5 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start" id="day-safari-detail">
+  <div className="grid gap-5 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]" id="day-safari-detail">
     <div data-anim className={`${CARD} overflow-hidden`}>
       <PhotoTop src={IMG.safariDay} alt="Open gypsy safari in Ratapani Tiger Reserve with Madhuban Eco Retreat" />
       <div className="p-5 md:p-6">
@@ -318,7 +339,8 @@ const dayPanel = (
         <a href={WA("Hi, I'd like to book the Ratapani Day Safari with lunch.")} target="_blank" rel="noopener noreferrer" className={`${BTN_PRIMARY} mt-5 w-full`}>Book the day safari</a>
       </div>
     </div>
-    <div data-anim className={`${CARD} p-5 md:p-6`}>
+    <div data-anim className="flex flex-col gap-5">
+    <div className={`${CARD} p-5 md:p-6`}>
       <p className={EYEBROW}>Day flow</p>
       <h3 className="mt-1 font-primary text-2xl leading-8 text-charcoal">Your afternoon in the forest</h3>
       <div className="mt-5">
@@ -333,11 +355,13 @@ const dayPanel = (
         </Timeline>
       </div>
     </div>
+    <PhotoFill src={IMG.safari} alt="Jungle safari in Ratapani Tiger Reserve" caption="Your safari: an open gypsy into Ratapani" />
+    </div>
   </div>
 );
 
 const twoDayPanel = (
-  <div className="grid gap-5 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start" id="two-day-detail">
+  <div className="grid gap-5 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]" id="two-day-detail">
     <div data-anim className={`${CARD} overflow-hidden`}>
       <PhotoTop src={IMG.lodge} alt="Madhuban Eco Retreat eco lodge on the edge of Ratapani Tiger Reserve" />
       <div className="p-5 md:p-6">
@@ -350,7 +374,8 @@ const twoDayPanel = (
         <p className="mt-4 text-sm leading-5 text-charcoal/65">One safari is included. Extra shifts can be added at booking, subject to permits.</p>
       </div>
     </div>
-    <div data-anim className={`${CARD} p-5 md:p-6`}>
+    <div data-anim className="flex flex-col gap-5">
+    <div className={`${CARD} p-5 md:p-6`}>
       <p className={EYEBROW}>Itinerary</p>
       <h3 className="mt-1 font-primary text-2xl leading-8 text-charcoal">Two days, one safari</h3>
       <div className="mt-5">
@@ -367,11 +392,13 @@ const twoDayPanel = (
         </Timeline>
       </div>
     </div>
+    <PhotoFill src={IMG.walk} alt="Mid-day forest walk near Madhuban Eco Retreat" caption="Slow forest time between rides" />
+    </div>
   </div>
 );
 
 const threeDayPanel = (
-  <div className="grid gap-5 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-start" id="three-day-detail">
+  <div className="grid gap-5 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]" id="three-day-detail">
     <div data-anim className={`${CARD} overflow-hidden`}>
       <PhotoTop src={IMG.dinner} alt="Bush dinner by firelight at Madhuban Eco Retreat, Ratapani" />
       <div className="p-5 md:p-6">
@@ -387,7 +414,8 @@ const threeDayPanel = (
         </ul>
       </div>
     </div>
-    <div data-anim className={`${CARD} p-5 md:p-6`}>
+    <div data-anim className="flex flex-col gap-5">
+    <div className={`${CARD} p-5 md:p-6`}>
       <p className={EYEBROW}>Three-day journey</p>
       <h3 className="mt-1 font-primary text-2xl leading-8 text-charcoal">Safari, rock art and stars</h3>
       <div className="mt-5">
@@ -401,6 +429,8 @@ const threeDayPanel = (
           ))}
         </Timeline>
       </div>
+    </div>
+    <PhotoFill src={IMG.village} alt="Village walk near Madhuban Eco Retreat, Ratapani" caption="Walks and craft with the local villages" />
     </div>
   </div>
 );
@@ -502,24 +532,16 @@ export default function RatapaniJungleSafariPage() {
             </p>
           </div>
 
-          <div className="mx-auto mt-6 grid max-w-[900px] gap-3 sm:grid-cols-3">
-            {[
-              ["Only a day?", "Day Safari", "#day-safari"],
-              ["One night away?", "2 Days / 1 Night", "#2-day-safari"],
-              ["Full forest weekend?", "3 Days / 2 Nights", "#3-day-safari"],
-            ].map(([q, a, href]) => (
-              <a key={a} href={href} className={`${CARD} flex items-center justify-between gap-3 px-4 py-3 transition duration-300 hover:-translate-y-0.5 hover:border-earth-brown`}>
-                <span>
-                  <span className="block text-xs text-charcoal/60">{q}</span>
-                  <span className="block font-medium text-earth-brown">{a}</span>
-                </span>
-                <ArrowRight size={16} className="text-[#9A8864]" aria-hidden="true" />
-              </a>
-            ))}
-          </div>
+          <PackageChooser
+            options={[
+              { id: "day-safari", question: "Only a day?", label: "Day Safari" },
+              { id: "2-day-safari", question: "One night away?", label: "2 Days / 1 Night" },
+              { id: "3-day-safari", question: "Full forest weekend?", label: "3 Days / 2 Nights" },
+            ]}
+          />
 
           <div className="mt-8">
-            <PackageTabs tabs={TABS} />
+            <PackageTabs tabs={TABS} defaultId="3-day-safari" />
           </div>
 
           <div className="mt-10">
@@ -588,12 +610,22 @@ export default function RatapaniJungleSafariPage() {
             <h2 id="what-title" className={H2}>What Is a Ratapani Jungle Safari?</h2>
             <div className="mt-4 space-y-4 text-base leading-7 text-charcoal/80">
               <p>Ratapani Tiger Reserve spreads across the Raisen and Sehore districts of Madhya Pradesh, in the Vindhyan hills. Dry deciduous teak forest, bamboo, and sandstone cliffs make up the landscape, and the reserve links tiger habitat across central India.</p>
-              <p>A Ratapani jungle safari is a guided drive through the forest in an open gypsy, accompanied by a Forest Department guide. Along with more than 40 resident tigers, visitors look for leopards, sloth bears, striped hyenas, dholes, sambar and chital, and many bird species.</p>
+              <p>A Ratapani jungle safari is a guided drive through the forest in an open gypsy, accompanied by a Forest Department guide. Along with more than 60 resident tigers, visitors look for leopards, sloth bears, striped hyenas, dholes, sambar and chital, and over 200 recorded bird species.</p>
               <p>Wildlife sightings can never be promised. What we promise is a well-planned safari and a calm stay at the edge of the forest.</p>
             </div>
             <Link href="/ratapani-tiger-safari" className="mt-4 inline-flex items-center gap-1.5 font-medium text-earth-brown underline-offset-4 hover:underline">
               Full guide: Ratapani Tiger Safari <ArrowRight size={15} aria-hidden="true" />
             </Link>
+            <h3 className="mt-6 font-primary text-xl leading-7 text-charcoal">Wildlife recorded in the sanctuary</h3>
+            <dl className="mt-3 grid grid-cols-3 gap-2.5">
+              {BIO.map(([n, label]) => (
+                <div key={label} className="flex flex-col-reverse rounded-xl border border-[#CEC5B9]/60 bg-white px-3 py-3 text-center">
+                  <dt className="text-xs leading-4 text-charcoal/70">{label}</dt>
+                  <dd className="font-primary text-2xl leading-8 text-earth-brown"><CountUp to={n} />{n === 60 ? "+" : ""}</dd>
+                </div>
+              ))}
+            </dl>
+            <p className="mt-2 text-xs leading-5 text-charcoal/60">Species recorded in Ratapani Wildlife Sanctuary, from official sanctuary information.</p>
           </div>
           <aside className={`${CARD} overflow-hidden`}>
             <div className="relative aspect-[16/9] w-full bg-[#E0D1BC]">
@@ -605,10 +637,10 @@ export default function RatapaniJungleSafariPage() {
                 {[
                   ["Where", "Ratapani Tiger Reserve (Raisen and Sehore)"],
                   ["Distance", "About an hour from Bhopal"],
-                  ["Vehicle", "Open gypsy, up to 6 guests"],
+                  ["Vehicle", "Open gypsy registered with the sanctuary, up to 6 guests"],
                   ["Shifts", "Morning and afternoon"],
                   ["Best seasons", "Oct–Feb for birds and cool weather; Mar–Jun for water-hole sightings"],
-                  ["Gates", "Jhiri, Delawadi and Bhimbetka"],
+                  ["Gates", "Jhiri and Delawadi (online or at the gate); Bhimbetka (offline only)"],
                 ].map(([k, v]) => (
                   <div key={k} className="flex gap-3 py-2">
                     <dt className="w-24 shrink-0 font-medium text-earth-brown">{k}</dt>
