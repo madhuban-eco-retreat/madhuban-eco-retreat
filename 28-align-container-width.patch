@@ -1,0 +1,13 @@
+diff --git a/src/components/blog/BlogDescription.js b/src/components/blog/BlogDescription.js
+index 0000000..0000000 100644
+--- a/src/components/blog/BlogDescription.js
++++ b/src/components/blog/BlogDescription.js
+@@ -60,7 +60,7 @@
+ 
+   return (
+     <div className="bg-[#FAF7F2] pt-8">
+-      <div className="max-w-6xl mx-auto px-4">
++      <div className="custom-container">
+ 
+         {/* ========== MOBILE / TABLET: TOC Dropdown ========== */}
+         {headings.length > 0 && (

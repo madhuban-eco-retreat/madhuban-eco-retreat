@@ -1,0 +1,53 @@
+diff --git a/next.config.mjs b/next.config.mjs
+index 0000000..0000000 100644
+--- a/next.config.mjs
++++ b/next.config.mjs
+@@ -51,6 +51,7 @@
+ 
+   images: {
+     formats: ["image/avif", "image/webp"],
++    qualities: [75, 90],
+     remotePatterns: [
+       {
+         protocol: "https",
+diff --git a/src/components/blog/FeaturedPost.jsx b/src/components/blog/FeaturedPost.jsx
+index 0000000..0000000 100644
+--- a/src/components/blog/FeaturedPost.jsx
++++ b/src/components/blog/FeaturedPost.jsx
+@@ -25,7 +25,8 @@
+   return (
+     <Link
+       href={`/blogs/${blog.slug}`}
+-      className="group relative block w-full h-[420px] md:h-[500px] lg:h-[560px] overflow-hidden rounded-xl"
++      className="group relative block w-full overflow-hidden rounded-xl"
++      style={{ aspectRatio: "16 / 8" }}
+     >
+       <Image
+         src={blog.featured_image_url || FALLBACK_IMAGE}
+diff --git a/src/common-components/card/Card.jsx b/src/common-components/card/Card.jsx
+index 0000000..0000000 100644
+--- a/src/common-components/card/Card.jsx
++++ b/src/common-components/card/Card.jsx
+@@ -33,7 +33,8 @@
+       className="group block h-full"
+     >
+       <div
+-        className={`relative w-full overflow-hidden rounded-lg ${large ? "aspect-[16/10]" : "aspect-[4/3]"}`}
++        className="relative w-full overflow-hidden rounded-lg"
++        style={{ aspectRatio: large ? "16 / 10" : "4 / 3" }}
+       >
+         <Image
+           src={imgSrc || FALLBACK_IMAGE}
+diff --git a/src/components/blog/BlogArticleHero.jsx b/src/components/blog/BlogArticleHero.jsx
+index 0000000..0000000 100644
+--- a/src/components/blog/BlogArticleHero.jsx
++++ b/src/components/blog/BlogArticleHero.jsx
+@@ -21,7 +21,7 @@
+  */
+ export default function BlogArticleHero({ blog, breadcrumb }) {
+   return (
+-    <header className="relative w-full h-[52vh] md:h-[68vh]">
++    <header className="relative w-full" style={{ height: "56vh" }}>
+       <Image
+         src={blog.featured_image_url || FALLBACK_IMAGE}
+         alt={blog.featured_image_alt || blog.title}

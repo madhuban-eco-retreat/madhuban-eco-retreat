@@ -1,0 +1,111 @@
+diff --git a/src/app/(marketing)/blogs/[slug]/page.jsx b/src/app/(marketing)/blogs/[slug]/page.jsx
+index 0000000..0000000 100644
+--- a/src/app/(marketing)/blogs/[slug]/page.jsx
++++ b/src/app/(marketing)/blogs/[slug]/page.jsx
+@@ -137,7 +137,7 @@
+       {blog.blog_authors?.name && (
+         <div className="bg-warm-beige/20 py-8 md:py-10">
+           <div className="custom-container">
+-            <AuthorBio author={blog.blog_authors} headingLevel="h2" />
++            <AuthorBio author={blog.blog_authors} headingLevel="p" />
+           </div>
+         </div>
+       )}
+diff --git a/src/components/admin/blog/RichTextEditor.jsx b/src/components/admin/blog/RichTextEditor.jsx
+index 0000000..0000000 100644
+--- a/src/components/admin/blog/RichTextEditor.jsx
++++ b/src/components/admin/blog/RichTextEditor.jsx
+@@ -47,6 +47,36 @@
+ const HEADING_LEVELS = [1, 2, 3, 4];
+ const SWATCHES = ["#2F3E34", "#6B7F5E", "#B4894A", "#8C3B2E", "#2B4C6F", "#4A4A4A"];
+ 
++/**
++ * Google Docs' HTML clipboard output doesn't use real <h1>-<h6> tags for
++ * text styled with its Heading 1/2/3 paragraph styles — it exports plain
++ * <p> tags with inline font-size/weight CSS, styled to *look* like a
++ * heading but with no semantic tag backing it. Pasted as-is, that content
++ * loses its heading structure entirely: it won't show up in the site's
++ * auto-generated table of contents, and it won't carry proper SEO/heading
++ * hierarchy on the published page.
++ *
++ * What Google Docs does preserve reliably is `role="heading"` and
++ * `aria-level="N"` on those paragraphs (it needs that for the pasted
++ * content to stay screen-reader accessible), so this rewrites any such
++ * element into a real <hN> tag before TipTap's normal paste parsing runs —
++ * at that point the Heading extension picks it up exactly like manually
++ * toggling the heading button would.
++ */
++function normalizeGoogleDocsHeadings(html) {
++  if (typeof window === "undefined" || !html) return html;
++  const doc = new DOMParser().parseFromString(html, "text/html");
++  const headingCandidates = doc.querySelectorAll('[role="heading"][aria-level]');
++  headingCandidates.forEach((el) => {
++    const rawLevel = parseInt(el.getAttribute("aria-level"), 10) || 2;
++    const level = Math.min(Math.max(rawLevel, 1), 4);
++    const heading = doc.createElement(`h${level}`);
++    heading.innerHTML = el.innerHTML;
++    el.replaceWith(heading);
++  });
++  return doc.body.innerHTML;
++}
++
+ function ToolbarButton({ onClick, active, disabled, label, children }) {
+   return (
+     <button
+@@ -111,6 +141,7 @@
+         class:
+           "prose prose-sm sm:prose-base max-w-none focus:outline-none min-h-[28rem] px-5 py-4",
+       },
++      transformPastedHTML: normalizeGoogleDocsHeadings,
+     },
+     onUpdate: ({ editor: instance }) => {
+       if (!hydratedRef.current) return;
+diff --git a/src/components/blog/BlogDescription.js b/src/components/blog/BlogDescription.js
+index 0000000..0000000 100644
+--- a/src/components/blog/BlogDescription.js
++++ b/src/components/blog/BlogDescription.js
+@@ -86,12 +86,22 @@
+           </div>
+         )}
+ 
+-        {/* MAIN LAYOUT — just TOC + content, no sidebar. Centered as a pair
+-            (not left-aligned) since the content column is capped narrower
+-            than the outer container for readability — left-aligning it
+-            would otherwise dump all the leftover width as dead space on
+-            the right. */}
++        {/* MAIN LAYOUT — content first, TOC second: renders content on the
++            left and TOC on the right. Centered as a pair (not left-aligned)
++            since the content column is capped narrower than the outer
++            container for readability — left-aligning it would otherwise
++            dump all the leftover width as dead space on the right. */}
+         <div className="flex flex-col xl:flex-row xl:justify-center gap-8 md:gap-10 pb-6 md:pb-8">
++          {/* Blog Content — no card, no border, no shadow: flows directly
++              on the page background so it doesn't read as a separate box
++              sitting on top of the page, just the article itself. */}
++          <main className="w-full min-w-0 max-w-3xl">
++            <div className="no-tailwind">
++              <div className="discriptionContent prose max-w-none"
++                dangerouslySetInnerHTML={{ __html: data }} ></div>
++            </div>
++          </main>
++
+           {/* Table of Contents — plain list, no box, just an accent line on
+               the active item. Fixed narrow width so the article gets the
+               rest of the space instead of splitting it three ways. */}
+@@ -117,16 +127,6 @@
+               )}
+             </div>
+           </aside>
+-
+-          {/* Blog Content — no card, no border, no shadow: flows directly
+-              on the page background so it doesn't read as a separate box
+-              sitting on top of the page, just the article itself. */}
+-          <main className="w-full min-w-0 max-w-3xl">
+-            <div className="no-tailwind">
+-              <div className="discriptionContent prose max-w-none"
+-                dangerouslySetInnerHTML={{ __html: data }} ></div>
+-            </div>
+-          </main>
+         </div>
+       </div>
+     </div>

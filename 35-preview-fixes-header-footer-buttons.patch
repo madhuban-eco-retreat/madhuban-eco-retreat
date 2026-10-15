@@ -1,0 +1,432 @@
+diff --git a/src/components/landing/ExperiencesPreview.jsx b/src/components/landing/ExperiencesPreview.jsx
+index 0000000..0000000 100644
+--- a/src/components/landing/ExperiencesPreview.jsx
++++ b/src/components/landing/ExperiencesPreview.jsx
+@@ -1,6 +1,8 @@
+ "use client";
+ 
+ import { useEffect, useRef, useState } from "react";
++import MainNavigation from "@/components/Header";
++import Footer from "@/components/Footer";
+ 
+ /**
+  * Design preview for the redesigned /experiences page (Stitch output,
+@@ -8,11 +10,15 @@
+  * Lives at /experiences-preview (noindex) until the client signs off, at
+  * which point this becomes the actual /experiences page.
+  *
+- * Deliberately self-contained (own header/footer, not the site's shared
+- * Header/Footer components) — this page's header has its own
+- * transparent-over-hero → solid-on-scroll behavior that the shared header
+- * doesn't do, and mixing chrome would fight this design rather than
+- * preview it accurately.
++ * Uses the site's real Header/Footer (not Stitch's own) — the real Header
++ * is `sticky` and always solid, not transparent-over-hero, so the hero
++ * below no longer needs to compensate for a fixed/overlaying header the
++ * way the first draft did.
++ *
++ * Buttons follow the exact classes the real "Book Now" button uses
++ * elsewhere on the site (rounded-full, font-primary, sentence case) rather
++ * than Stitch's small-caps tracking-widest style, which doesn't match how
++ * buttons look anywhere else on this site.
+  *
+  * Image note: Stitch's own placeholder image URLs are temporary AI-preview
+  * links, not real hosted assets, so every image below has been swapped for
+@@ -103,17 +109,21 @@
+   },
+ ];
+ 
++// Matches the real "Book Now" button exactly (see Header.jsx).
++const BTN_PRIMARY =
++  "inline-flex items-center justify-center rounded-full px-7 py-3 font-primary text-base font-medium text-warm-beige bg-earth-brown hover:bg-[rgb(132,116,85)] transition-colors whitespace-nowrap";
++const BTN_OUTLINE =
++  "inline-flex items-center justify-center gap-2 rounded-full px-7 py-3 font-primary text-base font-medium text-earth-brown border border-earth-brown hover:bg-earth-brown/10 transition-colors whitespace-nowrap";
++
+ export default function ExperiencesPreview() {
+-  const [scrolled, setScrolled] = useState(false);
+   const [openFaq, setOpenFaq] = useState(null);
+   const heroParallaxRef = useRef(null);
+   const statStripRef = useRef(null);
+   const [statsStarted, setStatsStarted] = useState(false);
+ 
+-  // Header scroll state + hero parallax
++  // Hero parallax on scroll
+   useEffect(() => {
+     const onScroll = () => {
+-      setScrolled(window.scrollY > 100);
+       if (heroParallaxRef.current && window.scrollY < 1000) {
+         heroParallaxRef.current.style.transform = `translate3d(0, ${window.scrollY * 0.35}px, 0)`;
+       }
+@@ -180,39 +190,11 @@
+         }
+       `}</style>
+ 
+-      {/* HEADER */}
+-      <header
+-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+-          scrolled
+-            ? "bg-cream/95 backdrop-blur-md text-charcoal shadow-sm py-3.5"
+-            : "bg-transparent text-white py-5"
+-        }`}
+-      >
+-        <div className="max-w-[1380px] mx-auto px-6 md:px-12 lg:px-16 flex items-center justify-between">
+-          <a className="flex items-center gap-3" href="/">
+-            <img
+-              alt="Madhuban Eco Retreat"
+-              className={`h-9 w-auto object-contain transition-all duration-500 ${scrolled ? "" : "brightness-0 invert"}`}
+-              src="https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/Madhuban_Logo_tight_crop.svg"
+-            />
+-          </a>
+-          <nav className="hidden lg:flex items-center gap-9 tracking-wider text-xs uppercase font-medium">
+-            <a className="transition-colors duration-200 hover:text-gold-accent" href="/stay-in-ratapani-tiger-reserve">Stay</a>
+-            <a className="relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1.5px] after:bg-earth-brown" href="/experiences">Experiences</a>
+-            <a className="transition-colors duration-200 hover:text-gold-accent" href="/nearby-attractions">Nearby Attractions</a>
+-          </nav>
+-          <a
+-            className="inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-earth-brown text-white text-xs uppercase tracking-widest font-semibold hover:bg-[rgb(85,73,48)] hover:shadow-lg transition-all duration-300"
+-            href="/stay-in-ratapani-tiger-reserve"
+-          >
+-            Book Now
+-          </a>
+-        </div>
+-      </header>
++      <MainNavigation />
+ 
+       <main className="w-full">
+         {/* HERO */}
+-        <section className="relative w-full h-[90vh] min-h-[640px] max-h-[880px] overflow-hidden flex items-end justify-start bg-charcoal">
++        <section className="relative w-full h-[60vh] min-h-[480px] max-h-[680px] overflow-hidden flex items-end justify-start bg-charcoal">
+           <div
+             ref={heroParallaxRef}
+             className="absolute inset-0 w-full h-[120%] -top-[10%] bg-cover bg-center will-change-transform"
+@@ -220,8 +202,8 @@
+           />
+           <div className="absolute inset-0 bg-gradient-to-t from-[#1F1F1F] via-charcoal/40 to-black/30" />
+           <div className="absolute inset-0 bg-black/20" />
+-          <div className="relative z-10 max-w-[1380px] w-full mx-auto px-6 md:px-12 lg:px-16 pb-20 md:pb-24">
+-            <div className="max-w-4xl space-y-6">
++          <div className="relative z-10 max-w-[1380px] w-full mx-auto px-6 md:px-12 lg:px-16 pb-14 md:pb-16">
++            <div className="max-w-4xl space-y-5">
+               <div className="fade-up-element" style={{ transitionDelay: "150ms" }}>
+                 <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-sm">
+                   <span className="w-1.5 h-1.5 rounded-full bg-gold-accent animate-pulse" />
+@@ -229,13 +211,13 @@
+                 </div>
+               </div>
+               <h1
+-                className="fade-up-element font-primary text-4xl sm:text-5xl md:text-6xl lg:text-[68px] text-white leading-[1.08] font-normal tracking-tight"
++                className="fade-up-element font-primary text-4xl sm:text-5xl md:text-6xl text-white leading-[1.1] tracking-tight"
+                 style={{ transitionDelay: "350ms" }}
+               >
+                 Experiences at Madhuban — Ratapani Tiger Reserve, Near Bhopal
+               </h1>
+               <p
+-                className="fade-up-element text-lg md:text-xl text-white/85 max-w-2xl font-light leading-relaxed tracking-wide"
++                className="fade-up-element text-lg md:text-xl text-white/85 max-w-2xl font-light leading-relaxed"
+                 style={{ transitionDelay: "550ms" }}
+               >
+                 Five ways to step into the forest, just an hour from Bhopal.
+@@ -245,26 +227,26 @@
+         </section>
+ 
+         {/* INTRO QUOTE */}
+-        <section className="w-full bg-cream py-28 md:py-36 border-b border-earth-brown/10">
++        <section className="w-full bg-cream py-16 md:py-20 border-b border-earth-brown/10">
+           <div className="max-w-[1100px] mx-auto px-6 md:px-12 text-center fade-up-element">
+-            <span className="text-xs uppercase tracking-[0.25em] text-earth-brown font-semibold block mb-8">Unscripted Immersion</span>
+-            <div className="w-10 h-px bg-gold-accent mx-auto mb-10" />
+-            <p className="font-primary italic text-2xl md:text-3xl lg:text-[32px] text-charcoal leading-relaxed md:leading-[1.55] font-normal">
++            <span className="text-xs uppercase tracking-[0.25em] text-earth-brown font-semibold block mb-6">Unscripted Immersion</span>
++            <div className="w-10 h-px bg-gold-accent mx-auto mb-8" />
++            <p className="font-primary italic text-2xl md:text-3xl text-charcoal leading-relaxed md:leading-[1.5]">
+               "Madhuban Eco Retreat sits on the edge of Ratapani Tiger Reserve, where dry deciduous teak forest, sandstone ridges and centuries-old tribal villages meet. Whether you have an afternoon or a full weekend, there's a way to experience it that matches your pace — from a guided jungle safari to a quiet hike, an overnight camp under canvas, a bush dinner by firelight, or an afternoon walking through a Gond village. Each experience near Bhopal is led by people who live and work on this forest's edge."
+             </p>
+-            <div className="w-10 h-px bg-gold-accent mx-auto mt-10" />
++            <div className="w-10 h-px bg-gold-accent mx-auto mt-8" />
+           </div>
+         </section>
+ 
+         {/* FEATURED — JUNGLE SAFARI */}
+-        <section className="w-full bg-cream py-16 md:py-20">
++        <section className="w-full bg-cream py-10 md:py-14">
+           <div className="max-w-[1380px] mx-auto px-6 md:px-12 lg:px-16">
+-            <div className="mb-6 flex items-center justify-between fade-up-element">
++            <div className="mb-5 flex items-center justify-between fade-up-element">
+               <span className="text-xs tracking-[0.2em] uppercase text-earth-brown font-semibold">Flagship Experience</span>
+               <span className="text-xs tracking-wider text-charcoal/50">01 / 05</span>
+             </div>
+             <a
+-              className="group block relative w-full h-[540px] md:h-[580px] rounded-2xl overflow-hidden shadow-xl cursor-pointer fade-up-element"
++              className="group block relative w-full h-[480px] md:h-[520px] rounded-2xl overflow-hidden shadow-xl cursor-pointer fade-up-element"
+               href="/experiences/jungle-safari"
+             >
+               <div
+@@ -273,13 +255,13 @@
+               />
+               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent" />
+               <div className="absolute inset-0 bg-black/10 group-hover:bg-black/25 transition-colors duration-500" />
+-              <div className="absolute inset-0 p-8 sm:p-12 md:p-16 flex flex-col justify-end text-white max-w-3xl">
++              <div className="absolute inset-0 p-8 sm:p-12 md:p-14 flex flex-col justify-end text-white max-w-3xl">
+                 <div className="mb-4">
+                   <span className="inline-block px-3.5 py-1 rounded-full bg-gold-accent/90 text-charcoal font-semibold text-xs uppercase tracking-widest backdrop-blur-sm">
+                     Wildlife
+                   </span>
+                 </div>
+-                <h2 className="font-primary text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight text-white mb-4 group-hover:text-cream transition-colors">
++                <h2 className="font-primary text-3xl sm:text-4xl md:text-5xl tracking-tight text-white mb-4 group-hover:text-cream transition-colors">
+                   Jungle Safari
+                 </h2>
+                 <p className="text-white/85 text-base sm:text-lg font-light leading-relaxed mb-6 max-w-2xl">
+@@ -290,7 +272,7 @@
+                     <span className="block text-[11px] uppercase tracking-[0.18em] text-white/60 mb-0.5">Ideal for</span>
+                     <span className="text-sm font-light text-white/95">Wildlife enthusiasts, photographers, families</span>
+                   </div>
+-                  <div className="inline-flex items-center gap-2 text-sm uppercase tracking-widest font-medium text-gold-accent group-hover:text-white transition-colors duration-300">
++                  <div className="inline-flex items-center gap-2 font-primary text-sm font-medium text-gold-accent group-hover:text-white transition-colors duration-300">
+                     <span>Learn More</span>
+                     <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+                   </div>
+@@ -301,9 +283,9 @@
+         </section>
+ 
+         {/* ASYMMETRIC GRID — 4 EXPERIENCES */}
+-        <section className="w-full bg-cream pb-24 md:pb-32">
++        <section className="w-full bg-cream pb-16 md:pb-20">
+           <div className="max-w-[1380px] mx-auto px-6 md:px-12 lg:px-16">
+-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10">
++            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
+               {EXPERIENCE_CARDS.map((card) => (
+                 <article
+                   key={card.title}
+@@ -322,19 +304,19 @@
+                       </span>
+                     </div>
+                   </div>
+-                  <div className="p-8 md:p-10 flex-1 flex flex-col justify-between space-y-6">
++                  <div className="p-6 md:p-8 flex-1 flex flex-col justify-between space-y-5">
+                     <div className="space-y-3">
+                       <h3 className="font-primary text-2xl md:text-3xl text-charcoal group-hover:text-earth-brown transition-colors">
+                         <span className="underline-sweep text-earth-brown">{card.title}</span>
+                       </h3>
+                       <p className="text-charcoal/70 font-light text-base leading-relaxed">{card.desc}</p>
+                     </div>
+-                    <div className="pt-5 border-t border-earth-brown/15 flex items-center justify-between">
++                    <div className="pt-4 border-t border-earth-brown/15 flex items-center justify-between">
+                       <div>
+                         <span className="block text-[11px] uppercase tracking-wider text-charcoal/50 mb-0.5">Ideal for</span>
+                         <span className="text-xs md:text-sm text-charcoal font-light">{card.idealFor}</span>
+                       </div>
+-                      <div className="inline-flex items-center gap-1.5 text-xs uppercase tracking-widest text-earth-brown font-semibold group-hover:text-gold-accent transition-colors">
++                      <div className="inline-flex items-center gap-1.5 font-primary text-sm font-medium text-earth-brown group-hover:text-gold-accent transition-colors">
+                         <span>Learn More</span>
+                         <span className="group-hover:translate-x-1 transition-transform">→</span>
+                       </div>
+@@ -347,13 +329,13 @@
+         </section>
+ 
+         {/* BY THE NUMBERS */}
+-        <section ref={statStripRef} className="w-full bg-charcoal text-white py-24 border-y border-white/10">
++        <section ref={statStripRef} className="w-full bg-charcoal text-white py-16 border-y border-white/10">
+           <div className="max-w-[1380px] mx-auto px-6 md:px-12 lg:px-16">
+-            <div className="text-center max-w-xl mx-auto mb-16 fade-up-element">
++            <div className="text-center max-w-xl mx-auto mb-10 fade-up-element">
+               <span className="text-xs uppercase tracking-[0.25em] text-gold-accent font-semibold block mb-3">By the Numbers</span>
+-              <h3 className="font-primary text-2xl md:text-3xl font-normal text-white">An Untamed Sanctuary in Central India</h3>
++              <h3 className="font-primary text-2xl md:text-3xl text-white">An Untamed Sanctuary in Central India</h3>
+             </div>
+-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center">
++            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 text-center">
+               {STATS.map((stat) => (
+                 <StatCard key={stat.label} stat={stat} started={statsStarted} />
+               ))}
+@@ -362,17 +344,17 @@
+         </section>
+ 
+         {/* A DAY AT MADHUBAN */}
+-        <section className="w-full bg-cream py-24 md:py-32">
++        <section className="w-full bg-cream py-16 md:py-20">
+           <div className="max-w-[1380px] mx-auto px-6 md:px-12 lg:px-16">
+-            <div className="max-w-2xl mb-16 fade-up-element">
++            <div className="max-w-2xl mb-10 fade-up-element">
+               <span className="text-xs uppercase tracking-[0.25em] text-earth-brown font-semibold block mb-3">Rhythm of the Wilderness</span>
+-              <h2 className="font-primary text-3xl md:text-4xl text-charcoal font-normal">A Day at Madhuban</h2>
++              <h2 className="font-primary text-3xl md:text-4xl text-charcoal">A Day at Madhuban</h2>
+               <p className="text-charcoal/70 font-light text-base mt-2">The passage of light and stillness, from pre-dawn mist to ember-lit clear skies.</p>
+             </div>
+             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+               {DAY_MOMENTS.map((m) => (
+-                <div key={m.title} className="group flex flex-col space-y-4 fade-up-element">
+-                  <div className="relative w-full h-80 rounded-xl overflow-hidden shadow-sm bg-warm-beige/20">
++                <div key={m.title} className="group flex flex-col space-y-3 fade-up-element">
++                  <div className="relative w-full h-72 rounded-xl overflow-hidden shadow-sm bg-warm-beige/20">
+                     <img alt={m.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src={m.img} />
+                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                     <span className="absolute top-4 left-4 px-3 py-1 bg-black/40 backdrop-blur-md rounded text-white text-[11px] tracking-widest uppercase font-semibold">{m.time}</span>
+@@ -388,25 +370,25 @@
+         </section>
+ 
+         {/* WHY DIFFERENT — 3 PILLARS */}
+-        <section className="w-full bg-warm-beige/20 py-24 md:py-28">
++        <section className="w-full bg-warm-beige/20 py-16 md:py-20">
+           <div className="max-w-[1380px] mx-auto px-6 md:px-12 lg:px-16">
+-            <div className="max-w-2xl mb-16 fade-up-element">
++            <div className="max-w-2xl mb-10 fade-up-element">
+               <span className="text-xs uppercase tracking-[0.25em] text-earth-brown font-semibold block mb-3">Philosophy &amp; Cadence</span>
+-              <h2 className="font-primary text-3xl md:text-4xl text-charcoal font-normal">Why an experience at Madhuban is different</h2>
++              <h2 className="font-primary text-3xl md:text-4xl text-charcoal">Why an experience at Madhuban is different</h2>
+             </div>
+-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
++            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+               {[
+                 { title: "Led by people who live here", desc: "Every guide is local to Ratapani, not flown in for the season.", tag: "Indigenous Knowledge" },
+                 { title: "Small groups, real pace", desc: "No herding between checkpoints; each experience is shaped around the people on it.", tag: "Private & Unrushed" },
+                 { title: "Inside the forest's edge", desc: "Every experience starts from the resort itself, not a 90-minute transfer to a \u201cwildlife zone.\u201d", tag: "Direct Sanctuary Access" },
+               ].map((p) => (
+-                <div key={p.title} className="relative bg-cream p-8 md:p-10 rounded-2xl border border-earth-brown/15 shadow-sm flex flex-col justify-between fade-up-element">
++                <div key={p.title} className="relative bg-cream p-6 md:p-8 rounded-2xl border border-earth-brown/15 shadow-sm flex flex-col justify-between fade-up-element">
+                   <div>
+-                    <div className="w-12 h-12 rounded-full bg-warm-beige/40 flex items-center justify-center text-earth-brown mb-6 text-2xl">●</div>
++                    <div className="w-12 h-12 rounded-full bg-warm-beige/40 flex items-center justify-center text-earth-brown mb-5 text-2xl">●</div>
+                     <h4 className="font-primary text-2xl text-charcoal mb-3">{p.title}</h4>
+                     <p className="text-charcoal/70 font-light text-base leading-relaxed">{p.desc}</p>
+                   </div>
+-                  <div className="mt-8 pt-4 border-t border-earth-brown/15 flex items-center gap-2">
++                  <div className="mt-6 pt-4 border-t border-earth-brown/15 flex items-center gap-2">
+                     <span className="w-1.5 h-1.5 rounded-full bg-gold-accent" />
+                     <span className="text-xs uppercase tracking-wider text-charcoal/50">{p.tag}</span>
+                   </div>
+@@ -417,17 +399,17 @@
+         </section>
+ 
+         {/* GUEST REVIEWS */}
+-        <section className="w-full bg-cream py-24 md:py-32 border-t border-earth-brown/10">
++        <section className="w-full bg-cream py-16 md:py-20 border-t border-earth-brown/10">
+           <div className="max-w-[1380px] mx-auto px-6 md:px-12 lg:px-16">
+-            <div className="text-center max-w-2xl mx-auto mb-16 fade-up-element">
++            <div className="text-center max-w-2xl mx-auto mb-10 fade-up-element">
+               <span className="text-xs uppercase tracking-[0.25em] text-earth-brown font-semibold block mb-3">Guest Voices</span>
+-              <h2 className="font-primary text-3xl md:text-4xl text-charcoal font-normal">What Guests Say</h2>
++              <h2 className="font-primary text-3xl md:text-4xl text-charcoal">What Guests Say</h2>
+             </div>
+-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
++            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+               {REVIEWS.map((r) => (
+-                <div key={r.name} className="bg-warm-beige/15 p-8 md:p-10 rounded-2xl border border-earth-brown/15 flex flex-col justify-between relative fade-up-element">
++                <div key={r.name} className="bg-warm-beige/15 p-6 md:p-8 rounded-2xl border border-earth-brown/15 flex flex-col justify-between relative fade-up-element">
+                   <span className="font-primary text-6xl text-earth-brown/15 absolute top-4 right-6 select-none">"</span>
+-                  <p className="font-primary italic text-base md:text-lg text-charcoal leading-relaxed mb-6 font-normal">"{r.text}"</p>
++                  <p className="font-primary italic text-base md:text-lg text-charcoal leading-relaxed mb-6">"{r.text}"</p>
+                   <div className="pt-4 border-t border-earth-brown/15">
+                     <p className="font-medium text-sm text-charcoal">{r.name}</p>
+                     <p className="text-xs text-charcoal/50 font-light">{r.location}</p>
+@@ -439,11 +421,11 @@
+         </section>
+ 
+         {/* FAQ */}
+-        <section className="w-full bg-cream py-20 md:py-28 border-t border-earth-brown/10">
++        <section className="w-full bg-cream py-16 md:py-20 border-t border-earth-brown/10">
+           <div className="max-w-3xl mx-auto px-6 md:px-12">
+-            <div className="text-center mb-14 fade-up-element">
++            <div className="text-center mb-10 fade-up-element">
+               <span className="text-xs uppercase tracking-[0.25em] text-earth-brown font-semibold block mb-3">Planning Ahead</span>
+-              <h2 className="font-primary text-3xl md:text-4xl text-charcoal font-normal">Frequently Asked Questions</h2>
++              <h2 className="font-primary text-3xl md:text-4xl text-charcoal">Frequently Asked Questions</h2>
+             </div>
+             <div className="space-y-4">
+               {FAQS.map((item, i) => {
+@@ -453,7 +435,7 @@
+                     <button
+                       type="button"
+                       onClick={() => setOpenFaq(isOpen ? null : i)}
+-                      className="w-full p-6 text-left flex items-center justify-between gap-4 font-primary text-lg md:text-xl text-charcoal hover:text-earth-brown transition-colors"
++                      className="w-full p-5 text-left flex items-center justify-between gap-4 font-primary text-lg text-charcoal hover:text-earth-brown transition-colors"
+                     >
+                       <span>{item.q}</span>
+                       <span className={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}>▾</span>
+@@ -462,7 +444,7 @@
+                       className="overflow-hidden transition-all duration-300 ease-out bg-cream/50"
+                       style={{ maxHeight: isOpen ? "300px" : "0px" }}
+                     >
+-                      <p className="p-6 pt-0 text-charcoal/70 font-light text-base leading-relaxed">{item.a}</p>
++                      <p className="p-5 pt-0 text-charcoal/70 font-light text-base leading-relaxed">{item.a}</p>
+                     </div>
+                   </div>
+                 );
+@@ -472,25 +454,17 @@
+         </section>
+ 
+         {/* CLOSING CTA */}
+-        <section className="w-full bg-cream py-28 md:py-36 border-t border-earth-brown/10">
+-          <div className="max-w-3xl mx-auto px-6 md:px-12 text-center space-y-8 fade-up-element">
+-            <h2 className="font-primary text-4xl md:text-5xl lg:text-6xl text-charcoal tracking-tight font-normal">Ready to plan your stay?</h2>
+-            <p className="text-charcoal/70 font-light text-lg md:text-xl max-w-xl mx-auto leading-relaxed">
++        <section className="w-full bg-cream py-16 md:py-20 border-t border-earth-brown/10">
++          <div className="max-w-3xl mx-auto px-6 md:px-12 text-center space-y-6 fade-up-element">
++            <h2 className="font-primary text-4xl md:text-5xl text-charcoal tracking-tight">Ready to plan your stay?</h2>
++            <p className="text-charcoal/70 font-light text-lg max-w-xl mx-auto leading-relaxed">
+               Every experience above can be arranged as part of your stay at Madhuban Eco Retreat, on the edge of Ratapani Tiger Reserve.
+             </p>
+-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+-              <a
+-                className="w-full sm:w-auto inline-flex items-center justify-center px-10 py-4 rounded-full bg-earth-brown text-white text-xs uppercase tracking-widest font-semibold hover:bg-[rgb(85,73,48)] hover:shadow-lg transition-all duration-300"
+-                href="/stay-in-ratapani-tiger-reserve"
+-              >
++            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
++              <a className={BTN_PRIMARY} href="/stay-in-ratapani-tiger-reserve">
+                 Book Your Stay
+               </a>
+-              <a
+-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full border border-earth-brown text-earth-brown bg-transparent hover:bg-warm-beige/20 text-xs uppercase tracking-widest font-semibold transition-all duration-300"
+-                href="https://wa.me/919770558419"
+-                target="_blank"
+-                rel="noopener noreferrer"
+-              >
++              <a className={BTN_OUTLINE} href="https://wa.me/919770558419" target="_blank" rel="noopener noreferrer">
+                 Chat on WhatsApp
+               </a>
+             </div>
+@@ -498,34 +472,7 @@
+         </section>
+       </main>
+ 
+-      {/* FOOTER */}
+-      <footer className="w-full bg-warm-beige/20 border-t border-earth-brown/15">
+-        <div className="max-w-[1380px] mx-auto px-6 md:px-12 lg:px-16 py-20">
+-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+-            <div className="md:col-span-5 space-y-4">
+-              <span className="font-primary text-2xl md:text-3xl text-charcoal tracking-tight block">Madhuban Eco Retreat</span>
+-              <p className="text-sm text-charcoal/70 font-light max-w-sm">Ratapani Tiger Reserve, Raisen &amp; Sehore Districts, Madhya Pradesh, India.</p>
+-            </div>
+-            <div className="md:col-span-4">
+-              <h4 className="font-primary text-lg text-charcoal mb-4">Our Pledge</h4>
+-              <p className="text-xs text-charcoal/70 font-light mb-4 max-w-sm leading-relaxed">
+-                Low-impact hospitality on the edge of a protected tiger reserve — every stay is built around the forest, not around us.
+-              </p>
+-            </div>
+-            <div className="md:col-span-3">
+-              <h4 className="font-primary text-lg text-charcoal mb-4">Navigation</h4>
+-              <ul className="space-y-2.5 text-xs uppercase tracking-wider font-medium">
+-                <li><a className="text-charcoal/70 hover:text-charcoal transition-colors" href="/stay-in-ratapani-tiger-reserve">Reservations</a></li>
+-                <li><a className="text-charcoal/70 hover:text-charcoal transition-colors" href="/experiences">Experiences</a></li>
+-                <li><a className="text-charcoal/70 hover:text-charcoal transition-colors" href="/nearby-attractions">Nearby Attractions</a></li>
+-              </ul>
+-            </div>
+-          </div>
+-          <div className="mt-16 pt-8 border-t border-earth-brown/15 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-charcoal/50 font-light">
+-            <p>© {new Date().getFullYear()} Madhuban Eco Retreat.</p>
+-          </div>
+-        </div>
+-      </footer>
++      <Footer />
+     </div>
+   );
+ }
+@@ -551,7 +498,7 @@
+ 
+   return (
+     <div className="p-6 rounded-xl bg-white/[0.03] border border-white/10">
+-      <div className="font-primary text-4xl sm:text-5xl lg:text-6xl text-gold-accent mb-3">
++      <div className="font-primary text-4xl sm:text-5xl lg:text-6xl text-gold-accent mb-2">
+         <span>{value}</span>
+         {stat.unitInline ? (
+           <span className="text-2xl sm:text-3xl font-body font-light ml-1">{stat.suffix}</span>

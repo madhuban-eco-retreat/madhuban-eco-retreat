@@ -1,0 +1,23 @@
+diff --git a/src/styles/globals.css b/src/styles/globals.css
+index 0000000..0000000 100644
+--- a/src/styles/globals.css
++++ b/src/styles/globals.css
+@@ -13,12 +13,12 @@
+    @tailwindcss/postcss directly, no @config pointing at it), so every
+    max640:/max500:/max-sm:/max-Xsm:/max-340:/max-367: class in the codebase
+    was silently a no-op until this. */
+-@custom-variant max640 (max-width: 640px);
+-@custom-variant max500 (max-width: 500px);
+-@custom-variant max-sm (max-width: 640px);
+-@custom-variant max-Xsm (max-width: 400px);
+-@custom-variant max-340 (max-width: 340px);
+-@custom-variant max-367 (max-width: 367px);
++@custom-variant max640 (@media (max-width: 640px));
++@custom-variant max500 (@media (max-width: 500px));
++@custom-variant max-sm (@media (max-width: 640px));
++@custom-variant max-Xsm (@media (max-width: 400px));
++@custom-variant max-340 (@media (max-width: 340px));
++@custom-variant max-367 (@media (max-width: 367px));
+ 
+ /* The @tailwind base/components/utilities trio was removed: those are v3
+    directives and are inert under v4, which this project uses via

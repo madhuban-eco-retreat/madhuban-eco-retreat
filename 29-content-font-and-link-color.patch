@@ -1,0 +1,71 @@
+diff --git a/src/styles/globals.css b/src/styles/globals.css
+index 0000000..0000000 100644
+--- a/src/styles/globals.css
++++ b/src/styles/globals.css
+@@ -214,11 +214,66 @@
+    style on specificity, so this is !important on purpose — the only way to
+    force brand-consistent table headers across old content without editing
+    and re-saving every affected post individually. */
++/* Pull-quote styling for blockquotes inside article content — the CMS
++   content is raw HTML, so this targets whatever <blockquote> the rich-text
++   editor produces, giving it the indented-italic-with-accent treatment
++   rather than default browser blockquote styling (just indentation). */
++.discriptionContent blockquote {
++  border-left: 3px solid var(--color-earth-brown);
++  background: var(--color-warm-beige, #E0D1BC);
++  background: color-mix(in oklab, var(--color-warm-beige) 25%, transparent);
++  margin: 1.75rem 0;
++  padding: 1.25rem 1.5rem;
++  border-radius: 0 0.5rem 0.5rem 0;
++  font-family: "Playfair Display", serif !important;
++  font-style: italic;
++  font-size: 1.15em;
++  line-height: 1.6;
++  color: var(--color-earth-brown);
++}
++
+ .discriptionContent table th {
+   background: var(--color-earth-brown) !important;
+   color: var(--color-warm-beige) !important;
+ }
+ 
++/* Blog article body — the CMS content is raw HTML that may carry its own
++   inline font-family styles (common with pasted/imported content), which
++   would otherwise make an article look inconsistent with the rest of the
++   site depending on what tool it was written in. The wildcard selector
++   with !important overrides that unconditionally, so every article reads
++   in the site's own fonts regardless of source. Headings get the site's
++   display font; everything else gets the body font. Needs !important on
++   both since inline style="font-family:..." attributes from the CMS carry
++   higher specificity than any external stylesheet rule without it. */
++.discriptionContent * {
++  font-family: var(--font-body) !important;
++}
++.discriptionContent h1,
++.discriptionContent h2,
++.discriptionContent h3,
++.discriptionContent h4,
++.discriptionContent h5,
++.discriptionContent h6 {
++  font-family: var(--font-primary) !important;
++}
++
++/* Hyperlinks inside article content use the brand secondary color
++   (bronze) — matching the hover/accent color already used for card
++   titles and category chips elsewhere on the blog — rather than
++   whatever color the CMS content's raw HTML happened to specify. */
++.discriptionContent a {
++  color: var(--color-brand-bronze) !important;
++  text-decoration: underline;
++  text-decoration-color: var(--color-brand-bronze);
++  text-underline-offset: 2px;
++  transition: color 0.2s ease;
++}
++.discriptionContent a:hover {
++  color: var(--color-earth-brown) !important;
++  text-decoration-color: var(--color-earth-brown);
++}
++
+ /* Drop cap on the article's opening paragraph — only fires when the very
+    first child really is a <p> (rich-text content sometimes opens with an
+    image or heading instead), so it never applies to the wrong element. */

@@ -1,0 +1,243 @@
+diff --git a/src/app/(marketing)/page.js b/src/app/(marketing)/page.js
+index 7766885..46ef472 100644
+--- a/src/app/(marketing)/page.js
++++ b/src/app/(marketing)/page.js
+@@ -114,9 +114,9 @@ export default function main() {
+ }
+ 
+ export const metadata = buildMetadata({
+-  title: "Nature Resort Near Ratapani Tiger Reserve | Madhuban Eco Retreat",
++  title: "Jungle Resort Near Bhopal | Eco Retreat in Ratapani",
+   description:
+-    "Madhuban Eco Retreat — jungle resort near Ratapani Tiger Reserve, Bhopal. Safari tents, mud houses, glamping & poolside villas. Book direct for best rates.",
++    "A jungle resort near Bhopal on the edge of Ratapani Tiger Reserve — safari tents, mud houses, glamping and a pool villa. Book direct for the best rates.",
+   path: "",
+   ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-og-social-1200x630.jpg",
+   keywords: [
+diff --git a/src/app/(marketing)/stay-in-ratapani-tiger-reserve/page.jsx b/src/app/(marketing)/stay-in-ratapani-tiger-reserve/page.jsx
+index ca9e70d..f758cbb 100644
+--- a/src/app/(marketing)/stay-in-ratapani-tiger-reserve/page.jsx
++++ b/src/app/(marketing)/stay-in-ratapani-tiger-reserve/page.jsx
+@@ -180,9 +180,9 @@ const StayPage = () => {
+ export default StayPage;
+ 
+ export const metadata = buildMetadata({
+-  title: "Jungle Stays Near Ratapani | Safari Tents & Villas",
++  title: "Resort in Ratapani | Safari Tents, Villas & Mud Houses",
+   description:
+-    "Choose from safari tents, glamping tents, mud houses & poolside villas at Madhuban Eco Retreat near Ratapani Tiger Reserve, Bhopal. Prices from ₹7,500/night. Book your nature stay today!",
++    "A resort in Ratapani Tiger Reserve near Bhopal — choose safari tents, mud houses, glamping or a private pool villa. Prices from ₹7,500/night. Book direct.",
+   path: "/stay-in-ratapani-tiger-reserve",
+   ogImage: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-og-social-1200x630.jpg",
+   keywords: [
+diff --git a/src/components/home/HomeBanner.jsx b/src/components/home/HomeBanner.jsx
+index 9bde655..20d0496 100644
+--- a/src/components/home/HomeBanner.jsx
++++ b/src/components/home/HomeBanner.jsx
+@@ -8,7 +8,7 @@ const heroSlides = [
+   { image: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/madhuban-eco-retreat-home-page-banner-aerial-view.jpg", alt: "Aerial view of Madhuban Eco Retreat near Ratapani Tiger Reserve Bhopal", position: "object-center" },
+   { image: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/madhuban-eco-retreat-home-page-banner-jungle-safari(1).jpg", alt: "Jungle safari at Ratapani Tiger Reserve near Madhuban Eco Retreat", position: "object-center" },
+   { image: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/madhuban-eco-retreat-home-page-banner-ratapani-forest-aerial-road.jpg", alt: "Ratapani forest aerial road view near Madhuban Eco Retreat Bhopal", position: "object-center" },
+-  { image: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/madhuban-eco-retreat-home-page-banner-common-iora-bird.jpg", alt: "Common Iora bird at Ratapani Wildlife Sanctuary near Madhuban Eco Retreat", position: "object-center" },
++  { image: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/banner/desktop/Madhuban_Eco_Retreat_3000x1688.jpg", alt: "Madhuban Eco Retreat lodge exterior at dusk, Ratapani Tiger Reserve, Bhopal", position: "object-center" },
+ ];
+ 
+ export default function HomeBanner() {
+@@ -39,7 +39,7 @@ export default function HomeBanner() {
+ 
+       <section className="bg-[#FAF7F2] py-8 md:py-10 px-4">
+         <div className="max-w-4xl mx-auto text-center">
+-          <h1 className="font-primary text-2xl md:text-3xl lg:text-4xl font-bold text-earth-brown mb-3 leading-tight">Eco Luxury Forest Stay - Ratapani Tiger Reserve</h1>
++          <h1 className="font-primary text-2xl md:text-3xl lg:text-4xl font-bold text-earth-brown mb-3 leading-tight">Jungle Resort Near Bhopal — Ratapani Tiger Reserve</h1>
+           <p className="text-sm md:text-base text-charcoal/70 leading-relaxed max-w-3xl mx-auto">Madhuban Eco Retreat is a nature resort nestled in the heart of Ratapani Tiger Reserve, near Bhopal. Surrounded by ancient forests and wildlife, we offer an eco-luxury escape through safari tents, mud houses, glamping and poolside villas.</p>
+         </div>
+       </section>
+diff --git a/src/components/nearbyAttractions/NearbyAttractions.jsx b/src/components/nearbyAttractions/NearbyAttractions.jsx
+index 0e3bc24..c54d689 100644
+--- a/src/components/nearbyAttractions/NearbyAttractions.jsx
++++ b/src/components/nearbyAttractions/NearbyAttractions.jsx
+@@ -2,6 +2,7 @@
+ 
+ import React, { useState, useEffect } from "react";
+ import { motion } from "framer-motion";
++import Link from "next/link";
+ import CommonFaqs from "@/common-components/faqs/CommonFaqs";
+ import HeroSlider from "./HeroSlider";
+ import { getAltFromUrl } from "@/utills/helperFunctions";
+@@ -232,6 +233,31 @@ const NearbyAttractions = () => {
+         </motion.div>
+       </section>
+ 
++      <section className="px-4 py-12 md:py-16 bg-warm-beige/20 text-center">
++        <div className="max-w-2xl mx-auto">
++          <h2 className="font-primary text-2xl md:text-3xl text-earth-brown mb-3">
++            Stay Close to All of This
++          </h2>
++          <p className="text-charcoal/80 leading-relaxed mb-6">
++            Every attraction above is a short drive from{" "}
++            <Link href="/stay-in-ratapani-tiger-reserve" className="text-brand-bronze hover:text-earth-brown font-medium">
++              our resort in Ratapani
++            </Link>
++            , on the edge of the Tiger Reserve itself.{" "}
++            <Link href="/booking" className="text-brand-bronze hover:text-earth-brown font-medium">
++              Book a stay near Bhopal
++            </Link>{" "}
++            and explore the reserve, Bhimbetka and Ginnourgarh Fort from a base inside the forest.
++          </p>
++          <Link
++            href="/booking"
++            className="inline-flex items-center justify-center rounded-full px-7 py-3 font-primary text-base font-medium text-warm-beige bg-earth-brown hover:bg-[rgb(132,116,85)] transition-colors"
++          >
++            Book Your Stay
++          </Link>
++        </div>
++      </section>
++
+       <section className=" px-4 py-4 rounded-bl-[60px] rounded-br-[60px] flex flex-col justify-center items-center">
+         <CommonFaqs faqs={nearbyAttractionsFaqs} />
+       </section>
+diff --git a/src/components/one-day-package/components/BookingCTA.jsx b/src/components/one-day-package/components/BookingCTA.jsx
+index b3eeee9..2a652f3 100644
+--- a/src/components/one-day-package/components/BookingCTA.jsx
++++ b/src/components/one-day-package/components/BookingCTA.jsx
+@@ -31,7 +31,11 @@ export const BookingCTA = () => {
+             genuine nature, good food, open spaces, and meaningful activities —
+             Madhuban Eco Retreat is the right choice. Spend a day surrounded by
+             forests, enjoy mindful experiences, and return home relaxed and
+-            refreshed.
++            refreshed. Want to stay longer?{" "}
++            <Link href="/booking" className="text-white underline hover:text-warm-beige">
++              Book a resort stay near Ratapani
++            </Link>{" "}
++            and wake up inside the forest.
+           </p>
+ 
+           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-6 md:mb-8">
+diff --git a/src/components/stay/Stay.functions.jsx b/src/components/stay/Stay.functions.jsx
+index 0000000..0000000 100644
+--- a/src/components/stay/Stay.functions.jsx
++++ b/src/components/stay/Stay.functions.jsx
+@@ -206,10 +206,10 @@
+ };
+ 
+ const mudHouseMetadata = {
+-  title: "Mud House Stay Ratapani | Eco Mud Cottage Near Bhopal",
++  title: "Mud House Near Bhopal | Eco Stay in Ratapani",
+ 
+   description:
+-    "Stay in authentic mud houses inspired by Gond architecture. Orchard setting, 360° rooftop views, luxury amenities & eco-comfort near Bhopal. Book now.",
++    "A traditional mud house near Bhopal, Gond-inspired and air-conditioned, with rooftop views over Ratapani Tiger Reserve. Check availability and book direct.",
+ 
+   keywords: [
+     "mud house bhopal",
+@@ -233,10 +233,10 @@
+ };
+ 
+ const poolSideMetadata = {
+-  title: "Pool Side Villa – Villas Near Bhopal | Ratapani Tiger Reserve",
++  title: "Pool Villa Near Bhopal | Private Villa in Ratapani",
+ 
+   description:
+-    "Looking for villas in Bhopal? Stay at Madhuban's private poolside villa near Ratapani — infinity pool, forest views & boutique luxury. Book now!",
++    "A private pool villa near Bhopal on the edge of Ratapani Tiger Reserve — infinity pool, forest views, boutique interiors. Only one available — book direct.",
+ 
+   keywords: [
+     "villas in Bhopal",
+@@ -259,10 +259,10 @@
+ };
+ 
+ const glampingTentMetadata = {
+-  title: "Glamping Tents in Ratapani | Luxury Stay Near Bhopal",
++  title: "Glamping Near Bhopal | Luxury Tents in Ratapani",
+ 
+   description:
+-    "Experience boutique luxury glamping tents in Ratapani at Madhuban Eco Retreat. King-size beds, private lawn & forest views. Perfect romantic escape near Bhopal!",
++    "Glamping near Bhopal with king-size beds, private lawns and forest views inside Ratapani Tiger Reserve. A romantic escape — book direct for best rates.",
+ 
+   keywords: [
+     "glamping tent Ratapani",
+@@ -282,10 +282,10 @@
+   },
+ };
+ const nightCampingMetadata = {
+-  title: "Camping in Ratapani | Night Camping Near Bhopal – ₹2500",
++  title: "Camping Near Bhopal | Night Camping in Ratapani",
+ 
+   description:
+-    "Enjoy night camping in Ratapani at ₹2,500 per person. Includes food, pool access, nature walk & adventure activities. Best jungle camping near Bhopal. Book now.",
++    "Night camping near Bhopal inside Ratapani Tiger Reserve — canvas tents, campfire, star-filled skies. From ₹2,500 per person including food. Book direct.",
+ 
+   keywords: [
+     "camping in ratapani",
+diff --git a/src/components/booking/NewBooking.js b/src/components/booking/NewBooking.js
+index 0000000..0000000 100644
+--- a/src/components/booking/NewBooking.js
++++ b/src/components/booking/NewBooking.js
+@@ -265,11 +265,11 @@
+               </div>
+               <div className="flex justify-center">
+                 <h1 className="bannerHeading primary-font-family text-center  text-white md:w-[70%]  mb-6 ">
+-                  Escape to Ratapani’s{" "}
++                  A{" "}
+                   <span className="text-primary text-mask-nature heading-glow font-serif-luxury">
+-                    Premier
++                    Resort
+                   </span>{" "}
+-                  Eco-Luxury Retreat
++                  in Ratapani, Near Bhopal
+                 </h1>
+               </div>
+               <p className="text-sm md:text-xl text-white/80 font-light leading-relaxed max-w-2xl mx-auto">
+diff --git a/src/components/dining/Dining.jsx b/src/components/dining/Dining.jsx
+index 0000000..0000000 100644
+--- a/src/components/dining/Dining.jsx
++++ b/src/components/dining/Dining.jsx
+@@ -2,6 +2,7 @@
+ 
+ import React, { useState } from "react";
+ import "./Dining.css";
++import Link from "next/link";
+ import DiningSpacial from "./DiningSpacial";
+ import DiningOptions from "./DiningOptions";
+ import CommonFaqs from "@/common-components/faqs/CommonFaqs";
+@@ -301,8 +302,7 @@
+                   width={1600}
+                   height={1200}
+                   sizes="100vw"
+-                  quality={90} className="w-auto h-auto"
+-                  quality={90}/>
++                  quality={90} className="w-auto h-auto"/>
+               )}
+               <h3>{selectedMedia.title}</h3>
+             </div>
+@@ -311,6 +311,30 @@
+       </div>
+       <DiningSpacial />
+       <DiningOptions />
++      <section className="px-4 py-12 md:py-16 bg-warm-beige/20 text-center">
++        <div className="max-w-2xl mx-auto">
++          <h2 className="font-primary text-2xl md:text-3xl text-earth-brown mb-3">
++            Stay for More Than a Meal
++          </h2>
++          <p className="text-charcoal/80 leading-relaxed mb-6">
++            Every dish here is served at{" "}
++            <Link href="/stay-in-ratapani-tiger-reserve" className="text-brand-bronze hover:text-earth-brown font-medium">
++              our resort in Ratapani
++            </Link>
++            , inside the Tiger Reserve itself.{" "}
++            <Link href="/booking" className="text-brand-bronze hover:text-earth-brown font-medium">
++              Book a stay near Bhopal
++            </Link>{" "}
++            and make farm-to-table dining part of a full jungle getaway.
++          </p>
++          <Link
++            href="/booking"
++            className="inline-flex items-center justify-center rounded-full px-7 py-3 font-primary text-base font-medium text-warm-beige bg-earth-brown hover:bg-[rgb(132,116,85)] transition-colors"
++          >
++            Book Your Stay
++          </Link>
++        </div>
++      </section>
+       <CommonFaqs faqs={foodAndDiningFaqs} />
+     </>
+   );

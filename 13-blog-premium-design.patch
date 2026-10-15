@@ -1,0 +1,728 @@
+diff --git a/src/styles/globals.css b/src/styles/globals.css
+index 0000000..0000000 100644
+--- a/src/styles/globals.css
++++ b/src/styles/globals.css
+@@ -206,12 +206,19 @@
+     max-width: 1280px;
+     margin-left: auto;
+     margin-right: auto;
+-    padding-left: 1rem;
+-    padding-right: 1rem;
+-    border: 1px solid var(--primary-gray2);
+-    border-radius: 20px;
+-    margin-top: 10px;
+-    background: var(--primary-gray);
++}
++
++/* Drop cap on the article's opening paragraph — only fires when the very
++   first child really is a <p> (rich-text content sometimes opens with an
++   image or heading instead), so it never applies to the wrong element. */
++.discriptionContent > p:first-child::first-letter {
++  font-family: "Playfair Display", serif;
++  float: left;
++  font-size: 3.4em;
++  line-height: 0.85;
++  padding-right: 0.08em;
++  padding-top: 0.05em;
++  color: var(--color-earth-brown, #6E6146);
+ }
+ 
+ /* footer */
+diff --git a/src/common-components/card/Card.jsx b/src/common-components/card/Card.jsx
+index 0000000..0000000 100644
+--- a/src/common-components/card/Card.jsx
++++ b/src/common-components/card/Card.jsx
+@@ -2,17 +2,16 @@
+ import React, { useState } from "react";
+ import Image from "next/image";
+ import Link from "next/link";
+-import { FaChevronRight } from "react-icons/fa6";
+ 
+ const FALLBACK_IMAGE =
+   "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/no-image/no-image.png";
+ 
+ /**
+- * Blog list card. The whole card is the link, so the "Explore More" affordance
+- * is a styled span - it was previously a <button> nested inside this <a>, which
+- * is invalid markup and silently dropped the href it was given. The `group`
+- * class also has to live on the linked element, otherwise the image's
+- * group-hover zoom never fires.
++ * Blog list/related-post card. Image-led, editorial: the whole card is the
++ * link (no per-card "Explore More" button — repeating the same CTA on every
++ * card is noise; the image zoom and title color shift on hover already say
++ * "this is clickable"). Category renders as a small chip overlaid on the
++ * image, not a boxed label below the fold.
+  */
+ const Card = ({
+   imageUrl = FALLBACK_IMAGE,
+@@ -21,6 +20,7 @@
+   title = "No title found",
+   cardkey = "",
+   createdAt = "",
++  category = "",
+ }) => {
+   const [imgSrc, setImgSrc] = useState(imageUrl);
+ 
+@@ -29,28 +29,32 @@
+       href={hrefLink}
+       key={cardkey}
+       aria-label={title}
+-      className="group block h-full rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 bg-primary-gray"
++      className="group block h-full"
+     >
+-      <div className="relative w-full h-48 md:h-56 overflow-hidden">
++      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg">
+         <Image
+           src={imgSrc || FALLBACK_IMAGE}
+           fill
+-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 25vw"
++          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+           quality={90}
+           alt={altText}
+-          className="object-cover transition-transform duration-500 group-hover:scale-105"
++          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+           onError={() => setImgSrc(FALLBACK_IMAGE)}
+         />
++        {category && (
++          <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#FAF7F2]/90 backdrop-blur-sm text-earth-brown text-xs font-medium">
++            {category}
++          </span>
++        )}
+       </div>
+ 
+-      <div className="p-4 md:p-5">
+-        <p className="text-xs text-charcoal/50 leading-relaxed">{createdAt}</p>
+-        <h3 className="mt-2 text-base font-semibold leading-relaxed line-clamp-2 text-charcoal">
++      <div className="pt-4">
++        {createdAt && (
++          <p className="text-xs text-charcoal/45 tracking-wide">{createdAt}</p>
++        )}
++        <h3 className="font-serif mt-1.5 text-lg leading-snug text-charcoal line-clamp-2 transition-colors duration-300 group-hover:text-earth-brown">
+           {title}
+         </h3>
+-        <span className="mt-3 inline-flex items-center gap-2 rounded-lg bg-earth-brown px-4 h-10 text-sm font-medium text-warm-beige transition-opacity duration-300 group-hover:opacity-90">
+-          Explore More <FaChevronRight size={13} aria-hidden="true" />
+-        </span>
+       </div>
+     </Link>
+   );
+diff --git a/src/components/blog/NewBlog.jsx b/src/components/blog/NewBlog.jsx
+index 0000000..0000000 100644
+--- a/src/components/blog/NewBlog.jsx
++++ b/src/components/blog/NewBlog.jsx
+@@ -1,14 +1,18 @@
+ import React from "react";
+ import Link from "next/link";
+ import BlogList from "@/common-components/Pagination/BlogListWithPagination";
++import FeaturedPost from "./FeaturedPost";
+ import BlogBanner from "./BlogBanner";
+ import NaturesStory from "./NaturesStory";
+-import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
+ 
+ const LIMIT = 9;
+ 
+ /**
+  * Shared shell for /blogs, /blogs/category/[slug] and /blogs/author/[slug].
++ * The first post gets the full-bleed FeaturedPost treatment; the rest sit in
++ * an asymmetric grid (BlogListWithPagination) so the grid doesn't repeat the
++ * same card size all the way down the page.
++ *
+  * Category tabs are real <Link>s to their own archive page (not a client-side
+  * filter) so each category gets its own crawlable, indexable URL — a JS-only
+  * filter on one page would hide all but the current category from search
+@@ -21,37 +25,43 @@
+   activeCategorySlug = null,
+   authorSlug = null,
+   heading = "Blogs",
++  headingLevel = "h1",
+ }) => {
++  const [featured, ...rest] = blogs;
++  const HeadingTag = headingLevel;
++
+   return (
+     <div>
+       <BlogBanner />
+       <NaturesStory />
+       <div className="custom-container py-4 md:py-8">
+-        <DecorativeHeading text={heading} as="h2" textClasses={"w-50"} />
++        <HeadingTag className="font-serif text-2xl md:text-3xl text-earth-brown mb-6">
++          {heading}
++        </HeadingTag>
+ 
+         {categories.length > 0 && !authorSlug && (
+           <nav
+             aria-label="Blog categories"
+-            className="flex flex-wrap gap-2 mt-4 mb-6 md:mb-8"
++            className="flex flex-wrap gap-x-6 gap-y-2 border-b border-earth-brown/15 mb-8 md:mb-10 pb-0"
+           >
+             <Link
+               href="/blogs"
+-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
++              className={`pb-3 text-sm font-medium border-b-2 -mb-px transition-colors ${
+                 !activeCategorySlug
+-                  ? "bg-earth-brown text-warm-beige"
+-                  : "bg-white text-earth-brown border border-earth-brown/30 hover:bg-earth-brown/10"
++                  ? "border-earth-brown text-earth-brown"
++                  : "border-transparent text-charcoal/50 hover:text-earth-brown"
+               }`}
+             >
+-              All
++              All Stories
+             </Link>
+             {categories.map((cat) => (
+               <Link
+                 key={cat.slug}
+                 href={`/blogs/category/${cat.slug}`}
+-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
++                className={`pb-3 text-sm font-medium border-b-2 -mb-px transition-colors ${
+                   activeCategorySlug === cat.slug
+-                    ? "bg-earth-brown text-warm-beige"
+-                    : "bg-white text-earth-brown border border-earth-brown/30 hover:bg-earth-brown/10"
++                    ? "border-earth-brown text-earth-brown"
++                    : "border-transparent text-charcoal/50 hover:text-earth-brown"
+                 }`}
+               >
+                 {cat.name}
+@@ -60,27 +70,30 @@
+           </nav>
+         )}
+ 
+-        <div className="mt-4 md:mt-6">
+-          {!blogs.length ? (
+-            <div className="text-center py-10">
+-              <p className="text-primary-gray2 text-lg md:text-xl">
+-                No blogs available at the moment.
+-              </p>
+-              <p className="text-primary-gray2 text-sm">
+-                Stay tuned—we’ll be sharing insights, stories, and experiences
+-                very soon.
+-              </p>
++        {!blogs.length ? (
++          <div className="text-center py-16">
++            <p className="text-charcoal text-lg md:text-xl">
++              No blogs available at the moment.
++            </p>
++            <p className="text-charcoal/60 text-sm mt-1">
++              Stay tuned—we’ll be sharing insights, stories, and experiences
++              very soon.
++            </p>
++          </div>
++        ) : (
++          <>
++            <div className="mb-8 md:mb-12">
++              <FeaturedPost blog={featured} />
+             </div>
+-          ) : (
+             <BlogList
+-              initialBlogs={blogs}
++              initialBlogs={rest}
+               totalPages={posts?.totalPages}
+               limit={LIMIT}
+               category={activeCategorySlug}
+               author={authorSlug}
+             />
+-          )}
+-        </div>
++          </>
++        )}
+       </div>
+     </div>
+   );
+diff --git a/src/common-components/Pagination/BlogListWithPagination.jsx b/src/common-components/Pagination/BlogListWithPagination.jsx
+index 0000000..0000000 100644
+--- a/src/common-components/Pagination/BlogListWithPagination.jsx
++++ b/src/common-components/Pagination/BlogListWithPagination.jsx
+@@ -1,7 +1,6 @@
+ "use client";
+ import React, { useState } from "react";
+ import Card from "../card/Card";
+-import CustomButton from "../CustomButton/CustomButton";
+ 
+ function formatDate(iso) {
+   if (!iso) return "";
+@@ -19,15 +18,13 @@
+ };
+ 
+ /**
+- * Blog grid with a Load More button. Reused on /blogs, /blogs/category/[slug]
+- * and /blogs/author/[slug] — `category` and `author` scope which posts the
+- * Load More fetch pulls in, matching whatever the server already rendered.
++ * Editorial grid with a Load More button. Every 5th card spans two columns
++ * on desktop, so the grid has rhythm instead of repeating one card size all
++ * the way down the page — deliberate, not a uniform SaaS-card wall.
+  *
+- * Rewired from the old MongoDB service (getAllBlogs from
+- * services/blog/blogServices) to the public /api/blog route, which reads
+- * from Supabase — the data the admin panel actually writes to. Field names
+- * changed to match: _id/uid -> id/slug, featuredImage.url ->
+- * featured_image_url, createdAt -> published_at.
++ * Reused on /blogs, /blogs/category/[slug] and /blogs/author/[slug] —
++ * `category` and `author` scope which posts the Load More fetch pulls in,
++ * matching whatever the server already rendered.
+  */
+ function BlogList({ initialBlogs, totalPages, limit = 9, category = null, author = null }) {
+   const [blogs, setBlogs] = useState(initialBlogs || []);
+@@ -64,44 +61,44 @@
+     }
+   };
+ 
++  if (!blogs.length) return null;
++
+   return (
+     <div className="w-full">
+-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
+-        {blogs?.map((blog) => (
+-          <div key={blog.id}>
++      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-8 md:gap-y-10">
++        {blogs.map((blog, idx) => (
++          <div
++            key={blog.id}
++            className={idx % 5 === 0 ? "sm:col-span-2 md:col-span-2" : ""}
++          >
+             <Card
+               cardkey={blog.id}
+-              imageUrl={
+-                blog?.featured_image_url ||
+-                "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/no-image/no-image.png"
+-              }
+-              altText={blog?.featured_image_alt || "Blog Image"}
++              imageUrl={blog?.featured_image_url}
++              altText={blog?.featured_image_alt || blog?.title}
+               hrefLink={`/blogs/${blog?.slug}`}
+               title={blog?.title}
+               createdAt={formatDate(blog?.published_at)}
++              category={blog?.blog_categories?.name}
+             />
+           </div>
+         ))}
+       </div>
+ 
+       {error && (
+-        <p className="text-center text-sm text-red-700 mt-4">
++        <p className="text-center text-sm text-red-700 mt-6">
+           Couldn&apos;t load more posts. Please try again.
+         </p>
+       )}
+ 
+       {hasMore && (
+-        <div className="mt-8 flex justify-center md:mt-12">
+-          <CustomButton
++        <div className="flex justify-center mt-10 md:mt-14">
++          <button
+             onClick={handleLoadMore}
+-            loading={loading}
+             disabled={loading}
+-            color="#6E6146"
+-            className="px-8 text-base"
+-            ariaLabel="Load more blogs"
++            className="px-8 py-3 rounded-full border border-earth-brown text-earth-brown text-sm font-medium tracking-wide transition-colors hover:bg-earth-brown hover:text-warm-beige disabled:opacity-50"
+           >
+-            {loading ? "Loading..." : "Load More"}
+-          </CustomButton>
++            {loading ? "Loading…" : "More Stories"}
++          </button>
+         </div>
+       )}
+     </div>
+diff --git a/src/app/(marketing)/blogs/[slug]/page.jsx b/src/app/(marketing)/blogs/[slug]/page.jsx
+index 0000000..0000000 100644
+--- a/src/app/(marketing)/blogs/[slug]/page.jsx
++++ b/src/app/(marketing)/blogs/[slug]/page.jsx
+@@ -1,12 +1,11 @@
+ export const revalidate = 3600;
+ import { buildMetadata } from "@/lib/seo";
+-import CustomLinkBtn from "@/common-components/CustomLinkBtn/CustomLinBtn";
+ import CommonFaqs from "@/common-components/faqs/CommonFaqs";
++import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
+ import BlogDescription from "@/components/blog/BlogDescription";
+-import HeroSection from "@/components/homepage/HeroSection";
++import BlogArticleHero from "@/components/blog/BlogArticleHero";
+ import SEO from "@/components/seo/Seo";
+ import Card from "@/common-components/card/Card";
+-import Link from "next/link";
+ import { notFound } from "next/navigation";
+ import {
+   getBlogBySlug,
+@@ -17,11 +16,6 @@
+ 
+ const BASE_URL = "https://www.madhubanecoretreat.com";
+ 
+-function toDDMMYYYY(iso) {
+-  if (!iso) return "";
+-  return new Date(iso).toLocaleDateString("en-GB").replace(/\//g, "-");
+-}
+-
+ function toDateOnly(iso) {
+   if (!iso) return undefined;
+   return iso.split("T")[0];
+@@ -124,47 +118,7 @@
+     <div>
+       <SEO schemas={[blogSchema, breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])]} />
+ 
+-      <HeroSection
+-        image={blog.featured_image_url}
+-        title={blog.title}
+-        createdAt={toDDMMYYYY(blog.published_at)}
+-        showPrimaryBtn={false}
+-        showSecondaryBtn={false}
+-        breadcom={breadcom}
+-      />
+-
+-      {/* Author / category byline — real internal links for both SEO
+-          (crawlable paths to the archive pages) and readers browsing by
+-          topic or writer. */}
+-      {(blog.blog_authors?.name || blog.blog_categories?.name) && (
+-        <div className="bg-[#b4a681d8] pt-6">
+-          <div className="max-w-[1400px] mx-auto px-4">
+-            <div className="flex flex-wrap items-center gap-3 text-sm">
+-              {blog.blog_authors?.slug && (
+-                <Link
+-                  href={`/blogs/author/${blog.blog_authors.slug}`}
+-                  className="font-semibold text-earth-brown hover:underline"
+-                >
+-                  By {blog.blog_authors.name}
+-                </Link>
+-              )}
+-              {blog.blog_categories?.slug && (
+-                <Link
+-                  href={`/blogs/category/${blog.blog_categories.slug}`}
+-                  className="px-3 py-1 rounded-full bg-earth-brown text-warm-beige text-xs font-medium"
+-                >
+-                  {blog.blog_categories.name}
+-                </Link>
+-              )}
+-              {blog.reading_time ? (
+-                <span className="text-charcoal/60">
+-                  {blog.reading_time} min read
+-                </span>
+-              ) : null}
+-            </div>
+-          </div>
+-        </div>
+-      )}
++      <BlogArticleHero blog={blog} breadcrumb={breadcom} />
+ 
+       <BlogDescription blog={blog} />
+ 
+@@ -173,12 +127,10 @@
+       )}
+ 
+       {related.length > 0 && (
+-        <div className="bg-[#b4a681d8] py-10">
++        <div className="bg-[#b4a681d8] py-12 md:py-16">
+           <div className="custom-container">
+-            <h2 className="font-primary text-2xl md:text-3xl text-earth-brown text-center mb-6 md:mb-8">
+-              Related Stories
+-            </h2>
+-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
++            <DecorativeHeading text="Related Stories" as="h2" />
++            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 mt-8">
+               {related.map((post) => (
+                 <Card
+                   key={post.id}
+@@ -188,11 +140,7 @@
+                   hrefLink={`/blogs/${post.slug}`}
+                   title={post.title}
+                   createdAt={
+-                    post.published_at
+-                      ? new Date(post.published_at)
+-                          .toLocaleDateString("en-GB")
+-                          .replace(/\//g, "-")
+-                      : ""
++                    post.published_at ? post.published_at.split("T")[0] : ""
+                   }
+                 />
+               ))}
+diff --git a/src/app/(marketing)/blogs/author/[slug]/page.jsx b/src/app/(marketing)/blogs/author/[slug]/page.jsx
+index 0000000..0000000 100644
+--- a/src/app/(marketing)/blogs/author/[slug]/page.jsx
++++ b/src/app/(marketing)/blogs/author/[slug]/page.jsx
+@@ -121,6 +121,7 @@
+         categories={[]}
+         authorSlug={slug}
+         heading={`Posts by ${author.name}`}
++        headingLevel="h2"
+       />
+     </>
+   );
+diff --git a/src/components/blog/BlogDescription.js b/src/components/blog/BlogDescription.js
+index 0000000..0000000 100644
+--- a/src/components/blog/BlogDescription.js
++++ b/src/components/blog/BlogDescription.js
+@@ -65,10 +65,10 @@
+ 
+         {/* ========== MOBILE / TABLET: TOC Dropdown ========== */}
+         <div className="xl:hidden w-full mb-6">
+-          <div className="bg-white rounded-lg shadow-md">
+-            <button onClick={() => setOpen(!open)} className="w-full text-left px-5 py-4 font-semibold flex justify-between items-center text-charcoal" >
+-              📑 Table of Contents
+-              <span className="text-xl font-bold">{open ? "−" : "+"}</span>
++          <div className="bg-[#FAF7F2] rounded-lg border border-earth-brown/15">
++            <button onClick={() => setOpen(!open)} className="w-full text-left px-5 py-4 font-serif text-lg flex justify-between items-center text-earth-brown" >
++              Contents
++              <span className="text-xl font-normal">{open ? "−" : "+"}</span>
+             </button>
+ 
+             {open && (
+@@ -93,8 +93,8 @@
+           <aside className="hidden xl:block xl:w-[22%]">
+             <div className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto scrollbar-thin">
+               {headings.length > 0 && (
+-                <div className="bg-white p-5 rounded-lg shadow-md">
+-                  <h3 className="text-lg font-bold mb-4 text-charcoal border-b pb-3"> 📑 Table of Contents </h3>
++                <div className="bg-[#FAF7F2] p-5 rounded-lg border border-earth-brown/15">
++                  <h3 className="font-serif text-lg mb-4 text-earth-brown border-b border-earth-brown/15 pb-3"> Contents </h3>
+                   <nav>
+                     <ul className="space-y-1 text-sm">
+                       {headings.map((item) => (
+@@ -102,8 +102,8 @@
+                           <a href={`#${item.id}`}
+                             className={`block py-1.5 px-3 rounded-md transition-all duration-200 ${
+                               activeId === item.id
+-                                ? "bg-cream text-moss-green font-semibold border-l-3 border-moss-green"
+-                                : "text-earth-brown hover:text-moss-green hover:bg-cream" }`}>
++                                ? "bg-warm-beige/60 text-earth-brown font-semibold border-l-2 border-earth-brown"
++                                : "text-charcoal/70 hover:text-earth-brown hover:bg-warm-beige/30" }`}>
+                             {item.text}
+                           </a>
+                         </li>
+@@ -117,23 +117,37 @@
+ 
+           {/*  Blog Content */}
+           <main className="w-full xl:w-[52%]">
+-            <div className="no-tailwind">
+-              <div className="discriptionContent prose max-w-none bg-white p-6 md:p-8 rounded-lg shadow-md"
+-                dangerouslySetInnerHTML={{ __html: data }} ></div>
++            <div className="bg-white rounded-lg border border-earth-brown/10 p-6 md:p-8">
++              <div className="no-tailwind">
++                <div className="discriptionContent prose max-w-none"
++                  dangerouslySetInnerHTML={{ __html: data }} ></div>
++              </div>
+             </div>
+           </main>
+ 
+           {/* Contact Form / Modal  */}
+           <aside className="hidden xl:block xl:w-[26%]">
+             <div className="sticky top-28 space-y-6 max-h-[calc(100vh-8rem)] overflow-y-auto scrollbar-thin">
+-              <StickyContactForm />
++              <div className="bg-[#FAF7F2] rounded-lg border border-earth-brown/15 p-5">
++                <h3 className="font-serif text-lg text-earth-brown mb-1">Plan Your Stay</h3>
++                <p className="text-sm text-charcoal/60 mb-4">
++                  Have a question about this trip? We&apos;ll reply on WhatsApp.
++                </p>
++                <StickyContactForm />
++              </div>
+             </div>
+           </aside>
+         </div>
+ 
+         {/*  Contact Form Below Content  */}
+-        <div className="xl:hidden w-full  py-10">
+-          <StickyContactForm />
++        <div className="xl:hidden w-full py-10">
++          <div className="bg-[#FAF7F2] rounded-lg border border-earth-brown/15 p-5">
++            <h3 className="font-serif text-lg text-earth-brown mb-1">Plan Your Stay</h3>
++            <p className="text-sm text-charcoal/60 mb-4">
++              Have a question about this trip? We&apos;ll reply on WhatsApp.
++            </p>
++            <StickyContactForm />
++          </div>
+         </div>
+       </div>
+ 
+diff --git a/src/components/blog/FeaturedPost.jsx b/src/components/blog/FeaturedPost.jsx
+new file mode 100644
+index 0000000..0000000
+--- /dev/null
++++ b/src/components/blog/FeaturedPost.jsx
+@@ -0,0 +1,54 @@
++import Image from "next/image";
++import Link from "next/link";
++
++const FALLBACK_IMAGE =
++  "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/no-image/no-image.png";
++
++/**
++ * Lead post treatment for /blogs and the category archives — full-bleed
++ * image with the headline overlaid, distinct from the grid below it. The
++ * "hero is the first thing" principle: don't give the newest story the same
++ * small card treatment as the twentieth.
++ */
++export default function FeaturedPost({ blog }) {
++  if (!blog) return null;
++
++  return (
++    <Link
++      href={`/blogs/${blog.slug}`}
++      className="group relative block w-full aspect-[16/10] md:aspect-[21/9] overflow-hidden rounded-xl"
++    >
++      <Image
++        src={blog.featured_image_url || FALLBACK_IMAGE}
++        alt={blog.featured_image_alt || blog.title}
++        fill
++        priority
++        sizes="100vw"
++        quality={90}
++        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
++      />
++      <div
++        className="absolute inset-0"
++        style={{
++          background:
++            "linear-gradient(0deg, rgba(23,19,12,0.82) 0%, rgba(23,19,12,0.35) 45%, rgba(23,19,12,0) 70%)",
++        }}
++      />
++      <div className="absolute bottom-0 left-0 right-0 p-5 md:p-10">
++        {blog.blog_categories?.name && (
++          <span className="inline-block px-3 py-1 rounded-full bg-warm-beige text-earth-brown text-xs font-medium mb-3">
++            {blog.blog_categories.name}
++          </span>
++        )}
++        <h2 className="font-serif text-2xl md:text-4xl lg:text-[2.75rem] leading-tight text-white max-w-3xl">
++          {blog.title}
++        </h2>
++        {blog.excerpt && (
++          <p className="hidden md:block mt-3 text-white/80 max-w-xl text-[15px] leading-relaxed line-clamp-2">
++            {blog.excerpt}
++          </p>
++        )}
++      </div>
++    </Link>
++  );
++}
+diff --git a/src/components/blog/BlogArticleHero.jsx b/src/components/blog/BlogArticleHero.jsx
+new file mode 100644
+index 0000000..0000000
+--- /dev/null
++++ b/src/components/blog/BlogArticleHero.jsx
+@@ -0,0 +1,130 @@
++import Image from "next/image";
++import Link from "next/link";
++
++const FALLBACK_IMAGE =
++  "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/no-image/no-image-banner.png";
++const FALLBACK_AVATAR =
++  "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/no-image/no-image.png";
++
++function formatDate(iso) {
++  if (!iso) return "";
++  return new Date(iso).toLocaleDateString("en-IN", {
++    day: "numeric",
++    month: "long",
++    year: "numeric",
++  });
++}
++
++/**
++ * Full-bleed article hero with a byline card that overlaps the bottom edge
++ * of the image — a real magazine device, and distinct from the plain strip
++ * the site's shared HeroSection uses for non-article pages.
++ */
++export default function BlogArticleHero({ blog, breadcrumb }) {
++  return (
++    <header>
++      <div className="relative w-full h-[46vh] md:h-[62vh]">
++        <Image
++          src={blog.featured_image_url || FALLBACK_IMAGE}
++          alt={blog.featured_image_alt || blog.title}
++          fill
++          priority
++          quality={90}
++          sizes="100vw"
++          className="object-cover"
++        />
++        <div
++          className="absolute inset-0"
++          style={{
++            background:
++              "linear-gradient(0deg, rgba(23,19,12,0.75) 0%, rgba(23,19,12,0.2) 55%, rgba(23,19,12,0.35) 100%)",
++          }}
++        />
++
++        {/* Breadcrumb — kept visible on the image itself, understated */}
++        <nav aria-label="Breadcrumb" className="absolute top-5 left-0 right-0 px-4 md:px-10">
++          <div className="flex items-center flex-wrap gap-1 text-xs text-white/80 max-w-5xl mx-auto">
++            <Link href="/" className="hover:text-white">
++              Home
++            </Link>
++            {breadcrumb.map((item, idx) => (
++              <span key={idx} className="flex items-center gap-1">
++                <span className="opacity-60">/</span>
++                {item.url ? (
++                  <Link href={item.url} className="hover:text-white">
++                    {item.title}
++                  </Link>
++                ) : (
++                  <span className="text-white truncate max-w-[220px]">
++                    {item.title}
++                  </span>
++                )}
++              </span>
++            ))}
++          </div>
++        </nav>
++
++        <div className="absolute bottom-0 left-0 right-0 px-4 md:px-10 pb-16 md:pb-20">
++          <div className="max-w-5xl mx-auto">
++            {blog.blog_categories?.name && (
++              <Link
++                href={`/blogs/category/${blog.blog_categories.slug}`}
++                className="inline-block px-3 py-1 rounded-full bg-warm-beige text-earth-brown text-xs font-medium mb-4"
++              >
++                {blog.blog_categories.name}
++              </Link>
++            )}
++            <h1 className="font-serif text-3xl md:text-5xl leading-tight text-white max-w-3xl">
++              {blog.title}
++            </h1>
++          </div>
++        </div>
++      </div>
++
++      {/* Byline card, overlapping the hero's bottom edge */}
++      <div className="max-w-5xl mx-auto px-4">
++        <div className="relative -mt-10 md:-mt-12 bg-[#FAF7F2] rounded-xl shadow-[0_8px_30px_rgba(23,19,12,0.12)] px-5 py-4 md:px-8 md:py-5 flex flex-wrap items-center gap-x-6 gap-y-3">
++          {blog.blog_authors?.name && (
++            <Link
++              href={
++                blog.blog_authors.slug
++                  ? `/blogs/author/${blog.blog_authors.slug}`
++                  : "#"
++              }
++              className="flex items-center gap-3 group"
++            >
++              <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0 bg-earth-brown/10">
++                <Image
++                  src={blog.blog_authors.avatar_url || FALLBACK_AVATAR}
++                  alt={blog.blog_authors.avatar_alt || blog.blog_authors.name}
++                  fill
++                  sizes="40px"
++                  className="object-cover"
++                />
++              </div>
++              <div className="leading-tight">
++                <p className="text-sm font-semibold text-charcoal group-hover:text-earth-brown transition-colors">
++                  {blog.blog_authors.name}
++                </p>
++                {blog.blog_authors.designation && (
++                  <p className="text-xs text-charcoal/50">
++                    {blog.blog_authors.designation}
++                  </p>
++                )}
++              </div>
++            </Link>
++          )}
++
++          <div className="flex items-center gap-4 text-sm text-charcoal/60 ml-auto">
++            {blog.published_at && <span>{formatDate(blog.published_at)}</span>}
++            {blog.reading_time ? (
++              <span className="hidden sm:inline">
++                {blog.reading_time} min read
++              </span>
++            ) : null}
++          </div>
++        </div>
++      </div>
++    </header>
++  );
++}

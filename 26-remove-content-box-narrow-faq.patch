@@ -1,0 +1,75 @@
+diff --git a/src/components/blog/BlogDescription.js b/src/components/blog/BlogDescription.js
+index 0000000..0000000 100644
+--- a/src/components/blog/BlogDescription.js
++++ b/src/components/blog/BlogDescription.js
+@@ -59,7 +59,7 @@
+   }, [headings]);
+ 
+   return (
+-    <div className="bg-warm-beige/20 pt-10">
++    <div className="bg-[#FAF7F2] pt-8">
+       <div className="max-w-[1400px] mx-auto px-4">
+ 
+         {/* ========== MOBILE / TABLET: TOC Dropdown ========== */}
+@@ -91,7 +91,7 @@
+             than the outer container for readability — left-aligning it
+             would otherwise dump all the leftover width as dead space on
+             the right. */}
+-        <div className="flex flex-col xl:flex-row xl:justify-center gap-8 md:gap-12 pb-12 md:pb-16">
++        <div className="flex flex-col xl:flex-row xl:justify-center gap-8 md:gap-10 pb-10 md:pb-12">
+           {/* Table of Contents — plain list, no box, just an accent line on
+               the active item. Fixed narrow width so the article gets the
+               rest of the space instead of splitting it three ways. */}
+@@ -118,13 +118,13 @@
+             </div>
+           </aside>
+ 
+-          {/*  Blog Content */}
++          {/* Blog Content — no card, no border, no shadow: flows directly
++              on the page background so it doesn't read as a separate box
++              sitting on top of the page, just the article itself. */}
+           <main className="w-full min-w-0 max-w-3xl">
+-            <div className="bg-white rounded-lg border border-earth-brown/10 p-6 md:p-8">
+-              <div className="no-tailwind">
+-                <div className="discriptionContent prose max-w-none"
+-                  dangerouslySetInnerHTML={{ __html: data }} ></div>
+-              </div>
++            <div className="no-tailwind">
++              <div className="discriptionContent prose max-w-none"
++                dangerouslySetInnerHTML={{ __html: data }} ></div>
+             </div>
+           </main>
+         </div>
+diff --git a/src/common-components/faqs/CommonFaqs.jsx b/src/common-components/faqs/CommonFaqs.jsx
+index 0000000..0000000 100644
+--- a/src/common-components/faqs/CommonFaqs.jsx
++++ b/src/common-components/faqs/CommonFaqs.jsx
+@@ -49,6 +49,7 @@
+   accordionBg = "var(--primary-gray2)",
+   accordionColor = "white",
+   dense = false,
++  maxWidth = "max-w-6xl",
+ }) {
+   const [expanded, setExpanded] = useState(false);
+ 
+@@ -60,7 +61,7 @@
+ 
+   return (
+     <section className={`py-8 px-4 md:px-8 ${bgColor}`}>
+-      <div className="max-w-6xl mx-auto">
++      <div className={`${maxWidth} mx-auto`}>
+         <motion.div
+           className="text-center mb-6 md:mb-8"
+           initial="hidden"
+diff --git a/src/app/(marketing)/blogs/[slug]/page.jsx b/src/app/(marketing)/blogs/[slug]/page.jsx
+index 0000000..0000000 100644
+--- a/src/app/(marketing)/blogs/[slug]/page.jsx
++++ b/src/app/(marketing)/blogs/[slug]/page.jsx
+@@ -130,6 +130,7 @@
+           accordionBg="#FEFCF8"
+           accordionColor="var(--color-earth-brown)"
+           dense
++          maxWidth="max-w-3xl"
+         />
+       )}
+ 

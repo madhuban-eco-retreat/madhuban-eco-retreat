@@ -1,0 +1,58 @@
+diff --git a/src/styles/globals.css b/src/styles/globals.css
+index 0000000..0000000 100644
+--- a/src/styles/globals.css
++++ b/src/styles/globals.css
+@@ -618,3 +618,35 @@
+ .booking-typography h4 {
+   font-family: var(--font-primary);
+ }
++
++/* Blog list asymmetric grid — hand-authored, not Tailwind utility classes.
++   Turbopack's dev-mode JIT scanner failed to generate lg:grid-cols-12 and
++   lg:col-span-8 (confirmed by inspecting the actual compiled CSS output —
++   every lg:col-span-1 through -4 was present since they're used elsewhere
++   in the codebase, but -8 and grid-cols-12 were completely absent, since
++   this grid is the only place in the whole project that needs them).
++   Hand-authored CSS bypasses that scanner entirely, so it can never be
++   silently dropped the way the utility classes were. */
++.blog-grid {
++  display: grid;
++  grid-template-columns: repeat(1, minmax(0, 1fr));
++  column-gap: 1.5rem;
++  row-gap: 2.5rem;
++}
++@media (min-width: 768px) {
++  .blog-grid {
++    grid-template-columns: repeat(2, minmax(0, 1fr));
++  }
++}
++@media (min-width: 1024px) {
++  .blog-grid {
++    grid-template-columns: repeat(12, minmax(0, 1fr));
++    row-gap: 3rem;
++  }
++  .blog-grid-item-large {
++    grid-column: span 8 / span 8;
++  }
++  .blog-grid-item-small {
++    grid-column: span 4 / span 4;
++  }
++}
+diff --git a/src/common-components/Pagination/BlogListWithPagination.jsx b/src/common-components/Pagination/BlogListWithPagination.jsx
+index 0000000..0000000 100644
+--- a/src/common-components/Pagination/BlogListWithPagination.jsx
++++ b/src/common-components/Pagination/BlogListWithPagination.jsx
+@@ -75,11 +75,11 @@
+ 
+   return (
+     <div className="w-full">
+-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-x-6 gap-y-10 md:gap-y-12">
++      <div className="blog-grid">
+         {blogs.map((blog, idx) => (
+           <div
+             key={blog.id}
+-            className={idx % 2 === 0 ? "lg:col-span-8" : "lg:col-span-4"}
++            className={idx % 2 === 0 ? "blog-grid-item-large" : "blog-grid-item-small"}
+           >
+             <Card
+               cardkey={blog.id}
