@@ -60,6 +60,19 @@ const IMG = {
   fort: `${R2}nearby-atterations/ginnorgarh-tribal-fort-ratapani-tiger-reserve.jpg`,
 };
 
+const UPDATED_ISO = "2026-10-12";
+const UPDATED_LABEL = "12 October 2026";
+
+const RELATED = [
+  ["Ratapani jungle safari packages", "Day safari, 2-day and 3-day tiger safari packages with prices.", "/experiences/ratapani-jungle-safari"],
+  ["Experiences at Madhuban", "Safaris, hikes, camping, bush dinners and village walks.", "/experiences"],
+  ["Bird-watching and wilderness", "Guided birding on the edge of the reserve.", "/experiences/bird-watching-and-wilderness"],
+  ["Forest walks and nature trails", "Slow, guided walks along the ridges.", "/experiences/forest-walks-and-nature-trails"],
+  ["Nearby attractions", "Bhimbetka, Ginnorgarh Fort, Ratapani Dam and more.", "/nearby-attractions"],
+  ["Day outing near Bhopal", "A day in the forest without an overnight stay.", "/day-outing"],
+  ["Travel stories and guides", "Articles on wildlife, eco-tourism and slow travel.", "/blogs"],
+];
+
 const NAV = [
   { id: "overview", label: "Overview" },
   { id: "wildlife", label: "Wildlife" },
@@ -299,6 +312,44 @@ const SCHEMAS = [
     isPartOf: { "@type": "WebSite", name: "Madhuban Eco Retreat", url: "https://www.madhubanecoretreat.com/" },
     about: { "@id": `${PAGE_URL}#reserve` },
     primaryImageOfPage: { "@type": "ImageObject", url: IMG.tiger },
+    datePublished: UPDATED_ISO,
+    dateModified: UPDATED_ISO,
+    author: { "@id": "https://www.madhubanecoretreat.com/#organization" },
+    publisher: { "@id": "https://www.madhubanecoretreat.com/#organization" },
+    speakable: { "@type": "SpeakableSpecification", cssSelector: ["h1", "#quick-answer"] },
+    mentions: [
+      { "@type": "Place", name: "Bhimbetka Rock Shelters", sameAs: "https://whc.unesco.org/en/list/925" },
+      { "@type": "Place", name: "Ratapani Dam" },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://www.madhubanecoretreat.com/#organization",
+    name: "Madhuban Eco Retreat",
+    url: "https://www.madhubanecoretreat.com/",
+    logo: "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/logo/madhuban-tree-logo-transparent-512.png",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Ratapani Tiger Reserve safari gates",
+    itemListElement: GATES.map((g, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: { "@type": "TouristAttraction", name: `${g.name}, Ratapani Tiger Reserve`, description: g.text },
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+    name: "2-day Ratapani tiger safari from Bhopal",
+    touristType: "Wildlife safari",
+    provider: { "@id": "https://www.madhubanecoretreat.com/#organization" },
+    itinerary: {
+      "@type": "ItemList",
+      itemListElement: ITINERARIES[0].days.map((d, i) => ({ "@type": "ListItem", position: i + 1, name: `${d.day}: ${d.title}` })),
+    },
   },
   {
     "@context": "https://schema.org",
@@ -406,7 +457,7 @@ export default function RatapaniSafariPage() {
             An untouched expanse of Vindhyan sandstone, teak forest and tiger country, just an hour from Bhopal.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Link href="/booking" className={BTN_LIGHT}>Plan your safari <ArrowRight size={16} aria-hidden="true" /></Link>
+            <Link href="/experiences/ratapani-jungle-safari" className={BTN_LIGHT}>Plan your safari <ArrowRight size={16} aria-hidden="true" /></Link>
             <Link href="/stay-in-ratapani-tiger-reserve" className={BTN_GHOST_LIGHT}>Explore stay options</Link>
           </div>
           <dl className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4">
@@ -420,14 +471,30 @@ export default function RatapaniSafariPage() {
         </div>
       </header>
 
-      <SectionNav items={NAV} ctaHref="/booking" ctaLabel="Plan safari" />
+      <SectionNav items={NAV} ctaHref="/experiences/ratapani-jungle-safari" ctaLabel="Safari packages" />
 
       <main>
         {/* OVERVIEW */}
         <Section id="overview">
+          <RevealOnScroll>
+            <aside id="quick-answer" aria-labelledby="quick-answer-title" className="mb-8 rounded-2xl border border-[#CEC5B9]/60 bg-cream p-5 md:mb-10 md:p-6">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <h2 id="quick-answer-title" className="font-primary text-xl leading-7 text-earth-brown">Ratapani Tiger Safari in 60 seconds</h2>
+                <p className="text-xs text-charcoal/60">Updated <time dateTime={UPDATED_ISO}>{UPDATED_LABEL}</time></p>
+              </div>
+              <ul className="mt-3 grid gap-x-8 gap-y-2 text-[15px] leading-6 text-charcoal/80 md:grid-cols-2">
+                <li><strong className="font-bold text-charcoal">What it is:</strong> Madhya Pradesh’s 8th tiger reserve (2024), about 1,271 sq. km of teak forest in Raisen and Sehore districts.</li>
+                <li><strong className="font-bold text-charcoal">Distance:</strong> The safari gates are roughly 35 to 55 km from Bhopal, about an hour by road.</li>
+                <li><strong className="font-bold text-charcoal">Tigers:</strong> More than 40 resident tigers, plus leopards, sloth bears and hyenas.</li>
+                <li><strong className="font-bold text-charcoal">Gates:</strong> Jhiri, Delawadi and Bhimbetka; permits are booked through the MPOnline forest portal.</li>
+                <li><strong className="font-bold text-charcoal">Best time:</strong> Winter for mist and birds, March to June for big-cat sightings; core zones usually close in the monsoon.</li>
+                <li><strong className="font-bold text-charcoal">Where to stay:</strong> <Link href="/stay-in-ratapani-tiger-reserve" className="font-medium text-earth-brown underline underline-offset-2">Madhuban Eco Retreat</Link>, on the edge of the reserve.</li>
+              </ul>
+            </aside>
+          </RevealOnScroll>
           <div className="grid items-center gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-12">
             <div>
-              <Heading eyebrow="Discover Ratapani" title="Where ancient ridges meet silent predators" />
+              <Heading eyebrow="Discover Ratapani" title="Ratapani Tiger Reserve: where ancient ridges meet silent predators" />
               <RevealOnScroll className="space-y-4 text-base font-light leading-7 text-charcoal/80 md:text-[17px] md:leading-8">
                 <p>
                   Folded into the Vindhya Range across Raisen and Sehore districts, Ratapani Tiger Reserve is central India’s newest and one
@@ -436,7 +503,7 @@ export default function RatapaniSafariPage() {
                 <p>
                   Set up as a wildlife sanctuary in 1976, it was notified as Madhya Pradesh’s 8th tiger reserve in 2024. It covers about 1,271
                   square kilometres of dry deciduous and teak forest, so a real <strong className="font-bold text-earth-brown">tiger safari near Bhopal</strong> needs no
-                  long journey.
+                  long journey. Stay at a <Link href="/stay-in-ratapani-tiger-reserve" className="text-earth-brown underline underline-offset-2">resort near Ratapani Tiger Reserve</Link> and every drive starts from the forest’s edge.
                 </p>
                 <p>
                   Unlike crowded tourist hubs, Ratapani offers an unhurried safari. Rock monoliths rise above seasonal streams, leopards bask on
@@ -469,7 +536,7 @@ export default function RatapaniSafariPage() {
 
         {/* ABOUT */}
         <Section id="about" tone="cream">
-          <Heading eyebrow="About the reserve" title="The genesis of a protected haven" lead="Anchored by the Ratapani reservoir and framed by prehistoric rock shelters, this is one of the most cohesive teak ecosystems in central India." />
+          <Heading eyebrow="About the reserve" title="History of Ratapani Tiger Reserve: a protected haven" lead="Anchored by the Ratapani reservoir and framed by prehistoric rock shelters, this is one of the most cohesive teak ecosystems in central India." />
           <div className="grid gap-6 lg:grid-cols-3">
             <RevealOnScroll className="h-full">
               <div className="h-full rounded-2xl border border-[#CEC5B9]/50 bg-white p-6">
@@ -516,7 +583,7 @@ export default function RatapaniSafariPage() {
 
         {/* WHY */}
         <Section id="why">
-          <Heading eyebrow="Why Ratapani" title="Four reasons to experience this wilderness" center />
+          <Heading eyebrow="Why Ratapani" title="Four reasons to visit Ratapani Tiger Reserve" center />
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {WHY.map((w, i) => (
               <RevealOnScroll key={w.title} delay={i * 80} className="h-full">
@@ -537,7 +604,7 @@ export default function RatapaniSafariPage() {
 
         {/* QUICK FACTS */}
         <Section id="facts" tone="sand">
-          <Heading eyebrow="Essential details" title="Reserve quick facts" />
+          <Heading eyebrow="Essential details" title="Ratapani Tiger Reserve quick facts" />
           <RevealOnScroll>
             <dl className="grid overflow-hidden rounded-2xl border border-[#CEC5B9]/60 bg-white md:grid-cols-2">
               {FACTS.map(([k, v], i) => (
@@ -547,7 +614,7 @@ export default function RatapaniSafariPage() {
                 </div>
               ))}
             </dl>
-            <p className="mt-3 text-xs text-charcoal/60">Figures are rounded and based on Madhya Pradesh Forest Department and Project Tiger notifications.</p>
+            <p className="mt-3 text-xs leading-5 text-charcoal/60">Figures are rounded and based on Madhya Pradesh Forest Department and Project Tiger notifications. Sources: <a className="underline underline-offset-2" href="https://forest.mponline.gov.in/" target="_blank" rel="noopener noreferrer">MP Forest Department (MPOnline)</a>, <a className="underline underline-offset-2" href="https://mptourism.com/ratapani-tiger-reserve-wilderness-near-bhopal.html" target="_blank" rel="noopener noreferrer">MP Tourism</a>, <a className="underline underline-offset-2" href="https://whc.unesco.org/en/list/925" target="_blank" rel="noopener noreferrer">UNESCO: Rock Shelters of Bhimbetka</a>.</p>
           </RevealOnScroll>
         </Section>
 
@@ -583,7 +650,7 @@ export default function RatapaniSafariPage() {
 
         {/* FLORA */}
         <Section id="flora" tone="cream">
-          <Heading eyebrow="Canopy and understory" title="Botanical tapestry of the Vindhyas" />
+          <Heading eyebrow="Canopy and understory" title="Flora of Ratapani Tiger Reserve: teak and bamboo forests" />
           <div className="grid gap-6 lg:grid-cols-[1fr_1.4fr]">
             <RevealOnScroll>
               <figure className="group relative h-full min-h-[280px] overflow-hidden rounded-2xl">
@@ -612,7 +679,7 @@ export default function RatapaniSafariPage() {
 
         {/* GATES */}
         <Section id="gates">
-          <Heading eyebrow="Safari access" title="Tourism gates and safari zones" lead="Safaris enter through three forest department gates, each leading into a different sector of the reserve." />
+          <Heading eyebrow="Safari access" title="Ratapani Tiger Safari zones and gates" lead="Safaris enter through three forest department gates, each leading into a different sector of the reserve." />
           <div className="grid gap-6 md:grid-cols-3">
             {GATES.map((g, i) => (
               <RevealOnScroll key={g.name} delay={i * 80} className="h-full">
@@ -635,14 +702,14 @@ export default function RatapaniSafariPage() {
                   Safari vehicles, guides and permits are booked through the Madhya Pradesh Forest Department’s MPOnline portal. We can help you plan it around your stay.
                 </p>
               </div>
-              <Link href="/booking" className={`${BTN_LIGHT} shrink-0`}>Plan my safari</Link>
+              <Link href="/experiences/ratapani-jungle-safari" className={`${BTN_LIGHT} shrink-0`}>Plan my safari</Link>
             </div>
           </RevealOnScroll>
         </Section>
 
         {/* PLANNING */}
         <Section id="planning" tone="sand">
-          <Heading eyebrow="Practical guide" title="Planning your jungle safari" lead="Safaris follow two forest department shifts, timed to the hours when animals are most active." />
+          <Heading eyebrow="Practical guide" title="Planning your Ratapani jungle safari" lead="Safaris follow two forest department shifts, timed to the hours when animals are most active." />
           <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
               {[
@@ -684,7 +751,7 @@ export default function RatapaniSafariPage() {
 
         {/* BEST TIME */}
         <Section id="best-time">
-          <Heading eyebrow="When to travel" title="Best time to visit Ratapani" lead="Core safari zones generally close for the monsoon and reopen in autumn. Check the current dates before you plan; we confirm them when you book." />
+          <Heading eyebrow="When to travel" title="Best time to visit Ratapani Tiger Reserve" lead="Core safari zones generally close for the monsoon and reopen in autumn. Check the current dates before you plan; we confirm them when you book." />
           <RevealOnScroll>
             <ol className="grid grid-cols-3 gap-2 sm:grid-cols-6 lg:grid-cols-12">
               {MONTHS.map(([m, s]) => (
@@ -716,7 +783,7 @@ export default function RatapaniSafariPage() {
 
         {/* ACTIVITIES */}
         <Section id="activities" tone="cream">
-          <Heading eyebrow="Curated adventures" title="Activities in and around Ratapani" center />
+          <Heading eyebrow="Curated adventures" title="Activities in and around Ratapani Tiger Reserve" center />
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {ACTIVITIES.map((a, i) => (
               <RevealOnScroll key={a.title} delay={(i % 3) * 80} className="h-full">
@@ -747,7 +814,7 @@ export default function RatapaniSafariPage() {
             <RevealOnScroll>
               <p className="text-xs font-bold uppercase tracking-[3px] text-warm-beige">UNESCO World Heritage</p>
               <h2 id="bhimbetka-title" className="mt-2 font-primary text-[28px] font-normal leading-9 md:text-4xl md:leading-[44px]">
-                Ratapani and Bhimbetka: where wilderness meets deep human time
+                Ratapani Tiger Reserve and Bhimbetka: where wilderness meets deep human time
               </h2>
               <span className="mt-3 block h-[2px] w-14 bg-warm-beige" aria-hidden="true" />
               <ul className="mt-5 space-y-2 font-primary text-lg italic text-warm-beige">
@@ -775,7 +842,7 @@ export default function RatapaniSafariPage() {
 
         {/* PACKING + RULES */}
         <Section id="packing">
-          <Heading eyebrow="Preparation" title="Safari packing essentials" lead="The right kit keeps you comfortable and keeps you blended into the dry teak forest." />
+          <Heading eyebrow="Preparation" title="Ratapani tiger safari packing essentials" lead="The right kit keeps you comfortable and keeps you blended into the dry teak forest." />
           <div className="grid gap-6 lg:grid-cols-[1.5fr_1fr]">
             <RevealOnScroll>
               <div className="h-full rounded-2xl border border-[#CEC5B9]/50 bg-cream p-6">
@@ -807,7 +874,7 @@ export default function RatapaniSafariPage() {
           </div>
 
           <div className="mt-10">
-            <Heading eyebrow="Forest code" title="Responsible safari guidelines" lead="Forest department rules protect wildlife habits and core corridors. Please follow them on every drive." />
+            <Heading eyebrow="Forest code" title="Responsible Ratapani safari guidelines" lead="Forest department rules protect wildlife habits and core corridors. Please follow them on every drive." />
             <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {RULES.map(([t, d], i) => (
                 <RevealOnScroll key={t} delay={(i % 4) * 60} as="li" className="h-full">
@@ -832,7 +899,7 @@ export default function RatapaniSafariPage() {
               <div className="group overflow-hidden rounded-2xl"><Photo src={IMG.camping} alt="Camp at the edge of Ratapani Tiger Reserve under the forest canopy" sizes="(max-width: 1024px) 100vw, 580px" ratio="aspect-[4/3]" className="[&_img]:object-bottom" /></div>
             </RevealOnScroll>
             <div>
-              <Heading eyebrow="Corridors and future" title="The 2024 tiger reserve mandate and ecological continuity" />
+              <Heading eyebrow="Corridors and future" title="The 2024 Ratapani Tiger Reserve mandate and ecological continuity" />
               <RevealOnScroll className="space-y-4 text-base font-light leading-7 text-charcoal/80">
                 <p>Ratapani was long known as a tiger-rich sanctuary without formal tiger-reserve status. The 2024 notification safeguards about 1,271 square kilometres of forest and brings dedicated protection and funding.</p>
                 <p>The forest also works as a green corridor linking Raisen, Sehore and neighbouring districts, helping tigers move between habitats. Low-impact tourism and trained local guides, many from nearby Gond communities, tie local livelihoods to the survival of the tiger.</p>
@@ -843,7 +910,7 @@ export default function RatapaniSafariPage() {
 
         {/* HOW TO REACH */}
         <Section id="how-to-reach">
-          <Heading eyebrow="Directions and transit" title="How to reach Ratapani" lead="Ratapani is one of the easiest tiger reserves in Madhya Pradesh to reach." center />
+          <Heading eyebrow="Directions and transit" title="How to reach Ratapani Tiger Reserve" lead="Ratapani is one of the easiest tiger reserves in Madhya Pradesh to reach." center />
           <div className="grid gap-6 md:grid-cols-3">
             {ROUTES.map(({ icon: Icon, title, place, text, note }, i) => (
               <RevealOnScroll key={title} delay={i * 80} className="h-full">
@@ -861,7 +928,7 @@ export default function RatapaniSafariPage() {
 
         {/* STAY */}
         <Section id="stay" tone="sand">
-          <Heading eyebrow="Wilderness sanctuary" title="Where to stay: Madhuban Eco Retreat" lead="An intimate, earth-conscious retreat on the edge of Ratapani’s teak forest, with direct help arranging safaris." />
+          <Heading eyebrow="Wilderness sanctuary" title="Where to stay near Ratapani Tiger Reserve: Madhuban Eco Retreat" lead="An intimate, earth-conscious retreat on the edge of Ratapani’s teak forest, with direct help arranging safaris." />
           <RevealOnScroll>
             <div className="group grid overflow-hidden rounded-2xl border border-[#CEC5B9]/50 bg-white lg:grid-cols-2">
               <Photo src={IMG.lodge} alt="Madhuban Eco Retreat lodge glowing at dusk beside Ratapani Tiger Reserve" sizes="(max-width: 1024px) 100vw, 620px" ratio="aspect-[16/10] lg:aspect-auto lg:min-h-[340px]" />
@@ -899,14 +966,14 @@ export default function RatapaniSafariPage() {
 
         {/* ITINERARIES */}
         <Section id="itineraries">
-          <Heading eyebrow="Curated journeys" title="Suggested itineraries" lead="Two ready-made ways to combine safaris, heritage and a forest stay." center />
+          <Heading eyebrow="Curated journeys" title="Suggested Ratapani tiger safari itineraries" lead="Two ready-made ways to combine safaris, heritage and a forest stay." center />
           <ItineraryTabs tabs={ITINERARIES} />
         </Section>
 
         {/* FAQ */}
         <Section id="faq" tone="cream">
           <div className="mx-auto max-w-[820px]">
-            <Heading eyebrow="Inquiries and answers" title="Frequently asked questions" lead="Permits, seasons, logistics and tiger sightings in Ratapani." center />
+            <Heading eyebrow="Inquiries and answers" title="Ratapani Tiger Safari: frequently asked questions" lead="Permits, seasons, logistics and tiger sightings in Ratapani." center />
             <div className="flex flex-col gap-3">
               {FAQS.map(([q, a], i) => (
                 <details key={q} className="group overflow-hidden rounded-xl border border-[#CEC5B9]/60 bg-white/70 open:bg-white open:shadow-sm">
@@ -919,6 +986,21 @@ export default function RatapaniSafariPage() {
               ))}
             </div>
           </div>
+        </Section>
+        {/* KEEP EXPLORING */}
+        <Section id="related" tone="white">
+          <Heading eyebrow="Keep exploring" title="More ways to experience Ratapani Tiger Reserve" center />
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {RELATED.map(([label, text, href], i) => (
+              <RevealOnScroll key={href} delay={(i % 3) * 60} as="li" className="h-full">
+                <Link href={href} className="group flex h-full flex-col rounded-2xl border border-[#CEC5B9]/50 bg-cream p-5 transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+                  <span className="font-primary text-lg leading-6 text-charcoal">{label}</span>
+                  <span className="mt-1 flex-1 text-sm font-light leading-5 text-charcoal/70">{text}</span>
+                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-earth-brown">Read more <ArrowRight size={12} aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1" /></span>
+                </Link>
+              </RevealOnScroll>
+            ))}
+          </ul>
         </Section>
       </main>
 
