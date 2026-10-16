@@ -1,7 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins&display=swap');
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Lato', sans-serif;
   background-color: #D1C8C1; /* warm beige/taupe (changed from green) */
   margin: 0;
   padding: 0;

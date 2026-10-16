@@ -314,7 +314,7 @@ export default function PrivacyPolicy() {
                     </Typography>
                     <Typography
                       variant="body1"
-                      color="#000000"
+                      color="#2A2A2A"
                       sx={{
                         fontSize: {
                           xs: "var(--text-sm)",
@@ -343,7 +343,7 @@ export default function PrivacyPolicy() {
                     </Typography>
                     <Typography
                       variant="body1"
-                      color="#000000"
+                      color="#2A2A2A"
                       sx={{
                         fontSize: {
                           xs: "var(--text-sm)",

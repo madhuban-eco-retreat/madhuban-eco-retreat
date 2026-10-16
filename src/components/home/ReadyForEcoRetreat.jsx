@@ -52,7 +52,7 @@ const ReadyForEcoRetreat = () => {
           quality={90}
         />
         {/* 2. The Overlay Layer (Ensures text is readable) */}
-        <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute inset-0 bg-[#3A3123]/25" />
       </div>
 
       {/* 3. The Content Layer (z-10 ensures it stays on top) */}

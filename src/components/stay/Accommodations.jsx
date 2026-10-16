@@ -1,9 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { BedDouble, Users, Leaf, Wifi, Sun, MountainSnow } from "lucide-react";
+import Image from "next/image";
+import { BedDouble, Users, Leaf, Wifi, Sun, Waves, Bath, Tent, Utensils, ShieldCheck } from "lucide-react";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
-import { getAltFromUrl } from "@/utills/helperFunctions";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -43,8 +43,8 @@ const accommodationsData = [
     name: "Safari Tent",
     slug: "safari-tent",
     image:
-      "/images/stay/accommodations/safari-tent-madhuban-eco-retreat-bhopal.avif",
-    altText: "Exterior view of a charming safari tent nestled in greenery",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/madhuban-eco-retreat-safari-tent-exterior-image-home-page-card.jpg",
+    altText: "Safari tent at Madhuban Eco Retreat on the edge of Ratapani Tiger Reserve",
     shortDescription:
       "Perched on raised platforms beside a gentle stream and facing forested mountains, our classic safari tent in Ratapani offers a true wilderness experience. Each tent is tastefully furnished with elegant cane furniture and features a vanity and dressing area, separate toilet and shower, and even an open-to-sky shower with a private relaxation space.",
     keyFeatures: [
@@ -54,7 +54,7 @@ const accommodationsData = [
       },
       {
         icon: <BedDouble size={18} className="text-white" />,
-        text: "Queen Bed",
+        text: "King Bed",
       },
       {
         icon: <Sun size={18} className="text-white" aria-label="sun" />,
@@ -72,8 +72,8 @@ const accommodationsData = [
     name: "Mud Houses",
     slug: "mud-house-standard",
     image:
-      "/images/stay/accommodations/mud-house-madhuban-eco-retreat-bhopal.avif",
-    altText: "Exterior view of a charming mud villa nestled in greenery",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/madhuban-eco-retreat-mud-house-exterior-image-home-page-card.jpg",
+    altText: "Gond-inspired mud house at Madhuban Eco Retreat, Ratapani",
     shortDescription:
       "Our mud villa in Ratapani, inspired by the vernacular architecture of the Gond tribes, is nestled in a 5-acre organic orchard. Each Mud House features a spacious air-conditioned room, an annexed lobby, verandas, and a traditionally styled luxury bathroom. The rooftop offers breathtaking 360° views — perfect for stargazing or peaceful evenings.",
     keyFeatures: [
@@ -83,7 +83,7 @@ const accommodationsData = [
       },
       {
         icon: <BedDouble size={18} className="text-white" />,
-        text: "Queen Bed",
+        text: "King Bed",
       },
       {
         icon: <Sun size={18} className="text-white" aria-label="sun" />,
@@ -101,32 +101,26 @@ const accommodationsData = [
     name: "Pool Side Villa",
     slug: "pool-side-villa",
     image:
-      "/images/stay/accommodations/madhuban-eco-retreat-pool-side-view.webp",
-    altText: "Poolside room with beautiful garden views",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/poolside-villa-madhuban-eco-retreat-home-page-card.jpg",
+    altText: "Poolside villa at Madhuban Eco Retreat, Ratapani",
     shortDescription:
       "Wake up to sunlight dancing on the eco-pool and unwind to the soothing rhythm of nature. Our elegant poolside villa in Ratapani offers the perfect balance of sophistication and serenity. Ideal for couples, families, or anyone looking for a private villa near Bhopal with forest-side calm.",
     keyFeatures: [
       {
-        icon: (
-          <MountainSnow
-            size={18}
-            className="text-white"
-            aria-label="mountain"
-          />
-        ),
-        text: "Panoramic Forest Views",
+        icon: <Waves size={18} className="text-white" aria-hidden="true" />,
+        text: "Eco-Pool Views",
       },
       {
-        icon: <BedDouble size={18} className="text-white" aria-label="bed" />,
-        text: "Comfortable Double Bed",
+        icon: <BedDouble size={18} className="text-white" aria-hidden="true" />,
+        text: "King Bed",
       },
       {
-        icon: <Leaf size={18} className="text-white" aria-label="leaf" />,
-        text: "Sustainably Built",
+        icon: <Waves size={18} className="text-white" aria-hidden="true" />,
+        text: "Infinity Pool Access",
       },
       {
-        icon: <Users size={18} className="text-white" aria-label="user" />,
-        text: "Cozy Reading Nook",
+        icon: <Bath size={18} className="text-white" aria-hidden="true" />,
+        text: "Bathtub",
       },
     ],
     capacity: "Sleeps 4",
@@ -137,8 +131,8 @@ const accommodationsData = [
     name: "Glamping Tents",
     slug: "glamping-tents",
     image:
-      "/images/stay/accommodations/glamping-tent-madhuban-eco-retreat-bhopal.avif",
-    altText: "Boutique glamping tent with deck and lush lawn",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/madhuban-eco-retreat-glamping-tent-exterior-image-home-page-card.jpg",
+    altText: "Glamping tent with a private lawn at Madhuban Eco Retreat, Ratapani",
     shortDescription:
       "Enjoy comfort in the wild with our rustic mini-safari glamping tents. Featuring chic interiors, a private lawn sit-out, and ensuite bathrooms, our glamping tent in Ratapani offers boutique-style luxury with the charm of camping — ideal for couples, families, or weekend travelers looking for a unique stay in the wilderness.",
     keyFeatures: [
@@ -166,35 +160,29 @@ const accommodationsData = [
     name: "Camping Tent",
     slug: "camping-tent",
     image:
-      "/images/stay/accommodations/camping-tent-new-madhuban-eco-retreat-bhopal.avif",
-    altText: "Scenic camping tent surrounded by nature",
+      "https://pub-ec3822a2d8d6482db36eb9dadc028ea6.r2.dev/home/accommodations/madhuban-camping-hammock-under-100kb.jpg",
+    altText: "Camping tent with a hammock at Madhuban Eco Retreat, Ratapani",
     shortDescription:
       "Our eco-friendly camping tents offer a simple yet comfortable outdoor stay in Ratapani's lush wilderness. Perfect for travelers seeking digital detox, jungle adventure, or peaceful night camping — a truly authentic experience at this Ratapani eco resort.",
     keyFeatures: [
       {
-        icon: (
-          <MountainSnow
-            size={18}
-            className="text-white"
-            aria-label="mountain"
-          />
-        ),
-        text: "Panoramic Forest Views",
+        icon: <Tent size={18} className="text-white" aria-hidden="true" />,
+        text: "Night Camping",
       },
       {
-        icon: <BedDouble size={18} className="text-white" aria-label="bed" />,
-        text: "Comfortable Double Bed",
+        icon: <Utensils size={18} className="text-white" aria-hidden="true" />,
+        text: "Dinner & Breakfast",
       },
       {
-        icon: <Leaf size={18} className="text-white" aria-label="leaf" />,
-        text: "Sustainably Built",
+        icon: <Waves size={18} className="text-white" aria-hidden="true" />,
+        text: "Pool Access",
       },
       {
-        icon: <Users size={18} className="text-white" aria-label="user" />,
-        text: "Cozy Reading Nook",
+        icon: <ShieldCheck size={18} className="text-white" aria-hidden="true" />,
+        text: "Secure Camp Area",
       },
     ],
-    capacity: "Sleeps 2",
+    capacity: "Up to 2 per tent",
   },
 ];
 
@@ -246,11 +234,13 @@ const Accommodations = () => {
                 className="image-wrapper"
                 variants={imageHoverVariants}
               >
-                <motion.img
+                <Image
                   src={accommodation.image}
-                  alt={getAltFromUrl(accommodation.image)}
-                  className="w-full h-full object-cover"
-                  transition={{ duration: 0.5 }}
+                  alt={accommodation.altText}
+                  fill
+                  sizes="(min-width: 768px) 350px, 100vw"
+                  quality={90}
+                  className="object-cover"
                 />
               </motion.div>
 

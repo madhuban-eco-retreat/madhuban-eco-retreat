@@ -16,7 +16,7 @@ const stayFaqs = [
   {
     question: "Do you offer safari tent stays near Bhopal?",
     answer:
-      "Yes. Our eco-friendly Safari Tents near Ratapani provide a classic wilderness stay with modern comforts like Wi-Fi, vanity area, and open-sky showers.",
+      "Yes. Our Safari Tents near Ratapani give you a classic wilderness stay with modern comforts: a king bed, Wi-Fi, a vanity area, and an open-to-sky shower.",
   },
   {
     question: "Are mud houses available for booking in Ratapani?",
@@ -31,12 +31,12 @@ const stayFaqs = [
   {
     question: "Is camping allowed inside the Ratapani Wildlife area?",
     answer:
-      "We offer safe, managed camping experiences within the Ratapani region, perfect for nature lovers and adventure seekers.",
+      "Camping inside the protected sanctuary is not allowed. Our camping tents are set up in a secure camping area at Madhuban, on the edge of the forest, so you get the outdoor experience with staff support nearby.",
   },
   {
     question: "Are your stays suitable for families?",
     answer:
-      "Yes. Most of our accommodations, including Pool Side Villas, Glamping Tents, and Mud Houses, are ideal for families.",
+      "Yes. Pool Side Villas, Glamping Tents and Mud Houses all suit families. Safari Tents and Glamping Tents sleep 2, and the Pool Side Villa sleeps 4.",
   },
   {
     question: "What activities can guests enjoy during their stay?",
@@ -46,13 +46,13 @@ const stayFaqs = [
   {
     question: "How far is Madhuban Eco Retreat from Bhopal city?",
     answer:
-      "The retreat is conveniently located near Bhopal, offering quick access while immersing guests in the serene Ratapani forest region.",
+      "Madhuban Eco Retreat is about an hour's drive from Bhopal, on the edge of Ratapani Tiger Reserve.",
   },
 ];
 
 const Stay = () => {
   return (
-    <div className="stay-page bg-[#b4a681d8]">
+    <div className="stay-page bg-cream">
       <StayBanner />
       <DiscoverIdeal />
       <Accommodations />

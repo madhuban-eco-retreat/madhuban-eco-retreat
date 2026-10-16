@@ -58,7 +58,7 @@ const Slidingbanner = ({ images = [], heading, subHeading, buttonLink }) => {
 
       {/* Overlay Content */}
       {(heading || subHeading) && (
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-white bg-black/40">
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-white bg-[#3A3123]/45">
           <motion.div
             initial="hidden"
             animate="visible"

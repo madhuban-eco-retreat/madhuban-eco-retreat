@@ -465,7 +465,7 @@ const mudHouseSchema = {
   "@context": "https://schema.org",
   "@type": "Resort",
   name: "Madhuban Eco Retreat",
-  url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/mud-house",
+  url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/mud-house-standard",
   description:
     "Traditional mud house stay near Bhopal inspired by Gond architecture, featuring luxury amenities, orchard views and eco-friendly comfort.",
   telephone: "+91 9770 558 419",
@@ -512,7 +512,7 @@ const mudHouseSchema = {
       price: String(regularRate("mud-house-standard")),
       priceCurrency: "INR",
       availability: "https://schema.org/InStock",
-      url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/mud-house",
+      url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/mud-house-standard",
       description:
         "Eco mud house stay without bathtub featuring AC room, verandas, orchard setting, and tribal-inspired design.",
       itemOffered: {
@@ -530,7 +530,7 @@ const mudHouseSchema = {
       price: String(regularRate("mud-house-premium")),
       priceCurrency: "INR",
       availability: "https://schema.org/InStock",
-      url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/mud-house",
+      url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/mud-house-standard",
       description:
         "Luxury mud house with bathtub, AC room, verandas, orchard views, and 360-degree rooftop seating.",
       itemOffered: {
@@ -602,7 +602,7 @@ const poolsideSchema = {
   "@context": "https://schema.org",
   "@type": "Resort",
   name: "Madhuban Eco Retreat",
-  url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/poolside-villa",
+  url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/pool-side-villa",
   description:
     "Luxury pool side villa near Bhopal offering eco-pool views, spacious interiors, nature surroundings and boutique comfort in Ratapani.",
   telephone: "+91 9770 558 419",
@@ -644,7 +644,7 @@ const poolsideSchema = {
     price: String(regularRate("pool-side-villa")),
     priceCurrency: "INR",
     availability: "https://schema.org/InStock",
-    url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/poolside-villa",
+    url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/pool-side-villa",
     description:
       "Poolside villa stay near Bhopal with eco-pool views, luxury amenities, AC, bathtub, and nature-rich surroundings.",
     itemOffered: {
@@ -715,7 +715,7 @@ const glampingTentSchema = {
   "@context": "https://schema.org",
   "@type": "Resort",
   name: "Madhuban Eco Retreat",
-  url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/glamping-tent",
+  url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/glamping-tents",
   description:
     "Boutique glamping tent stay near Bhopal with private lawn sit-out, AC, ensuite shower and modern amenities in the Ratapani forest region.",
   telephone: "+91 9770 558 419",
@@ -761,7 +761,7 @@ const glampingTentSchema = {
     price: String(regularRate("glamping-tents")),
     priceCurrency: "INR",
     availability: "https://schema.org/InStock",
-    url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/glamping-tent",
+    url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/glamping-tents",
     description:
       "Glamping tent stay with king bed, AC, ensuite shower, private lawn sit-out, and eco-luxury amenities near Ratapani.",
     itemOffered: {
@@ -839,7 +839,7 @@ const nightCampingSchema = {
   "@context": "https://schema.org",
   "@type": "Resort",
   name: "Madhuban Eco Retreat",
-  url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/camping",
+  url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/camping-tent",
   description:
     "Night camping in Ratapani at ₹2500 per person with dinner, breakfast, pool access, nature walk and obstacle course. Best camping near Bhopal.",
   telephone: "+91 9770 558 419",
@@ -884,7 +884,7 @@ const nightCampingSchema = {
     price: "2500",
     priceCurrency: "INR",
     availability: "https://schema.org/InStock",
-    url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/camping",
+    url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/camping-tent",
     description:
       "One night camping at Madhuban Eco Retreat with stay, food, pool access, obstacle course and nature walk.",
     itemOffered: {

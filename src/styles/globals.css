@@ -60,17 +60,17 @@ body {
 }
 
 @theme {
-  --font-primary: "Sitka Banner", var(--font-playfair-display), serif;
+  --font-primary: var(--font-playfair-display), "Playfair Display", Georgia, serif;
 
   /* Everything below is migrated from tailwind.config.js (dead under v4,
      see note above) ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â restores real utilities that ~35 files across the
      codebase already reference but that were previously no-ops:
      font-arial-narrow (24 files), font-poppins/openSans/inter (9 files),
      shadow-subtle and the green/brown/stone ramps + text-title (a few each). */
-  --font-poppins: "Poppins", sans-serif;
-  --font-openSans: "Open Sans", sans-serif;
-  --font-inter: "Inter", sans-serif;
-  --font-arial-narrow: "Arial Narrow", sans-serif;
+  --font-poppins: var(--font-lato), "Lato", sans-serif;
+  --font-openSans: var(--font-lato), "Lato", sans-serif;
+  --font-inter: var(--font-lato), "Lato", sans-serif;
+  --font-arial-narrow: var(--font-lato), "Lato", sans-serif;
 
   --shadow-subtle: 0 2px 10px rgba(0, 0, 0, 0.05);
 

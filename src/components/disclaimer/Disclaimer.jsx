@@ -243,7 +243,7 @@ export default function Disclaimer() {
                     <Typography fontWeight={600} component={"span"}>
                       Email :
                     </Typography>
-                    <Typography variant="body1" color="#000000">
+                    <Typography variant="body1" color="#2A2A2A">
                       {section.contactInfo.email}
                     </Typography>
                   </Stack>
@@ -254,7 +254,7 @@ export default function Disclaimer() {
                     <Typography fontWeight={600} component={"span"}>
                       Phone :
                     </Typography>
-                    <Typography variant="body1" color="#000000">
+                    <Typography variant="body1" color="#2A2A2A">
                       {section.contactInfo.phone}
                     </Typography>
                   </Stack>

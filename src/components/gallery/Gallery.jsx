@@ -400,7 +400,7 @@ const Gallery = () => {
         </video>
 
         {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="absolute inset-0 bg-[#3A3123]/25"></div>
 
         {/* Content Layer */}
         <div className="relative z-10 flex items-center justify-center h-full text-white text-center px-4">
@@ -498,7 +498,7 @@ const Gallery = () => {
                   </video>
                 ) : (
                   <div
-                    className="relative w-full h-80 bg-black rounded-2xl cursor-pointer group overflow-hidden"
+                    className="relative w-full h-80 bg-earth-brown rounded-2xl cursor-pointer group overflow-hidden"
                     onClick={() => setPlayingVideoIndex(index)}
                   >
                     <video
@@ -510,7 +510,7 @@ const Gallery = () => {
                       loop
                       playsInline
                     />
-                    <div className="absolute inset-0 bg-black/30 rounded-2xl"></div>
+                    <div className="absolute inset-0 bg-[#3A3123]/35 rounded-2xl"></div>
                     <div className="absolute inset-0 flex items-center justify-center">
                       <FaPlayCircle className="text-white text-6xl group-hover:scale-110 transition-transform" />
                     </div>
@@ -539,7 +539,7 @@ const TabWrapper = styled.div`
 const StyledButton = styled.button`
   margin: 0.5rem;
   padding: 0.75rem 1.5rem;
-  border: 2px solid ${({ isActive }) => (isActive ? "#000000" : "#000000")};
+  border: 2px solid ${({ isActive }) => (isActive ? "#6E6146" : "#6E6146")};
   border-radius: 9999px;
   background-color: ${({ isActive }) => (isActive ? "#d1c8c1" : "#6E6146")};
   color: ${({ isActive }) => (isActive ? "black" : "white")};
@@ -549,6 +549,6 @@ const StyledButton = styled.button`
   &:hover {
     background-color: #b3a69d;
     color: black;
-    border-color: #000000;
+    border-color: #6E6146;
   }
 `;

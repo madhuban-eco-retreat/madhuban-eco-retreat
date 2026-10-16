@@ -12,7 +12,7 @@ import { CountUp } from "@/components/safari/SafariClient";
  *   - content column 1120px: two 540px cards, then three 347px cards, 40px apart
  *   - cards: 16px radius, 1px border at 50%, photo 538x336 (large) / 4:3 (small),
  *     32px inner padding, "Ideal for" rule at 30%
- *   - hero 700px tall on #1B1B17 with a 3-photo slideshow, dark "By the Numbers" strip,
+ *   - hero 700px tall on #3A3123 with a 3-photo slideshow, dark "By the Numbers" strip,
  *     "A Day at Madhuban" (4 moments), "Why different" strip on #F6F3EE, guest reviews,
  *     FAQ on #FAF7F2 and a white closing call-to-action
  * The header, ratings bar, footer, cookie banner and floating contact buttons come
@@ -143,7 +143,7 @@ const FAQ_SCHEMA = {
 // exist yet, so these point at the closest live pages. Change them here once the
 // real pages ship.
 const ROUTES = {
-  safari: "/nearby-attractions",
+  safari: "/ratapani-tiger-safari",
   hiking: "/experiences/forest-walks-and-nature-trails",
   camping: "/stay-in-ratapani-tiger-reserve/camping-tent",
   dinner: "/dining",
@@ -261,7 +261,7 @@ function ExperienceCard({ item, large, index }) {
         <div className="flex flex-1 flex-col justify-between p-8">
           <div>
             <h3
-              className={`font-primary font-normal text-[#1C1C19] ${
+              className={`font-primary font-normal text-[#2A2A2A] ${
                 large ? "text-[32px] leading-10" : "text-2xl leading-8"
               }`}
             >
@@ -315,7 +315,7 @@ export default function ExperiencesPreview() {
     <div className="bg-white font-body text-[#4B463D] antialiased">
       <main>
         {/* HERO — 700px, left-aligned, text sits on the bottom edge */}
-        <section className="relative isolate overflow-hidden bg-[#1B1B17]">
+        <section className="relative isolate overflow-hidden bg-[#3A3123]">
           <ExperiencesHeroSlider images={HERO_IMAGES} />
           <div className="relative mx-auto flex min-h-[520px] max-w-[1440px] flex-col justify-end px-6 pb-14 md:min-h-[700px] md:px-[60px] md:pb-[97px]">
             <p className="flex items-center gap-2 pl-[15px]">
@@ -405,7 +405,7 @@ export default function ExperiencesPreview() {
               </p>
               <h2
                 id="a-day"
-                className="mt-2 font-primary text-[28px] font-normal leading-9 text-[#1C1C19] md:text-4xl md:leading-10"
+                className="mt-2 font-primary text-[28px] font-normal leading-9 text-[#2A2A2A] md:text-4xl md:leading-10"
               >
                 A Day at Madhuban
               </h2>
@@ -434,7 +434,7 @@ export default function ExperiencesPreview() {
                         </span>
                       </div>
                       <figcaption className="px-1 pt-4">
-                        <h3 className="font-primary text-xl font-normal leading-7 text-[#1C1C19]">{m.title}</h3>
+                        <h3 className="font-primary text-xl font-normal leading-7 text-[#2A2A2A]">{m.title}</h3>
                         <p className="mt-1 text-sm font-light leading-[22.75px] text-[#4B463D]">{m.text}</p>
                       </figcaption>
                     </figure>
@@ -454,7 +454,7 @@ export default function ExperiencesPreview() {
               <p className="text-xs uppercase leading-4 tracking-[0.02em] text-[#7D766B]">Philosophy &amp; Cadence</p>
               <h2
                 id="why-different"
-                className="mt-2 font-primary text-[28px] font-normal leading-9 text-[#1C1C19] md:text-[32px] md:leading-10"
+                className="mt-2 font-primary text-[28px] font-normal leading-9 text-[#2A2A2A] md:text-[32px] md:leading-10"
               >
                 Why an experience at Madhuban is different
               </h2>
@@ -467,7 +467,7 @@ export default function ExperiencesPreview() {
                     <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FCF9F4] text-earth-brown">
                       <Icon size={17} strokeWidth={1.5} aria-hidden="true" />
                     </span>
-                    <h3 className="pt-3 font-primary text-xl font-normal leading-7 text-[#1C1C19]">{title}</h3>
+                    <h3 className="pt-3 font-primary text-xl font-normal leading-7 text-[#2A2A2A]">{title}</h3>
                     <p className="pt-[7px] text-[15px] leading-6 tracking-[0.02em] text-[#4B463D]">{text}</p>
                   </div>
                 </RevealOnScroll>
@@ -483,7 +483,7 @@ export default function ExperiencesPreview() {
               <p className="text-xs font-bold uppercase leading-4 tracking-[3px] text-earth-brown">Guest Voices</p>
               <h2
                 id="guest-voices"
-                className="mt-3 font-primary text-[28px] font-normal leading-9 text-[#1C1C19] md:text-4xl md:leading-10"
+                className="mt-3 font-primary text-[28px] font-normal leading-9 text-[#2A2A2A] md:text-4xl md:leading-10"
               >
                 What Guests Say
               </h2>
@@ -499,11 +499,11 @@ export default function ExperiencesPreview() {
                     >
                       “
                     </span>
-                    <blockquote className="pb-6 font-primary text-lg italic leading-7 text-[#1C1C19]">
+                    <blockquote className="pb-6 font-primary text-lg italic leading-7 text-[#2A2A2A]">
                       <p>“{r.quote}”</p>
                     </blockquote>
                     <figcaption className="mt-7 border-t border-[#CEC5B9]/30 pt-[17px]">
-                      <p className="text-sm leading-5 text-[#1C1C19]">{r.name}</p>
+                      <p className="text-sm leading-5 text-[#2A2A2A]">{r.name}</p>
                       <p className="text-xs font-light leading-4 text-[#7D766B]">{r.note}</p>
                     </figcaption>
                   </figure>
@@ -522,7 +522,7 @@ export default function ExperiencesPreview() {
               <p className="text-xs font-bold uppercase leading-4 tracking-[3px] text-earth-brown">Planning Ahead</p>
               <h2
                 id="faq"
-                className="mt-3 font-primary text-[28px] font-normal leading-9 text-[#1C1C19] md:text-4xl md:leading-10"
+                className="mt-3 font-primary text-[28px] font-normal leading-9 text-[#2A2A2A] md:text-4xl md:leading-10"
               >
                 Frequently Asked Questions
               </h2>
@@ -534,7 +534,7 @@ export default function ExperiencesPreview() {
                   key={f.q}
                   className="group overflow-hidden rounded-xl border border-[#CEC5B9]/50 bg-white/50"
                 >
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 font-primary text-lg font-normal leading-7 text-[#1C1C19] marker:hidden md:p-6 md:text-xl [&::-webkit-details-marker]:hidden">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 font-primary text-lg font-normal leading-7 text-[#2A2A2A] marker:hidden md:p-6 md:text-xl [&::-webkit-details-marker]:hidden">
                     {f.q}
                     <ChevronDown
                       size={16}
@@ -555,7 +555,7 @@ export default function ExperiencesPreview() {
         <section className="bg-white px-6 py-12 md:py-16">
           <RevealOnScroll className="mx-auto flex max-w-[672px] flex-col items-center gap-8 text-center">
             <div className="flex flex-col items-center gap-2">
-              <h2 className="font-primary text-[32px] font-normal leading-10 tracking-[-0.01em] text-[#1C1C19] md:text-[40px] md:leading-[50px]">
+              <h2 className="font-primary text-[32px] font-normal leading-10 tracking-[-0.01em] text-[#2A2A2A] md:text-[40px] md:leading-[50px]">
                 Ready to plan your stay?
               </h2>
               <p className="max-w-[512px] text-lg leading-[29px] tracking-[0.02em] text-[#4B463D]">

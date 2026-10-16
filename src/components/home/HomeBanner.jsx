@@ -27,7 +27,7 @@ export default function HomeBanner() {
         {heroSlides.map((slide, index) => (
           <div key={index} className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"}`}>
             <Image src={slide.image} alt={slide.alt} fill priority={index === 0} loading={index === 0 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} sizes="(max-width: 768px) 100vw, 100vw" quality={95} className={`object-cover ${slide.position}`} />
-            <div className="absolute inset-0 bg-black/10" />
+            <div className="absolute inset-0 bg-[#3A3123]/15" />
           </div>
         ))}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex gap-2">

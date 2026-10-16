@@ -75,28 +75,28 @@ const staySchema = {
         name: "Mud House",
         description:
           "Traditional Gond-inspired mud house stay in Ratapani with air-conditioned rooms, large verandas, and 360-degree rooftop views.",
-        url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/mud-house",
+        url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/mud-house-standard",
       },
       {
         "@type": "Offer",
         name: "Pool Side Villa",
         description:
           "Private poolside villa near Bhopal offering serene eco-pool views, sustainable interiors, and forest-side ambiance.",
-        url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/poolside-villa",
+        url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/pool-side-villa",
       },
       {
         "@type": "Offer",
         name: "Glamping Tent",
         description:
           "Boutique glamping stay near Bhopal with chic interiors, ensuite bathroom, private lawn area, and curated eco-amenities.",
-        url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/glamping-tent",
+        url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/glamping-tents",
       },
       {
         "@type": "Offer",
         name: "Camping Tent",
         description:
-          "Eco-conscious camping experience in Ratapani with forest views, comfortable bedding, and a nature-immersive environment.",
-        url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/camping",
+          "Eco-conscious night camping in Ratapani with dinner, breakfast, pool access and a secure camping area.",
+        url: "https://www.madhubanecoretreat.com/stay-in-ratapani-tiger-reserve/camping-tent",
       },
     ],
   },
@@ -123,7 +123,7 @@ const faqSchema = {
       name: "Do you offer safari tent stays near Bhopal?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Our eco-friendly Safari Tents near Ratapani offer forest views, queen beds, Wi-Fi, solar-powered amenities, and open-sky showers for a true wilderness experience.",
+        text: "Yes. Our eco-friendly Safari Tents near Ratapani offer forest views, king beds, Wi-Fi, solar-powered amenities, and an open-to-sky shower for a true wilderness experience.",
       },
     },
     {
@@ -147,7 +147,7 @@ const faqSchema = {
       name: "Is camping allowed inside Ratapani Wildlife area?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "We offer safe, managed camping experiences in the Ratapani region with eco-friendly tents, forest views, and comfortable bedding.",
+        text: "Camping inside the protected sanctuary is not allowed. Our camping tents are set up in a secure camping area at Madhuban, on the edge of the forest.",
       },
     },
     {
@@ -163,7 +163,7 @@ const faqSchema = {
       name: "How far is Madhuban Eco Retreat from Bhopal city?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "The retreat is conveniently located near Bhopal, offering quick access while immersing guests in the serene Ratapani forest region.",
+        text: "Madhuban Eco Retreat is about an hour's drive from Bhopal, on the edge of Ratapani Tiger Reserve.",
       },
     },
   ],

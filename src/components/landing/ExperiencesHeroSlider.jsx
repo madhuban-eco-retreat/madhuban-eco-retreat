@@ -45,7 +45,7 @@ export default function ExperiencesHeroSlider({ images }) {
           />
         ))}
         {/* Darkens the lower half so the headline always reads clearly. */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1B1B17] via-[#1B1B17]/45 to-[#1B1B17]/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#3A3123] via-[#3A3123]/45 to-[#3A3123]/20" />
       </div>
 
       {count > 1 && (

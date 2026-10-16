@@ -246,10 +246,10 @@ export default function Cookie() {
                 <Typography variant="body1" sx={{ fontWeight: 500 }}>
                   {section.contactInfo.company}
                 </Typography>
-                <Typography variant="body1" color="#000000">
+                <Typography variant="body1" color="#2A2A2A">
                   {section.contactInfo.email}
                 </Typography>
-                <Typography variant="body1" color="#000000">
+                <Typography variant="body1" color="#2A2A2A">
                   {section.contactInfo.phone}
                 </Typography>
               </Box>
