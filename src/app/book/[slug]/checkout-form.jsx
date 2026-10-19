@@ -101,6 +101,8 @@ export function CheckoutForm({
   const [mealPlan, setMealPlan] = useState("AP");
   const [couponCode, setCouponCode] = useState("");
   const activeCouponRef = useRef("");
+  const requestSeq = useRef({});
+  const pricedSignature = useRef({});
   const [couponError, setCouponError] = useState("");
   const [couponFailCount, setCouponFailCount] = useState(0);
   const [couponCooling, setCouponCooling] = useState(false);
@@ -144,6 +146,11 @@ export function CheckoutForm({
   const fetchLinePrice = useCallback(async (line, couponOverride) => {
     if (!checkIn || !checkOut || checkOut <= checkIn) return;
     const code = couponAllowed ? (couponOverride !== undefined ? couponOverride : activeCouponRef.current) : "";
+    // Only the newest request for a line may write its result. Without this, a
+    // slow answer for an earlier choice could land after a newer one and the
+    // summary would show the price of something the guest had already changed.
+    const seq = (requestSeq.current[line.id] = (requestSeq.current[line.id] ?? 0) + 1);
+    const isCurrent = () => requestSeq.current[line.id] === seq;
     updateLine(line.id, { loadingPrice: true, pricingError: "" });
     try {
       const [priceRes, availRes] = await Promise.all([
@@ -169,6 +176,7 @@ export function CheckoutForm({
       ]);
       const priceData = await priceRes.json();
       const availData = availRes.ok ? await availRes.json() : null;
+      if (!isCurrent()) return;
       if (!priceRes.ok) {
         updateLine(line.id, { pricingError: priceData.error ?? "Could not calculate price", pricing: null, loadingPrice: false, availability: availData });
         return;
@@ -185,26 +193,30 @@ export function CheckoutForm({
       }
       updateLine(line.id, { pricing: priceData, pricingError: "", loadingPrice: false, availability: availData });
     } catch {
+      if (!isCurrent()) return;
       updateLine(line.id, { pricingError: "Could not calculate price. Please try again.", pricing: null, loadingPrice: false });
     }
   }, [checkIn, checkOut, mealPlan, couponAllowed]);
 
-  // Re-price every line when shared inputs (dates, meal plan) or the number of
-  // lines changes; a line's own inputs (adults/children/quantity) re-price
-  // just that one line through repriceLine below.
+  // Price every line from what is on screen NOW. A line is re-priced whenever
+  // anything that feeds its price changes (dates, meal plan, room type, adults,
+  // children, infants, number of rooms, coupon eligibility). This is driven by
+  // the current state rather than by each input's onChange handler: those
+  // handlers used to call the pricing function straight after setState, which
+  // still saw the PREVIOUS values, so every price was one change behind (the
+  // child just selected was never charged).
   useEffect(() => {
-    lines.forEach((l) => void fetchLinePrice(l));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [checkIn, checkOut, mealPlan, lines.length]);
+    lines.forEach((l) => {
+      const signature = [checkIn, checkOut, mealPlan, couponAllowed, l.roomSlug, l.adults, l.children, l.infants, l.quantity].join("|");
+      if (pricedSignature.current[l.id] === signature) return;
+      pricedSignature.current[l.id] = signature;
+      void fetchLinePrice(l);
+    });
+  }, [lines, checkIn, checkOut, mealPlan, couponAllowed, fetchLinePrice]);
 
   useEffect(() => () => {
     if (couponTimerRef.current) clearTimeout(couponTimerRef.current);
   }, []);
-
-  const repriceLine = (id) => {
-    const line = lines.find((l) => l.id === id);
-    if (line) void fetchLinePrice(line);
-  };
 
   const applyCoupon = useCallback(() => {
     if (!couponAllowed) return;
@@ -213,6 +225,10 @@ export function CheckoutForm({
     activeCouponRef.current = code;
     lines.forEach((l) => void fetchLinePrice(l, code));
   }, [couponAllowed, couponCode, couponCooling, lines, fetchLinePrice]);
+
+  // Peak / long-weekend nights are priced +20% with no 2+ night discount. Say so
+  // next to the price, so a higher rate reads as the tariff and not as an error.
+  const peakLabels = [...new Set(lines.flatMap((l) => l.pricing?.peakLabels ?? []))];
 
   const datesUnavailable = lines.some((l) => l.availability?.available === false);
   const anyChecking = lines.some((l) => l.loadingPrice);
@@ -388,7 +404,7 @@ export function CheckoutForm({
                     onChange={(e) => {
                       const room = allRooms.find((r) => r.slug === e.target.value);
                       if (!room) return;
-                      updateLine(line.id, { ...makeLine(room) });
+                      updateLine(line.id, { ...makeLine(room), id: line.id });
                     }}
                     className={INPUT_CLS}
                   >
@@ -403,7 +419,6 @@ export function CheckoutForm({
                     value={line.quantity}
                     onChange={(e) => {
                       updateLine(line.id, { quantity: Number(e.target.value) });
-                      repriceLine(line.id);
                     }}
                     className={INPUT_CLS}
                     disabled={line.inventoryCount <= 1}
@@ -430,7 +445,7 @@ export function CheckoutForm({
               <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <div>
                   <label className={LABEL_CLS}>Adults (per room)</label>
-                  <select value={line.adults} onChange={(e) => { updateLine(line.id, { adults: Number(e.target.value) }); repriceLine(line.id); }} className={INPUT_CLS}>
+                  <select value={line.adults} onChange={(e) => { updateLine(line.id, { adults: Number(e.target.value) }); }} className={INPUT_CLS}>
                     {Array.from({ length: maxA }, (_, i) => i + 1).map((n) => (
                       <option key={n} value={n}>{n} adult{n > 1 ? "s" : ""}{n === included ? " (included in base price)" : ""}</option>
                     ))}
@@ -438,7 +453,7 @@ export function CheckoutForm({
                 </div>
                 <div>
                   <label className={LABEL_CLS}>Children <span className="font-normal text-muted-foreground">(5–12 yrs)</span></label>
-                  <select value={line.children} onChange={(e) => { updateLine(line.id, { children: Number(e.target.value) }); repriceLine(line.id); }} className={INPUT_CLS}>
+                  <select value={line.children} onChange={(e) => { updateLine(line.id, { children: Number(e.target.value) }); }} className={INPUT_CLS}>
                     {Array.from({ length: MAX_CHILDREN + 1 }, (_, i) => i).map((n) => (
                       <option key={n} value={n}>{n === 0 ? "No children" : `${n} child${n > 1 ? "ren" : ""}`}</option>
                     ))}
@@ -446,7 +461,7 @@ export function CheckoutForm({
                 </div>
                 <div>
                   <label className={LABEL_CLS}>Infants <span className="font-normal text-muted-foreground">(under 5)</span></label>
-                  <select value={line.infants} onChange={(e) => { updateLine(line.id, { infants: Number(e.target.value) }); repriceLine(line.id); }} className={INPUT_CLS}>
+                  <select value={line.infants} onChange={(e) => { updateLine(line.id, { infants: Number(e.target.value) }); }} className={INPUT_CLS}>
                     {Array.from({ length: MAX_INFANTS + 1 }, (_, i) => i).map((n) => (
                       <option key={n} value={n}>{n === 0 ? "No infants" : `${n} infant${n > 1 ? "s" : ""} (Free)`}</option>
                     ))}
@@ -565,6 +580,11 @@ export function CheckoutForm({
               )}
               {totals.discountAmount > 0 && (
                 <div className="flex justify-between text-success"><span>Coupon</span><span>−&#8377;{formatPrice(totals.discountAmount)}</span></div>
+              )}
+              {peakLabels.length > 0 && (
+                <p className="rounded-lg bg-warm-beige/50 px-3 py-2 text-xs leading-5 text-charcoal/80">
+                  Peak-season rates apply on some nights of this stay ({peakLabels.join(", ")}): room rent is +20% on those nights and the 2+ night discount does not apply to them.
+                </p>
               )}
               <div className="flex justify-between border-t border-border pt-3 text-charcoal/70"><span>Subtotal</span><span>&#8377;{formatPrice(totals.subtotalBeforeGst)}</span></div>
               <div className="flex justify-between text-charcoal/70"><span>CGST</span><span>&#8377;{formatPrice(totals.cgstAmount)}</span></div>
