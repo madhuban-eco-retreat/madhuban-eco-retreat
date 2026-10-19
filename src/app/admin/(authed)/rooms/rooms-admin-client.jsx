@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Plus, GripVertical, Pencil, Check, X as XIcon, CalendarOff, BedDouble, } from "lucide-react";
 import { toast } from "sonner";
 import { Card, Button, Tabs, Toggle } from "@/components/admin/ui";
-import { computeRoomGstRate } from "@/lib/gst";
+import { indicativeSlabForBaseRate } from "@/lib/gst";
 import { RoomQuickEditDrawer } from "./room-quick-edit-drawer";
 // ─── helpers ────────────────────────────────────────────────────────────────
 function getThumbnailUrl(room) {
@@ -203,9 +203,12 @@ function RatesTab({ rooms, editingId, editingVal, onStartEdit, onEditValChange, 
         <tbody className="divide-y divide-admin-card-border">
           {rooms.map((room) => {
             const isEditing = editingId === room.id;
+            // Indicative only: the slab a bare double-occupancy regular night at
+            // this tariff would take. A real booking is taxed on its own final
+            // per-night amount, which extras, a peak night or a discount move.
             const previewGst = isEditing && editingVal
-                ? (() => { const v = parseFloat(editingVal); return isNaN(v) ? null : computeRoomGstRate(v); })()
-                : computeRoomGstRate(room.base_price_per_night);
+                ? (() => { const v = parseFloat(editingVal); return isNaN(v) ? null : indicativeSlabForBaseRate(v); })()
+                : indicativeSlabForBaseRate(room.base_price_per_night);
             return (<tr key={room.id} className="transition-colors hover:bg-warm-beige/20">
                 <td className="px-6 py-4">
                   <p className="font-body text-sm font-medium text-charcoal">{room.name}</p>
@@ -232,8 +235,8 @@ function RatesTab({ rooms, editingId, editingVal, onStartEdit, onEditValChange, 
                     </span>)}
                 </td>
                 <td className="px-6 py-4">
-                  {previewGst !== null ? (<span className={`font-body text-sm font-semibold ${previewGst === 18 ? "text-error/80" : "text-forest-green"}`}>
-                      {previewGst}%
+                  {previewGst !== null ? (<span className={`font-body text-sm font-semibold ${previewGst === 18 ? "text-error/80" : "text-forest-green"}`} title="Indicative at this base rate. A booking is taxed on its final per-night amount, after extras, peak surcharge and any discount.">
+                      {previewGst}%*
                     </span>) : (<span className="font-body text-sm text-charcoal/40">—</span>)}
                 </td>
                 <td className="px-6 py-4 text-right">

@@ -3,7 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
 import { Drawer, Button, Input, Toggle } from "@/components/admin/ui";
-import { computeRoomGstRate } from "@/lib/gst";
+import { indicativeSlabForBaseRate } from "@/lib/gst";
 // Inner form component — keyed by room.id so state resets cleanly on room change
 function QuickEditForm({ room, onSaved, onClose, }) {
     const [price, setPrice] = useState(String(room.base_price_per_night));
@@ -13,7 +13,7 @@ function QuickEditForm({ room, onSaved, onClose, }) {
     const [error, setError] = useState(null);
     const parsedPrice = parseFloat(price);
     const derivedGst = !isNaN(parsedPrice) && parsedPrice > 0
-        ? computeRoomGstRate(parsedPrice)
+        ? indicativeSlabForBaseRate(parsedPrice)
         : null;
     async function handleSave() {
         const priceVal = parseFloat(price);
@@ -52,7 +52,7 @@ function QuickEditForm({ room, onSaved, onClose, }) {
     return (<div className="space-y-5">
       {error && (<p className="rounded-xl bg-error/10 px-4 py-2.5 font-body text-sm text-error">{error}</p>)}
 
-      <Input label="Base Price per Night (₹)" type="number" min={0} step={100} value={price} onChange={(e) => setPrice(e.target.value)} helperText={derivedGst !== null ? `→ ${derivedGst}% GST applies at this price` : undefined}/>
+      <Input label="Base Price per Night (₹)" type="number" min={0} step={100} value={price} onChange={(e) => setPrice(e.target.value)} helperText={derivedGst !== null ? `→ ${derivedGst}% GST at this base rate. Extras, a peak night or a discount move a booking onto its own slab.` : undefined}/>
 
       <Input label="Inventory Count" type="number" min={1} step={1} value={inventory} onChange={(e) => setInventory(e.target.value)} helperText="Number of physical units of this room type"/>
 

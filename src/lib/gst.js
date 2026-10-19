@@ -28,16 +28,59 @@ export function gstRate(effectivePerNightValue) {
 }
 
 /**
- * Slab for a room shown on its own, with no stay in hand.
+ * INDICATIVE slab for a catalogue rate, with no stay in hand.
  *
- * Admin room lists and rate editors display a slab against a catalogue tariff,
- * where there is no season, no discount and no guest count to apply — the
- * indicative rate for the room at its base price. It is NOT what a booking is
- * taxed at; anything pricing a real stay must go through quote.mjs, whose slab
- * follows the amount actually charged.
+ * Named for what it is, because the previous name — computeRoomGstRate — read
+ * like "the GST rate for this room" and was used on a real booking's folio,
+ * where it printed the slab of the catalogue tariff rather than the slab the
+ * guest was actually charged. A Rs 7,500 tent sold at Rs 9,500 with a third
+ * adult displayed "GST (5%)" against an 18% tax line.
+ *
+ * The ONLY legitimate use is a room list or rate editor, where there is no
+ * season, no discount and no guest count to apply, and the figure is explicitly
+ * labelled as indicative. Anything with a stay in hand must use quote.mjs;
+ * anything with a booking in hand must use slabFromChargedAmounts below.
  */
-export function computeRoomGstRate(basePricePerNight) {
+export function indicativeSlabForBaseRate(basePricePerNight) {
   return gstRateForEffectiveValue(basePricePerNight);
+}
+
+/**
+ * Retained under its original name for callers that predate the rename.
+ * Prefer indicativeSlabForBaseRate — the name is the warning.
+ */
+export const computeRoomGstRate = indicativeSlabForBaseRate;
+
+/**
+ * The slab a booking was ACTUALLY charged at, recovered from its own figures.
+ *
+ * A booking stores what it was billed — a taxable base and a GST amount — so
+ * the rate is recoverable by division, no rate card required. That matters for
+ * two reasons: a booking made before the rate screen existed has no snapshot to
+ * read, and a booking made after it must not be re-derived from a rate card
+ * that may have moved since.
+ *
+ * The result is snapped to the nearest configured slab so ordinary rounding on
+ * a mixed-slab stay does not print "GST (17%)". A stay spanning both slabs has
+ * no single honest rate, and the caller is told so via `mixed`.
+ */
+export function slabFromChargedAmounts(taxableAmount, gstAmount) {
+  const base = Number(taxableAmount);
+  const gst = Number(gstAmount);
+  if (!Number.isFinite(base) || !Number.isFinite(gst) || base <= 0) return null;
+
+  const exact = (gst / base) * 100;
+  const slabs = [GST_RATE_LOW, GST_RATE_HIGH];
+  const nearest = slabs.reduce((best, s) =>
+    Math.abs(s - exact) < Math.abs(best - exact) ? s : best,
+  );
+  return {
+    ratePercent: nearest,
+    exactPercent: Math.round(exact * 100) / 100,
+    // More than a rounding wobble away from either slab means the stay spanned
+    // both, which is legitimate and worth saying out loud.
+    mixed: Math.abs(nearest - exact) > 0.5,
+  };
 }
 
 /**

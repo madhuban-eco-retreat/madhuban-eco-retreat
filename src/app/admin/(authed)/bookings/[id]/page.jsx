@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { CheckCircle2, XCircle, Circle, Zap, CreditCard, Banknote, CalendarDays, Users, BedDouble, } from "lucide-react";
-import { computeRoomGstRate } from "@/lib/gst";
+import { slabFromChargedAmounts } from "@/lib/gst";
+import { readRateSnapshot } from "@/lib/pricing/snapshot.mjs";
 import { Card, Badge } from "@/components/admin/ui";
 import { bookingStatusVariant, bookingStatusLabel, initialsFromName, avatarColor, } from "@/lib/admin/dashboard";
 import { BookingActionsPanel } from "./booking-actions";
@@ -189,7 +190,18 @@ export default async function BookingDetailPage({ params }) {
     const existingInvoiceId = invoiceRow?.id ?? null;
     // derived
     const nights = Math.max(1, Math.round((new Date(booking.checkout).getTime() - new Date(booking.checkin).getTime()) / 86400000));
-    const derivedGstRate = room ? computeRoomGstRate(room.base_price_per_night) : 0;
+    // The slab this booking was ACTUALLY charged at, never the catalogue rate.
+    // Reading room.base_price_per_night here — as this page used to — printed
+    // "GST (5%)" above an 18% tax line for any booking whose final per-night
+    // value crossed the threshold: an extra adult, a peak night, a bedding
+    // charge. The snapshot knows; failing that, the stored amounts do, because
+    // a booking records what it was billed.
+    const snapshot = readRateSnapshot(booking.rate_snapshot);
+    const chargedSlab = slabFromChargedAmounts(booking.base_amount, booking.gst_amount);
+    const derivedGstRate = snapshot?.totals?.gstRate ?? chargedSlab?.ratePercent ?? 0;
+    // A stay spanning both slabs has no single rate; the folio says so rather
+    // than picking one and implying the whole stay was taxed at it.
+    const mixedSlabs = Boolean(snapshot?.totals?.mixedGstRates ?? chargedSlab?.mixed);
     const totalPaid = payments
         .filter(p => p.status === "captured")
         .reduce((s, p) => s + Number(p.amount), 0);
@@ -335,8 +347,8 @@ export default async function BookingDetailPage({ params }) {
                     {roomName} ({nights} night{nights !== 1 ? "s" : ""})
                   </p>
                   <p className="font-body text-xs text-charcoal/50">
-                    ₹{fmtAmt(room?.base_price_per_night ?? 0)}/night
-                    {room ? ` + ${derivedGstRate}% GST` : ""}
+                    ₹{fmtAmt(snapshot?.rules?.baseNightlyRate ?? room?.base_price_per_night ?? 0)}/night
+                    {derivedGstRate ? ` + ${mixedSlabs ? "mixed" : `${derivedGstRate}%`} GST` : ""}
                   </p>
                 </div>
                 {/* Gross, so the discount below reads as a deduction from it.
@@ -363,7 +375,7 @@ export default async function BookingDetailPage({ params }) {
                 <span>₹{fmtAmt(Number(booking.base_amount))}</span>
               </div>
               <div className="flex justify-between font-body text-sm text-charcoal/70">
-                <span>GST ({derivedGstRate}%)</span>
+                <span>GST ({mixedSlabs ? "5% & 18%" : `${derivedGstRate}%`})</span>
                 <span>₹{fmtAmt(Number(booking.gst_amount))}</span>
               </div>
               <div className="flex justify-between border-t border-admin-card-border pt-2">
