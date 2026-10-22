@@ -744,7 +744,7 @@ export default function RatapaniJungleSafariPage() {
             <a href="tel:+919770558419" className={BTN_GHOST}><Phone size={16} aria-hidden="true" /> Call 09770558419</a>
           </div>
           <p className="mt-6 text-sm text-warm-beige/80">
-            More to do here: <Link href="/experiences" className="underline">all experiences</Link> · <Link href="/nearby-attractions" className="underline">nearby attractions</Link> · <Link href="/stay-in-ratapani-tiger-reserve" className="underline">our rooms</Link>
+            More to do here: <Link href="/experiences/ratapani-hike-experience" className="underline">Ratapani hike experience</Link> · <Link href="/experiences" className="underline">all experiences</Link> · <Link href="/nearby-attractions" className="underline">nearby attractions</Link> · <Link href="/stay-in-ratapani-tiger-reserve" className="underline">our rooms</Link>
           </p>
         </div>
       </section>
