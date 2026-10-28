@@ -1,3 +1,4 @@
+import { revalidateBlogs } from "@/lib/blog/revalidate";
 import { NextResponse } from "next/server";
 import { audit, jsonError, readJson, requireAdmin, uniqueSlug } from "@/lib/blog/api";
 import { blogUpdateSchema, firstIssue } from "@/lib/blog/validation";
@@ -69,6 +70,7 @@ export async function PATCH(req, { params }) {
   });
 
   await refreshAuthorCounts(gate.supabase);
+  revalidateBlogs(existing.slug, data.slug);
   return NextResponse.json(data);
 }
 
@@ -121,5 +123,6 @@ export async function DELETE(_req, { params }) {
   });
 
   await refreshAuthorCounts(gate.supabase);
+  revalidateBlogs(existing.slug);
   return NextResponse.json({ ok: true, images_removed: keys.size });
 }

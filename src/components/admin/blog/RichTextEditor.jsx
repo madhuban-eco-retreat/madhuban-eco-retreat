@@ -34,6 +34,7 @@ import {
   Youtube as YoutubeIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { uploadBlogImageFile } from "@/lib/blog/upload-client";
 
 /**
  * The article body editor.
@@ -167,17 +168,7 @@ export function RichTextEditor({
       setUploading(true);
       setUploadError(null);
       try {
-        const form = new FormData();
-        form.append("file", file);
-        form.append("fileName", file.name);
-        if (blogId) form.append("blogId", blogId);
-
-        const res = await fetch("/api/admin/blog/upload-image", {
-          method: "POST",
-          body: form,
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error ?? "Upload failed");
+        const data = await uploadBlogImageFile(file, { blogId });
 
         editor
           .chain()

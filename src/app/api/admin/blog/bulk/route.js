@@ -1,3 +1,4 @@
+import { revalidateBlogs } from "@/lib/blog/revalidate";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { audit, jsonError, readJson, requireAdmin } from "@/lib/blog/api";
@@ -63,6 +64,7 @@ export async function POST(req) {
       images_removed: keys.size,
     });
     await refreshAuthorCounts(gate.supabase);
+    revalidateBlogs();
     return NextResponse.json({ ok: true, affected: ids.length });
   }
 
@@ -107,5 +109,6 @@ export async function POST(req) {
     ids,
   });
   await refreshAuthorCounts(gate.supabase);
+  revalidateBlogs();
   return NextResponse.json({ ok: true, affected: ids.length, status });
 }

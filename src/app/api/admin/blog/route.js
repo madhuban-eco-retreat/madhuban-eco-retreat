@@ -1,3 +1,4 @@
+import { revalidateBlogs } from "@/lib/blog/revalidate";
 import { NextResponse } from "next/server";
 import { audit, jsonError, readJson, requireAdmin, uniqueSlug } from "@/lib/blog/api";
 import { blogCreateSchema, firstIssue } from "@/lib/blog/validation";
@@ -92,5 +93,6 @@ export async function POST(req) {
     status: data.status,
   });
 
+  revalidateBlogs(data.slug);
   return NextResponse.json(data, { status: 201 });
 }
