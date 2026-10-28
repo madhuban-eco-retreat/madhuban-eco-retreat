@@ -1,4 +1,4 @@
-export const revalidate = 3600;
+export const revalidate = 60;
 import { buildMetadata } from "@/lib/seo";
 import CommonFaqs from "@/common-components/faqs/CommonFaqs";
 import DecorativeHeading from "@/common-components/heading/DecorativeHeading";
