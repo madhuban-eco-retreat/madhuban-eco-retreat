@@ -5,6 +5,7 @@ import NextImage from "next/image";
 import { ImagePlus, Loader2, Trash2 } from "lucide-react";
 import { Input } from "@/components/admin/ui";
 import { cn } from "@/lib/utils";
+import { uploadBlogImageFile } from "@/lib/blog/upload-client";
 
 /**
  * Featured-image control: click or drag to upload, plus the alt text.
@@ -24,17 +25,7 @@ export function FeaturedImagePicker({ value, alt, onChange, blogId }) {
     setBusy(true);
     setError(null);
     try {
-      const form = new FormData();
-      form.append("file", file);
-      form.append("fileName", file.name);
-      if (blogId) form.append("blogId", blogId);
-
-      const res = await fetch("/api/admin/blog/upload-image", {
-        method: "POST",
-        body: form,
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "Upload failed");
+      const data = await uploadBlogImageFile(file, { blogId });
 
       onChange({
         url: data.url,

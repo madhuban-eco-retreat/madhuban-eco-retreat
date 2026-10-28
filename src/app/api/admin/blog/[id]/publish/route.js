@@ -1,3 +1,4 @@
+import { revalidateBlogs } from "@/lib/blog/revalidate";
 import { NextResponse } from "next/server";
 import { audit, jsonError, requireAdmin } from "@/lib/blog/api";
 import { refreshAuthorCounts } from "@/lib/blog/author-counts";
@@ -56,5 +57,6 @@ export async function POST(req, { params }) {
   });
 
   await refreshAuthorCounts(gate.supabase);
+  revalidateBlogs(data.slug);
   return NextResponse.json(data);
 }
